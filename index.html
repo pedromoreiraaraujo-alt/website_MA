@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moreira &amp; Araújo — Aluguer de Material para Eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    :root {
+      --cream: #f5efe2;
+      --cream-light: #faf7f2;
+      --cream-mid: #ede4d0;
+      --cream-border: #e0d5c0;
+      --dark: #14120f;
+      --dark-soft: #2a2520;
+      --muted: #6b5f4a;
+      --gold: #b89a55;
+      --gold-light: #d4b87a;
+      --gold-dark: #8a7340;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--dark);
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 520px;
+      font-weight: 300;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section { padding: 6rem 0; }
+    .section-header { margin-bottom: 3.5rem; }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 2rem;
+      background: var(--cream-light);
+      border-bottom: 1px solid var(--cream-border);
+      transition: padding 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    nav.scrolled {
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 16px rgba(20,18,15,0.06);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--dark);
+    }
+
+    .nav-logo .amp {
+      font-family: Georgia, serif;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dark-soft);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      border: 1px solid var(--gold);
+      padding: 0.5rem 1.25rem;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--gold); color: var(--cream-light); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 7rem 4rem 4.5rem;
+      padding-left: max(2rem, calc((100vw - 4rem - 1200px) / 2 + 2rem));
+      background: var(--cream-light);
+      position: relative;
+    }
+
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(184,154,85,0.25) 30%, rgba(184,154,85,0.25) 70%, transparent);
+    }
+
+    .hero-eyebrow-top {
+      display: flex; align-items: center; gap: 1rem;
+      font-size: 10px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .hero-eyebrow-top::before {
+      content: ''; display: inline-block;
+      width: 32px; height: 1px; background: var(--gold); flex-shrink: 0;
+    }
+
+    .hero-text-block { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .hero-display {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: var(--dark);
+    }
+    .hero-display em {
+      font-style: italic; color: var(--gold-dark);
+      display: block;
+    }
+
+    .hero-body {
+      font-size: 0.95rem; color: var(--muted);
+      max-width: 400px; line-height: 1.85;
+    }
+
+    .hero-bottom { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .hero-actions { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+
+    .hero-scroll {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .hero-scroll::before {
+      content: ''; display: inline-block;
+      width: 28px; height: 1px; background: var(--cream-border);
+    }
+
+    .hero-right {
+      position: relative; overflow: hidden;
+    }
+    .hero-right::before {
+      content: ''; position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to right, rgba(250,247,242,0.22) 0%, transparent 20%);
+      pointer-events: none;
+    }
+    .hero-slide {
+      position: absolute; inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .hero-dots {
+      position: absolute; bottom: 1.5rem; right: 1.75rem; z-index: 2;
+      display: flex; gap: 0.5rem;
+    }
+    .hero-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(245,239,226,0.4);
+      cursor: pointer; transition: background 0.3s, transform 0.3s;
+      border: none; padding: 0;
+    }
+    .hero-dot.active { background: var(--gold); transform: scale(1.3); }
+    .hero-right-badge {
+      position: absolute; bottom: 2.5rem; right: 2.5rem; z-index: 2;
+      background: var(--dark); padding: 1.5rem 2rem;
+      border-left: 3px solid var(--gold);
+    }
+    .hero-right-badge .stat-number { font-size: 2.2rem; line-height: 1; }
+    .hero-right-badge .stat-label { margin-top: 0.25rem; }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-block;
+      background: var(--dark);
+      color: var(--cream-light);
+      padding: 0.875rem 2.25rem;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      transition: background 0.25s, color 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary:hover { background: var(--gold); color: var(--dark); }
+
+    .btn-outline {
+      display: inline-block;
+      border: 1px solid var(--dark);
+      color: var(--dark);
+      padding: 0.875rem 2.25rem;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      transition: border-color 0.25s, color 0.25s;
+    }
+
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Stats */
+    .stats-bar {
+      background: var(--dark);
+      padding: 2.75rem 2rem;
+    }
+
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.75rem;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(245,239,226,0.55);
+      margin-top: 0.4rem;
+    }
+
+    .stats-inner > div {
+      border-right: 1px solid rgba(245,239,226,0.07);
+      padding: 0 1rem;
+    }
+    .stats-inner > div:last-child { border-right: none; }
+
+    /* Categories */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.15fr;
+      grid-template-rows: 260px 260px;
+      gap: 2px;
+      background: var(--dark);
+    }
+
+    .category-card {
+      background: var(--cream-light);
+      padding: 2rem 2.5rem;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      transition: background 0.32s;
+      display: flex; flex-direction: column;
+      text-align: left;
+    }
+
+    .category-card.cat-featured {
+      grid-row: 1 / 3;
+      grid-column: 3;
+      padding: 2.5rem 2.5rem 0;
+    }
+
+    .category-card:hover { background: var(--dark-soft); }
+    .category-card:hover .category-name { color: var(--cream-light); }
+    .category-card:hover .category-desc { color: rgba(245,239,226,0.42); }
+    .category-card:hover .category-cta { color: var(--gold); }
+    .category-card:hover .category-cta-arrow { transform: translateX(4px); }
+    .category-card:hover .category-card-img { transform: scale(1.04); opacity: 1; }
+
+    .category-card-img {
+      position: absolute; bottom: 0; right: 0;
+      width: 58%; height: 62%;
+      object-fit: contain; object-position: bottom right;
+      opacity: 0.82;
+      transition: transform 0.45s ease, opacity 0.3s;
+      pointer-events: none;
+    }
+    .category-card.cat-featured .category-card-img {
+      width: 100%; height: 58%;
+      object-position: bottom center;
+    }
+
+    .category-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.45rem;
+      transition: color 0.3s;
+    }
+    .category-card:hover .category-label { color: rgba(184,154,85,0.75); }
+
+    .category-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem; font-weight: 400;
+      line-height: 1.2; margin-bottom: 0.5rem;
+      color: var(--dark);
+      transition: color 0.32s;
+    }
+    .category-card.cat-featured .category-name { font-size: 1.8rem; }
+
+    .category-desc {
+      font-size: 0.8rem; color: var(--muted);
+      line-height: 1.65; max-width: 220px;
+      transition: color 0.32s;
+    }
+
+    .category-cta {
+      margin-top: auto; padding-top: 1rem;
+      font-size: 9px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+      transition: color 0.2s;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .category-card.cat-featured .category-cta { margin-bottom: 1.5rem; }
+    .category-cta-arrow { display: inline-block; transition: transform 0.2s; }
+
+    /* Lifestyle band */
+    .lifestyle-band {
+      height: clamp(320px, 38vw, 520px);
+      position: relative; overflow: hidden;
+    }
+    .lifestyle-band img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .lifestyle-band::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right,
+        rgba(20,18,15,0.52) 0%, rgba(20,18,15,0.15) 45%, transparent 70%);
+    }
+    .lifestyle-band-text {
+      position: absolute; inset: 0; z-index: 1;
+      display: flex; align-items: center;
+      padding: 0 clamp(2rem, 8vw, 8rem);
+    }
+    .lifestyle-band-text blockquote {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+      font-weight: 300; font-style: italic;
+      color: var(--cream-light); line-height: 1.35;
+      max-width: 560px;
+      border-left: 2px solid var(--gold);
+      padding-left: 2rem;
+    }
+    .lifestyle-band-text blockquote cite {
+      display: block; margin-top: 1.25rem;
+      font-size: 10px; font-weight: 700; font-style: normal;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* Featured */
+    .featured-section { background: var(--cream); }
+
+    /* ── SECTION DIVIDER ── */
+    .section-divider {
+      padding: 3.5rem 2rem 3rem;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      background: var(--cream);
+    }
+    .section-divider-inner {
+      display: flex; align-items: center; gap: 1.5rem;
+      width: 100%; max-width: 680px;
+    }
+    .section-divider-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
+      opacity: 0.35;
+    }
+    .section-divider-emblem {
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      animation: emblem-rotate 18s linear infinite;
+      opacity: 0.85;
+    }
+    @keyframes emblem-rotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .section-divider-tagline {
+      font-size: 9px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold-dark); opacity: 0.55;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .featured-item { position: relative; overflow: hidden; }
+    .featured-item:hover .featured-img img { transform: scale(1.04); }
+
+    .featured-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--cream-mid);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(20,18,15,0.62) 0%, rgba(20,18,15,0.08) 55%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .featured-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .featured-img-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .featured-img-placeholder svg {
+      width: 38%;
+      opacity: 0.15;
+      stroke: var(--gold-dark);
+    }
+
+    .featured-info { padding: 1.1rem 0 0; }
+
+    .featured-category {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .featured-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-visual { position: relative; }
+
+    .about-img-main {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--cream-mid);
+      position: relative;
+    }
+
+    .about-img-accent {
+      position: absolute;
+      bottom: -1.25rem;
+      right: -1.25rem;
+      width: 38%;
+      aspect-ratio: 1;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-accent-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--gold);
+      text-align: center;
+      padding: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.85;
+    }
+
+    .about-signature {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      color: var(--dark);
+      margin-top: 2rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--cream-border);
+    }
+
+    .about-accent-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--gold-light);
+      text-align: center;
+      padding: 1.75rem;
+      line-height: 1.7;
+    }
+
+    /* Process */
+    .process-section { background: var(--dark); }
+    .process-section .section-title { color: var(--cream-light); }
+    .process-section .section-subtitle { color: rgba(245,239,226,0.45); }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3rem;
+      position: relative;
+    }
+
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 27px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 1px;
+      background: rgba(184,154,85,0.2);
+    }
+
+    .process-step { text-align: center; position: relative; }
+
+    .process-number {
+      width: 56px;
+      height: 56px;
+      border: 1px solid rgba(184,154,85,0.45);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.25rem;
+      color: var(--gold);
+      background: var(--dark);
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--cream-light);
+    }
+
+    .process-desc { font-size: 0.875rem; color: rgba(245,239,226,0.42); line-height: 1.7; }
+
+    /* Testimonials */
+    .testimonials-section { background: var(--dark); }
+
+    .testimonials-section .eyebrow { color: var(--gold); }
+    .testimonials-section .section-title { color: var(--cream-light); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      border: 1px solid rgba(184,154,85,0.2);
+      padding: 2.5rem;
+    }
+
+    .testimonial-quote {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 3.5rem;
+      color: var(--gold);
+      line-height: 0.8;
+      margin-bottom: 1.25rem;
+    }
+
+    .testimonial-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: rgba(245,239,226,0.75);
+      line-height: 1.8;
+      margin-bottom: 1.75rem;
+    }
+
+    .testimonial-author {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .testimonial-role {
+      font-size: 0.8rem;
+      color: rgba(245,239,226,0.35);
+      margin-top: 0.25rem;
+    }
+
+    /* CTA Band */
+    .cta-band {
+      background: var(--gold);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .cta-band h2 {
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      color: var(--dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .cta-band p {
+      font-size: 1rem;
+      color: rgba(20,18,15,0.65);
+      margin-bottom: 2rem;
+    }
+
+    .btn-dark {
+      display: inline-block;
+      background: var(--dark);
+      color: var(--cream-light);
+      padding: 0.9rem 2.5rem;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      transition: background 0.25s;
+    }
+
+    .btn-dark:hover { background: var(--dark-soft); }
+
+    /* Contact */
+    .contact-section { background: var(--dark); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+    }
+
+    .contact-info .eyebrow { color: var(--gold); }
+    .contact-info .section-title { color: var(--cream-light); }
+    .contact-info p { color: rgba(245,239,226,0.5); margin-bottom: 2.5rem; line-height: 1.8; }
+    .contact-info .contact-label { color: var(--gold); }
+    .contact-info .contact-value { color: rgba(245,239,226,0.78); }
+    .contact-info .contact-icon { color: var(--gold); }
+
+    .contact-detail {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      align-items: flex-start;
+    }
+
+    .contact-icon { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+
+    .contact-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-value { font-size: 0.95rem; color: var(--dark); line-height: 1.6; }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-group label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(245,239,226,0.55);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(245,239,226,0.15);
+      padding: 0.875rem 1rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.9rem;
+      color: var(--cream-light);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(245,239,226,0.3); }
+
+    .form-group select option { background: var(--dark-soft); color: var(--cream-light); }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: rgba(245,239,226,0.45);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(245,239,226,0.07);
+      margin-bottom: 2rem;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--cream-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-logo .amp {
+      font-family: Georgia, serif;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .footer-tagline {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(245,239,226,0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-desc { font-size: 0.875rem; line-height: 1.8; max-width: 260px; }
+
+    .footer-col h4 {
+      font-family: 'Lato', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: rgba(245,239,226,0.45);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--cream-light); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    /* Fade-in */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .fade-in.delay-1 { transition-delay: 0.1s; }
+    .fade-in.delay-2 { transition-delay: 0.2s; }
+    .fade-in.delay-3 { transition-delay: 0.3s; }
+
+    /* Cart summary in contact form */
+    .cart-summary-box {
+      background: rgba(184,154,85,0.07);
+      border: 1px solid rgba(184,154,85,0.22);
+      border-left: 3px solid var(--gold);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .cart-summary-eyebrow {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .cart-summary-eyebrow::before { content: ''; display: inline-block; width: 18px; height: 1px; background: var(--gold); }
+    .cart-summary-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; color: var(--cream-light);
+      margin-bottom: 0.75rem; font-style: italic;
+    }
+    .cart-summary-item {
+      font-size: 13px; color: rgba(245,239,226,0.6);
+      padding: 0.35rem 0; border-bottom: 1px solid rgba(245,239,226,0.06);
+      display: flex; gap: 0.6rem; align-items: baseline;
+    }
+    .cart-summary-item:last-of-type { border-bottom: none; }
+    .cart-summary-item-ref { font-weight: 700; color: var(--gold); font-size: 10px; letter-spacing: 1.5px; flex-shrink: 0; }
+    .cart-summary-item-qty { color: rgba(245,239,226,0.35); font-size: 12px; margin-left: auto; flex-shrink: 0; }
+    .cart-clear-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(245,239,226,0.25); padding: 0.75rem 0 0; display: block;
+      transition: color 0.2s;
+    }
+    .cart-clear-btn:hover { color: rgba(210,70,70,0.7); }
+
+    /* Mobile nav toggle */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--dark);
+      transition: all 0.3s;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--cream);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+
+    .mobile-nav.open { display: flex; }
+
+    .mobile-nav a {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.5rem;
+      font-style: italic;
+      color: var(--dark);
+    }
+
+    .mobile-nav-close {
+      position: absolute;
+      top: 1.5rem; right: 2rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    @media (max-width: 960px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { height: 55vw; max-height: 480px; }
+      .hero-left { padding: 7rem 2.5rem 4rem; }
+      .hero-left::after { display: none; }
+      .hero-scroll { display: none; }
+      .hero-right-badge { display: none; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .categories-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .category-card.cat-featured { grid-row: auto; grid-column: auto; }
+      .category-card.cat-featured .category-card-img { width: 58%; height: 62%; object-position: bottom right; }
+      .featured-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-img-accent { display: none; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid::before { display: none; }
+      .testimonials-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+
+    @media (max-width: 600px) {
+      .categories-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .category-card { min-height: 220px; }
+      .featured-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .process-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+
+    /* ── PAGE TRANSITION ── */
+    #pageTransition {
+      position: fixed; inset: 0; z-index: 10000;
+      background: var(--cream-light);
+      opacity: 1;
+      transition: opacity 0.45s ease;
+      pointer-events: none;
+    }
+
+    /* ── CART FAB ── */
+    .cart-fab {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 400;
+      width: 56px; height: 56px;
+      background: var(--dark); border: 1px solid rgba(184,154,85,0.25);
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(20,18,15,0.35), 0 1px 4px rgba(20,18,15,0.2);
+      transition: background 0.25s, transform 0.2s, border-color 0.2s;
+    }
+    .cart-fab:hover { background: var(--dark-soft); border-color: var(--gold); transform: scale(1.06); }
+    .cart-fab:active { transform: scale(0.97); }
+    .cart-fab svg { width: 22px; height: 22px; stroke: var(--cream-light); fill: none; stroke-width: 1.5; stroke-linecap: round; }
+    .cart-fab-badge {
+      position: absolute; top: -5px; right: -5px;
+      min-width: 20px; height: 20px; padding: 0 5px;
+      background: var(--gold); color: var(--dark); border-radius: 10px;
+      font-size: 10px; font-weight: 700; font-family: 'Lato', sans-serif;
+      display: none; align-items: center; justify-content: center;
+    }
+
+    /* ── MINI CART DRAWER ── */
+    .mini-cart-drawer { position: fixed; inset: 0; z-index: 600; pointer-events: none; }
+    .mini-cart-drawer.open { pointer-events: all; }
+    .mini-cart-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(20,18,15,0); transition: background 0.35s ease;
+    }
+    .mini-cart-drawer.open .mini-cart-backdrop { background: rgba(20,18,15,0.6); }
+    .mini-cart-panel {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: min(400px, 100vw); background: var(--dark);
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+      display: flex; flex-direction: column;
+      box-shadow: -8px 0 40px rgba(20,18,15,0.3);
+    }
+    .mini-cart-drawer.open .mini-cart-panel { transform: translateX(0); }
+    .mini-cart-header {
+      padding: 1.75rem 1.75rem 1.25rem;
+      border-bottom: 1px solid rgba(245,239,226,0.07);
+      flex-shrink: 0; position: relative;
+    }
+    .mini-cart-header .eyebrow { color: var(--gold); font-size: 10px; margin-bottom: 0.3rem; }
+    .mini-cart-header h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem; font-weight: 400; color: var(--cream-light);
+    }
+    .mini-cart-close {
+      position: absolute; top: 1.4rem; right: 1.4rem;
+      background: none; border: none; cursor: pointer;
+      color: rgba(245,239,226,0.35); font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: color 0.2s; padding: 0.4rem;
+    }
+    .mini-cart-close:hover { color: var(--cream-light); }
+    .mini-cart-items {
+      flex: 1; overflow-y: auto; padding: 0.5rem 1.75rem 1rem;
+      scrollbar-width: thin; scrollbar-color: rgba(184,154,85,0.15) transparent;
+    }
+    .mini-cart-items::-webkit-scrollbar { width: 3px; }
+    .mini-cart-items::-webkit-scrollbar-thumb { background: rgba(184,154,85,0.15); }
+    .mini-cart-empty { text-align: center; padding: 3.5rem 1rem; }
+    .mini-cart-empty svg { width: 44px; height: 44px; stroke: rgba(184,154,85,0.25); margin: 0 auto 1.25rem; display: block; fill: none; stroke-width: 1; stroke-linecap: round; }
+    .mini-cart-empty p { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-style: italic; color: rgba(245,239,226,0.4); margin-bottom: 0.35rem; }
+    .mini-cart-empty span { font-size: 12px; color: rgba(245,239,226,0.25); }
+    .mini-cart-item {
+      display: flex; gap: 0.875rem; align-items: flex-start;
+      padding: 1rem 0; border-bottom: 1px solid rgba(245,239,226,0.06);
+    }
+    .mini-cart-item:last-child { border-bottom: none; }
+    .mini-cart-item-img { width: 56px; height: 56px; flex-shrink: 0; overflow: hidden; background: var(--dark-soft); }
+    .mini-cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .mini-cart-item-body { flex: 1; min-width: 0; }
+    .mini-cart-item-ref { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.15rem; }
+    .mini-cart-item-name { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--cream-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.25rem; }
+    .mini-cart-item-qty { font-size: 11px; color: rgba(245,239,226,0.4); }
+    .mini-cart-item-remove {
+      background: none; border: none; cursor: pointer;
+      color: rgba(245,239,226,0.2); padding: 0.25rem; flex-shrink: 0; margin-top: 3px;
+      transition: color 0.2s;
+    }
+    .mini-cart-item-remove:hover { color: rgba(210,70,70,0.8); }
+    .mini-cart-footer {
+      padding: 1.25rem 1.75rem 2rem;
+      border-top: 1px solid rgba(245,239,226,0.07);
+      flex-shrink: 0; display: flex; flex-direction: column; gap: 0.65rem;
+    }
+    .mini-cart-summary-text {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(245,239,226,0.35); margin-bottom: 0.35rem;
+    }
+    .mini-cart-btn {
+      display: block; width: 100%;
+      padding: 0.9rem; text-align: center;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .mini-cart-btn-primary { background: var(--gold); color: var(--dark); }
+    .mini-cart-btn-primary:hover { background: var(--gold-light); }
+    .mini-cart-btn-outline { background: none; border: 1px solid rgba(245,239,226,0.18); color: rgba(245,239,226,0.6); }
+    .mini-cart-btn-outline:hover { border-color: rgba(245,239,226,0.4); color: var(--cream-light); }
+  </style>
+</head>
+<body>
+  <div id="pageTransition"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="height:80px;width:auto;display:block;"></a>
+      <ul class="nav-links">
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#processo">Como Funciona</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <a href="#contacto" class="nav-cta">Pedir Orçamento</a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <span class="mobile-nav-close" id="mobileClose">✕</span>
+    <a href="#catalogo" class="mobile-link">Catálogo</a>
+    <a href="#sobre" class="mobile-link">Sobre</a>
+    <a href="#processo" class="mobile-link">Como Funciona</a>
+    <a href="#contacto" class="mobile-link">Contacto</a>
+    <a href="#contacto" class="btn-primary">Pedir Orçamento</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow-top fade-in">Moreira &amp; Araújo · Eventos</div>
+
+      <div class="hero-text-block">
+        <h1 class="hero-display fade-in delay-1">
+          Elegância<br>em Cada<em>Detalhe.</em>
+        </h1>
+        <p class="hero-body fade-in delay-2">Do casamento íntimo à grande gala — dispomos de tudo o que precisa para criar momentos verdadeiramente inesquecíveis.</p>
+      </div>
+
+      <div class="hero-bottom fade-in delay-3">
+        <div class="hero-actions">
+          <a href="catalogo.html" class="btn-primary">Ver Catálogo</a>
+          <a href="#contacto" class="btn-outline">Pedir Orçamento</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right" id="heroSlider">
+      <div class="hero-slide active">
+        <img src="Fotosdiversas/535IMG3.jpg" alt="Evento Moreira &amp; Araújo">
+      </div>
+      <div class="hero-slide">
+        <img src="Fotosdiversas/FB_IMG_1683293407737.jpg" alt="Evento Moreira &amp; Araújo">
+      </div>
+      <div class="hero-slide">
+        <img src="Fotosdiversas/img1.jpg" alt="Evento Moreira &amp; Araújo">
+      </div>
+      <div class="hero-slide">
+        <img src="Fotosdiversas/IMG1 (2).jpg" alt="Evento Moreira &amp; Araújo">
+      </div>
+      <div class="hero-dots" id="heroDots"></div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="fade-in"><div class="stat-number">500+</div><div class="stat-label">Eventos Realizados</div></div>
+      <div class="fade-in delay-1"><div class="stat-number">25</div><div class="stat-label">Anos de Experiência</div></div>
+      <div class="fade-in delay-2"><div class="stat-number">2000+</div><div class="stat-label">Peças em Catálogo</div></div>
+      <div class="fade-in delay-3"><div class="stat-number">98%</div><div class="stat-label">Clientes Satisfeitos</div></div>
+    </div>
+  </div>
+
+  <!-- Featured Items -->
+  <section class="section featured-section">
+    <div class="container">
+      <div class="section-header fade-in" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <div class="eyebrow">Destaques</div>
+          <h2 class="section-title" style="margin-bottom:0;">Peças Mais Procuradas</h2>
+        </div>
+        <a href="#contacto" class="btn-outline">Ver Catálogo Completo</a>
+      </div>
+      <div class="featured-grid">
+
+        <div class="featured-item fade-in">
+          <div class="featured-img" style="background: linear-gradient(135deg, #ede4d0 0%, #e0d5c0 100%);">
+            <div class="featured-img-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="featured-info">
+            <div class="featured-category">Decoração</div>
+            <div class="featured-name">Centro de Mesa em Cristal</div>
+          </div>
+        </div>
+
+        <div class="featured-item fade-in delay-1">
+          <div class="featured-img" style="background: linear-gradient(135deg, #e8dfc8 0%, #ddd0b5 100%);">
+            <div class="featured-img-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+              </svg>
+            </div>
+          </div>
+          <div class="featured-info">
+            <div class="featured-category">Iluminação</div>
+            <div class="featured-name">Lustre de Cristal Vintage</div>
+          </div>
+        </div>
+
+        <div class="featured-item fade-in delay-2">
+          <div class="featured-img" style="background: linear-gradient(135deg, #ede4d0 0%, #e0d5c0 100%);">
+            <div class="featured-img-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 9V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2"/><path d="M2 11h20v11H2z"/><path d="M12 11v11"/>
+              </svg>
+            </div>
+          </div>
+          <div class="featured-info">
+            <div class="featured-category">Mobiliário</div>
+            <div class="featured-name">Cadeira Tiffany Dourada</div>
+          </div>
+        </div>
+
+        <div class="featured-item fade-in delay-3">
+          <div class="featured-img" style="background: linear-gradient(135deg, #e8dfc8 0%, #ddd0b5 100%);">
+            <div class="featured-img-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+              </svg>
+            </div>
+          </div>
+          <div class="featured-info">
+            <div class="featured-category">Louça &amp; Cristalaria</div>
+            <div class="featured-name">Serviço de Jantar em Porcelana</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Divider -->
+  <div class="section-divider">
+    <div class="section-divider-inner">
+      <div class="section-divider-line"></div>
+      <div class="section-divider-emblem">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="23.5" y="2" width="1" height="44" fill="var(--gold-dark)" opacity="0.35"/>
+          <rect x="2" y="23.5" width="44" height="1" fill="var(--gold-dark)" opacity="0.35"/>
+          <rect x="7.1" y="7.1" width="1" height="33.8" transform="rotate(-45 7.1 7.1)" fill="var(--gold-dark)" opacity="0.2"/>
+          <circle cx="24" cy="24" r="7" stroke="var(--gold)" stroke-width="0.75" fill="none"/>
+          <circle cx="24" cy="24" r="3.5" fill="var(--gold)" opacity="0.5"/>
+          <circle cx="24" cy="24" r="1.2" fill="var(--gold)"/>
+        </svg>
+      </div>
+      <div class="section-divider-line"></div>
+    </div>
+    <div class="section-divider-tagline">Elegância em Cada Detalhe</div>
+  </div>
+
+  <!-- About -->
+  <section class="section" id="sobre">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-visual fade-in">
+          <div class="about-img-main" style="background: var(--cream-mid);">
+            <img src="Fotosdiversas/img2.png" alt="Salão de eventos Moreira &amp; Araújo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;">
+          </div>
+          <div class="about-img-accent">
+            <div class="about-accent-text">"Cada evento é uma obra de arte que merece os melhores materiais."</div>
+          </div>
+        </div>
+
+        <div class="about-text fade-in">
+          <div class="eyebrow">Sobre Nós</div>
+          <h2 class="section-title">Tradição e Elegância ao Seu Serviço</h2>
+          <p>Há mais de 25 anos que a Moreira &amp; Araújo se dedica a tornar eventos extraordinários. Nascemos da paixão por criar momentos inesquecíveis e da convicção de que cada detalhe importa.</p>
+          <p>O nosso catálogo, cuidadosamente seleccionado, reúne as melhores peças de mobiliário, decoração, louça e têxteis — de estilo clássico ao contemporâneo — para que o seu evento reflicta exactamente a sua visão.</p>
+          <p>Trabalhamos em estreita colaboração com wedding planners, organizadores de eventos e particulares, garantindo um serviço personalizado do primeiro contacto à entrega e recolha do material.</p>
+          <div class="about-signature">Família Moreira &amp; Araújo</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section process-section" id="processo">
+    <div class="container">
+      <div class="section-header fade-in" style="text-align:center;">
+        <div class="eyebrow">Como Funciona</div>
+        <h2 class="section-title">Um Processo Simples e Transparente</h2>
+        <p class="section-subtitle" style="margin: 0 auto;">Do primeiro contacto à recolha, tratamos de tudo para que não tenha com que se preocupar.</p>
+      </div>
+      <div class="process-grid fade-in">
+        <div class="process-step">
+          <div class="process-number">01</div>
+          <h3 class="process-title">Consulta</h3>
+          <p class="process-desc">Conte-nos sobre o seu evento — data, número de convidados e estilo pretendido.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">02</div>
+          <h3 class="process-title">Proposta</h3>
+          <p class="process-desc">Preparamos uma proposta personalizada com o material seleccionado e orçamento detalhado.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">03</div>
+          <h3 class="process-title">Confirmação</h3>
+          <p class="process-desc">Confirma a reserva e nós tratamos de toda a logística de entrega e montagem.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">04</div>
+          <h3 class="process-title">Evento</h3>
+          <p class="process-desc">Desfrute do seu evento. Após o fim, recolhemos todo o material sem qualquer preocupação.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section testimonials-section">
+    <div class="container">
+      <div class="section-header fade-in" style="text-align:center;">
+        <div class="eyebrow">Testemunhos</div>
+        <h2 class="section-title">O Que Dizem os Nossos Clientes</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">O material alugado na Moreira &amp; Araújo transformou completamente o nosso casamento. A qualidade é incomparável e o serviço foi impecável do início ao fim.</p>
+          <div class="testimonial-author">Ana &amp; Miguel Santos</div>
+          <div class="testimonial-role">Casamento em Sintra, 2024</div>
+        </div>
+        <div class="testimonial-card fade-in delay-1">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">Trabalho com a M&amp;A há 5 anos como organizadora de eventos. São o único fornecedor em quem confio para eventos de luxo. Profissionalismo exemplar.</p>
+          <div class="testimonial-author">Catarina Ferreira</div>
+          <div class="testimonial-role">Wedding Planner · Porto</div>
+        </div>
+        <div class="testimonial-card fade-in delay-2">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">A nossa gala empresarial ganhou outro nível graças ao mobiliário e à decoração da Moreira &amp; Araújo. Os convidados não paravam de fazer elogios ao espaço.</p>
+          <div class="testimonial-author">Ricardo Almeida</div>
+          <div class="testimonial-role">Director Geral · Grupo Almeida</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Band -->
+  <div class="cta-band fade-in">
+    <div class="container" style="max-width:680px;">
+      <div class="eyebrow" style="color:rgba(20,18,15,0.5); margin-bottom:0.75rem;">Pronto para Começar?</div>
+      <h2>Vamos Criar o Seu Evento de Sonho</h2>
+      <p>Entre em contacto hoje e descubra como podemos tornar o seu evento verdadeiramente especial.</p>
+      <a href="#contacto" class="btn-dark">Pedir Orçamento Gratuito</a>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <section class="section contact-section" id="contacto">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="contact-info fade-in">
+          <div class="eyebrow">Contacto</div>
+          <h2 class="section-title">Fale Connosco</h2>
+          <p>Responderemos dentro de 24 horas com uma proposta personalizada para o seu evento.</p>
+
+          <div class="contact-detail">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Morada</div>
+              <div class="contact-value">Travessa do Eirado A-66<br>Ferreiró, Vila do Conde</div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.72 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.64 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.81-.81a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.28v-.36z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Telefone</div>
+              <div class="contact-value">910 060 114 / 252 651 538</div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">geral.moreiraearaujo@gmail.com</div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Horário</div>
+              <div class="contact-value">Seg. a Sex.: 9h–18h<br>Sábado: 9h–13h</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="cartSummaryBox" style="display:none;"></div>
+        <form class="contact-form fade-in" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input id="nome" type="text" placeholder="O seu nome" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="email@exemplo.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tel">Telefone</label>
+              <input id="tel" type="tel" placeholder="+351 900 000 000">
+            </div>
+            <div class="form-group">
+              <label for="tipo">Tipo de Evento</label>
+              <select id="tipo">
+                <option value="">Seleccionar...</option>
+                <option>Casamento</option>
+                <option>Baptizado</option>
+                <option>Evento Corporativo</option>
+                <option>Festa Privada</option>
+                <option>Outro</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="msg">Mensagem</label>
+            <textarea id="msg" placeholder="Descreva o seu evento e o material que procura..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%; padding:1rem; font-size:11px;">Enviar Pedido de Orçamento</button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">Moreira <span class="amp">&</span> Araújo</div>
+          <div class="footer-tagline">Eventos · Aluguer de Material</div>
+          <p class="footer-desc">Especialistas em aluguer de material para eventos de luxo em todo Portugal. Qualidade, elegância e serviço personalizado.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Catálogo</h4>
+          <ul class="footer-links">
+            <li><a href="#catalogo">Mobiliário</a></li>
+            <li><a href="#catalogo">Iluminação</a></li>
+            <li><a href="#catalogo">Louça &amp; Cristalaria</a></li>
+            <li><a href="#catalogo">Têxteis</a></li>
+            <li><a href="#catalogo">Tendas &amp; Estruturas</a></li>
+            <li><a href="#catalogo">Decoração</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <ul class="footer-links">
+            <li><a href="#sobre">Sobre Nós</a></li>
+            <li><a href="#processo">Como Funciona</a></li>
+            <li><a href="#contacto">Testemunhos</a></li>
+            <li><a href="#contacto">Galeria</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:geral.moreiraearaujo@gmail.com">geral.moreiraearaujo@gmail.com</a></li>
+            <li><a href="tel:+351910060114">910 060 114 / 252 651 538</a></li>
+            <li><a href="#contacto">Vila do Conde, Portugal</a></li>
+            <li style="margin-top:1rem;"><a href="https://www.facebook.com/moreiraearaujo2001/?locale=pt_PT" target="_blank" rel="noopener">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Moreira &amp; Araújo. Todos os direitos reservados.</span>
+        <span>Política de Privacidade &nbsp;·&nbsp; Termos e Condições</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART FAB -->
+  <button class="cart-fab" id="cartFab" onclick="openMiniCart()" aria-label="Ver carrinho">
+    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <span class="cart-fab-badge" id="cartFabBadge">0</span>
+  </button>
+
+  <!-- MINI CART DRAWER -->
+  <div class="mini-cart-drawer" id="miniCartDrawer">
+    <div class="mini-cart-backdrop" id="miniCartBackdrop"></div>
+    <div class="mini-cart-panel">
+      <div class="mini-cart-header">
+        <div class="eyebrow">Selecção</div>
+        <h3>Pedido de Orçamento</h3>
+        <button class="mini-cart-close" id="miniCartClose">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/></svg>
+          Fechar
+        </button>
+      </div>
+      <div class="mini-cart-items" id="miniCartItems"></div>
+      <div class="mini-cart-footer">
+        <div class="mini-cart-summary-text" id="miniCartSummary">0 artigos seleccionados</div>
+        <a href="catalogo.html?quote=1" class="mini-cart-btn mini-cart-btn-primary">Pedir Orçamento →</a>
+        <a href="catalogo.html" class="mini-cart-btn mini-cart-btn-outline">Continuar a Seleccionar</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Mobile nav
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileClose = document.getElementById('mobileClose');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+    mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+    mobileLinks.forEach(l => l.addEventListener('click', () => mobileNav.classList.remove('open')));
+
+    // Hero slider
+    (function() {
+      const slides = document.querySelectorAll('#heroSlider .hero-slide');
+      const dotsWrap = document.getElementById('heroDots');
+      let current = 0;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Imagem ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
+      });
+
+      function goTo(n) {
+        slides[current].classList.remove('active');
+        dotsWrap.children[current].classList.remove('active');
+        current = n;
+        slides[current].classList.add('active');
+        dotsWrap.children[current].classList.add('active');
+      }
+
+      setInterval(() => goTo((current + 1) % slides.length), 5000);
+    })();
+
+    // Fade-in on scroll
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+    fadeEls.forEach(el => io.observe(el));
+
+    // Trigger hero immediately
+    document.querySelectorAll('.hero .fade-in').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 100);
+    });
+
+    /* ── EmailJS config (mesmos IDs do catalogo.html) ── */
+    const EMAILJS_SERVICE  = 'service_hedx7n4';
+    const EMAILJS_TEMPLATE = 'template_fo7ukql';
+    const EMAILJS_KEY      = 'RHarKQcbP-Dabtyb1';
+    emailjs.init({ publicKey: EMAILJS_KEY });
+
+    // Form
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn  = form.querySelector('button[type="submit"]');
+
+      const nome  = form.querySelector('#nome').value;
+      const email = form.querySelector('#email').value;
+      const tel   = form.querySelector('#tel').value;
+      const tipo  = form.querySelector('#tipo').value;
+      const msg   = form.querySelector('#msg').value;
+
+      const cart = JSON.parse(localStorage.getItem('ma_cart') || '[]');
+      const cartText = cart.length
+        ? cart.map(i => `• ${i.ref} — ${i.name} (unid: ${i.qty})`).join('\n')
+        : '—';
+
+      btn.textContent = 'A enviar…';
+      btn.disabled = true;
+
+      try {
+        await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+          from_name:   nome,
+          from_email:  email,
+          telefone:    tel  || '—',
+          artigos:     cartText,
+          observacoes: (tipo ? 'Tipo de evento: ' + tipo + '\n\n' : '') + msg,
+          reply_to:    email,
+        });
+        btn.textContent = 'Pedido Enviado ✓';
+        btn.style.background = 'var(--gold)';
+        btn.style.color = 'var(--dark)';
+        localStorage.removeItem('ma_cart');
+        form.reset();
+        document.getElementById('cartSummaryBox').style.display = 'none';
+      } catch (err) {
+        console.error('EmailJS error:', err);
+        btn.textContent = 'Erro — Tente novamente';
+        btn.disabled = false;
+        btn.style.background = '#c05050';
+        btn.style.color = '#fff';
+      }
+    }
+
+    // Cart integration
+    (function() {
+      const cart = JSON.parse(localStorage.getItem('ma_cart') || '[]');
+      if (cart.length === 0) return;
+      const total = cart.reduce((sum, i) => sum + i.qty, 0);
+      const box = document.getElementById('cartSummaryBox');
+      box.style.display = 'block';
+      box.innerHTML = `
+        <div class="cart-summary-box">
+          <div class="cart-summary-eyebrow">Carrinho — ${total} ${total === 1 ? 'artigo' : 'artigos'}</div>
+          <div class="cart-summary-title">Artigos seleccionados no catálogo:</div>
+          ${cart.map(item => `
+            <div class="cart-summary-item">
+              <span class="cart-summary-item-ref">${item.ref}</span>
+              <span>${item.name}</span>
+              <span class="cart-summary-item-qty">× ${item.qty}</span>
+            </div>`).join('')}
+          <button class="cart-clear-btn" onclick="clearCartFromForm()">✕ Limpar selecção</button>
+        </div>`;
+
+      const msgEl = document.getElementById('msg');
+      if (!msgEl.value) {
+        msgEl.value = 'Artigos pretendidos:\n' +
+          cart.map(i => `• ${i.ref} — ${i.name}  (unid: ${i.qty})`).join('\n') +
+          '\n\n';
+      }
+    })();
+
+    function clearCartFromForm() {
+      localStorage.removeItem('ma_cart');
+      document.getElementById('cartSummaryBox').style.display = 'none';
+      document.getElementById('msg').value = '';
+    }
+
+    /* ── CART FAB ── */
+    function getMiniCart() { return JSON.parse(localStorage.getItem('ma_cart') || '[]'); }
+
+    function updateFabBadge() {
+      const total = getMiniCart().reduce((sum, i) => sum + i.qty, 0);
+      const badge = document.getElementById('cartFabBadge');
+      badge.textContent = total;
+      badge.style.display = total > 0 ? 'flex' : 'none';
+    }
+
+    function renderMiniCartItems() {
+      const cart = getMiniCart();
+      const total = cart.reduce((sum, i) => sum + i.qty, 0);
+      document.getElementById('miniCartSummary').textContent =
+        total === 0 ? '0 artigos' : total + (total === 1 ? ' artigo seleccionado' : ' artigos seleccionados');
+
+      const wrap = document.getElementById('miniCartItems');
+      if (cart.length === 0) {
+        wrap.innerHTML = `
+          <div class="mini-cart-empty">
+            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            <p>Carrinho vazio</p>
+            <span>Explore o catálogo e adicione os artigos pretendidos</span>
+          </div>`;
+        return;
+      }
+      wrap.innerHTML = cart.map(item => `
+        <div class="mini-cart-item">
+          <div class="mini-cart-item-img"><img src="${item.image}" alt="${item.name}" loading="lazy"></div>
+          <div class="mini-cart-item-body">
+            <span class="mini-cart-item-ref">${item.ref}</span>
+            <div class="mini-cart-item-name">${item.name}</div>
+            <div class="mini-cart-item-qty">× ${item.qty}</div>
+          </div>
+          <button class="mini-cart-item-remove" onclick="removeMiniCartItem('${item.id}')" aria-label="Remover">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/></svg>
+          </button>
+        </div>`).join('');
+    }
+
+    function removeMiniCartItem(id) {
+      const cart = getMiniCart().filter(i => i.id !== id);
+      localStorage.setItem('ma_cart', JSON.stringify(cart));
+      updateFabBadge();
+      renderMiniCartItems();
+    }
+
+    function openMiniCart() {
+      renderMiniCartItems();
+      document.getElementById('miniCartDrawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMiniCart() {
+      document.getElementById('miniCartDrawer').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('miniCartClose').addEventListener('click', closeMiniCart);
+    document.getElementById('miniCartBackdrop').addEventListener('click', closeMiniCart);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMiniCart();
+    });
+
+    updateFabBadge();
+
+    /* ── PAGE TRANSITIONS ── */
+    (function() {
+      const overlay = document.getElementById('pageTransition');
+
+      // Reveal page on load
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        overlay.style.opacity = '0';
+      }));
+
+      // Fade out before navigating
+      document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href]');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || /^https?:\/\//.test(href)) return;
+        e.preventDefault();
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'all';
+        setTimeout(() => { window.location.href = href; }, 440);
+      });
+    })();
+  </script>
+</body>
+</html>

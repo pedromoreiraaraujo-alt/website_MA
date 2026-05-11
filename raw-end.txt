@@ -1,0 +1,1 @@
+﻿4 -195 -6 8 -63 124 -126 259 l-114 245 -71 3 c-39 2 -73 -1 -76 -7z\"><\u002Fpath>\n      <\u002Fg>\n    <\u002Fsymbol>\n  <\u002Fdefs>\n<\u002Fsvg>\n\n<!-- Helper to render the logo at any color -->\n

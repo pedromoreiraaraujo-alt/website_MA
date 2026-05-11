@@ -1,0 +1,2350 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo — Moreira &amp; Araújo Eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5efe2; --cream-light: #faf7f2; --cream-mid: #ede4d0;
+      --cream-border: #e0d5c0; --dark: #14120f; --dark-soft: #2a2520;
+      --muted: #6b5f4a; --gold: #b89a55; --gold-light: #d4b87a;
+      --gold-dark: #8a7340; --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--dark); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--cream-light);
+      border-bottom: 1px solid var(--cream-border);
+      padding: 1.5rem 2rem;
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-style: italic; color: var(--dark); }
+    .nav-logo .amp { font-family: Georgia, serif; font-style: italic; color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--dark); }
+    .nav-cta {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      border: 1px solid var(--gold); color: var(--gold); padding: 0.5rem 1.25rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--white); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: var(--dark); padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+    .page-header .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+    .page-header h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; color: var(--cream); letter-spacing: -0.02em; }
+    .page-header p { color: rgba(245,239,226,0.55); font-size: 14px; margin-top: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+    /* ── CATEGORY TABS ── */
+    .cat-nav-wrap {
+      background: var(--cream-light); border-bottom: 1px solid var(--cream-border);
+      position: sticky; top: 113px; z-index: 190;
+    }
+    .cat-nav {
+      max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+      display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+    }
+    .cat-nav::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      flex-shrink: 0; padding: 1rem 1.5rem; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+      border: none; background: none; cursor: pointer;
+      border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+    }
+    .cat-btn:hover { color: var(--dark); }
+    .cat-btn.active { color: var(--dark); border-bottom-color: var(--gold); }
+
+    /* ── MAIN WRAP ── */
+    .catalog-wrap { max-width: 1280px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+    /* ── CATEGORY SECTION ── */
+    .cat-section { display: none; }
+    .cat-section.visible { display: block; }
+    .cat-section-header {
+      margin-bottom: 2.5rem; padding-bottom: 1.25rem;
+      padding-left: 1.25rem;
+      border-bottom: 1px solid var(--cream-border);
+      border-left: 3px solid var(--gold);
+    }
+    .cat-section-header h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; font-weight: 400; }
+    .cat-section-header p { color: var(--muted); font-size: 14px; margin-top: 0.3rem; }
+
+    /* ── SUB-SECTION ── */
+    .cat-subsection { margin-top: 3.5rem; }
+    .cat-subsection-header {
+      margin-bottom: 2rem; padding-bottom: 1rem;
+      padding-left: 1rem;
+      border-bottom: 1px solid var(--cream-border);
+      border-left: 2px solid var(--gold-light);
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .cat-subsection-header h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.45rem; font-weight: 400; color: var(--dark);
+    }
+    .cat-subsection-header .subsection-badge {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); background: rgba(184,154,85,0.1);
+      border: 1px solid rgba(184,154,85,0.25);
+      padding: 0.25rem 0.6rem;
+    }
+    .cat-subsection-header p { color: var(--muted); font-size: 13px; margin-top: 0.2rem; }
+
+    /* ── PRODUCT GRID ── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* ── PRODUCT CARD ── */
+    .product-card {
+      background: var(--cream-light);
+      border: 1px solid var(--cream-border);
+      cursor: pointer;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: transparent;
+      transition: background 0.25s;
+      z-index: 2;
+    }
+    .product-card:hover::before { background: var(--gold); }
+    .product-card:hover {
+      border-color: rgba(184,154,85,0.55);
+      box-shadow:
+        0 6px 20px rgba(20,18,15,0.09),
+        0 1px 4px rgba(20,18,15,0.06);
+      transform: translateY(-3px);
+    }
+    .product-card:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .product-card:active { transform: translateY(0); }
+
+    .card-img {
+      width: 100%; aspect-ratio: 1;
+      overflow: hidden; position: relative;
+      background: var(--cream-mid);
+    }
+    .card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .card-img img { transform: scale(1.04); }
+    .card-img-overlay {
+      position: absolute; inset: 0;
+      background: rgba(20,18,15,0);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.3s;
+    }
+    .product-card:hover .card-img-overlay { background: rgba(20,18,15,0.18); }
+    .card-img-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: white; background: rgba(20,18,15,0.55); padding: 0.4rem 0.85rem;
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .product-card:hover .card-img-label { opacity: 1; }
+
+    .card-body { padding: 1rem 1.1rem 1.2rem; }
+    .card-ref {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 0.3rem;
+    }
+    .card-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem; font-weight: 500; line-height: 1.3;
+      color: var(--dark);
+    }
+    .card-price {
+      font-size: 12px; color: var(--muted); margin-top: 0.35rem; font-weight: 300;
+    }
+
+    /* ── DRAWER ── */
+    .drawer {
+      position: fixed; inset: 0; z-index: 500;
+      pointer-events: none;
+    }
+    .drawer.open { pointer-events: all; }
+
+    .drawer-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(20,18,15,0);
+      transition: background 0.35s ease;
+    }
+    .drawer.open .drawer-backdrop { background: rgba(20,18,15,0.52); }
+
+    .drawer-panel {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: min(520px, 100vw);
+      background: var(--cream-light);
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      display: flex; flex-direction: column;
+      box-shadow: -8px 0 32px rgba(20,18,15,0.12);
+    }
+    .drawer.open .drawer-panel { transform: translateX(0); }
+
+    .drawer-close {
+      position: absolute; top: 1.25rem; right: 1.25rem;
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.4rem 0.6rem;
+      transition: color 0.2s;
+      z-index: 10;
+    }
+    .drawer-close:hover { color: var(--dark); }
+    .drawer-close:focus-visible { outline: 2px solid var(--gold); }
+
+    /* Drawer image */
+    .drawer-img-wrap {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--dark); position: relative; overflow: hidden;
+      flex-shrink: 0;
+    }
+    .drawer-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: opacity 0.2s;
+    }
+    .drawer-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(20,18,15,0.35) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .drawer-thumbs {
+      display: flex; gap: 0.5rem; padding: 0.75rem 1.5rem 0;
+    }
+    .drawer-thumb {
+      width: 56px; height: 56px; flex-shrink: 0;
+      border: 2px solid transparent; cursor: pointer;
+      overflow: hidden; background: var(--cream-mid);
+      transition: border-color 0.2s;
+    }
+    .drawer-thumb.active { border-color: var(--gold); }
+    .drawer-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Drawer info */
+    .drawer-info {
+      padding: 1.5rem 1.75rem 2.5rem;
+      flex: 1;
+    }
+    .drawer-ref {
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 0.4rem;
+    }
+    .drawer-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.9rem; font-weight: 400; line-height: 1.15;
+      color: var(--dark); margin-bottom: 0.9rem;
+    }
+    .drawer-desc { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 1.5rem; }
+
+    .drawer-specs {
+      border-top: 1px solid var(--cream-border);
+      border-bottom: 1px solid var(--cream-border);
+      padding: 1rem 0; margin-bottom: 1.5rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .spec-row { display: flex; gap: 0.5rem; font-size: 13px; }
+    .spec-label { font-weight: 700; color: var(--dark-soft); min-width: 130px; flex-shrink: 0; }
+    .spec-value { color: var(--muted); }
+
+    .drawer-price-box {
+      background: var(--cream-mid); padding: 1rem 1.25rem;
+      border-left: 3px solid var(--gold); margin-bottom: 1.5rem;
+    }
+    .price-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.2rem; }
+    .price-value { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.6rem; font-weight: 500; color: var(--dark); }
+    .price-note { font-size: 12px; color: var(--muted); margin-top: 0.15rem; }
+
+    .drawer-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+
+    /* Quantity selector — drawer */
+    .qty-selector {
+      display: flex; align-items: stretch;
+      border: 1px solid var(--cream-border); height: 44px;
+    }
+    .qty-btn {
+      width: 38px; background: none; border: none; cursor: pointer;
+      font-size: 1.15rem; color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .qty-btn:hover { background: var(--cream-mid); color: var(--dark); }
+    .qty-value {
+      min-width: 42px; text-align: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 500;
+      color: var(--dark);
+      border-left: 1px solid var(--cream-border);
+      border-right: 1px solid var(--cream-border);
+      border-top: none; border-bottom: none;
+      background: none; outline: none;
+      height: 44px; padding: 0; width: 52px;
+    }
+    .qty-value::-webkit-inner-spin-button,
+    .qty-value::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .qty-value[type=number] { -moz-appearance: textfield; }
+    .qty-value:focus { background: rgba(184,154,85,0.05); }
+
+    /* Quantity selector — collection mini cards */
+    .ci-footer { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; border-top: 1px solid var(--cream-border); padding-top: 0.5rem; }
+    .qty-selector-sm { display: flex; align-items: stretch; border: 1px solid var(--cream-border); flex-shrink: 0; }
+    .qty-btn-sm {
+      width: 24px; height: 28px; background: none; border: none; cursor: pointer;
+      font-size: 0.9rem; color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .qty-btn-sm:hover { background: var(--cream-mid); color: var(--dark); }
+    .qty-val-sm {
+      min-width: 26px; width: 32px; text-align: center;
+      font-size: 0.82rem; font-weight: 700; color: var(--dark);
+      border-left: 1px solid var(--cream-border);
+      border-right: 1px solid var(--cream-border);
+      border-top: none; border-bottom: none;
+      background: none; outline: none;
+      height: 28px; padding: 0;
+    }
+    .qty-val-sm::-webkit-inner-spin-button,
+    .qty-val-sm::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .qty-val-sm[type=number] { -moz-appearance: textfield; }
+    .qty-val-sm:focus { background: rgba(184,154,85,0.05); }
+    .btn-dark {
+      display: inline-block; background: var(--dark); color: var(--cream-light);
+      padding: 0.8rem 1.75rem; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      transition: background 0.25s, color 0.25s; border: none; cursor: pointer;
+    }
+    .btn-dark:hover { background: var(--gold); color: var(--dark); }
+    .btn-outline-sm {
+      display: inline-block; border: 1px solid var(--dark); color: var(--dark);
+      padding: 0.8rem 1.75rem; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .btn-outline-sm:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── COLLECTION CARD ── */
+    .collection-count-pill {
+      position: absolute; top: 0.65rem; right: 0.65rem; z-index: 3;
+      background: var(--dark); color: var(--gold);
+      font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0.22rem 0.55rem;
+      pointer-events: none;
+    }
+    .collection-card .card-body {
+      background: linear-gradient(135deg, rgba(184,154,85,0.04) 0%, transparent 60%);
+      border-top: 1px solid rgba(184,154,85,0.18);
+    }
+    .collection-card .card-img-label { content: 'Ver Coleção'; }
+
+    /* ── COLLECTION DRAWER ── */
+    .collection-drawer {
+      position: fixed; inset: 0; z-index: 480;
+      pointer-events: none;
+    }
+    .collection-drawer.open { pointer-events: all; }
+    .collection-drawer .drawer-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(20,18,15,0);
+      transition: background 0.35s ease;
+    }
+    .collection-drawer.open .drawer-backdrop { background: rgba(20,18,15,0.42); }
+    .collection-panel {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: min(700px, 100vw);
+      background: var(--cream-light);
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      display: flex; flex-direction: column;
+      box-shadow: -8px 0 32px rgba(20,18,15,0.12);
+    }
+    .collection-drawer.open .collection-panel { transform: translateX(0); }
+    .collection-panel-header {
+      padding: 2.5rem 2rem 1.5rem;
+      border-bottom: 1px solid var(--cream-border);
+      position: relative;
+    }
+    .collection-panel-ref {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 0.4rem;
+    }
+    .collection-panel-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.9rem; font-weight: 300; letter-spacing: -0.01em;
+    }
+    .collection-panel-desc { color: var(--muted); font-size: 13px; margin-top: 0.4rem; line-height: 1.6; }
+    .collection-panel-body { padding: 1.75rem 2rem 3rem; flex: 1; }
+    .collection-item-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    }
+    .collection-item-card {
+      background: var(--cream); border: 1px solid var(--cream-border);
+      cursor: pointer; position: relative; overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .collection-item-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: transparent; transition: background 0.2s; z-index: 2;
+    }
+    .collection-item-card:hover::before { background: var(--gold); }
+    .collection-item-card:hover {
+      border-color: rgba(184,154,85,0.5);
+      box-shadow: 0 4px 14px rgba(20,18,15,0.08);
+      transform: translateY(-2px);
+    }
+    .collection-item-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .ci-img { width: 100%; aspect-ratio: 1; overflow: hidden; background: var(--cream-mid); }
+    .ci-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+    .collection-item-card:hover .ci-img img { transform: scale(1.05); }
+    .ci-body { padding: 0.6rem 0.8rem 0.8rem; }
+    .ci-ref {
+      font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 0.15rem;
+    }
+    .ci-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.95rem; font-weight: 500; line-height: 1.3; color: var(--dark);
+    }
+    .ci-add-btn {
+      display: block; width: 100%; margin-top: 0.6rem;
+      padding: 0.5rem 0; text-align: center;
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--dark); background: var(--gold);
+      border: none; cursor: pointer;
+      transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+      box-shadow: 0 2px 6px rgba(184,154,85,0.25);
+    }
+    .ci-add-btn:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(184,154,85,0.4);
+    }
+    .ci-add-btn:active { transform: translateY(0) scale(0.98); box-shadow: none; }
+
+    /* ── CATEGORY SEARCH ── */
+    .cat-search {
+      margin-bottom: 2rem;
+      position: relative;
+      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    }
+    .cat-search-field {
+      position: relative; flex: 0 0 auto;
+    }
+    .cat-search-field svg {
+      position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%);
+      color: var(--muted); pointer-events: none; width: 15px; height: 15px;
+    }
+    .cat-search-field input {
+      width: 320px; padding: 0.6rem 1rem 0.6rem 2.4rem;
+      border: 1px solid var(--cream-border);
+      background: var(--cream-light);
+      font-family: 'Lato', sans-serif; font-size: 13px; color: var(--dark);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cat-search-field input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,154,85,0.1);
+    }
+    .cat-search-field input::placeholder { color: var(--muted); }
+    .cat-search-field input::-webkit-search-cancel-button { cursor: pointer; }
+    .cat-search-count {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cat-search-count span { color: var(--gold); }
+    .cat-no-results {
+      padding: 4rem 0; text-align: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.4rem; font-weight: 300; font-style: italic;
+      color: var(--muted); display: none;
+    }
+    .cat-no-results small {
+      display: block; margin-top: 0.4rem;
+      font-family: 'Lato', sans-serif; font-size: 12px; font-style: normal; letter-spacing: 1px;
+    }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); color: rgba(245,239,226,0.65); font-size: 13px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; padding: 3rem 2rem 2rem; }
+    .footer-bottom { border-top: 1px solid rgba(245,239,226,0.1); padding-top: 1.5rem; margin-top: 2rem; font-size: 12px; text-align: center; color: rgba(245,239,226,0.3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .product-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+      .drawer-panel { width: 100vw; }
+    }
+    @media (max-width: 480px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .cat-btn { padding: 0.875rem 1rem; font-size: 10px; letter-spacing: 1.5px; }
+    }
+
+    /* ── CART FAB ── */
+    .cart-fab {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 400;
+      width: 56px; height: 56px;
+      background: var(--dark); border: 1px solid rgba(184,154,85,0.25);
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(20,18,15,0.35), 0 1px 4px rgba(20,18,15,0.2);
+      transition: background 0.25s, transform 0.2s, border-color 0.2s;
+    }
+    .cart-fab:hover { background: var(--dark-soft); border-color: var(--gold); transform: scale(1.06); }
+    .cart-fab:active { transform: scale(0.97); }
+    .cart-fab svg { width: 22px; height: 22px; stroke: var(--cream-light); fill: none; stroke-width: 1.5; stroke-linecap: round; }
+    .cart-badge {
+      position: absolute; top: -5px; right: -5px;
+      min-width: 20px; height: 20px; padding: 0 5px;
+      background: var(--gold); color: var(--dark);
+      border-radius: 10px;
+      font-size: 10px; font-weight: 700; font-family: 'Lato', sans-serif;
+      display: none; align-items: center; justify-content: center;
+    }
+
+    /* ── CART DRAWER ── */
+    .cart-drawer { position: fixed; inset: 0; z-index: 600; pointer-events: none; }
+    .cart-drawer.open { pointer-events: all; }
+    .cart-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(20,18,15,0);
+      transition: background 0.35s ease;
+    }
+    .cart-drawer.open .cart-backdrop { background: rgba(20,18,15,0.6); }
+    .cart-panel {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: min(400px, 100vw);
+      background: var(--dark);
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex; flex-direction: column;
+      box-shadow: -8px 0 40px rgba(20,18,15,0.3);
+    }
+    .cart-drawer.open .cart-panel { transform: translateX(0); }
+
+    .cart-header {
+      padding: 1.75rem 1.75rem 1.25rem;
+      border-bottom: 1px solid rgba(245,239,226,0.07);
+      flex-shrink: 0; position: relative;
+    }
+    .cart-header .eyebrow { color: var(--gold); margin-bottom: 0.3rem; font-size: 10px; }
+    .cart-header .eyebrow::before { background: var(--gold); }
+    .cart-header h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem; font-weight: 400; color: var(--cream-light);
+    }
+    .cart-close-btn {
+      position: absolute; top: 1.4rem; right: 1.4rem;
+      background: none; border: none; cursor: pointer;
+      color: rgba(245,239,226,0.35); font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: color 0.2s; padding: 0.4rem;
+    }
+    .cart-close-btn:hover { color: var(--cream-light); }
+
+    .cart-items-wrap {
+      flex: 1; overflow-y: auto; padding: 0.5rem 1.75rem 1rem;
+    }
+    .cart-items-wrap::-webkit-scrollbar { width: 3px; }
+    .cart-items-wrap::-webkit-scrollbar-thumb { background: rgba(184,154,85,0.2); }
+
+    .cart-empty { text-align: center; padding: 3.5rem 1rem; }
+    .cart-empty svg { width: 44px; height: 44px; stroke: rgba(184,154,85,0.25); margin: 0 auto 1.25rem; display: block; fill: none; stroke-width: 1; stroke-linecap: round; }
+    .cart-empty p { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; font-style: italic; color: rgba(245,239,226,0.4); margin-bottom: 0.35rem; }
+    .cart-empty span { font-size: 12px; color: rgba(245,239,226,0.25); }
+
+    .cart-item {
+      display: flex; gap: 0.875rem; align-items: flex-start;
+      padding: 1rem 0; border-bottom: 1px solid rgba(245,239,226,0.06);
+    }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item-img { width: 56px; height: 56px; flex-shrink: 0; overflow: hidden; background: var(--dark-soft); }
+    .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .cart-item-body { flex: 1; min-width: 0; }
+    .cart-item-ref { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.15rem; }
+    .cart-item-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.95rem; color: var(--cream-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.5rem; }
+    .cart-item-qty { display: flex; align-items: center; gap: 0.5rem; }
+    .qty-btn {
+      width: 22px; height: 22px; border: 1px solid rgba(184,154,85,0.28);
+      background: none; color: rgba(245,239,226,0.6); cursor: pointer;
+      font-size: 14px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .qty-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .qty-num { font-size: 12px; color: var(--cream-light); min-width: 18px; text-align: center; }
+    .cart-item-remove {
+      background: none; border: none; cursor: pointer;
+      color: rgba(245,239,226,0.2); padding: 0.25rem; flex-shrink: 0; margin-top: 3px;
+      transition: color 0.2s;
+    }
+    .cart-item-remove:hover { color: rgba(210,70,70,0.8); }
+
+    .cart-footer {
+      padding: 1.25rem 1.75rem 2rem;
+      border-top: 1px solid rgba(245,239,226,0.07); flex-shrink: 0;
+    }
+    .cart-summary-text {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(245,239,226,0.35); margin-bottom: 1rem;
+    }
+    .cart-quote-btn {
+      display: block; width: 100%;
+      background: var(--gold); color: var(--dark);
+      padding: 0.95rem; text-align: center;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background 0.25s;
+    }
+    .cart-quote-btn:hover { background: var(--gold-light); }
+
+    /* ── QUOTE OVERLAY ── */
+    .quote-overlay {
+      position: fixed; inset: 0; z-index: 650;
+      pointer-events: none;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+    }
+    .quote-overlay.open { pointer-events: all; }
+    .quote-overlay .quote-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(20,18,15,0);
+      transition: background 0.35s ease;
+    }
+    .quote-overlay.open .quote-backdrop { background: rgba(20,18,15,0.72); }
+    .quote-panel {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 660px; max-height: 92vh;
+      background: var(--cream-light);
+      overflow-y: auto;
+      transform: translateY(24px) scale(0.98); opacity: 0;
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.38s ease;
+      box-shadow: 0 24px 64px rgba(20,18,15,0.28), 0 4px 16px rgba(20,18,15,0.14);
+      scrollbar-width: thin; scrollbar-color: rgba(184,154,85,0.2) transparent;
+    }
+    .quote-panel::-webkit-scrollbar { width: 3px; }
+    .quote-panel::-webkit-scrollbar-thumb { background: rgba(184,154,85,0.2); }
+    .quote-overlay.open .quote-panel { transform: translateY(0) scale(1); opacity: 1; }
+
+    .quote-panel-header {
+      padding: 2.25rem 2.25rem 1.5rem;
+      border-bottom: 1px solid var(--cream-border);
+      background: var(--dark); position: relative;
+    }
+    .quote-panel-header .eyebrow {
+      font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.5rem; display: block;
+    }
+    .quote-panel-header h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem; font-weight: 300; color: var(--cream-light);
+      letter-spacing: -0.01em; margin-bottom: 0.35rem;
+    }
+    .quote-panel-header p {
+      font-size: 13px; color: rgba(245,239,226,0.5); line-height: 1.6;
+    }
+    .quote-close-btn {
+      position: absolute; top: 1.4rem; right: 1.4rem;
+      background: none; border: none; cursor: pointer;
+      color: rgba(245,239,226,0.35); font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: color 0.2s; padding: 0.4rem;
+    }
+    .quote-close-btn:hover { color: var(--cream-light); }
+
+    .quote-panel-body { padding: 2rem 2.25rem 2.5rem; }
+
+    .quote-items-section { margin-bottom: 2rem; }
+    .quote-items-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.85rem; display: block;
+    }
+    .quote-item-row {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--cream-border);
+    }
+    .quote-item-row:last-child { border-bottom: none; }
+    .quote-item-img { width: 40px; height: 40px; flex-shrink: 0; overflow: hidden; background: var(--cream-mid); }
+    .quote-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .quote-item-text { flex: 1; min-width: 0; }
+    .quote-item-ref { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); display: block; }
+    .quote-item-name { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .quote-item-qty { font-size: 11px; font-weight: 700; color: var(--muted); flex-shrink: 0; }
+
+    .quote-divider {
+      height: 1px; background: var(--cream-border);
+      margin: 1.75rem 0;
+    }
+
+    .quote-form { display: flex; flex-direction: column; gap: 1.1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+    .form-group label {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-group label span { color: var(--gold); }
+    .form-group input,
+    .form-group textarea {
+      width: 100%; padding: 0.65rem 0.9rem;
+      border: 1px solid var(--cream-border);
+      background: var(--cream);
+      font-family: 'Lato', sans-serif; font-size: 14px; color: var(--dark);
+      outline: none; resize: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,154,85,0.1);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--cream-border); }
+
+    .quote-submit-btn {
+      display: block; width: 100%; margin-top: 0.5rem;
+      background: var(--dark); color: var(--cream-light);
+      padding: 1rem; text-align: center;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      border: none; cursor: pointer; position: relative; overflow: hidden;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 10px rgba(20,18,15,0.2);
+    }
+    .quote-submit-btn:hover { background: var(--gold); color: var(--dark); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(184,154,85,0.35); }
+    .quote-submit-btn:active { transform: translateY(0) scale(0.98); }
+
+    .quote-success {
+      text-align: center; padding: 3rem 1.5rem;
+      display: none;
+    }
+    .quote-success-icon {
+      width: 52px; height: 52px; background: rgba(184,154,85,0.12);
+      border: 1px solid rgba(184,154,85,0.3);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .quote-success-icon svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 2; }
+    .quote-success h3 {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400;
+      color: var(--dark); margin-bottom: 0.5rem;
+    }
+    .quote-success p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    @media (max-width: 600px) {
+      .quote-overlay { padding: 0; align-items: flex-end; }
+      .quote-panel { max-height: 96vh; border-radius: 0; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── PAGE TRANSITION ── */
+    #pageTransition {
+      position: fixed; inset: 0; z-index: 10000;
+      background: var(--cream-light);
+      opacity: 1;
+      transition: opacity 0.45s ease;
+      pointer-events: none;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 5.5rem; right: 2rem; z-index: 700;
+      background: var(--dark-soft); color: var(--cream-light);
+      padding: 0.7rem 1.1rem; font-size: 13px;
+      border-left: 3px solid var(--gold);
+      box-shadow: 0 4px 16px rgba(20,18,15,0.35);
+      transform: translateY(6px); opacity: 0;
+      transition: opacity 0.22s, transform 0.22s;
+      pointer-events: none; max-width: 260px;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── ADD TO CART BUTTON (in drawer) ── */
+    .btn-add-cart {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      background: var(--gold); color: var(--dark);
+      padding: 0.8rem 1.75rem; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      border: none; cursor: pointer; position: relative; overflow: hidden;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 10px rgba(184,154,85,0.3), 0 1px 3px rgba(184,154,85,0.2);
+    }
+    .btn-add-cart:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(184,154,85,0.45), 0 2px 6px rgba(184,154,85,0.25);
+    }
+    .btn-add-cart:active { transform: translateY(0) scale(0.97); box-shadow: 0 1px 4px rgba(184,154,85,0.2); }
+    .btn-add-cart:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .btn-add-cart.btn-added { background: #6b956b; color: #fff; pointer-events: none; transform: none; box-shadow: 0 2px 10px rgba(107,149,107,0.3); }
+    .ci-add-btn.btn-added { color: #fff; background: #6b956b; pointer-events: none; box-shadow: none; transform: none; }
+  </style>
+</head>
+<body>
+
+  <div id="pageTransition"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="height:80px;width:auto;display:block;"></a>
+      <ul class="nav-links">
+        <li><a href="index.html" aria-label="Início" style="display:flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a></li>
+        <li><a href="catalogo.html" class="active">Catálogo</a></li>
+        <li><a href="index.html#sobre">Sobre</a></li>
+        <li><a href="index.html#processo">Como Funciona</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+      <a href="index.html#contacto" class="nav-cta">Pedir Orçamento</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="eyebrow">Moreira &amp; Araújo</div>
+    <h1>Catálogo de Material</h1>
+    <p>Seleccione uma categoria e clique em qualquer peça para ver todos os detalhes</p>
+  </div>
+
+  <!-- CATEGORY TABS -->
+  <div class="cat-nav-wrap">
+    <div class="cat-nav">
+      <button class="cat-btn active" data-cat="mobiliario">Mobiliário</button>
+      <button class="cat-btn" data-cat="texteis">Têxteis</button>
+      <button class="cat-btn" data-cat="loucas">Louças</button>
+      <button class="cat-btn" data-cat="decoracao">Decoração</button>
+      <button class="cat-btn" data-cat="exterior">Exterior</button>
+      <button class="cat-btn" data-cat="outros">Outros</button>
+    </div>
+  </div>
+
+  <!-- CATALOG CONTENT -->
+  <div class="catalog-wrap">
+
+    <!-- MOBILIÁRIO -->
+    <div class="cat-section visible" id="cat-mobiliario">
+      <div class="cat-section-header">
+        <h2>Mobiliário</h2>
+        <p>Mesas, cadeiras, sofás e mobiliário decorativo para criar ambientes únicos e memoráveis.</p>
+      </div>
+      <div class="product-grid" id="grid-mobiliario"></div>
+    </div>
+
+    <!-- TÊXTEIS -->
+    <div class="cat-section" id="cat-texteis">
+      <div class="cat-section-header">
+        <h2>Têxteis</h2>
+        <p>Toalhas, centros de mesa, capas e têxteis para criar ambientes sofisticados.</p>
+      </div>
+      <div class="product-grid" id="grid-texteis"></div>
+    </div>
+
+    <!-- LOUÇAS -->
+    <div class="cat-section" id="cat-loucas">
+      <div class="cat-section-header">
+        <h2>Louças</h2>
+        <p>Pratos, copos, talheres e peças de cristal para uma mesa verdadeiramente elegante.</p>
+      </div>
+      <div class="product-grid" id="grid-loucas"></div>
+    </div>
+
+    <!-- DECORAÇÃO -->
+    <div class="cat-section" id="cat-decoracao">
+      <div class="cat-section-header">
+        <h2>Decoração</h2>
+        <p>Centros de mesa, candelabros, velas e elementos decorativos para ambientar o seu evento.</p>
+      </div>
+      <div class="product-grid" id="grid-decoracao"></div>
+    </div>
+
+    <!-- EXTERIOR -->
+    <div class="cat-section" id="cat-exterior">
+      <div class="cat-section-header">
+        <h2>Exterior</h2>
+        <p>Tendas, pufes, mobiliário de jardim e equipamento para eventos ao ar livre.</p>
+      </div>
+      <div class="product-grid" id="grid-exterior"></div>
+    </div>
+
+    <!-- OUTROS -->
+    <div class="cat-section" id="cat-outros">
+      <div class="cat-section-header">
+        <h2>Outros</h2>
+        <p>Equipamentos e artigos complementares para tornar o seu evento ainda mais completo.</p>
+      </div>
+      <div class="product-grid" id="grid-outros"></div>
+    </div>
+
+  </div><!-- /catalog-wrap -->
+
+  <!-- DRAWER -->
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Detalhes do produto">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="drawer-panel">
+      <button class="drawer-close" id="drawerClose" aria-label="Fechar">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
+        Fechar
+      </button>
+      <div class="drawer-img-wrap">
+        <img id="drawerMainImg" src="" alt="">
+      </div>
+      <div class="drawer-thumbs" id="drawerThumbs"></div>
+      <div class="drawer-info" id="drawerInfo"></div>
+    </div>
+  </div>
+
+  <!-- COLLECTION DRAWER -->
+  <div class="collection-drawer" id="collectionDrawer" role="dialog" aria-modal="true" aria-label="Coleção de produtos">
+    <div class="drawer-backdrop" id="collectionBackdrop"></div>
+    <div class="collection-panel" id="collectionPanel">
+      <button class="drawer-close" id="collectionClose" aria-label="Fechar coleção">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
+        Fechar
+      </button>
+      <div id="collectionContent"></div>
+    </div>
+  </div>
+
+  <!-- CART FAB -->
+  <button class="cart-fab" id="cartFab" onclick="openCart()" aria-label="Ver carrinho">
+    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <span class="cart-badge" id="cartBadge">0</span>
+  </button>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- CART DRAWER -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-backdrop" id="cartBackdrop"></div>
+    <div class="cart-panel">
+      <div class="cart-header">
+        <div class="eyebrow">Selecção</div>
+        <h3>Pedido de Orçamento</h3>
+        <button class="cart-close-btn" id="cartCloseBtn">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/></svg>
+          Fechar
+        </button>
+      </div>
+      <div class="cart-items-wrap" id="cartItemsWrap"></div>
+      <div class="cart-footer">
+        <div class="cart-summary-text" id="cartSummaryText">0 artigos seleccionados</div>
+        <button class="cart-quote-btn" id="cartQuoteBtn" onclick="goToQuote()">Pedir Orçamento com estes Artigos →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTE OVERLAY -->
+  <div class="quote-overlay" id="quoteOverlay">
+    <div class="quote-backdrop" id="quoteBackdrop"></div>
+    <div class="quote-panel" id="quotePanel">
+      <div class="quote-panel-header">
+        <span class="eyebrow">Moreira &amp; Araújo · Eventos</span>
+        <h2>Pedido de Orçamento</h2>
+        <p>Preencha o formulário abaixo e entraremos em contacto o mais brevemente possível.</p>
+        <button class="quote-close-btn" id="quoteCloseBtn">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/></svg>
+          Fechar
+        </button>
+      </div>
+      <div class="quote-panel-body">
+        <div id="quoteFormWrap">
+          <div class="quote-items-section">
+            <span class="quote-items-label">Artigos Seleccionados</span>
+            <div id="quoteItemsList"></div>
+          </div>
+          <div class="quote-divider"></div>
+          <form class="quote-form" id="quoteForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nome <span>*</span></label>
+                <input type="text" name="nome" placeholder="O seu nome" required>
+              </div>
+              <div class="form-group">
+                <label>Telefone <span>*</span></label>
+                <input type="tel" name="telefone" placeholder="+351 900 000 000" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email <span>*</span></label>
+              <input type="email" name="email" placeholder="email@exemplo.com" required>
+            </div>
+            <div class="form-group">
+              <label>Observações</label>
+              <textarea name="mensagem" rows="3" placeholder="Local do evento, tipo de cerimónia, outros pedidos…"></textarea>
+            </div>
+            <button type="submit" class="quote-submit-btn">Enviar Pedido de Orçamento →</button>
+          </form>
+        </div>
+        <div class="quote-success" id="quoteSuccess">
+          <div class="quote-success-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Pedido Enviado!</h3>
+          <p>O seu pedido de orçamento foi enviado com sucesso.<br>Entraremos em contacto em breve.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;color:rgba(245,239,226,0.85);margin-bottom:0.5rem;">
+        Moreira <span style="font-family:Georgia,serif;font-style:italic;color:#b89a55;">&</span> Araújo
+      </p>
+      <p style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,239,226,0.35);margin-bottom:1.5rem;">Eventos · Aluguer de Material</p>
+      <p style="font-size:12px;color:rgba(245,239,226,0.4);">Travessa do Eirado A-66, Ferreiró · Vila do Conde &nbsp;|&nbsp; <a href="tel:+351910060114" style="color:rgba(245,239,226,0.4);">910 060 114</a> &nbsp;|&nbsp; <a href="mailto:geral.moreiraearaujo@gmail.com" style="color:rgba(245,239,226,0.4);">geral.moreiraearaujo@gmail.com</a></p>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Moreira &amp; Araújo Eventos. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <script>
+    /* ─── PRODUCT DATA ─── */
+    const PRODUCTS = {
+
+      /* MOBILIÁRIO */
+      'mob-001': {
+        cat: 'mobiliario',
+        ref: 'MOB-001',
+        name: 'Mesa Redonda',
+        desc: 'Mesa redonda elegante ideal para banquetes e jantares. Disponível em diferentes diâmetros para 8 a 12 pessoas.',
+        images: [
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Mesa+Redonda',
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Vista+2',
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Vista+3',
+        ],
+        specs: [
+          ['Dimensões', 'Ø 180 cm'],
+          ['Capacidade', '8 a 10 pessoas'],
+          ['Disponibilidade', 'Consultar'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço inclui entrega e recolha em Vila do Conde',
+      },
+      'mob-002': {
+        cat: 'mobiliario',
+        ref: 'MOB-002',
+        name: 'Cadeira Tiffany',
+        desc: 'Cadeira clássica em resina de alta qualidade, disponível em branco e transparente. Ideal para cerimónias e jantares de gala.',
+        images: [
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Cadeira+Tiffany',
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Vista+2',
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Vista+3',
+        ],
+        specs: [
+          ['Material', 'Resina premium'],
+          ['Cores', 'Branco / Transparente'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'mob-003': {
+        cat: 'mobiliario',
+        ref: 'MOB-003',
+        name: 'Cadeira Napoleão',
+        desc: 'Cadeira com estrutura em madeira de faia e assento almofadado. Elegância clássica para eventos de luxo e casamentos.',
+        images: [
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Cadeira+Napoleon',
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Vista+2',
+        ],
+        specs: [
+          ['Material', 'Madeira de faia'],
+          ['Assento', 'Almofadado'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'mob-004': {
+        cat: 'mobiliario',
+        ref: 'MOB-004',
+        name: 'Mesa Rectangular',
+        desc: 'Mesa rectangular em madeira para banquetes. Combinável com outras para criar configurações personalizadas.',
+        images: [
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Mesa+Rectangular',
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Vista+2',
+        ],
+        specs: [
+          ['Dimensões', '180 × 90 cm'],
+          ['Capacidade', '6 a 8 pessoas'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Inclui entrega em Vila do Conde e arredores',
+      },
+
+      /* CADEIRAS */
+      'cd-001': {
+        cat: 'mobiliario-cd001',
+        ref: 'CD 001',
+        name: 'Cadeira Dobrável Castanha',
+        desc: 'Cadeira dobrável em madeira com acabamento castanho. Robusta, elegante e fácil de transportar, ideal para qualquer tipo de evento.',
+        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+001'],
+        specs: [['Material', 'Madeira'], ['Acabamento', 'Castanho'], ['Tipo', 'Dobrável']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'cd-002': {
+        cat: 'mobiliario-cd001',
+        ref: 'CD 002',
+        name: 'Cadeira Dobrável Castanha c/ Coxim Tecido Pérola',
+        desc: 'Cadeira dobrável castanha com coxim de assento em tecido pérola. Conforto e elegância para cerimónias e jantares de gala.',
+        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+002'],
+        specs: [['Material', 'Madeira + Tecido'], ['Acabamento', 'Castanho / Pérola'], ['Tipo', 'Dobrável c/ coxim']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'cd-003': {
+        cat: 'mobiliario-cd001',
+        ref: 'CD 003',
+        name: 'Cadeira Dobrável Castanha c/ Coxim Pele Sintética',
+        desc: 'Cadeira dobrável castanha com coxim de pele sintética castanha. Acabamento premium para eventos de luxo.',
+        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+003'],
+        specs: [['Material', 'Madeira + Pele Sintética'], ['Acabamento', 'Castanho'], ['Tipo', 'Dobrável c/ coxim']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'cd-004': {
+        cat: 'mobiliario-cd004',
+        ref: 'CD 004',
+        name: 'Cadeira Dobrável Prateada',
+        desc: 'Cadeira dobrável com acabamento prateado. Elegante e versátil, perfeita para eventos com decoração moderna ou clássica.',
+        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+004'],
+        specs: [['Material', 'Metal / Madeira'], ['Acabamento', 'Prateado'], ['Tipo', 'Dobrável']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'cd-005': {
+        cat: 'mobiliario-cd004',
+        ref: 'CD 005',
+        name: 'Cadeira Dobrável Prateada c/ Coxim Tecido Pérola',
+        desc: 'Cadeira dobrável prateada com coxim de tecido pérola. Combinação sofisticada para cerimónias e eventos de gala.',
+        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+005'],
+        specs: [['Material', 'Metal + Tecido'], ['Acabamento', 'Prateado / Pérola'], ['Tipo', 'Dobrável c/ coxim']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'cd-006': {
+        cat: 'mobiliario-cd004',
+        ref: 'CD 006',
+        name: 'Cadeira Dobrável Prateada c/ Coxim Pele Sintética',
+        desc: 'Cadeira dobrável prateada com coxim de pele sintética castanha. Contraste elegante entre o metal prateado e o couro.',
+        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+006'],
+        specs: [['Material', 'Metal + Pele Sintética'], ['Acabamento', 'Prateado / Castanho'], ['Tipo', 'Dobrável c/ coxim']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'cd-007': {
+        cat: 'mobiliario-cd007',
+        ref: 'CD 007',
+        name: 'Cadeira Crossback Camel',
+        desc: 'Cadeira crossback em madeira com acabamento camel. Design rústico e contemporâneo, muito popular em casamentos e eventos ao ar livre.',
+        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+007'],
+        specs: [['Material', 'Madeira'], ['Acabamento', 'Camel'], ['Tipo', 'Crossback']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'cd-008': {
+        cat: 'mobiliario-cd007',
+        ref: 'CD 008',
+        name: 'Cadeira Crossback Camel c/ Coxim Pérola',
+        desc: 'Cadeira crossback camel com coxim de assento pérola. O coxim suaviza o assento e adiciona um toque refinado ao estilo rústico-chic.',
+        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+008'],
+        specs: [['Material', 'Madeira + Tecido'], ['Acabamento', 'Camel / Pérola'], ['Tipo', 'Crossback c/ coxim']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+      'cd-009': {
+        cat: 'mobiliario',
+        ref: 'CD 009',
+        name: 'Cadeira Imperial Dourada',
+        desc: 'Cadeira imperial com estrutura dourada e assento almofadado. Presença majestosa para eventos de luxo, galas e cerimónias de prestígio.',
+        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+009'],
+        specs: [['Material', 'Metal + Tecido'], ['Acabamento', 'Dourado'], ['Tipo', 'Imperial']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+
+      /* TÊXTEIS */
+      'tex-001': {
+        cat: 'texteis',
+        ref: 'TEX-001',
+        name: 'Toalha de Mesa Redonda',
+        desc: 'Toalha em linho de alta qualidade para mesas redondas. Disponível em várias cores para combinar com o tema do evento.',
+        images: [
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Toalha+Redonda',
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Detalhe',
+        ],
+        specs: [
+          ['Material', 'Linho premium'],
+          ['Cores', 'Branco / Ivory / Cinza'],
+          ['Tamanho', 'Para mesa Ø 180 cm'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Inclui lavagem e engomagem',
+      },
+      'tex-002': {
+        cat: 'texteis',
+        ref: 'TEX-002',
+        name: 'Capa de Cadeira com Laço',
+        desc: 'Capa em organza ou poliéster para cadeiras de banquete, com laço incluído. Transforma qualquer cadeira numa peça elegante.',
+        images: [
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Capa+Cadeira',
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Detalhe+Laco',
+        ],
+        specs: [
+          ['Material', 'Organza / Poliéster'],
+          ['Cores', 'Várias disponíveis'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Inclui laço e colocação',
+      },
+      'tex-003': {
+        cat: 'texteis',
+        ref: 'TEX-003',
+        name: 'Guardanapo de Linho',
+        desc: 'Guardanapos em linho lavado com acabamento elegante. Dobráveis em múltiplas formas para a apresentação da mesa.',
+        images: [
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Guardanapos',
+        ],
+        specs: [
+          ['Material', 'Linho'],
+          ['Tamanho', '50 × 50 cm'],
+          ['Cores', 'Branco / Ivory / Bege'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Inclui lavagem após utilização',
+      },
+
+      /* LAÇOS LISOS */
+      'lc-001': { cat: 'texteis-lisos', ref: 'LC 001', name: 'Laço Liso Rosa Bébé', desc: 'Laço liso em tecido na cor rosa bébé. Ideal para decoração de cadeiras em casamentos e eventos delicados.', images: ['https://placehold.co/600x900/f5e0e8/6b5f4a?text=LC+001'], specs: [['Cor', 'Rosa Bébé'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-002': { cat: 'texteis-lisos', ref: 'LC 002', name: 'Laço Liso Rosa Fúsia', desc: 'Laço liso em tecido na cor rosa fúsia. Cor vibrante e elegante para eventos festivos.', images: ['https://placehold.co/600x900/f0a0c0/6b5f4a?text=LC+002'], specs: [['Cor', 'Rosa Fúsia'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-003': { cat: 'texteis-lisos', ref: 'LC 003', name: 'Laço Liso Salmão', desc: 'Laço liso em tecido na cor salmão. Tom quente e sofisticado para casamentos de verão.', images: ['https://placehold.co/600x900/f5c0a0/6b5f4a?text=LC+003'], specs: [['Cor', 'Salmão'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-004': { cat: 'texteis-lisos', ref: 'LC 004', name: 'Laço Liso Azul Porto', desc: 'Laço liso em tecido na cor azul porto. Tom profundo e elegante para eventos formais.', images: ['https://placehold.co/600x900/5060a0/faf7f2?text=LC+004'], specs: [['Cor', 'Azul Porto'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-005': { cat: 'texteis-lisos', ref: 'LC 005', name: 'Laço Liso Turquesa', desc: 'Laço liso em tecido na cor turquesa. Frescura e modernidade para eventos de praia ou jardim.', images: ['https://placehold.co/600x900/40c0c0/faf7f2?text=LC+005'], specs: [['Cor', 'Turquesa'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-006': { cat: 'texteis-lisos', ref: 'LC 006', name: 'Laço Liso Verde Garrafa', desc: 'Laço liso em tecido na cor verde garrafa. Tom profundo e sofisticado para eventos com decoração natural.', images: ['https://placehold.co/600x900/2a6040/faf7f2?text=LC+006'], specs: [['Cor', 'Verde Garrafa'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-007': { cat: 'texteis-lisos', ref: 'LC 007', name: 'Laço Liso Rosa Seco', desc: 'Laço liso em tecido na cor rosa seco. Tom terroso e elegante muito popular em casamentos boho.', images: ['https://placehold.co/600x900/d4a0a0/faf7f2?text=LC+007'], specs: [['Cor', 'Rosa Seco'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-008': { cat: 'texteis-lisos', ref: 'LC 008', name: 'Laço Cetim Vermelho', desc: 'Laço em cetim na cor vermelha. Brilho suave e cor intensa para eventos de gala e Natal.', images: ['https://placehold.co/600x900/c03030/faf7f2?text=LC+008'], specs: [['Cor', 'Vermelho'], ['Tipo', 'Cetim'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-009': { cat: 'texteis-lisos', ref: 'LC 009', name: 'Laço Liso Branco', desc: 'Laço liso em tecido branco. Clássico e versátil, perfeito para casamentos e batizados.', images: ['https://placehold.co/600x900/f8f6f0/6b5f4a?text=LC+009'], specs: [['Cor', 'Branco'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-010': { cat: 'texteis-lisos', ref: 'LC 010', name: 'Laço Liso Pérola', desc: 'Laço liso em tecido pérola. Tom suave e refinado para cerimónias elegantes.', images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=LC+010'], specs: [['Cor', 'Pérola'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-011': { cat: 'texteis-lisos', ref: 'LC 011', name: 'Laço Liso Marinho', desc: 'Laço liso em tecido azul marinho. Tom clássico e formal para eventos náuticos ou de gala.', images: ['https://placehold.co/600x900/203060/faf7f2?text=LC+011'], specs: [['Cor', 'Marinho'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-012': { cat: 'texteis-lisos', ref: 'LC 012', name: 'Laço Liso Bordeaux', desc: 'Laço liso em tecido bordeaux. Cor profunda e luxuosa para casamentos de outono/inverno.', images: ['https://placehold.co/600x900/702040/faf7f2?text=LC+012'], specs: [['Cor', 'Bordeaux'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-013': { cat: 'texteis-lisos', ref: 'LC 013', name: 'Laço Liso Preto', desc: 'Laço liso em tecido preto. Elegância atemporal para eventos formais e galas.', images: ['https://placehold.co/600x900/1a1a1a/f5efe2?text=LC+013'], specs: [['Cor', 'Preto'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-014': { cat: 'texteis-lisos', ref: 'LC 014', name: 'Laço Liso Castanho', desc: 'Laço liso em tecido castanho. Tom terroso e natural ideal para eventos rústicos e boho.', images: ['https://placehold.co/600x900/7a5030/faf7f2?text=LC+014'], specs: [['Cor', 'Castanho'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-015': { cat: 'texteis-lisos', ref: 'LC 015', name: 'Laço Liso Prateado Estreito', desc: 'Laço liso prateado de largura estreita. Acabamento metálico sofisticado para eventos de gala.', images: ['https://placehold.co/600x900/c0c0c8/faf7f2?text=LC+015'], specs: [['Cor', 'Prateado'], ['Largura', 'Estreito'], ['Tipo', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-016': { cat: 'texteis-lisos', ref: 'LC 016', name: 'Laço Liso Prateado Largo', desc: 'Laço liso prateado de largura larga. Presença marcante com acabamento metálico elegante.', images: ['https://placehold.co/600x900/c0c0c8/faf7f2?text=LC+016'], specs: [['Cor', 'Prateado'], ['Largura', 'Largo'], ['Tipo', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-017': { cat: 'texteis-lisos', ref: 'LC 017', name: 'Laço Liso Dourado', desc: 'Laço liso na cor dourada. Brilho e luxo para eventos de gala e casamentos premium.', images: ['https://placehold.co/600x900/c8a840/faf7f2?text=LC+017'], specs: [['Cor', 'Dourado'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-020': { cat: 'texteis-lisos', ref: 'LC 020', name: 'Laço Liso Laranja', desc: 'Laço liso em tecido laranja. Cor vibrante e alegre para eventos festivos e de verão.', images: ['https://placehold.co/600x900/e87030/faf7f2?text=LC+020'], specs: [['Cor', 'Laranja'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-021': { cat: 'texteis-lisos', ref: 'LC 021', name: 'Laço Liso Lilás', desc: 'Laço liso em tecido lilás. Tom suave e romântico ideal para casamentos primaverais.', images: ['https://placehold.co/600x900/c0a0d0/faf7f2?text=LC+021'], specs: [['Cor', 'Lilás'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-023': { cat: 'texteis-lisos', ref: 'LC 023', name: 'Laço Liso Cinza', desc: 'Laço liso em tecido cinza. Tom neutro e moderno que combina com qualquer paleta de cores.', images: ['https://placehold.co/600x900/909090/faf7f2?text=LC+023'], specs: [['Cor', 'Cinza'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* LAÇOS ORGANZA */
+      'lc-018': { cat: 'texteis-organza', ref: 'LC 018', name: 'Laço Organza Vermelho', desc: 'Laço em organza na cor vermelha. Tecido translúcido e leve que confere elegância e movimento.', images: ['https://placehold.co/600x900/c03030/faf7f2?text=LC+018'], specs: [['Cor', 'Vermelho'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-019': { cat: 'texteis-organza', ref: 'LC 019', name: 'Laço Organza Preto', desc: 'Laço em organza na cor preta. Elegância sofisticada com leveza do tecido translúcido.', images: ['https://placehold.co/600x900/1a1a1a/f5efe2?text=LC+019'], specs: [['Cor', 'Preto'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-022': { cat: 'texteis-organza', ref: 'LC 022', name: 'Laço Organza Dourado', desc: 'Laço em organza na cor dourada. Brilho delicado e luxuoso para eventos de gala.', images: ['https://placehold.co/600x900/c8a840/faf7f2?text=LC+022'], specs: [['Cor', 'Dourado'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-024': { cat: 'texteis-organza', ref: 'LC 024', name: 'Laço Organza Azul', desc: 'Laço em organza na cor azul. Leveza e elegância com o efeito translúcido do tecido.', images: ['https://placehold.co/600x900/4060c0/faf7f2?text=LC+024'], specs: [['Cor', 'Azul'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-025': { cat: 'texteis-organza', ref: 'LC 025', name: 'Laço Organza Amarelo', desc: 'Laço em organza na cor amarela. Leveza e alegria para eventos de primavera e verão.', images: ['https://placehold.co/600x900/d4c040/faf7f2?text=LC+025'], specs: [['Cor', 'Amarelo'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-026': { cat: 'texteis-organza', ref: 'LC 026', name: 'Laço Organza Verde Lima', desc: 'Laço em organza na cor verde lima. Frescura e leveza para eventos ao ar livre e de verão.', images: ['https://placehold.co/600x900/90c030/faf7f2?text=LC+026'], specs: [['Cor', 'Verde Lima'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* LOUÇAS */
+      'lou-001': {
+        cat: 'loucas',
+        ref: 'LOU-001',
+        name: 'Serviço de Jantar Branco',
+        desc: 'Serviço de jantar completo em porcelana branca de alta qualidade. Inclui prato de sopa, prato raso e prato de sobremesa.',
+        images: [
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Servico+Jantar',
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Detalhe',
+        ],
+        specs: [
+          ['Material', 'Porcelana'],
+          ['Peças', '3 pratos por pessoa'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por pessoa / dia',
+        price: 'Sob consulta',
+        priceNote: 'Inclui lavagem após utilização',
+      },
+      'lou-002': {
+        cat: 'loucas',
+        ref: 'LOU-002',
+        name: 'Copos de Cristal',
+        desc: 'Conjunto de copos em cristal: água, vinho tinto, vinho branco e champanhe. Brilho e elegância para qualquer mesa.',
+        images: [
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Copos+Cristal',
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Detalhe',
+        ],
+        specs: [
+          ['Material', 'Cristal'],
+          ['Peças', '4 copos por pessoa'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por pessoa / dia',
+        price: 'Sob consulta',
+        priceNote: 'Inclui lavagem após utilização',
+      },
+      'lou-003': {
+        cat: 'loucas',
+        ref: 'LOU-003',
+        name: 'Talheres em Inox',
+        desc: 'Faqueiro completo em inox brilhante: faca, garfo, colher e colher de sobremesa. Acabamento espelhado de alta qualidade.',
+        images: [
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Talheres',
+        ],
+        specs: [
+          ['Material', 'Inox 18/10'],
+          ['Peças', '4 talheres por pessoa'],
+          ['Acabamento', 'Brilhante'],
+        ],
+        priceLabel: 'Preço por pessoa / dia',
+        price: 'Sob consulta',
+        priceNote: 'Inclui lavagem após utilização',
+      },
+
+      /* TALHERES DOURADOS */
+      'tad-002': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 002',
+        name: 'Garfo de Peixe',
+        desc: 'Garfo de peixe dourado em aço inoxidável com acabamento PVD dourado mate. Design elegante e atemporal para serviços de luxo.',
+        images: [
+          'Fotosdiversas/I2.jpg',
+        ],
+        specs: [
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Uso', 'Serviço de peixe'],
+        ],
+        priceLabel: 'Preço por unidade / dia (s/ IVA)',
+        price: '0,50 €',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído · Com IVA: 0,62 €',
+      },
+      'tad-003': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 003',
+        name: 'Faca de Peixe',
+        desc: 'Faca de peixe dourada com lâmina arredondada em aço inoxidável com acabamento PVD dourado. Par perfeito com o garfo TAD 002.',
+        images: [
+          'Fotosdiversas/I3.jpg',
+        ],
+        specs: [
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Uso', 'Serviço de peixe'],
+        ],
+        priceLabel: 'Preço por unidade / dia (s/ IVA)',
+        price: '0,50 €',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído · Com IVA: 0,62 €',
+      },
+      'tad-004': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 004',
+        name: 'Garfo de Carne',
+        desc: 'Garfo de carne dourado em aço inoxidável com acabamento PVD. Quatro dentes para serviços de carne em ambiente requintado.',
+        images: [
+          'Fotosdiversas/I4.jpg',
+        ],
+        specs: [
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Uso', 'Serviço de carne'],
+        ],
+        priceLabel: 'Preço por unidade / dia (s/ IVA)',
+        price: '0,50 €',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído · Com IVA: 0,62 €',
+      },
+      'tad-005': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 005',
+        name: 'Faca de Carne',
+        desc: 'Faca de carne dourada com lâmina em aço inoxidável e acabamento PVD dourado. Corte preciso com estética premium.',
+        images: [
+          'Fotosdiversas/I5.jpg',
+        ],
+        specs: [
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Uso', 'Serviço de carne'],
+        ],
+        priceLabel: 'Preço por unidade / dia (s/ IVA)',
+        price: '0,50 €',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído · Com IVA: 0,62 €',
+      },
+      'tad-006': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 006',
+        name: 'Colher de Sopa',
+        desc: 'Colher de sopa dourada de grande dimensão, em aço inoxidável com revestimento PVD dourado. Peça central de qualquer serviço de jantar elegante.',
+        images: [
+          'Fotosdiversas/I6.jpg',
+        ],
+        specs: [
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Uso', 'Serviço de sopa'],
+        ],
+        priceLabel: 'Preço por unidade / dia (s/ IVA)',
+        price: '0,50 €',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído · Com IVA: 0,62 €',
+      },
+      'tad-007': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 007',
+        name: 'Garfo de Sobremesa',
+        desc: 'Garfo de sobremesa dourado de dimensão reduzida, em aço inoxidável com acabamento PVD. Ideal para doces e sobremesas finas.',
+        images: [
+          'Fotosdiversas/I7.jpg',
+        ],
+        specs: [
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Uso', 'Serviço de sobremesa'],
+        ],
+        priceLabel: 'Preço por unidade / dia (s/ IVA)',
+        price: '0,50 €',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído · Com IVA: 0,62 €',
+      },
+      'tad-008': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 008',
+        name: 'Faca de Sobremesa',
+        desc: 'Faca de sobremesa dourada com lâmina curta em aço inoxidável com acabamento PVD. Complementa o serviço completo de sobremesa.',
+        images: [
+          'Fotosdiversas/I8.jpg',
+        ],
+        specs: [
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Uso', 'Serviço de sobremesa'],
+        ],
+        priceLabel: 'Preço por unidade / dia (s/ IVA)',
+        price: '0,50 €',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído · Com IVA: 0,62 €',
+      },
+      'tad-009': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 009',
+        name: 'Colher de Sobremesa',
+        desc: 'Colher de sobremesa dourada de dimensão intermédia, em aço inoxidável com revestimento PVD. Perfeita para mousses, sorvetes e doces.',
+        images: [
+          'Fotosdiversas/I9.jpg',
+        ],
+        specs: [
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Uso', 'Serviço de sobremesa'],
+        ],
+        priceLabel: 'Preço por unidade / dia (s/ IVA)',
+        price: '0,50 €',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído · Com IVA: 0,62 €',
+      },
+      'tad-010': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 010',
+        name: 'Colher de Chá',
+        desc: 'Colher de chá dourada de pequena dimensão, em aço inoxidável com acabamento PVD dourado. Ideal para café, chá e petit fours.',
+        images: [
+          'Fotosdiversas/I10.jpg',
+        ],
+        specs: [
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Uso', 'Café / Chá'],
+        ],
+        priceLabel: 'Preço por unidade / dia (s/ IVA)',
+        price: '0,50 €',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído · Com IVA: 0,62 €',
+      },
+
+      /* TALHERES PRATEADOS */
+      'ta-002': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 002',
+        name: 'Garfo de Peixe',
+        desc: 'Garfo de peixe em aço inoxidável com acabamento espelhado. Design clássico e elegante para serviços de peixe.',
+        images: [
+          'Fotosdiversas/P2.jpg',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+          ['Uso', 'Serviço de peixe'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
+      'ta-003': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 003',
+        name: 'Faca de Peixe',
+        desc: 'Faca de peixe em aço inoxidável com lâmina arredondada e acabamento espelhado. Par ideal com o garfo TA 002.',
+        images: [
+          'Fotosdiversas/P3.jpg',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+          ['Uso', 'Serviço de peixe'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
+      'ta-004': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 004',
+        name: 'Garfo de Carne',
+        desc: 'Garfo de carne em aço inoxidável com quatro dentes e acabamento espelhado. Robusto e elegante para serviços de carne.',
+        images: [
+          'Fotosdiversas/P4.jpg',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+          ['Uso', 'Serviço de carne'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
+      'ta-005': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 005',
+        name: 'Faca de Carne',
+        desc: 'Faca de carne em aço inoxidável com lâmina serrilhada e cabo em inox espelhado. Corte preciso e apresentação impecável.',
+        images: [
+          'Fotosdiversas/P5.jpg',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+          ['Uso', 'Serviço de carne'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
+      'ta-006': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 006',
+        name: 'Colher de Sopa',
+        desc: 'Colher de sopa em aço inoxidável de grande dimensão com acabamento espelhado. Peça essencial para qualquer serviço de jantar.',
+        images: [
+          'Fotosdiversas/P6.jpg',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+          ['Uso', 'Serviço de sopa'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
+      'ta-007': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 007',
+        name: 'Faca de Bife',
+        desc: 'Faca de bife em aço inoxidável com lâmina de corte reforçada e cabo ergonómico espelhado. Ideal para eventos com serviço de grelhados.',
+        images: [
+          'Fotosdiversas/P7.jpg',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+          ['Uso', 'Serviço de bife'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
+      'ta-008': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 008',
+        name: 'Garfo de Sobremesa',
+        desc: 'Garfo de sobremesa em aço inoxidável de dimensão reduzida com acabamento espelhado. Elegante para doces e sobremesas.',
+        images: [
+          'Fotosdiversas/P8.jpg',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+          ['Uso', 'Serviço de sobremesa'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
+      'ta-009': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 009',
+        name: 'Faca de Sobremesa',
+        desc: 'Faca de sobremesa em aço inoxidável com lâmina curta e acabamento espelhado. Complemento perfeito para o serviço de sobremesa.',
+        images: [
+          'Fotosdiversas/P9.jpg',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+          ['Uso', 'Serviço de sobremesa'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
+      'ta-010': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 010',
+        name: 'Colher de Sobremesa',
+        desc: 'Colher de sobremesa em aço inoxidável de dimensão intermédia com acabamento espelhado. Perfeita para mousses, sorvetes e doces finos.',
+        images: [
+          'Fotosdiversas/P10.jpg',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+          ['Uso', 'Serviço de sobremesa'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
+
+      /* DECORAÇÃO */
+      'dec-001': {
+        cat: 'decoracao',
+        ref: 'DEC-001',
+        name: 'Candelabro Alto',
+        desc: 'Candelabro de metal dourado de grande dimensão, ideal para centros de mesa ou decoração de corredor. Cria uma atmosfera sofisticada e romântica.',
+        images: [
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Candelabro+Alto',
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Detalhe',
+        ],
+        specs: [
+          ['Material', 'Metal dourado'],
+          ['Altura', '80 cm'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Velas não incluídas',
+      },
+      'dec-002': {
+        cat: 'decoracao',
+        ref: 'DEC-002',
+        name: 'Arco Floral',
+        desc: 'Estrutura metálica dourada em arco para decoração de cerimónias. Compatível com flores naturais e artificiais.',
+        images: [
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Arco+Floral',
+        ],
+        specs: [
+          ['Material', 'Metal dourado'],
+          ['Dimensões', '200 × 220 cm'],
+          ['Montagem', 'Incluída'],
+        ],
+        priceLabel: 'Preço por evento',
+        price: 'Sob consulta',
+        priceNote: 'Flores e decoração não incluídas',
+      },
+
+      /* EXTERIOR */
+      'ext-001': {
+        cat: 'exterior',
+        ref: 'EXT-001',
+        name: 'Tenda de Eventos',
+        desc: 'Tenda estrutural para eventos ao ar livre, resistente ao vento e chuva. Ideal para casamentos, festas e eventos corporativos em espaço exterior.',
+        images: [
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Tenda+Eventos',
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Interior',
+        ],
+        specs: [
+          ['Dimensões', 'Consultar tamanhos'],
+          ['Montagem', 'Incluída'],
+          ['Capacidade', 'Consultar'],
+        ],
+        priceLabel: 'Preço por evento',
+        price: 'Sob consulta',
+        priceNote: 'Inclui montagem e desmontagem',
+      },
+      'ext-002': {
+        cat: 'exterior',
+        ref: 'EXT-002',
+        name: 'Pufes de Exterior',
+        desc: 'Pufes em rattan sintético resistentes ao exterior. Ideais para lounges e zonas de convívio em eventos ao ar livre.',
+        images: [
+          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Pufes',
+        ],
+        specs: [
+          ['Material', 'Rattan sintético'],
+          ['Cores', 'Natural / Branco'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Disponível em conjunto lounge',
+      },
+
+      /* OUTROS */
+      'out-001': {
+        cat: 'outros',
+        ref: 'OUT-001',
+        name: 'Palco Modular',
+        desc: 'Sistema de palco modular em alumínio, configurável em várias dimensões. Inclui escadas de acesso e proteções laterais.',
+        images: [
+          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Palco+Modular',
+        ],
+        specs: [
+          ['Material', 'Alumínio'],
+          ['Altura', '40 / 60 / 80 cm'],
+          ['Montagem', 'Incluída'],
+        ],
+        priceLabel: 'Preço por evento',
+        price: 'Sob consulta',
+        priceNote: 'Preço varia com dimensão',
+      },
+    };
+
+    /* ─── COLLECTIONS ─── */
+    const COLLECTIONS = {
+      'col-lacos-lisos': {
+        cat: 'texteis',
+        ref: 'LC 001 – 023',
+        name: 'Laços Lisos',
+        desc: 'Coleção de laços para cadeiras em tecido liso. Disponível em 20 cores: do branco pérola ao bordeaux, passando por dourados e prateados.',
+        count: 20,
+        priceHint: 'Sob consulta',
+        previewImage: 'https://placehold.co/600x900/ede4d0/8a7340?text=La%C3%A7os+Lisos',
+        items: ['lc-001','lc-002','lc-003','lc-004','lc-005','lc-006','lc-007','lc-008','lc-009','lc-010','lc-011','lc-012','lc-013','lc-014','lc-015','lc-016','lc-017','lc-020','lc-021','lc-023'],
+      },
+      'col-lacos-organza': {
+        cat: 'texteis',
+        ref: 'LC 018 – 026',
+        name: 'Laços Organza',
+        desc: 'Coleção de laços para cadeiras em organza translúcida. Disponível em 6 cores com efeito leve e elegante.',
+        count: 6,
+        priceHint: 'Sob consulta',
+        previewImage: 'https://placehold.co/600x900/ede4d0/8a7340?text=La%C3%A7os+Organza',
+        items: ['lc-018','lc-019','lc-022','lc-024','lc-025','lc-026'],
+      },
+      'col-cd007': {
+        cat: 'mobiliario',
+        ref: 'CD 007 – 008',
+        name: 'Cadeira Crossback Camel',
+        desc: 'Cadeira crossback em madeira camel, disponível simples ou com coxim de assento pérola.',
+        count: 2,
+        priceHint: 'Sob consulta',
+        previewImage: 'https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+007',
+        items: ['cd-007', 'cd-008'],
+      },
+      'col-cd004': {
+        cat: 'mobiliario',
+        ref: 'CD 004 – 006',
+        name: 'Cadeira Dobrável Prateada',
+        desc: 'Cadeira dobrável com acabamento prateado, disponível simples ou com coxim de tecido pérola / pele sintética castanha.',
+        count: 3,
+        priceHint: 'Sob consulta',
+        previewImage: 'https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+004',
+        items: ['cd-004', 'cd-005', 'cd-006'],
+      },
+      'col-cd001': {
+        cat: 'mobiliario',
+        ref: 'CD 001 – 003',
+        name: 'Cadeira Dobrável Castanha',
+        desc: 'Cadeira dobrável em madeira castanha, disponível simples ou com coxim de tecido pérola / pele sintética castanha.',
+        count: 3,
+        priceHint: 'Sob consulta',
+        previewImage: 'https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+001',
+        items: ['cd-001', 'cd-002', 'cd-003'],
+      },
+      'col-talheres-dourados': {
+        cat: 'loucas',
+        ref: 'TAD 002 – 010',
+        name: 'Talheres Dourados',
+        desc: 'Coleção completa de talheres em aço inoxidável com acabamento PVD dourado mate. Design elegante e atemporal para serviços de luxo.',
+        count: 9,
+        priceHint: 'a partir de 0,50 € / unid.',
+        previewImage: 'Fotosdiversas/Foto talheres dourados.png',
+        items: ['tad-002','tad-003','tad-004','tad-005','tad-006','tad-007','tad-008','tad-009','tad-010'],
+      },
+      'col-talheres-prateados': {
+        cat: 'loucas',
+        ref: 'TA 002 – 010',
+        name: 'Talheres Prateados',
+        desc: 'Conjunto completo de talheres em aço inoxidável com acabamento espelhado. Clássico e versátil para qualquer tipo de evento.',
+        count: 9,
+        priceHint: 'Sob consulta',
+        previewImage: 'Fotosdiversas/P2.jpg',
+        items: ['ta-002','ta-003','ta-004','ta-005','ta-006','ta-007','ta-008','ta-009','ta-010'],
+      },
+    };
+
+    /* ─── RENDER GRID CARDS ─── */
+    function renderGrid() {
+      Object.values(PRODUCTS).forEach(p => {
+        const id = Object.keys(PRODUCTS).find(k => PRODUCTS[k] === p);
+        const grid = document.getElementById('grid-' + p.cat);
+        if (!grid) return;
+
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', 'Ver detalhes: ' + p.name);
+        card.innerHTML = `
+          <div class="card-img">
+            <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
+            <div class="card-img-overlay"><span class="card-img-label">Ver Detalhes</span></div>
+          </div>
+          <div class="card-body">
+            <span class="card-ref">${p.ref}</span>
+            <div class="card-name">${p.name}</div>
+            <div class="card-price">${p.price}</div>
+          </div>
+        `;
+        card.addEventListener('click', () => openDrawer(id));
+        card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(id); } });
+        grid.appendChild(card);
+      });
+
+      /* Collection cards */
+      Object.entries(COLLECTIONS).forEach(([id, col]) => {
+        const grid = document.getElementById('grid-' + col.cat);
+        if (!grid) return;
+
+        const card = document.createElement('div');
+        card.className = 'product-card collection-card';
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', 'Ver coleção: ' + col.name);
+        card.innerHTML = `
+          <div class="card-img">
+            <img src="${col.previewImage}" alt="${col.name}" loading="lazy">
+            <div class="card-img-overlay"><span class="card-img-label">Ver Coleção</span></div>
+            <span class="collection-count-pill">${col.count} peças</span>
+          </div>
+          <div class="card-body">
+            <span class="card-ref">${col.ref}</span>
+            <div class="card-name">${col.name}</div>
+            <div class="card-price">${col.priceHint}</div>
+          </div>
+        `;
+        card.addEventListener('click', () => openCollection(id));
+        card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCollection(id); } });
+        grid.appendChild(card);
+      });
+    }
+
+    /* ─── DRAWER ─── */
+    let currentDrawerProduct = null;
+
+    function openDrawer(id) {
+      const p = PRODUCTS[id];
+      if (!p) return;
+      currentDrawerProduct = p;
+
+      /* Main image */
+      const mainImg = document.getElementById('drawerMainImg');
+      mainImg.src = p.images[0];
+      mainImg.alt = p.name;
+
+      /* Thumbnails */
+      const thumbsEl = document.getElementById('drawerThumbs');
+      thumbsEl.innerHTML = '';
+      if (p.images.length > 1) {
+        p.images.forEach((src, i) => {
+          const t = document.createElement('div');
+          t.className = 'drawer-thumb' + (i === 0 ? ' active' : '');
+          t.innerHTML = `<img src="${src}" alt="Vista ${i+1}" loading="lazy">`;
+          t.addEventListener('click', () => {
+            mainImg.src = src;
+            thumbsEl.querySelectorAll('.drawer-thumb').forEach(el => el.classList.remove('active'));
+            t.classList.add('active');
+          });
+          thumbsEl.appendChild(t);
+        });
+      }
+
+      /* Info */
+      const specsHtml = p.specs.map(([label, val]) =>
+        `<div class="spec-row"><span class="spec-label">${label}</span><span class="spec-value">${val}</span></div>`
+      ).join('');
+
+      document.getElementById('drawerInfo').innerHTML = `
+        <span class="drawer-ref">${p.ref}</span>
+        <h2 class="drawer-name">${p.name}</h2>
+        <p class="drawer-desc">${p.desc}</p>
+        <div class="drawer-specs">${specsHtml}</div>
+        <div class="drawer-price-box">
+          <span class="price-label">${p.priceLabel}</span>
+          <div class="price-value">${p.price}</div>
+          <div class="price-note">${p.priceNote}</div>
+        </div>
+        <div class="drawer-actions">
+          <div class="qty-selector">
+            <button class="qty-btn" onclick="changeDrawerQty(-1)">−</button>
+            <input type="number" class="qty-value" id="drawerQtyVal" value="1" min="1">
+            <button class="qty-btn" onclick="changeDrawerQty(1)">+</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('${id}', getDrawerQty(), this)">+ Adicionar ao Carrinho</button>
+          <a href="tel:+351910060114" class="btn-outline-sm">910 060 114</a>
+        </div>
+      `;
+
+      const qtyEl = document.getElementById('drawerQtyVal');
+      if (qtyEl) qtyEl.value = 1;
+
+      const drawer = document.getElementById('drawer');
+      drawer.classList.add('open');
+      drawer.querySelector('.drawer-panel').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      document.getElementById('drawer').classList.remove('open');
+      const colOpen = document.getElementById('collectionDrawer').classList.contains('open');
+      if (!document.getElementById('cartDrawer').classList.contains('open') && !colOpen) {
+        document.body.style.overflow = '';
+      }
+      currentDrawerProduct = null;
+    }
+
+    document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+    document.getElementById('drawerBackdrop').addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (document.getElementById('drawer').classList.contains('open')) { closeDrawer(); return; }
+        closeCollection(); closeCart();
+      }
+    });
+
+    /* ─── COLLECTION DRAWER ─── */
+    function openCollection(id) {
+      const col = COLLECTIONS[id];
+      if (!col) return;
+
+      const itemsHtml = col.items.map(itemId => {
+        const p = PRODUCTS[itemId];
+        if (!p) return '';
+        return `
+          <div class="collection-item-card" role="button" tabindex="0"
+               aria-label="Ver detalhes: ${p.name}"
+               onclick="openDrawer('${itemId}')"
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDrawer('${itemId}')}">
+            <div class="ci-img"><img src="${p.images[0]}" alt="${p.name}" loading="lazy"></div>
+            <div class="ci-body">
+              <span class="ci-ref">${p.ref}</span>
+              <div class="ci-name">${p.name}</div>
+            </div>
+            <div class="ci-footer" onclick="event.stopPropagation()">
+              <div class="qty-selector-sm">
+                <button class="qty-btn-sm" onclick="var v=this.nextElementSibling;v.value=Math.max(1,(parseInt(v.value)||1)-1)">−</button>
+                <input type="number" class="qty-val-sm" value="1" min="1">
+                <button class="qty-btn-sm" onclick="var v=this.previousElementSibling;v.value=(parseInt(v.value)||1)+1">+</button>
+              </div>
+              <button class="ci-add-btn" style="margin-top:0;border-top:none;flex:1;" onclick="addToCart('${itemId}', parseInt(this.parentElement.querySelector('.qty-val-sm').value)||1, this, true)">+ Adicionar</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('collectionContent').innerHTML = `
+        <div class="collection-panel-header">
+          <span class="collection-panel-ref">${col.ref}</span>
+          <h2 class="collection-panel-name">${col.name}</h2>
+          <p class="collection-panel-desc">${col.desc}</p>
+        </div>
+        <div class="collection-panel-body">
+          <div class="collection-item-grid">${itemsHtml}</div>
+        </div>
+      `;
+
+      const colDrawer = document.getElementById('collectionDrawer');
+      colDrawer.classList.add('open');
+      document.getElementById('collectionPanel').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCollection() {
+      document.getElementById('collectionDrawer').classList.remove('open');
+      if (!document.getElementById('cartDrawer').classList.contains('open') &&
+          !document.getElementById('drawer').classList.contains('open')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.getElementById('collectionClose').addEventListener('click', closeCollection);
+    document.getElementById('collectionBackdrop').addEventListener('click', closeCollection);
+
+    /* ─── CATEGORY TABS ─── */
+    const catBtns = document.querySelectorAll('.cat-btn');
+    const catSections = document.querySelectorAll('.cat-section');
+
+    catBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        catBtns.forEach(b => b.classList.remove('active'));
+        catSections.forEach(s => s.classList.remove('visible'));
+        btn.classList.add('active');
+        document.getElementById('cat-' + btn.dataset.cat).classList.add('visible');
+        window.scrollTo({ top: document.querySelector('.cat-nav-wrap').offsetTop - 70, behavior: 'smooth' });
+      });
+    });
+
+    /* ─── CART ─── */
+    function getCart() { return JSON.parse(localStorage.getItem('ma_cart') || '[]'); }
+    function saveCart(cart) { localStorage.setItem('ma_cart', JSON.stringify(cart)); }
+
+    function getDrawerQty() {
+      const el = document.getElementById('drawerQtyVal');
+      return Math.max(1, parseInt(el ? el.value : 1) || 1);
+    }
+    function changeDrawerQty(delta) {
+      const el = document.getElementById('drawerQtyVal');
+      if (el) el.value = Math.max(1, (parseInt(el.value) || 1) + delta);
+    }
+
+    function addToCart(productId, qty, btn, keepDrawerOpen) {
+      qty = Math.max(1, parseInt(qty) || 1);
+      const p = PRODUCTS[productId];
+      if (!p) return;
+      const cart = getCart();
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({ id: productId, ref: p.ref, name: p.name, image: p.images[0], qty: qty });
+      }
+      saveCart(cart);
+      updateCartBadge();
+      showToast('+ ' + qty + '× ' + p.name + ' adicionado' + (qty > 1 ? 's' : ''));
+
+      if (btn) {
+        const origHtml = btn.innerHTML;
+        btn.innerHTML = '✓ Adicionado';
+        btn.classList.add('btn-added');
+        setTimeout(() => {
+          btn.innerHTML = origHtml;
+          btn.classList.remove('btn-added');
+          if (!keepDrawerOpen) closeDrawer();
+        }, 900);
+      } else {
+        if (!keepDrawerOpen) closeDrawer();
+      }
+    }
+
+    function removeFromCart(productId) {
+      saveCart(getCart().filter(item => item.id !== productId));
+      updateCartBadge();
+      renderCartItems();
+    }
+
+    function updateQty(productId, delta) {
+      const cart = getCart();
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+      item.qty = Math.max(1, item.qty + delta);
+      saveCart(cart);
+      renderCartItems();
+    }
+
+    function updateCartBadge() {
+      const total = getCart().reduce((sum, i) => sum + i.qty, 0);
+      const badge = document.getElementById('cartBadge');
+      badge.textContent = total;
+      badge.style.display = total > 0 ? 'flex' : 'none';
+    }
+
+    function renderCartItems() {
+      const cart = getCart();
+      const wrap = document.getElementById('cartItemsWrap');
+      const total = cart.reduce((sum, i) => sum + i.qty, 0);
+      document.getElementById('cartSummaryText').textContent =
+        total === 0 ? '0 artigos' : total + (total === 1 ? ' artigo seleccionado' : ' artigos seleccionados');
+
+      if (cart.length === 0) {
+        wrap.innerHTML = `
+          <div class="cart-empty">
+            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            <p>Carrinho vazio</p>
+            <span>Explore o catálogo e adicione os artigos pretendidos</span>
+          </div>`;
+        return;
+      }
+
+      wrap.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-img"><img src="${item.image}" alt="${item.name}" loading="lazy"></div>
+          <div class="cart-item-body">
+            <span class="cart-item-ref">${item.ref}</span>
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-qty">
+              <button class="qty-btn" onclick="updateQty('${item.id}',-1)">−</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" onclick="updateQty('${item.id}',1)">+</button>
+            </div>
+          </div>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" aria-label="Remover">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/>
+            </svg>
+          </button>
+        </div>`).join('');
+    }
+
+    function openCart() {
+      renderCartItems();
+      document.getElementById('cartDrawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+      document.getElementById('cartDrawer').classList.remove('open');
+      if (!document.getElementById('drawer').classList.contains('open')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    function goToQuote() {
+      if (getCart().length === 0) return;
+      closeCart();
+      openQuote();
+    }
+
+    function openQuote() {
+      const cart = getCart();
+      const listEl = document.getElementById('quoteItemsList');
+      listEl.innerHTML = cart.map(item => `
+        <div class="quote-item-row">
+          <div class="quote-item-img"><img src="${item.image}" alt="${item.name}" loading="lazy"></div>
+          <div class="quote-item-text">
+            <span class="quote-item-ref">${item.ref}</span>
+            <div class="quote-item-name">${item.name}</div>
+          </div>
+          <span class="quote-item-qty">${item.qty}×</span>
+        </div>
+      `).join('');
+
+      document.getElementById('quoteFormWrap').style.display = '';
+      document.getElementById('quoteSuccess').style.display = 'none';
+      document.getElementById('quoteForm').reset();
+
+      const overlay = document.getElementById('quoteOverlay');
+      overlay.classList.add('open');
+      document.getElementById('quotePanel').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeQuote() {
+      document.getElementById('quoteOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('quoteCloseBtn').addEventListener('click', closeQuote);
+    document.getElementById('quoteBackdrop').addEventListener('click', closeQuote);
+
+    /* ── EmailJS config ── */
+    const EMAILJS_SERVICE  = 'service_hedx7n4';
+    const EMAILJS_TEMPLATE = 'template_fo7ukql';
+    const EMAILJS_KEY      = 'RHarKQcbP-Dabtyb1';
+    emailjs.init({ publicKey: EMAILJS_KEY });
+
+    document.getElementById('quoteForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+      const cart = getCart();
+
+      const nome  = data.get('nome')      || '';
+      const email = data.get('email')     || '';
+      const tel   = data.get('telefone')  || '';
+      const msg   = data.get('mensagem')  || '';
+
+      const itemsText = cart.length
+        ? cart.map(i => `• ${i.ref} — ${i.name}  ×${i.qty}`).join('\n')
+        : '—';
+
+      const btn = this.querySelector('.quote-submit-btn');
+      btn.textContent = 'A enviar…';
+      btn.disabled = true;
+
+      const showSuccess = () => {
+        document.getElementById('quoteFormWrap').style.display = 'none';
+        document.getElementById('quoteSuccess').style.display = 'block';
+      };
+
+      try {
+        await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+          from_name:  nome,
+          from_email: email,
+          telefone:   tel   || '—',
+          artigos:    itemsText,
+          observacoes: msg  || '—',
+          reply_to:   email,
+        });
+        showSuccess();
+      } catch (err) {
+        console.error('EmailJS error:', err);
+        btn.textContent = 'Erro — Tente novamente';
+        btn.disabled = false;
+        btn.style.background = '#c05050';
+        btn.style.color = '#fff';
+      }
+    });
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(t._tid);
+      t._tid = setTimeout(() => t.classList.remove('show'), 2400);
+    }
+
+    document.getElementById('cartCloseBtn').addEventListener('click', closeCart);
+    document.getElementById('cartBackdrop').addEventListener('click', closeCart);
+
+    /* ─── CATEGORY SEARCH ─── */
+    function initSearch() {
+      document.querySelectorAll('.cat-section').forEach(section => {
+        const header = section.querySelector('.cat-section-header');
+
+        /* Build search bar */
+        const wrap = document.createElement('div');
+        wrap.className = 'cat-search';
+        wrap.innerHTML = `
+          <div class="cat-search-field">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="8.5" cy="8.5" r="5.5"/><line x1="13" y1="13" x2="17" y2="17"/>
+            </svg>
+            <input type="search" placeholder="Pesquisar nesta categoria…" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="cat-search-count"></div>
+        `;
+        header.after(wrap);
+
+        /* No-results message (appended once, before closing of section) */
+        const noRes = document.createElement('div');
+        noRes.className = 'cat-no-results';
+        noRes.innerHTML = 'Nenhum produto encontrado<small>Tente outro termo de pesquisa</small>';
+        section.appendChild(noRes);
+
+        const input = wrap.querySelector('input');
+        const countEl = wrap.querySelector('.cat-search-count');
+
+        input.addEventListener('input', () => {
+          const q = input.value.trim().toLowerCase();
+          const cards = section.querySelectorAll('.product-card');
+          let visible = 0;
+
+          cards.forEach(card => {
+            const name = (card.querySelector('.card-name')?.textContent || '').toLowerCase();
+            const ref  = (card.querySelector('.card-ref')?.textContent  || '').toLowerCase();
+            const show = !q || name.includes(q) || ref.includes(q);
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
+          });
+
+          /* Hide / show subsections whose grids are entirely empty */
+          section.querySelectorAll('.cat-subsection').forEach(sub => {
+            const hasVisible = [...sub.querySelectorAll('.product-card')].some(c => c.style.display !== 'none');
+            sub.style.display = hasVisible ? '' : (q ? 'none' : '');
+          });
+
+          /* Update count label */
+          if (q) {
+            const total = cards.length;
+            countEl.innerHTML = `<span>${visible}</span> de ${total} produto${total !== 1 ? 's' : ''}`;
+          } else {
+            countEl.innerHTML = '';
+          }
+
+          noRes.style.display = q && visible === 0 ? 'block' : 'none';
+        });
+      });
+    }
+
+    /* ─── INIT ─── */
+    renderGrid();
+    initSearch();
+    updateCartBadge();
+    if (new URLSearchParams(location.search).get('quote') === '1' && getCart().length > 0) {
+      setTimeout(openQuote, 400);
+    }
+
+    /* ── PAGE TRANSITIONS ── */
+    (function() {
+      const overlay = document.getElementById('pageTransition');
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        overlay.style.opacity = '0';
+      }));
+
+      document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href]');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || /^https?:\/\//.test(href)) return;
+        e.preventDefault();
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'all';
+        setTimeout(() => { window.location.href = href; }, 440);
+      });
+    })();
+  </script>
+</body>
+</html>
