@@ -120,58 +120,69 @@
     .product-card {
       background: var(--cream-light);
       border: 1px solid var(--cream-border);
+      border-radius: 12px;
       cursor: pointer;
-      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
       position: relative;
       overflow: hidden;
+      box-shadow: 0 1px 4px rgba(20,18,15,0.04);
     }
-    .product-card::before {
+    .product-card::after {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: transparent;
-      transition: background 0.25s;
-      z-index: 2;
+      inset: 0;
+      border-radius: 12px;
+      border: 1.5px solid transparent;
+      background: linear-gradient(135deg, rgba(184,154,85,0.55), rgba(184,154,85,0.1)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 3;
     }
-    .product-card:hover::before { background: var(--gold); }
+    .product-card:hover::after { opacity: 1; }
     .product-card:hover {
-      border-color: rgba(184,154,85,0.55);
+      border-color: rgba(184,154,85,0.3);
       box-shadow:
-        0 6px 20px rgba(20,18,15,0.09),
-        0 1px 4px rgba(20,18,15,0.06);
-      transform: translateY(-3px);
+        0 12px 32px rgba(20,18,15,0.12),
+        0 3px 8px rgba(20,18,15,0.07),
+        0 0 0 1px rgba(184,154,85,0.15);
+      transform: translateY(-5px);
     }
-    .product-card:focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 2px;
-    }
-    .product-card:active { transform: translateY(0); }
+    .product-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .product-card:active { transform: translateY(-1px); transition-duration: 0.1s; }
 
     .card-img {
       width: 100%; aspect-ratio: 1;
       overflow: hidden; position: relative;
       background: var(--cream-mid);
+      border-radius: 11px 11px 0 0;
     }
     .card-img img {
       width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.4s ease;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
     }
-    .product-card:hover .card-img img { transform: scale(1.04); }
+    .product-card:hover .card-img img { transform: scale(1.07); }
     .card-img-overlay {
       position: absolute; inset: 0;
       background: rgba(20,18,15,0);
-      display: flex; align-items: center; justify-content: center;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 1rem;
       transition: background 0.3s;
     }
-    .product-card:hover .card-img-overlay { background: rgba(20,18,15,0.18); }
+    .product-card:hover .card-img-overlay { background: rgba(20,18,15,0.22); }
     .card-img-label {
       font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: white; background: rgba(20,18,15,0.55); padding: 0.4rem 0.85rem;
-      opacity: 0; transition: opacity 0.25s;
+      color: white; background: rgba(20,18,15,0.6);
+      padding: 0.4rem 1rem; border-radius: 999px;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.25s, transform 0.25s;
     }
-    .product-card:hover .card-img-label { opacity: 1; }
+    .product-card:hover .card-img-label { opacity: 1; transform: translateY(0); }
 
-    .card-body { padding: 1rem 1.1rem 1.2rem; }
+    .card-body { padding: 1rem 1.1rem 1.25rem; }
     .card-ref {
       font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
       color: var(--gold); display: block; margin-bottom: 0.3rem;
@@ -224,6 +235,35 @@
     .drawer-close:hover { color: var(--dark); }
     .drawer-close:focus-visible { outline: 2px solid var(--gold); }
 
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 900;
+      background: rgba(20,18,15,0.96);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img {
+      max-width: 90vw; max-height: 90vh;
+      object-fit: contain;
+      transform: scale(0.93);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      border-radius: 4px;
+    }
+    .lightbox.open img { transform: scale(1); }
+    .lightbox-close {
+      position: absolute; top: 1.5rem; right: 1.75rem;
+      background: none; border: none; cursor: pointer;
+      color: rgba(245,239,226,0.55); font-family: 'Lato', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: var(--cream); }
+    .drawer-img-wrap { cursor: zoom-in; }
+
+
     /* Drawer image */
     .drawer-img-wrap {
       width: 100%; aspect-ratio: 4/3;
@@ -267,72 +307,87 @@
       font-size: 1.9rem; font-weight: 400; line-height: 1.15;
       color: var(--dark); margin-bottom: 0.9rem;
     }
-    .drawer-desc { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 1.5rem; }
+    .drawer-desc { font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.85; margin-bottom: 1.5rem; }
 
     .drawer-specs {
       border-top: 1px solid var(--cream-border);
       border-bottom: 1px solid var(--cream-border);
-      padding: 1rem 0; margin-bottom: 1.5rem;
-      display: flex; flex-direction: column; gap: 0.5rem;
+      padding: 1.1rem 0; margin-bottom: 1.5rem;
+      display: flex; flex-direction: column; gap: 0.65rem;
     }
-    .spec-row { display: flex; gap: 0.5rem; font-size: 13px; }
-    .spec-label { font-weight: 700; color: var(--dark-soft); min-width: 130px; flex-shrink: 0; }
-    .spec-value { color: var(--muted); }
+    .spec-row { display: flex; align-items: baseline; gap: 1rem; }
+    .spec-label {
+      font-family: 'Lato', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold-dark);
+      min-width: 110px; flex-shrink: 0;
+    }
+    .spec-value {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 17px; font-weight: 400; color: var(--dark);
+    }
 
     .drawer-price-box {
-      background: var(--cream-mid); padding: 1rem 1.25rem;
+      background: var(--cream-mid); padding: 1.1rem 1.4rem;
       border-left: 3px solid var(--gold); margin-bottom: 1.5rem;
     }
-    .price-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.2rem; }
-    .price-value { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.6rem; font-weight: 500; color: var(--dark); }
-    .price-note { font-size: 12px; color: var(--muted); margin-top: 0.15rem; }
+    .price-label {
+      font-family: 'Lato', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold-dark);
+      display: block; margin-bottom: 0.3rem;
+    }
+    .price-value {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.75rem; font-weight: 400; color: var(--dark); line-height: 1.15;
+    }
+    .price-note {
+      font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 300;
+      letter-spacing: 0.5px; color: var(--muted); margin-top: 0.3rem;
+    }
 
     .drawer-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
 
     /* Quantity selector — drawer */
     .qty-selector {
-      display: flex; align-items: stretch;
-      border: 1px solid var(--cream-border); height: 44px;
+      display: flex; align-items: center; gap: 0.4rem; height: 44px;
     }
     .qty-btn {
-      width: 38px; background: none; border: none; cursor: pointer;
-      font-size: 1.15rem; color: var(--muted);
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s, color 0.15s;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--dark-soft);
+      background: none; cursor: pointer;
+      font-size: 1.25rem; font-weight: 300; line-height: 1; color: var(--dark);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
     }
-    .qty-btn:hover { background: var(--cream-mid); color: var(--dark); }
+    .qty-btn:hover { border-color: var(--gold); background: var(--gold); color: var(--dark); transform: scale(1.08); }
+    .qty-btn:active { transform: scale(0.95); }
     .qty-value {
-      min-width: 42px; text-align: center;
-      font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 500;
-      color: var(--dark);
-      border-left: 1px solid var(--cream-border);
-      border-right: 1px solid var(--cream-border);
-      border-top: none; border-bottom: none;
-      background: none; outline: none;
-      height: 44px; padding: 0; width: 52px;
+      width: 44px; text-align: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 500;
+      color: var(--dark); border: none; background: none; outline: none;
+      height: 44px; padding: 0;
     }
     .qty-value::-webkit-inner-spin-button,
     .qty-value::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     .qty-value[type=number] { -moz-appearance: textfield; }
-    .qty-value:focus { background: rgba(184,154,85,0.05); }
+    .qty-value:focus { color: var(--gold-dark); }
 
     /* Quantity selector — collection mini cards */
     .ci-footer { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; border-top: 1px solid var(--cream-border); padding-top: 0.5rem; }
-    .qty-selector-sm { display: flex; align-items: stretch; border: 1px solid var(--cream-border); flex-shrink: 0; }
+    .qty-selector-sm { display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0; }
     .qty-btn-sm {
-      width: 24px; height: 28px; background: none; border: none; cursor: pointer;
-      font-size: 0.9rem; color: var(--muted);
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s;
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 1.5px solid var(--dark-soft);
+      background: none; cursor: pointer;
+      font-size: 1rem; font-weight: 300; line-height: 1; color: var(--dark);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
     }
-    .qty-btn-sm:hover { background: var(--cream-mid); color: var(--dark); }
+    .qty-btn-sm:hover { border-color: var(--gold); background: var(--gold); color: var(--dark); transform: scale(1.08); }
+    .qty-btn-sm:active { transform: scale(0.95); }
     .qty-val-sm {
-      min-width: 26px; width: 32px; text-align: center;
-      font-size: 0.82rem; font-weight: 700; color: var(--dark);
-      border-left: 1px solid var(--cream-border);
-      border-right: 1px solid var(--cream-border);
-      border-top: none; border-bottom: none;
-      background: none; outline: none;
+      width: 28px; text-align: center;
+      font-size: 0.85rem; font-weight: 600; color: var(--dark);
+      border: none; background: none; outline: none;
       height: 28px; padding: 0;
     }
     .qty-val-sm::-webkit-inner-spin-button,
@@ -438,20 +493,23 @@
       font-size: 0.95rem; font-weight: 500; line-height: 1.3; color: var(--dark);
     }
     .ci-add-btn {
-      display: block; width: 100%; margin-top: 0.6rem;
-      padding: 0.5rem 0; text-align: center;
-      font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--dark); background: var(--gold);
-      border: none; cursor: pointer;
-      transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
-      box-shadow: 0 2px 6px rgba(184,154,85,0.25);
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.45rem 0.75rem;
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      border: 1.5px solid var(--gold); border-radius: 999px;
+      background: linear-gradient(to right, var(--gold) 50%, transparent 50%);
+      background-size: 200% 100%; background-position: left center;
+      color: var(--dark); cursor: pointer;
+      transition: background-position 0.35s cubic-bezier(0.4,0,0.2,1), color 0.35s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 6px rgba(184,154,85,0.2);
     }
     .ci-add-btn:hover {
-      background: var(--gold-light);
+      background-position: right center;
+      color: var(--gold);
       transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(184,154,85,0.4);
+      box-shadow: 0 4px 12px rgba(184,154,85,0.35);
     }
-    .ci-add-btn:active { transform: translateY(0) scale(0.98); box-shadow: none; }
+    .ci-add-btn:active { transform: translateY(0) scale(0.97); box-shadow: none; }
 
     /* ── CATEGORY SEARCH ── */
     .cat-search {
@@ -600,14 +658,14 @@
     .cart-item-ref { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.15rem; }
     .cart-item-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.95rem; color: var(--cream-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.5rem; }
     .cart-item-qty { display: flex; align-items: center; gap: 0.5rem; }
-    .qty-btn {
+    .cart-qty-btn {
       width: 22px; height: 22px; border: 1px solid rgba(184,154,85,0.28);
       background: none; color: rgba(245,239,226,0.6); cursor: pointer;
       font-size: 14px; line-height: 1;
       display: flex; align-items: center; justify-content: center;
       transition: border-color 0.2s, color 0.2s;
     }
-    .qty-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .cart-qty-btn:hover { border-color: var(--gold); color: var(--gold); }
     .qty-num { font-size: 12px; color: var(--cream-light); min-width: 18px; text-align: center; }
     .cart-item-remove {
       background: none; border: none; cursor: pointer;
@@ -797,28 +855,50 @@
 
     /* ── ADD TO CART BUTTON (in drawer) ── */
     .btn-add-cart {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      background: var(--gold); color: var(--dark);
-      padding: 0.8rem 1.75rem; font-size: 11px; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      padding: 0.9rem 2rem; font-size: 11px; font-weight: 700;
       letter-spacing: 2px; text-transform: uppercase;
-      border: none; cursor: pointer; position: relative; overflow: hidden;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 2px 10px rgba(184,154,85,0.3), 0 1px 3px rgba(184,154,85,0.2);
+      border: 1.5px solid var(--gold); cursor: pointer;
+      border-radius: 999px;
+      position: relative; overflow: hidden;
+      background: linear-gradient(to right, var(--gold) 50%, transparent 50%);
+      background-size: 200% 100%;
+      background-position: left center;
+      color: var(--dark);
+      transition: background-position 0.35s cubic-bezier(0.4,0,0.2,1),
+                  color 0.35s ease,
+                  transform 0.15s ease,
+                  box-shadow 0.2s ease;
+      box-shadow: 0 2px 10px rgba(184,154,85,0.25);
     }
     .btn-add-cart:hover {
-      background: var(--gold-light);
+      background-position: right center;
+      color: var(--gold);
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(184,154,85,0.45), 0 2px 6px rgba(184,154,85,0.25);
+      box-shadow: 0 6px 20px rgba(184,154,85,0.35);
     }
-    .btn-add-cart:active { transform: translateY(0) scale(0.97); box-shadow: 0 1px 4px rgba(184,154,85,0.2); }
-    .btn-add-cart:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-    .btn-add-cart.btn-added { background: #6b956b; color: #fff; pointer-events: none; transform: none; box-shadow: 0 2px 10px rgba(107,149,107,0.3); }
+    .btn-add-cart:active { transform: translateY(0) scale(0.97); box-shadow: none; }
+    .btn-add-cart:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .btn-add-cart.btn-added {
+      background: #6b956b; border-color: #6b956b; color: #fff;
+      pointer-events: none; transform: none;
+      box-shadow: 0 2px 10px rgba(107,149,107,0.3);
+    }
     .ci-add-btn.btn-added { color: #fff; background: #6b956b; pointer-events: none; box-shadow: none; transform: none; }
   </style>
 </head>
 <body>
 
   <div id="pageTransition"></div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightboxClose">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
+      Fechar
+    </button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
 
   <!-- NAV -->
   <nav>
@@ -827,8 +907,7 @@
       <ul class="nav-links">
         <li><a href="index.html" aria-label="Início" style="display:flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a></li>
         <li><a href="catalogo.html" class="active">Catálogo</a></li>
-        <li><a href="index.html#sobre">Sobre</a></li>
-        <li><a href="index.html#processo">Como Funciona</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
         <li><a href="index.html#contacto">Contacto</a></li>
       </ul>
       <a href="index.html#contacto" class="nav-cta">Pedir Orçamento</a>
@@ -1067,9 +1146,7 @@
         name: 'Cadeira Tiffany',
         desc: 'Cadeira clássica em resina de alta qualidade, disponível em branco e transparente. Ideal para cerimónias e jantares de gala.',
         images: [
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Cadeira+Tiffany',
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Vista+2',
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Vista+3',
+          'Fotosdiversas/COPO_2_sem_fundo.png',
         ],
         specs: [
           ['Material', 'Resina premium'],
@@ -1356,6 +1433,24 @@
         priceLabel: 'Preço por pessoa / dia',
         price: 'Sob consulta',
         priceNote: 'Inclui lavagem após utilização',
+      },
+
+      'copo-cd001': {
+        cat: 'loucas',
+        ref: 'CD 001',
+        name: 'Copo Fio Dourado',
+        desc: 'Copo em vidro com fio dourado decorativo. Elegante e sofisticado, ideal para serviços de mesa em eventos de luxo.',
+        images: [
+          'Fotosdiversas/Copo_novo.jpg',
+        ],
+        specs: [
+          ['Material', 'Vidro'],
+          ['Acabamento', 'Fio dourado'],
+          ['Uso', 'Serviço de mesa'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
       },
 
       /* TALHERES DOURADOS */
@@ -1943,7 +2038,10 @@
             <input type="number" class="qty-value" id="drawerQtyVal" value="1" min="1">
             <button class="qty-btn" onclick="changeDrawerQty(1)">+</button>
           </div>
-          <button class="btn-add-cart" onclick="addToCart('${id}', getDrawerQty(), this)">+ Adicionar ao Carrinho</button>
+          <button class="btn-add-cart" onclick="addToCart('${id}', getDrawerQty(), this)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Adicionar ao Carrinho
+          </button>
           <a href="tel:+351910060114" class="btn-outline-sm">910 060 114</a>
         </div>
       `;
@@ -1999,7 +2097,7 @@
                 <input type="number" class="qty-val-sm" value="1" min="1">
                 <button class="qty-btn-sm" onclick="var v=this.previousElementSibling;v.value=(parseInt(v.value)||1)+1">+</button>
               </div>
-              <button class="ci-add-btn" style="margin-top:0;border-top:none;flex:1;" onclick="addToCart('${itemId}', parseInt(this.parentElement.querySelector('.qty-val-sm').value)||1, this, true)">+ Adicionar</button>
+              <button class="ci-add-btn" onclick="addToCart('${itemId}', parseInt(this.parentElement.querySelector('.qty-val-sm').value)||1, this, true)">Adicionar</button>
             </div>
           </div>
         `;
@@ -2135,9 +2233,9 @@
             <span class="cart-item-ref">${item.ref}</span>
             <div class="cart-item-name">${item.name}</div>
             <div class="cart-item-qty">
-              <button class="qty-btn" onclick="updateQty('${item.id}',-1)">−</button>
+              <button class="cart-qty-btn" onclick="updateQty('${item.id}',-1)">−</button>
               <span class="qty-num">${item.qty}</span>
-              <button class="qty-btn" onclick="updateQty('${item.id}',1)">+</button>
+              <button class="cart-qty-btn" onclick="updateQty('${item.id}',1)">+</button>
             </div>
           </div>
           <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" aria-label="Remover">
@@ -2344,6 +2442,31 @@
         overlay.style.pointerEvents = 'all';
         setTimeout(() => { window.location.href = href; }, 440);
       });
+    })();
+
+    /* ── LIGHTBOX ── */
+    (function() {
+      const lb      = document.getElementById('lightbox');
+      const lbImg   = document.getElementById('lightboxImg');
+      const lbClose = document.getElementById('lightboxClose');
+
+      function openLightbox(src) {
+        lbImg.src = src;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        lb.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('drawerMainImg').addEventListener('click', function() {
+        if (this.src) openLightbox(this.src);
+      });
+
+      lbClose.addEventListener('click', closeLightbox);
+      lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
     })();
   </script>
 </body>

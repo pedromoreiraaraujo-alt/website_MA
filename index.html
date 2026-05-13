@@ -298,10 +298,10 @@
     }
 
     .stats-inner {
-      max-width: 1200px;
+      max-width: 900px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       text-align: center;
     }
@@ -440,8 +440,61 @@
       color: var(--gold);
     }
 
-    /* Featured */
+    /* ── RECENT PRODUCTS ── */
     .featured-section { background: var(--cream); }
+
+    .recent-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.75rem;
+      margin-top: 2.5rem;
+    }
+
+    .recent-card {
+      background: var(--cream-light);
+      border: 1px solid var(--cream-border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, border-color 0.3s;
+      box-shadow: 0 1px 4px rgba(20,18,15,0.04);
+      text-decoration: none; color: inherit; display: block;
+    }
+    .recent-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(184,154,85,0.3);
+      box-shadow: 0 12px 32px rgba(20,18,15,0.1), 0 3px 8px rgba(20,18,15,0.06);
+    }
+
+    .recent-card-img {
+      width: 100%; aspect-ratio: 4/3;
+      overflow: hidden; position: relative;
+      background: var(--cream-mid);
+    }
+    .recent-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .recent-card:hover .recent-card-img img { transform: scale(1.06); }
+    .recent-card-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(20,18,15,0.35) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .recent-card-body { padding: 1rem 1.1rem 1.25rem; }
+    .recent-card-cat {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold-dark); margin-bottom: 0.3rem;
+    }
+    .recent-card-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem; font-weight: 500; color: var(--dark); line-height: 1.3;
+    }
+    .recent-card-price {
+      font-size: 11px; color: var(--muted); margin-top: 0.35rem;
+    }
 
     /* ── SECTION DIVIDER ── */
     .section-divider {
@@ -473,249 +526,297 @@
       color: var(--gold-dark); opacity: 0.55;
     }
 
-    .featured-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-    }
 
-    .featured-item { position: relative; overflow: hidden; }
-    .featured-item:hover .featured-img img { transform: scale(1.04); }
+    /* ── EDITORIAL BLOCKS (About / Featured) ── */
+    .about-editorial { background: var(--cream-light); padding: 0; }
 
-    .featured-img {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: var(--cream-mid);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .featured-img::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(20,18,15,0.62) 0%, rgba(20,18,15,0.08) 55%, transparent 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .featured-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.45s ease;
-    }
-
-    .featured-img-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .featured-img-placeholder svg {
-      width: 38%;
-      opacity: 0.15;
-      stroke: var(--gold-dark);
-    }
-
-    .featured-info { padding: 1.1rem 0 0; }
-
-    .featured-category {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.3rem;
-    }
-
-    .featured-name {
+    .about-intro { padding: 5rem 0 2rem; max-width: 680px; }
+    .about-intro-heading {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: var(--dark);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300; letter-spacing: -0.02em; line-height: 1.1;
+      color: var(--dark); margin: 0.75rem 0 1.5rem;
     }
+    .about-intro-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 560px; }
 
-    /* About */
-    .about-grid {
+    .editorial-block {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
+      grid-template-columns: 5fr 7fr;
+      gap: 5rem;
       align-items: center;
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--cream-border);
     }
+    .editorial-block:last-child { border-bottom: none; }
+    .editorial-block.reverse { grid-template-columns: 7fr 5fr; }
+    .editorial-block.reverse .editorial-text { order: 2; }
+    .editorial-block.reverse .editorial-photos { order: 1; }
 
-    .about-visual { position: relative; }
-
-    .about-img-main {
-      width: 100%;
-      aspect-ratio: 4/5;
-      background: var(--cream-mid);
-      position: relative;
-    }
-
-    .about-img-accent {
-      position: absolute;
-      bottom: -1.25rem;
-      right: -1.25rem;
-      width: 38%;
-      aspect-ratio: 1;
-      background: var(--dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .about-accent-text {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.78rem;
-      font-style: italic;
-      color: var(--gold);
-      text-align: center;
-      padding: 1.1rem;
-      line-height: 1.7;
-    }
-
-    .about-text p {
-      color: var(--muted);
+    .editorial-eyebrow {
+      font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold-dark);
+      display: flex; align-items: center; gap: 0.75rem;
       margin-bottom: 1.25rem;
-      line-height: 1.85;
+    }
+    .editorial-eyebrow::before {
+      content: ''; width: 2rem; height: 1px; background: var(--gold-dark);
     }
 
-    .about-signature {
+    .editorial-heading {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.6rem;
-      font-style: italic;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
       color: var(--dark);
-      margin-top: 2rem;
-      padding-top: 1.75rem;
-      border-top: 1px solid var(--cream-border);
+      margin-bottom: 1.5rem;
     }
 
-    .about-accent-text {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.05rem;
-      font-style: italic;
-      color: var(--gold-light);
-      text-align: center;
-      padding: 1.75rem;
-      line-height: 1.7;
+    .editorial-text p {
+      font-size: 14px; color: var(--muted);
+      line-height: 1.85; margin-bottom: 2rem;
+      max-width: 380px;
     }
+
+    .btn-editorial {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.8rem 2rem;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      background: var(--gold-dark); color: var(--cream-light);
+      border-radius: 999px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-editorial:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(184,154,85,0.3);
+    }
+
+    .editorial-photos {
+      position: relative; height: 520px;
+    }
+    .editorial-photo-main {
+      position: absolute; top: 0; right: 0;
+      width: 72%; height: 75%; overflow: hidden;
+    }
+    .editorial-photo-secondary {
+      position: absolute; bottom: 0; left: 0;
+      width: 50%; height: 50%; overflow: hidden;
+      outline: 6px solid var(--cream-light);
+    }
+    .editorial-block.reverse .editorial-photo-main { left: 0; right: auto; }
+    .editorial-block.reverse .editorial-photo-secondary { right: 0; left: auto; }
+
+    .editorial-photos img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .editorial-block:hover .editorial-photos img { transform: scale(1.03); }
 
     /* Process */
-    .process-section { background: var(--dark); }
-    .process-section .section-title { color: var(--cream-light); }
-    .process-section .section-subtitle { color: rgba(245,239,226,0.45); }
+    .process-section { background: var(--cream); }
+    .process-section .eyebrow { color: var(--gold-dark); }
+    .process-section .section-title { color: var(--dark); }
+    .process-section .section-subtitle { color: var(--muted); }
 
     .process-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 3rem;
+      gap: 0;
       position: relative;
+      margin-top: 4rem;
     }
 
     .process-grid::before {
       content: '';
       position: absolute;
-      top: 27px;
+      top: 2.2rem;
       left: 12.5%;
       right: 12.5%;
       height: 1px;
-      background: rgba(184,154,85,0.2);
+      background: linear-gradient(to right, transparent, var(--gold-light) 20%, var(--gold-light) 80%, transparent);
     }
 
-    .process-step { text-align: center; position: relative; }
+    .process-step {
+      text-align: center;
+      padding: 0 1.75rem;
+      position: relative;
+    }
 
     .process-number {
-      width: 56px;
-      height: 56px;
-      border: 1px solid rgba(184,154,85,0.45);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.5rem;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.25rem;
+      font-size: 4.5rem;
+      font-weight: 300;
       color: var(--gold);
-      background: var(--dark);
+      line-height: 1;
+      margin-bottom: 1.25rem;
       position: relative;
       z-index: 1;
+      display: block;
+    }
+
+    .process-number::after {
+      content: '';
+      display: block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin: 0.4rem auto 0;
     }
 
     .process-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-      color: var(--cream-light);
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      color: var(--dark);
     }
 
-    .process-desc { font-size: 0.875rem; color: rgba(245,239,226,0.42); line-height: 1.7; }
+    .process-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.75; }
 
     /* Testimonials */
-    .testimonials-section { background: var(--dark); }
-
-    .testimonials-section .eyebrow { color: var(--gold); }
-    .testimonials-section .section-title { color: var(--cream-light); }
+    .testimonials-section { background: var(--cream-light); }
+    .testimonials-section .eyebrow { color: var(--gold-dark); }
+    .testimonials-section .section-title { color: var(--dark); }
 
     .testimonials-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
+      margin-top: 1rem;
     }
 
     .testimonial-card {
-      border: 1px solid rgba(184,154,85,0.2);
-      padding: 2.5rem;
+      background: var(--white);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 2rem 2rem 2rem 2.25rem;
+      box-shadow: 0 2px 20px rgba(20,18,15,0.05), 0 1px 4px rgba(20,18,15,0.03);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .testimonial-card:hover {
+      box-shadow: 0 8px 32px rgba(20,18,15,0.09), 0 2px 8px rgba(20,18,15,0.05);
+      transform: translateY(-3px);
     }
 
     .testimonial-quote {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 3.5rem;
+      font-size: 4rem;
       color: var(--gold);
-      line-height: 0.8;
-      margin-bottom: 1.25rem;
+      opacity: 0.35;
+      line-height: 0.75;
+      margin-bottom: 1rem;
     }
 
     .testimonial-text {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1.1rem;
       font-style: italic;
-      color: rgba(245,239,226,0.75);
+      color: var(--dark-soft);
       line-height: 1.8;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
 
     .testimonial-author {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--dark);
     }
 
     .testimonial-role {
       font-size: 0.8rem;
-      color: rgba(245,239,226,0.35);
-      margin-top: 0.25rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
     }
 
     /* CTA Band */
     .cta-band {
-      background: var(--gold);
-      padding: 5rem 2rem;
-      text-align: center;
+      position: relative; overflow: hidden;
+      min-height: 520px;
+      display: flex; align-items: center;
     }
-
-    .cta-band h2 {
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      color: var(--dark);
-      margin-bottom: 0.75rem;
+    .cta-band-bg {
+      position: absolute; inset: 0;
+      background-image: url('Fotosdiversas/535IMG3.jpg');
+      background-size: cover; background-position: center 30%;
+      transform: scale(1.04);
+      transition: transform 8s ease;
     }
+    .cta-band:hover .cta-band-bg { transform: scale(1); }
+    .cta-band-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right, rgba(20,18,15,0.92) 0%, rgba(20,18,15,0.72) 55%, rgba(20,18,15,0.55) 100%),
+        radial-gradient(ellipse 80% 70% at 30% 50%, rgba(138,115,64,0.12) 0%, transparent 60%);
+    }
+    .cta-band-inner {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto; padding: 5rem 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .cta-band-text .eyebrow { color: var(--gold); margin-bottom: 1.25rem; }
+    .cta-band-text h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      font-weight: 300; line-height: 1.08; letter-spacing: -0.02em;
+      color: var(--cream-light); margin-bottom: 1.25rem;
+    }
+    .cta-band-text h2 em { font-style: italic; color: var(--gold-light); display: block; }
+    .cta-band-text p {
+      font-size: 14px; color: rgba(245,239,226,0.5);
+      line-height: 1.85; max-width: 400px; margin-bottom: 2.5rem;
+    }
+    .cta-band-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-    .cta-band p {
-      font-size: 1rem;
-      color: rgba(20,18,15,0.65);
-      margin-bottom: 2rem;
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.95rem 2.5rem;
+      font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      border: 1.5px solid var(--gold); border-radius: 999px;
+      color: var(--dark); background: var(--gold);
+      transition: background 0.25s ease, color 0.25s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    }
+    .btn-cta:hover {
+      background: var(--gold-light); border-color: var(--gold-light);
+      box-shadow: 0 6px 28px rgba(184,154,85,0.4);
+      transform: translateY(-2px);
+    }
+    .btn-cta-outline {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.95rem 2.5rem;
+      font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      border: 1.5px solid rgba(245,239,226,0.25); border-radius: 999px;
+      color: rgba(245,239,226,0.65);
+      transition: border-color 0.25s, color 0.25s, transform 0.15s;
+    }
+    .btn-cta-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    .cta-band-aside {
+      display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-start;
+    }
+    .cta-aside-card {
+      background: rgba(245,239,226,0.04);
+      border: 1px solid rgba(184,154,85,0.15);
+      border-left: 3px solid var(--gold);
+      padding: 1.25rem 1.5rem;
+      width: 100%;
+      display: flex; align-items: center; gap: 1rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cta-aside-card:hover { background: rgba(184,154,85,0.07); border-color: rgba(184,154,85,0.4); }
+    .cta-aside-icon {
+      color: var(--gold); flex-shrink: 0;
+      width: 40px; height: 40px;
+      background: rgba(184,154,85,0.1); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cta-aside-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem; font-weight: 600; font-style: normal;
+      color: var(--cream-light); line-height: 1.25; letter-spacing: -0.01em;
     }
 
     .btn-dark {
@@ -827,8 +928,17 @@
     footer {
       background: var(--dark);
       color: rgba(245,239,226,0.45);
-      padding: 4rem 2rem 2rem;
+      padding: 0 2rem 2rem;
+      border-top: 1px solid rgba(184,154,85,0.2);
     }
+
+    .footer-brand-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 3rem 0 3rem;
+      border-bottom: 1px solid rgba(245,239,226,0.06);
+      margin-bottom: 3rem;
+    }
+    .footer-brand-left { display: flex; align-items: baseline; gap: 1.5rem; }
 
     .footer-inner { max-width: 1200px; margin: 0 auto; }
 
@@ -843,7 +953,7 @@
 
     .footer-logo {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2rem;
+      font-size: 2.4rem;
       font-style: italic;
       color: var(--cream-light);
       margin-bottom: 0.5rem;
@@ -877,13 +987,33 @@
 
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
 
+    .footer-links li { font-size: 0.875rem; color: rgba(245,239,226,0.45); }
+
     .footer-links a {
       font-size: 0.875rem;
       color: rgba(245,239,226,0.45);
       transition: color 0.2s;
+      display: flex; align-items: center; gap: 0.5rem;
     }
+    .footer-links a::before {
+      content: ''; display: inline-block; width: 12px; height: 1px;
+      background: var(--gold); opacity: 0;
+      transition: opacity 0.2s, width 0.2s;
+      flex-shrink: 0;
+    }
+    .footer-links a:hover { color: var(--cream-light); padding-left: 0; }
+    .footer-links a:hover::before { opacity: 1; }
 
-    .footer-links a:hover { color: var(--cream-light); }
+    .footer-social { display: flex; gap: 0.75rem; }
+    .footer-social-link {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(184,154,85,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(245,239,226,0.45); font-size: 11px; font-weight: 700;
+      letter-spacing: 0; text-transform: none;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .footer-social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,154,85,0.08); }
 
     .footer-bottom {
       display: flex;
@@ -987,6 +1117,10 @@
     }
 
     @media (max-width: 960px) {
+      .cta-band-inner { grid-template-columns: 1fr; }
+      .cta-band-aside { flex-direction: row; flex-wrap: wrap; }
+      .cta-aside-card { width: calc(50% - 0.75rem); }
+      .footer-brand-row { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       .hero { grid-template-columns: 1fr; min-height: auto; }
@@ -995,7 +1129,7 @@
       .hero-left::after { display: none; }
       .hero-scroll { display: none; }
       .hero-right-badge { display: none; }
-      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .stats-inner { grid-template-columns: repeat(3, 1fr); }
       .categories-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
       .category-card.cat-featured { grid-row: auto; grid-column: auto; }
       .category-card.cat-featured .category-card-img { width: 58%; height: 62%; object-position: bottom right; }
@@ -1143,8 +1277,7 @@
       <a href="#" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="height:80px;width:auto;display:block;"></a>
       <ul class="nav-links">
         <li><a href="catalogo.html">Catálogo</a></li>
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#processo">Como Funciona</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
       <a href="#contacto" class="nav-cta">Pedir Orçamento</a>
@@ -1157,9 +1290,8 @@
   <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav">
     <span class="mobile-nav-close" id="mobileClose">✕</span>
-    <a href="#catalogo" class="mobile-link">Catálogo</a>
-    <a href="#sobre" class="mobile-link">Sobre</a>
-    <a href="#processo" class="mobile-link">Como Funciona</a>
+    <a href="catalogo.html" class="mobile-link">Catálogo</a>
+    <a href="sobre.html" class="mobile-link">Sobre</a>
     <a href="#contacto" class="mobile-link">Contacto</a>
     <a href="#contacto" class="btn-primary">Pedir Orçamento</a>
   </div>
@@ -1203,80 +1335,68 @@
   <!-- Stats -->
   <div class="stats-bar">
     <div class="stats-inner">
-      <div class="fade-in"><div class="stat-number">500+</div><div class="stat-label">Eventos Realizados</div></div>
+      <div class="fade-in"><div class="stat-number">1500+</div><div class="stat-label">Eventos Realizados</div></div>
       <div class="fade-in delay-1"><div class="stat-number">25</div><div class="stat-label">Anos de Experiência</div></div>
-      <div class="fade-in delay-2"><div class="stat-number">2000+</div><div class="stat-label">Peças em Catálogo</div></div>
-      <div class="fade-in delay-3"><div class="stat-number">98%</div><div class="stat-label">Clientes Satisfeitos</div></div>
+      <div class="fade-in delay-2"><div class="stat-number">500+</div><div class="stat-label">Peças em Catálogo</div></div>
     </div>
   </div>
 
-  <!-- Featured Items -->
+  <!-- Recent Products -->
   <section class="section featured-section">
     <div class="container">
       <div class="section-header fade-in" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;">
         <div>
-          <div class="eyebrow">Destaques</div>
-          <h2 class="section-title" style="margin-bottom:0;">Peças Mais Procuradas</h2>
+          <div class="eyebrow">Novidades</div>
+          <h2 class="section-title" style="margin-bottom:0;">Peças Mais Recentes</h2>
         </div>
-        <a href="#contacto" class="btn-outline">Ver Catálogo Completo</a>
+        <a href="catalogo.html" class="btn-outline">Ver Catálogo Completo</a>
       </div>
-      <div class="featured-grid">
 
-        <div class="featured-item fade-in">
-          <div class="featured-img" style="background: linear-gradient(135deg, #ede4d0 0%, #e0d5c0 100%);">
-            <div class="featured-img-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-              </svg>
-            </div>
-          </div>
-          <div class="featured-info">
-            <div class="featured-category">Decoração</div>
-            <div class="featured-name">Centro de Mesa em Cristal</div>
-          </div>
-        </div>
+      <div class="recent-grid">
 
-        <div class="featured-item fade-in delay-1">
-          <div class="featured-img" style="background: linear-gradient(135deg, #e8dfc8 0%, #ddd0b5 100%);">
-            <div class="featured-img-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-              </svg>
-            </div>
+        <a href="catalogo.html" class="recent-card fade-in">
+          <div class="recent-card-img">
+            <img src="Fotosdiversas/Copo_novo.jpg" alt="Copo Fio Dourado">
           </div>
-          <div class="featured-info">
-            <div class="featured-category">Iluminação</div>
-            <div class="featured-name">Lustre de Cristal Vintage</div>
+          <div class="recent-card-body">
+            <div class="recent-card-cat">Louça &amp; Cristalaria</div>
+            <div class="recent-card-name">Copo Fio Dourado</div>
+            <div class="recent-card-price">Sob consulta</div>
           </div>
-        </div>
+        </a>
 
-        <div class="featured-item fade-in delay-2">
-          <div class="featured-img" style="background: linear-gradient(135deg, #ede4d0 0%, #e0d5c0 100%);">
-            <div class="featured-img-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 9V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2"/><path d="M2 11h20v11H2z"/><path d="M12 11v11"/>
-              </svg>
-            </div>
+        <a href="catalogo.html" class="recent-card fade-in delay-1">
+          <div class="recent-card-img">
+            <img src="Fotosdiversas/I2.jpg" alt="Cadeira Dobrável Castanha">
           </div>
-          <div class="featured-info">
-            <div class="featured-category">Mobiliário</div>
-            <div class="featured-name">Cadeira Tiffany Dourada</div>
+          <div class="recent-card-body">
+            <div class="recent-card-cat">Mobiliário</div>
+            <div class="recent-card-name">Cadeira Dobrável Castanha</div>
+            <div class="recent-card-price">Sob consulta</div>
           </div>
-        </div>
+        </a>
 
-        <div class="featured-item fade-in delay-3">
-          <div class="featured-img" style="background: linear-gradient(135deg, #e8dfc8 0%, #ddd0b5 100%);">
-            <div class="featured-img-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
-              </svg>
-            </div>
+        <a href="catalogo.html" class="recent-card fade-in delay-2">
+          <div class="recent-card-img">
+            <img src="Fotosdiversas/P2.jpg" alt="Saia de Mesa">
           </div>
-          <div class="featured-info">
-            <div class="featured-category">Louça &amp; Cristalaria</div>
-            <div class="featured-name">Serviço de Jantar em Porcelana</div>
+          <div class="recent-card-body">
+            <div class="recent-card-cat">Têxteis</div>
+            <div class="recent-card-name">Saia de Mesa</div>
+            <div class="recent-card-price">Sob consulta</div>
           </div>
-        </div>
+        </a>
+
+        <a href="catalogo.html" class="recent-card fade-in delay-3">
+          <div class="recent-card-img">
+            <img src="Fotosdiversas/Foto talheres dourados.png" alt="Talheres Dourados">
+          </div>
+          <div class="recent-card-body">
+            <div class="recent-card-cat">Louça &amp; Cristalaria</div>
+            <div class="recent-card-name">Talheres Dourados</div>
+            <div class="recent-card-price">Sob consulta</div>
+          </div>
+        </a>
 
       </div>
     </div>
@@ -1300,66 +1420,6 @@
     </div>
     <div class="section-divider-tagline">Elegância em Cada Detalhe</div>
   </div>
-
-  <!-- About -->
-  <section class="section" id="sobre">
-    <div class="container">
-      <div class="about-grid">
-
-        <div class="about-visual fade-in">
-          <div class="about-img-main" style="background: var(--cream-mid);">
-            <img src="Fotosdiversas/img2.png" alt="Salão de eventos Moreira &amp; Araújo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;">
-          </div>
-          <div class="about-img-accent">
-            <div class="about-accent-text">"Cada evento é uma obra de arte que merece os melhores materiais."</div>
-          </div>
-        </div>
-
-        <div class="about-text fade-in">
-          <div class="eyebrow">Sobre Nós</div>
-          <h2 class="section-title">Tradição e Elegância ao Seu Serviço</h2>
-          <p>Há mais de 25 anos que a Moreira &amp; Araújo se dedica a tornar eventos extraordinários. Nascemos da paixão por criar momentos inesquecíveis e da convicção de que cada detalhe importa.</p>
-          <p>O nosso catálogo, cuidadosamente seleccionado, reúne as melhores peças de mobiliário, decoração, louça e têxteis — de estilo clássico ao contemporâneo — para que o seu evento reflicta exactamente a sua visão.</p>
-          <p>Trabalhamos em estreita colaboração com wedding planners, organizadores de eventos e particulares, garantindo um serviço personalizado do primeiro contacto à entrega e recolha do material.</p>
-          <div class="about-signature">Família Moreira &amp; Araújo</div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Process -->
-  <section class="section process-section" id="processo">
-    <div class="container">
-      <div class="section-header fade-in" style="text-align:center;">
-        <div class="eyebrow">Como Funciona</div>
-        <h2 class="section-title">Um Processo Simples e Transparente</h2>
-        <p class="section-subtitle" style="margin: 0 auto;">Do primeiro contacto à recolha, tratamos de tudo para que não tenha com que se preocupar.</p>
-      </div>
-      <div class="process-grid fade-in">
-        <div class="process-step">
-          <div class="process-number">01</div>
-          <h3 class="process-title">Consulta</h3>
-          <p class="process-desc">Conte-nos sobre o seu evento — data, número de convidados e estilo pretendido.</p>
-        </div>
-        <div class="process-step">
-          <div class="process-number">02</div>
-          <h3 class="process-title">Proposta</h3>
-          <p class="process-desc">Preparamos uma proposta personalizada com o material seleccionado e orçamento detalhado.</p>
-        </div>
-        <div class="process-step">
-          <div class="process-number">03</div>
-          <h3 class="process-title">Confirmação</h3>
-          <p class="process-desc">Confirma a reserva e nós tratamos de toda a logística de entrega e montagem.</p>
-        </div>
-        <div class="process-step">
-          <div class="process-number">04</div>
-          <h3 class="process-title">Evento</h3>
-          <p class="process-desc">Desfrute do seu evento. Após o fim, recolhemos todo o material sem qualquer preocupação.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Testimonials -->
   <section class="section testimonials-section">
@@ -1393,140 +1453,74 @@
 
   <!-- CTA Band -->
   <div class="cta-band fade-in">
-    <div class="container" style="max-width:680px;">
-      <div class="eyebrow" style="color:rgba(20,18,15,0.5); margin-bottom:0.75rem;">Pronto para Começar?</div>
-      <h2>Vamos Criar o Seu Evento de Sonho</h2>
-      <p>Entre em contacto hoje e descubra como podemos tornar o seu evento verdadeiramente especial.</p>
-      <a href="#contacto" class="btn-dark">Pedir Orçamento Gratuito</a>
+    <div class="cta-band-bg"></div>
+    <div class="cta-band-overlay"></div>
+    <div class="cta-band-inner">
+      <div class="cta-band-text">
+        <div class="eyebrow" style="margin-bottom:1.25rem;">Pronto para Começar?</div>
+        <h2>Vamos Criar o Seu <em>Evento de Sonho</em></h2>
+        <p>Entre em contacto hoje e descubra como podemos tornar o seu evento verdadeiramente especial — do primeiro detalhe ao último.</p>
+        <div class="cta-band-actions">
+          <a href="#contacto" class="btn-cta">Pedir Orçamento Gratuito</a>
+          <a href="catalogo.html" class="btn-cta-outline">Ver Catálogo</a>
+        </div>
+      </div>
+      <div class="cta-band-aside">
+        <div class="cta-aside-card">
+          <div class="cta-aside-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg>
+          </div>
+          <div class="cta-aside-title">Orçamento sem compromisso</div>
+        </div>
+        <div class="cta-aside-card">
+          <div class="cta-aside-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="cta-aside-title">Montagem e Desmontagem incluídas</div>
+        </div>
+        <div class="cta-aside-card">
+          <div class="cta-aside-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div class="cta-aside-title">Transporte grátis até 50km da nossa sede</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Contact -->
-  <section class="section contact-section" id="contacto">
-    <div class="container">
-      <div class="contact-grid">
-
-        <div class="contact-info fade-in">
-          <div class="eyebrow">Contacto</div>
-          <h2 class="section-title">Fale Connosco</h2>
-          <p>Responderemos dentro de 24 horas com uma proposta personalizada para o seu evento.</p>
-
-          <div class="contact-detail">
-            <div class="contact-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-              </svg>
-            </div>
-            <div>
-              <div class="contact-label">Morada</div>
-              <div class="contact-value">Travessa do Eirado A-66<br>Ferreiró, Vila do Conde</div>
-            </div>
-          </div>
-
-          <div class="contact-detail">
-            <div class="contact-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.72 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.64 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.81-.81a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.28v-.36z"/>
-              </svg>
-            </div>
-            <div>
-              <div class="contact-label">Telefone</div>
-              <div class="contact-value">910 060 114 / 252 651 538</div>
-            </div>
-          </div>
-
-          <div class="contact-detail">
-            <div class="contact-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-              </svg>
-            </div>
-            <div>
-              <div class="contact-label">Email</div>
-              <div class="contact-value">geral.moreiraearaujo@gmail.com</div>
-            </div>
-          </div>
-
-          <div class="contact-detail">
-            <div class="contact-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-              </svg>
-            </div>
-            <div>
-              <div class="contact-label">Horário</div>
-              <div class="contact-value">Seg. a Sex.: 9h–18h<br>Sábado: 9h–13h</div>
-            </div>
-          </div>
-        </div>
-
-        <div id="cartSummaryBox" style="display:none;"></div>
-        <form class="contact-form fade-in" onsubmit="handleSubmit(event)">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="nome">Nome</label>
-              <input id="nome" type="text" placeholder="O seu nome" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input id="email" type="email" placeholder="email@exemplo.com" required>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="tel">Telefone</label>
-              <input id="tel" type="tel" placeholder="+351 900 000 000">
-            </div>
-            <div class="form-group">
-              <label for="tipo">Tipo de Evento</label>
-              <select id="tipo">
-                <option value="">Seleccionar...</option>
-                <option>Casamento</option>
-                <option>Baptizado</option>
-                <option>Evento Corporativo</option>
-                <option>Festa Privada</option>
-                <option>Outro</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="msg">Mensagem</label>
-            <textarea id="msg" placeholder="Descreva o seu evento e o material que procura..."></textarea>
-          </div>
-          <button type="submit" class="btn-primary" style="width:100%; padding:1rem; font-size:11px;">Enviar Pedido de Orçamento</button>
-        </form>
-
-      </div>
-    </div>
-  </section>
 
   <!-- Footer -->
   <footer>
     <div class="footer-inner">
+      <div class="footer-brand-row">
+        <div class="footer-brand-left">
+          <div class="footer-logo">Moreira <span class="amp">&</span> Araújo</div>
+          <div class="footer-tagline" style="margin:0;">Eventos · Aluguer de Material</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/moreiraearaujo2001/?locale=pt_PT" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
       <div class="footer-top">
         <div>
-          <div class="footer-logo">Moreira <span class="amp">&</span> Araújo</div>
-          <div class="footer-tagline">Eventos · Aluguer de Material</div>
-          <p class="footer-desc">Especialistas em aluguer de material para eventos de luxo em todo Portugal. Qualidade, elegância e serviço personalizado.</p>
+          <p class="footer-desc">Especialistas em aluguer de material para eventos de luxo em todo Portugal. Qualidade, elegância e serviço personalizado desde 1999.</p>
         </div>
         <div class="footer-col">
           <h4>Catálogo</h4>
           <ul class="footer-links">
-            <li><a href="#catalogo">Mobiliário</a></li>
-            <li><a href="#catalogo">Iluminação</a></li>
-            <li><a href="#catalogo">Louça &amp; Cristalaria</a></li>
-            <li><a href="#catalogo">Têxteis</a></li>
-            <li><a href="#catalogo">Tendas &amp; Estruturas</a></li>
-            <li><a href="#catalogo">Decoração</a></li>
+            <li><a href="catalogo.html">Mobiliário</a></li>
+            <li><a href="catalogo.html">Louça &amp; Cristalaria</a></li>
+            <li><a href="catalogo.html">Têxteis</a></li>
+            <li><a href="catalogo.html">Decoração</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Empresa</h4>
           <ul class="footer-links">
-            <li><a href="#sobre">Sobre Nós</a></li>
-            <li><a href="#processo">Como Funciona</a></li>
-            <li><a href="#contacto">Testemunhos</a></li>
-            <li><a href="#contacto">Galeria</a></li>
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="#contacto">Contacto</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -1534,8 +1528,9 @@
           <ul class="footer-links">
             <li><a href="mailto:geral.moreiraearaujo@gmail.com">geral.moreiraearaujo@gmail.com</a></li>
             <li><a href="tel:+351910060114">910 060 114 / 252 651 538</a></li>
-            <li><a href="#contacto">Vila do Conde, Portugal</a></li>
-            <li style="margin-top:1rem;"><a href="https://www.facebook.com/moreiraearaujo2001/?locale=pt_PT" target="_blank" rel="noopener">Facebook</a></li>
+            <li>Vila do Conde, Portugal</li>
+            <li style="margin-top:0.75rem; color:rgba(245,239,226,0.3);">Seg. a Sex.: 9h–18h</li>
+            <li style="color:rgba(245,239,226,0.3);">Sábado: 9h–13h</li>
           </ul>
         </div>
       </div>

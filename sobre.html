@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre Nós — Moreira &amp; Araújo Eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5efe2; --cream-light: #faf7f2; --cream-mid: #ede4d0;
+      --cream-border: #e0d5c0; --dark: #14120f; --dark-soft: #2a2520;
+      --muted: #6b5f4a; --gold: #b89a55; --gold-light: #d4b87a;
+      --gold-dark: #8a7340; --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--dark); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--cream-light);
+      border-bottom: 1px solid var(--cream-border);
+      padding: 1.5rem 2rem;
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-style: italic; color: var(--dark); }
+    .nav-logo .amp { font-family: Georgia, serif; font-style: italic; color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); transition: color 0.2s; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--dark); }
+    .nav-cta {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      border: 1px solid var(--gold); color: var(--gold); padding: 0.5rem 1.25rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--white); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: var(--dark); padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+    .page-header .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+    .page-header h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; color: var(--cream); letter-spacing: -0.02em; }
+    .page-header p { color: rgba(245,239,226,0.55); font-size: 14px; margin-top: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+    /* ── MAIN WRAP ── */
+    .about-wrap { max-width: 1280px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+    /* ── ABOUT INTRO ── */
+    .about-intro { padding: 5rem 0 2rem; max-width: 680px; }
+    .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); display: flex; align-items: center; gap: 0.75rem;
+    }
+    .eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--gold); flex-shrink: 0; }
+    .about-intro-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300; letter-spacing: -0.02em; line-height: 1.1;
+      color: var(--dark); margin: 0.75rem 0 1.5rem;
+    }
+    .about-intro-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 560px; }
+
+    /* ── EDITORIAL BLOCKS ── */
+    .editorial-block {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 5rem; align-items: center;
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--cream-border);
+    }
+    .editorial-block:last-child { border-bottom: none; }
+    .editorial-block.reverse { grid-template-columns: 7fr 5fr; }
+    .editorial-block.reverse .editorial-text { order: 2; }
+    .editorial-block.reverse .editorial-photos { order: 1; }
+
+    .editorial-eyebrow {
+      font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold-dark); display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .editorial-eyebrow::before { content: ''; width: 2rem; height: 1px; background: var(--gold-dark); }
+
+    .editorial-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 500; line-height: 1.05; letter-spacing: -0.02em;
+      color: var(--dark); margin-bottom: 1.5rem;
+    }
+
+    .editorial-text p { font-size: 14px; color: var(--muted); line-height: 1.85; margin-bottom: 2rem; max-width: 380px; }
+
+    .btn-editorial {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.8rem 2rem; font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      background: var(--gold-dark); color: var(--cream-light);
+      border-radius: 999px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-editorial:hover { background: var(--gold); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(184,154,85,0.3); }
+
+    .editorial-photos { position: relative; height: 520px; }
+    .editorial-photo-main {
+      position: absolute; top: 0; right: 0;
+      width: 72%; height: 75%; overflow: hidden;
+    }
+    .editorial-photo-secondary {
+      position: absolute; bottom: 0; left: 0;
+      width: 50%; height: 50%; overflow: hidden;
+      outline: 6px solid var(--cream-light);
+    }
+    .editorial-block.reverse .editorial-photo-main { left: 0; right: auto; }
+    .editorial-block.reverse .editorial-photo-secondary { right: 0; left: auto; }
+
+    .editorial-photos img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .editorial-block:hover .editorial-photos img { transform: scale(1.03); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); color: rgba(245,239,226,0.45); padding: 4rem 2rem 2rem; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem; padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(245,239,226,0.07); margin-bottom: 2rem;
+    }
+    .footer-logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; font-style: italic; color: var(--cream-light); margin-bottom: 0.5rem; }
+    .footer-logo .amp { font-family: Georgia, serif; font-style: italic; color: var(--gold); }
+    .footer-tagline { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(245,239,226,0.3); margin-bottom: 1.5rem; }
+    .footer-desc { font-size: 0.875rem; line-height: 1.8; max-width: 260px; }
+    .footer-col h4 { font-family: 'Lato', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-links a { font-size: 0.875rem; color: rgba(245,239,226,0.45); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cream-light); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
+
+    /* ── FADE-IN ── */
+    .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in.delay-1 { transition-delay: 0.1s; }
+    .fade-in.delay-2 { transition-delay: 0.2s; }
+
+    /* ── PAGE TRANSITION ── */
+    #pageTransition {
+      position: fixed; inset: 0; z-index: 10000;
+      background: var(--cream-light);
+      opacity: 1;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .editorial-block, .editorial-block.reverse { grid-template-columns: 1fr; gap: 3rem; }
+      .editorial-block.reverse .editorial-text { order: 1; }
+      .editorial-block.reverse .editorial-photos { order: 2; }
+      .editorial-photos { height: 380px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 600px) {
+      .editorial-photos { height: 280px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="pageTransition"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="height:80px;width:auto;display:block;"></a>
+      <ul class="nav-links">
+        <li><a href="index.html" aria-label="Início" style="display:flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="sobre.html" class="active">Sobre</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+      <a href="index.html#contacto" class="nav-cta">Pedir Orçamento</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="eyebrow" style="justify-content:center;">Moreira &amp; Araújo</div>
+    <h1>Sobre Nós</h1>
+    <p>Uma empresa familiar com mais de 25 anos de experiência em eventos</p>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="about-wrap">
+
+    <!-- Intro -->
+    <div class="about-intro fade-in">
+      <div class="eyebrow" style="color:var(--gold-dark);">A Nossa História</div>
+      <h2 class="about-intro-heading">Moreira &amp; Araújo</h2>
+      <p class="about-intro-text">Somos uma empresa familiar com mais de 25 anos de experiência no aluguer de material para eventos. A nossa missão é simples: garantir que cada evento seja inesquecível, com o material certo, entregue a tempo e com o serviço que merece.</p>
+    </div>
+
+    <!-- Editorial Block: Photos left, text right -->
+    <div class="editorial-block reverse fade-in">
+      <div class="editorial-text">
+        <div class="editorial-eyebrow">A Nossa Missão</div>
+        <h2 class="editorial-heading">Venha Conhecer Tudo o Que Temos Para Si.</h2>
+        <p>O nosso catálogo reúne as melhores peças de mobiliário, decoração, louça e têxteis — de estilo clássico ao contemporâneo. Trabalhamos com wedding planners, organizadores e particulares, garantindo um serviço personalizado do primeiro contacto à recolha do material.</p>
+        <a href="catalogo.html" class="btn-editorial">Ver Catálogo</a>
+      </div>
+      <div class="editorial-photos">
+        <div class="editorial-photo-main">
+          <img src="Fotosdiversas/535IMG3.jpg" alt="Evento Moreira &amp; Araújo">
+        </div>
+        <div class="editorial-photo-secondary">
+          <img src="Fotosdiversas/IMG-20230606-WA0001.jpg" alt="Montagem">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">Moreira <span class="amp">&</span> Araújo</div>
+          <div class="footer-tagline">Eventos · Aluguer de Material</div>
+          <p class="footer-desc">Especialistas em aluguer de material para eventos de luxo em todo Portugal. Qualidade, elegância e serviço personalizado.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Catálogo</h4>
+          <ul class="footer-links">
+            <li><a href="catalogo.html">Mobiliário</a></li>
+            <li><a href="catalogo.html">Louça &amp; Cristalaria</a></li>
+            <li><a href="catalogo.html">Têxteis</a></li>
+            <li><a href="catalogo.html">Decoração</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <ul class="footer-links">
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:geral.moreiraearaujo@gmail.com">geral.moreiraearaujo@gmail.com</a></li>
+            <li><a href="tel:+351910060114">910 060 114 / 252 651 538</a></li>
+            <li>Vila do Conde, Portugal</li>
+            <li style="margin-top:0.75rem;">Seg. a Sex.: 9h–18h</li>
+            <li>Sábado: 9h–13h</li>
+            <li style="margin-top:1rem;"><a href="https://www.facebook.com/moreiraearaujo2001/?locale=pt_PT" target="_blank" rel="noopener">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Moreira &amp; Araújo. Todos os direitos reservados.</span>
+        <span>Política de Privacidade &nbsp;·&nbsp; Termos e Condições</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── FADE-IN ── */
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+    fadeEls.forEach(el => io.observe(el));
+
+    /* ── PAGE TRANSITIONS ── */
+    (function() {
+      const overlay = document.getElementById('pageTransition');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        overlay.style.opacity = '0';
+      }));
+      document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href]');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || /^https?:\/\//.test(href)) return;
+        e.preventDefault();
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'all';
+        setTimeout(() => { window.location.href = href; }, 440);
+      });
+    })();
+  </script>
+
+</body>
+</html>
