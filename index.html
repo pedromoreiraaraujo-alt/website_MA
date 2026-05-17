@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root {
       --cream: #f5efe2;
@@ -1632,89 +1631,6 @@
       setTimeout(() => el.classList.add('visible'), 100);
     });
 
-    /* ── EmailJS config (mesmos IDs do catalogo.html) ── */
-    const EMAILJS_SERVICE  = 'service_hedx7n4';
-    const EMAILJS_TEMPLATE = 'template_fo7ukql';
-    const EMAILJS_KEY      = 'RHarKQcbP-Dabtyb1';
-    emailjs.init({ publicKey: EMAILJS_KEY });
-
-    // Form
-    async function handleSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const btn  = form.querySelector('button[type="submit"]');
-
-      const nome  = form.querySelector('#nome').value;
-      const email = form.querySelector('#email').value;
-      const tel   = form.querySelector('#tel').value;
-      const tipo  = form.querySelector('#tipo').value;
-      const msg   = form.querySelector('#msg').value;
-
-      const cart = JSON.parse(localStorage.getItem('ma_cart') || '[]');
-      const cartText = cart.length
-        ? cart.map(i => `• ${i.ref} — ${i.name} (unid: ${i.qty})`).join('\n')
-        : '—';
-
-      btn.textContent = 'A enviar…';
-      btn.disabled = true;
-
-      try {
-        await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
-          from_name:   nome,
-          from_email:  email,
-          telefone:    tel  || '—',
-          artigos:     cartText,
-          observacoes: (tipo ? 'Tipo de evento: ' + tipo + '\n\n' : '') + msg,
-          reply_to:    email,
-        });
-        btn.textContent = 'Pedido Enviado ✓';
-        btn.style.background = 'var(--gold)';
-        btn.style.color = 'var(--dark)';
-        localStorage.removeItem('ma_cart');
-        form.reset();
-        document.getElementById('cartSummaryBox').style.display = 'none';
-      } catch (err) {
-        console.error('EmailJS error:', err);
-        btn.textContent = 'Erro — Tente novamente';
-        btn.disabled = false;
-        btn.style.background = '#c05050';
-        btn.style.color = '#fff';
-      }
-    }
-
-    // Cart integration
-    (function() {
-      const cart = JSON.parse(localStorage.getItem('ma_cart') || '[]');
-      if (cart.length === 0) return;
-      const total = cart.reduce((sum, i) => sum + i.qty, 0);
-      const box = document.getElementById('cartSummaryBox');
-      box.style.display = 'block';
-      box.innerHTML = `
-        <div class="cart-summary-box">
-          <div class="cart-summary-eyebrow">Carrinho — ${total} ${total === 1 ? 'artigo' : 'artigos'}</div>
-          <div class="cart-summary-title">Artigos seleccionados no catálogo:</div>
-          ${cart.map(item => `
-            <div class="cart-summary-item">
-              <span class="cart-summary-item-ref">${item.ref}</span>
-              <span>${item.name}</span>
-              <span class="cart-summary-item-qty">× ${item.qty}</span>
-            </div>`).join('')}
-          <button class="cart-clear-btn" onclick="clearCartFromForm()">✕ Limpar selecção</button>
-        </div>`;
-
-      const msgEl = document.getElementById('msg');
-      if (!msgEl.value) {
-        msgEl.value = 'Artigos pretendidos:\n' +
-          cart.map(i => `• ${i.ref} — ${i.name}  (unid: ${i.qty})`).join('\n') +
-          '\n\n';
-      }
-    })();
-
-    function clearCartFromForm() {
-      localStorage.removeItem('ma_cart');
-      document.getElementById('cartSummaryBox').style.display = 'none';
-      document.getElementById('msg').value = '';
-    }
 
     /* ── CART FAB ── */
     function getMiniCart() { return JSON.parse(localStorage.getItem('ma_cart') || '[]'); }
