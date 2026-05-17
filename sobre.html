@@ -68,7 +68,21 @@
     .about-wrap { max-width: 1280px; margin: 0 auto; padding: 0 2rem 6rem; }
 
     /* ── ABOUT INTRO ── */
-    .about-intro { padding: 5rem 0 2rem; max-width: 680px; }
+    .about-intro {
+      padding: 5rem 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+    }
+    .about-intro-text-col { flex: 1; max-width: 560px; }
+    .about-intro-logo-col {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.75;
+    }
+    .about-intro-logo-col img { width: 260px; height: auto; }
     .eyebrow {
       font-family: 'Lato', sans-serif;
       font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
@@ -198,6 +212,8 @@
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       .nav-logo img { height: 50px; }
+      .about-intro { flex-direction: column; gap: 2.5rem; }
+      .about-intro-logo-col { display: none; }
     }
     @media (max-width: 960px) {
       .editorial-block, .editorial-block.reverse { grid-template-columns: 1fr; gap: 3rem; }
@@ -252,10 +268,15 @@
 
     <!-- Intro -->
     <div class="about-intro fade-in">
-      <div class="eyebrow" style="color:var(--gold-dark);">A Nossa História</div>
-      <h2 class="about-intro-heading">Moreira &amp; Araújo</h2>
-      <p class="about-intro-text">A Moreira &amp; Araújo, Lda iniciou a sua actividade em 2001 como confecção de atoalhados para hotelaria e restauração — desde toalhas, guardanapos, capas de cadeira, laços e organzas, nas mais variadas composições, padrões e cores.</p>
-      <p class="about-intro-text" style="margin-top:1rem;">Para vendas, consulte os nossos produtos e faça a sua encomenda.</p>
+      <div class="about-intro-text-col">
+        <div class="eyebrow" style="color:var(--gold-dark);">A Nossa História</div>
+        <h2 class="about-intro-heading">Moreira &amp; Araújo</h2>
+        <p class="about-intro-text">A Moreira &amp; Araújo, Lda iniciou a sua actividade em 2001 como confecção de atoalhados para hotelaria e restauração — desde toalhas, guardanapos, capas de cadeira, laços e organzas, nas mais variadas composições, padrões e cores.</p>
+        <p class="about-intro-text" style="margin-top:1rem;">Para vendas, consulte os nossos produtos e faça a sua encomenda.</p>
+      </div>
+      <div class="about-intro-logo-col">
+        <img src="logo.svg" alt="Moreira &amp; Araújo">
+      </div>
     </div>
 
     <!-- Editorial Block: 2008 expansion -->
