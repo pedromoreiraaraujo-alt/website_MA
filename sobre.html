@@ -49,10 +49,20 @@
     .page-header {
       background: var(--dark); padding: 4rem 2rem 3rem;
       text-align: center;
+      position: relative; overflow: hidden;
     }
-    .page-header .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
-    .page-header h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; color: var(--cream); letter-spacing: -0.02em; }
-    .page-header p { color: rgba(245,239,226,0.55); font-size: 14px; margin-top: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url('Fotosdiversas/foto.jpg');
+      background-size: 70%; background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.22;
+      pointer-events: none;
+    }
+    .page-header .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; position: relative; z-index: 1; }
+    .page-header h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; color: var(--cream); letter-spacing: -0.02em; position: relative; z-index: 1; }
+    .page-header p { color: rgba(245,239,226,0.55); font-size: 14px; margin-top: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
 
     /* ── MAIN WRAP ── */
     .about-wrap { max-width: 1280px; margin: 0 auto; padding: 0 2rem 6rem; }
@@ -208,15 +218,17 @@
     <div class="about-intro fade-in">
       <div class="eyebrow" style="color:var(--gold-dark);">A Nossa História</div>
       <h2 class="about-intro-heading">Moreira &amp; Araújo</h2>
-      <p class="about-intro-text">Somos uma empresa familiar com mais de 25 anos de experiência no aluguer de material para eventos. A nossa missão é simples: garantir que cada evento seja inesquecível, com o material certo, entregue a tempo e com o serviço que merece.</p>
+      <p class="about-intro-text">A Moreira &amp; Araújo, Lda iniciou a sua actividade em 2001 como confecção de atoalhados para hotelaria e restauração — desde toalhas, guardanapos, capas de cadeira, laços e organzas, nas mais variadas composições, padrões e cores.</p>
+      <p class="about-intro-text" style="margin-top:1rem;">Para vendas, consulte os nossos produtos e faça a sua encomenda.</p>
     </div>
 
-    <!-- Editorial Block: Photos left, text right -->
+    <!-- Editorial Block: 2008 expansion -->
     <div class="editorial-block reverse fade-in">
       <div class="editorial-text">
-        <div class="editorial-eyebrow">A Nossa Missão</div>
-        <h2 class="editorial-heading">Venha Conhecer Tudo o Que Temos Para Si.</h2>
-        <p>O nosso catálogo reúne as melhores peças de mobiliário, decoração, louça e têxteis — de estilo clássico ao contemporâneo. Trabalhamos com wedding planners, organizadores e particulares, garantindo um serviço personalizado do primeiro contacto à recolha do material.</p>
+        <div class="editorial-eyebrow">Desde 2008</div>
+        <h2 class="editorial-heading">Aluguer de Material para Eventos.</h2>
+        <p>Em 2008, com as novas tendências de mercado, decidimos alargar a nossa actividade ao aluguer de materiais para eventos — disponibilizando tudo o que é necessário à organização de um evento de qualidade.</p>
+        <p style="font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:2rem;max-width:380px;">Alugamos para hotéis, restaurantes, quintas de casamentos, empresas de catering e particulares.</p>
         <a href="catalogo.html" class="btn-editorial">Ver Catálogo</a>
       </div>
       <div class="editorial-photos">

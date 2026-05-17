@@ -111,6 +111,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
     }
 
     .nav-logo {
@@ -130,6 +131,9 @@
       display: flex;
       gap: 2.5rem;
       list-style: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .nav-links a {
@@ -749,8 +753,8 @@
     .cta-band-overlay {
       position: absolute; inset: 0;
       background:
-        linear-gradient(to right, rgba(20,18,15,0.92) 0%, rgba(20,18,15,0.72) 55%, rgba(20,18,15,0.55) 100%),
-        radial-gradient(ellipse 80% 70% at 30% 50%, rgba(138,115,64,0.12) 0%, transparent 60%);
+        linear-gradient(to right, rgba(20,18,15,0.96) 0%, rgba(20,18,15,0.88) 35%, rgba(20,18,15,0.60) 65%, rgba(20,18,15,0.35) 100%),
+        radial-gradient(ellipse 80% 70% at 30% 50%, rgba(138,115,64,0.1) 0%, transparent 60%);
     }
     .cta-band-inner {
       position: relative; z-index: 1;

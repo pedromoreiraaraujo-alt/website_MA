@@ -80,13 +80,41 @@
     .cat-section { display: none; }
     .cat-section.visible { display: block; }
     .cat-section-header {
-      margin-bottom: 2.5rem; padding-bottom: 1.25rem;
-      padding-left: 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas: "title search" "desc search";
+      row-gap: 0.75rem; column-gap: 3rem;
+      align-items: center;
+      padding: 3rem 0 2.25rem;
       border-bottom: 1px solid var(--cream-border);
-      border-left: 3px solid var(--gold);
+      margin-bottom: 2.5rem;
+      position: relative;
     }
-    .cat-section-header h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; font-weight: 400; }
-    .cat-section-header p { color: var(--muted); font-size: 14px; margin-top: 0.3rem; }
+    .cat-section-header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 3.5rem; height: 3px;
+      background: var(--gold);
+      border-radius: 999px;
+    }
+    .cat-section-header h2 {
+      grid-area: title;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3rem, 4.5vw, 4.5rem);
+      font-weight: 300; letter-spacing: -0.02em; line-height: 1;
+      color: var(--dark);
+    }
+    .cat-section-header p {
+      grid-area: desc;
+      color: var(--muted); font-size: 14px; line-height: 1.65; margin-top: 0;
+    }
+    .cat-section-header .cat-search {
+      grid-area: search;
+      margin-bottom: 0;
+      flex-direction: column; align-items: stretch; gap: 0.5rem;
+    }
+    .cat-section-header .cat-search-field input { width: 240px; }
 
     /* ── SUB-SECTION ── */
     .cat-subsection { margin-top: 3.5rem; }
@@ -491,6 +519,7 @@
     .ci-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 0.95rem; font-weight: 500; line-height: 1.3; color: var(--dark);
+      min-height: 2.6rem;
     }
     .ci-add-btn {
       display: inline-flex; align-items: center; justify-content: center;
@@ -511,6 +540,55 @@
     }
     .ci-add-btn:active { transform: translateY(0) scale(0.97); box-shadow: none; }
 
+    /* ── CATEGORY TOOLBAR ── */
+    .cat-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 0 1.25rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--cream-border);
+      flex-wrap: wrap; gap: 0.75rem;
+    }
+    .cat-toolbar-left { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .cat-toolbar-right { display: flex; align-items: center; gap: 0.75rem; }
+    .cat-sort-wrap { display: flex; align-items: center; gap: 0.75rem; }
+    .cat-sort-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    .cat-sort-select {
+      font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700;
+      color: var(--dark); background: var(--cream-light);
+      border: 1px solid var(--cream-border);
+      padding: 0.45rem 2.2rem 0.45rem 0.85rem;
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236b5f4a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.7rem center; background-size: 10px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .cat-sort-select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,154,85,0.1); }
+    .cat-toolbar-count {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+    }
+    .cat-toolbar-count span { color: var(--gold-dark); }
+    .cat-view-toggle { display: flex; }
+    .cat-view-btn {
+      width: 34px; height: 34px;
+      border: 1px solid var(--cream-border); border-right: none; background: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .cat-view-btn:last-child { border-right: 1px solid var(--cream-border); }
+    .cat-view-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(184,154,85,0.07); z-index: 1; }
+    .cat-view-btn:hover:not(.active) { color: var(--dark); background: rgba(20,18,15,0.03); }
+    /* List view */
+    .product-grid.view-list { grid-template-columns: 1fr; gap: 0.6rem; }
+    .product-grid.view-list .product-card { display: flex; border-radius: 8px; }
+    .product-grid.view-list .card-img { width: 130px; aspect-ratio: 1; flex-shrink: 0; border-radius: 7px 0 0 7px; }
+    .product-grid.view-list .card-img img { border-radius: 0; }
+    .product-grid.view-list .card-body { flex: 1; display: flex; align-items: center; gap: 2.5rem; padding: 1rem 1.75rem; flex-wrap: wrap; }
+    .product-grid.view-list .card-name { font-size: 1.15rem; }
+    .product-grid.view-list .card-price { margin-top: 0; }
+
     /* ── CATEGORY SEARCH ── */
     .cat-search {
       margin-bottom: 2rem;
@@ -521,13 +599,14 @@
       position: relative; flex: 0 0 auto;
     }
     .cat-search-field svg {
-      position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%);
+      position: absolute; right: 0.9rem; top: 50%; transform: translateY(-50%);
       color: var(--muted); pointer-events: none; width: 15px; height: 15px;
     }
     .cat-search-field input {
-      width: 320px; padding: 0.6rem 1rem 0.6rem 2.4rem;
+      width: 280px; padding: 0.6rem 2.6rem 0.6rem 1.1rem;
       border: 1px solid var(--cream-border);
-      background: var(--cream-light);
+      border-radius: 999px;
+      background: var(--white);
       font-family: 'Lato', sans-serif; font-size: 13px; color: var(--dark);
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
@@ -536,7 +615,7 @@
       border-color: var(--gold);
       box-shadow: 0 0 0 3px rgba(184,154,85,0.1);
     }
-    .cat-search-field input::placeholder { color: var(--muted); }
+    .cat-search-field input::placeholder { color: rgba(107,95,74,0.55); }
     .cat-search-field input::-webkit-search-cancel-button { cursor: pointer; }
     .cat-search-count {
       font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
@@ -940,7 +1019,6 @@
     <div class="cat-section visible" id="cat-mobiliario">
       <div class="cat-section-header">
         <h2>Mobiliário</h2>
-        <p>Mesas, cadeiras, sofás e mobiliário decorativo para criar ambientes únicos e memoráveis.</p>
       </div>
       <div class="product-grid" id="grid-mobiliario"></div>
     </div>
@@ -949,7 +1027,6 @@
     <div class="cat-section" id="cat-texteis">
       <div class="cat-section-header">
         <h2>Têxteis</h2>
-        <p>Toalhas, centros de mesa, capas e têxteis para criar ambientes sofisticados.</p>
       </div>
       <div class="product-grid" id="grid-texteis"></div>
     </div>
@@ -958,7 +1035,6 @@
     <div class="cat-section" id="cat-loucas">
       <div class="cat-section-header">
         <h2>Louças</h2>
-        <p>Pratos, copos, talheres e peças de cristal para uma mesa verdadeiramente elegante.</p>
       </div>
       <div class="product-grid" id="grid-loucas"></div>
     </div>
@@ -967,7 +1043,6 @@
     <div class="cat-section" id="cat-decoracao">
       <div class="cat-section-header">
         <h2>Decoração</h2>
-        <p>Centros de mesa, candelabros, velas e elementos decorativos para ambientar o seu evento.</p>
       </div>
       <div class="product-grid" id="grid-decoracao"></div>
     </div>
@@ -976,7 +1051,6 @@
     <div class="cat-section" id="cat-exterior">
       <div class="cat-section-header">
         <h2>Exterior</h2>
-        <p>Tendas, pufes, mobiliário de jardim e equipamento para eventos ao ar livre.</p>
       </div>
       <div class="product-grid" id="grid-exterior"></div>
     </div>
@@ -985,7 +1059,6 @@
     <div class="cat-section" id="cat-outros">
       <div class="cat-section-header">
         <h2>Outros</h2>
-        <p>Equipamentos e artigos complementares para tornar o seu evento ainda mais completo.</p>
       </div>
       <div class="product-grid" id="grid-outros"></div>
     </div>
@@ -2373,7 +2446,7 @@
           </div>
           <div class="cat-search-count"></div>
         `;
-        header.after(wrap);
+        header.appendChild(wrap);
 
         /* No-results message (appended once, before closing of section) */
         const noRes = document.createElement('div');
@@ -2416,9 +2489,88 @@
       });
     }
 
+    /* ─── CATEGORY TOOLBAR ─── */
+    function initToolbar() {
+      document.querySelectorAll('.cat-section').forEach(section => {
+        const header = section.querySelector('.cat-section-header');
+        const grid   = section.querySelector('.product-grid');
+        if (!header || !grid) return;
+
+        const countCards = () =>
+          Array.from(grid.querySelectorAll('.product-card'))
+               .filter(c => c.style.display !== 'none').length;
+
+        const toolbar = document.createElement('div');
+        toolbar.className = 'cat-toolbar';
+        toolbar.innerHTML = `
+          <div class="cat-toolbar-left">
+            <div class="cat-sort-wrap">
+              <span class="cat-sort-label">Ordenar por</span>
+              <select class="cat-sort-select">
+                <option value="default">Padrão</option>
+                <option value="az">Nome (A – Z)</option>
+                <option value="za">Nome (Z – A)</option>
+              </select>
+            </div>
+            <div class="cat-toolbar-count"><span>${countCards()}</span> artigos</div>
+          </div>
+          <div class="cat-toolbar-right">
+            <div class="cat-view-toggle">
+              <button class="cat-view-btn active" data-view="grid4" title="Grelha">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><rect x="0" y="0" width="5.5" height="5.5"/><rect x="7.5" y="0" width="5.5" height="5.5"/><rect x="0" y="7.5" width="5.5" height="5.5"/><rect x="7.5" y="7.5" width="5.5" height="5.5"/></svg>
+              </button>
+              <button class="cat-view-btn" data-view="list" title="Lista">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="0" y1="2" x2="13" y2="2"/><line x1="0" y1="6.5" x2="13" y2="6.5"/><line x1="0" y1="11" x2="13" y2="11"/></svg>
+              </button>
+            </div>
+          </div>`;
+
+        header.after(toolbar);
+
+        const countEl  = toolbar.querySelector('.cat-toolbar-count span');
+        const select   = toolbar.querySelector('.cat-sort-select');
+        const viewBtns = toolbar.querySelectorAll('.cat-view-btn');
+
+        /* ── sort ── */
+        let originalOrder = null;
+        select.addEventListener('change', () => {
+          if (!originalOrder) originalOrder = Array.from(grid.querySelectorAll('.product-card'));
+          const cards = Array.from(grid.querySelectorAll('.product-card'));
+          if (select.value === 'default') {
+            originalOrder.forEach(c => grid.appendChild(c));
+          } else {
+            cards.sort((a, b) => {
+              const na = a.querySelector('.card-name')?.textContent || '';
+              const nb = b.querySelector('.card-name')?.textContent || '';
+              return select.value === 'az'
+                ? na.localeCompare(nb, 'pt')
+                : nb.localeCompare(na, 'pt');
+            });
+            cards.forEach(c => grid.appendChild(c));
+          }
+        });
+
+        /* ── view toggle ── */
+        viewBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            viewBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            grid.classList.remove('view-list');
+            if (btn.dataset.view === 'list') grid.classList.add('view-list');
+          });
+        });
+
+        /* ── count sync with search ── */
+        new MutationObserver(() => {
+          countEl.textContent = countCards();
+        }).observe(grid, { subtree: true, attributes: true, attributeFilter: ['style'] });
+      });
+    }
+
     /* ─── INIT ─── */
     renderGrid();
     initSearch();
+    initToolbar();
     updateCartBadge();
     if (new URLSearchParams(location.search).get('quote') === '1' && getCart().length > 0) {
       setTimeout(openQuote, 400);
