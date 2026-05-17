@@ -165,11 +165,10 @@
     /* ── PAGE TRANSITION ── */
     #pageTransition {
       position: fixed; inset: 0; z-index: 10000;
-      background: var(--dark);
-      transform: translateX(0);
+      background: var(--cream-light);
+      opacity: 1;
       pointer-events: all;
-      transition: transform 0.55s cubic-bezier(0.76, 0, 0.24, 1);
-      will-change: transform;
+      transition: opacity 0.4s ease;
     }
 
     /* ── RESPONSIVE ── */
@@ -305,8 +304,8 @@
     (function() {
       const overlay = document.getElementById('pageTransition');
       requestAnimationFrame(() => requestAnimationFrame(() => {
-        overlay.style.transform = 'translateX(-101%)';
-        setTimeout(() => { overlay.style.pointerEvents = 'none'; }, 580);
+        overlay.style.opacity = '0';
+        setTimeout(() => { overlay.style.pointerEvents = 'none'; }, 420);
       }));
       document.addEventListener('click', function(e) {
         const link = e.target.closest('a[href]');
@@ -314,14 +313,9 @@
         const href = link.getAttribute('href');
         if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || /^https?:\/\//.test(href)) return;
         e.preventDefault();
-        overlay.style.transition = 'none';
-        overlay.style.transform = 'translateX(101%)';
         overlay.style.pointerEvents = 'all';
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          overlay.style.transition = 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)';
-          overlay.style.transform = 'translateX(0)';
-          setTimeout(() => { window.location.href = href; }, 580);
-        }));
+        overlay.style.opacity = '1';
+        setTimeout(() => { window.location.href = href; }, 420);
       });
     })();
   </script>
