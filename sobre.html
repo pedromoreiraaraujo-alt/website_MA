@@ -171,7 +171,34 @@
       transition: opacity 0.4s ease;
     }
 
+    /* ── HAMBURGER / MOBILE NAV ── */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .hamburger span { display: block; width: 22px; height: 1px; background: var(--dark); transition: all 0.3s; }
+    .mobile-nav {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--cream); z-index: 999;
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.5rem; font-style: italic; color: var(--dark);
+    }
+    .mobile-nav-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-size: 1.5rem; cursor: pointer; color: var(--muted);
+      background: none; border: none;
+    }
+
     /* ── RESPONSIVE ── */
+    @media (max-width: 760px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .nav-logo img { height: 50px; }
+    }
     @media (max-width: 960px) {
       .editorial-block, .editorial-block.reverse { grid-template-columns: 1fr; gap: 3rem; }
       .editorial-block.reverse .editorial-text { order: 1; }
@@ -201,8 +228,17 @@
         <li><a href="index.html#contacto">Contacto</a></li>
       </ul>
       <a href="index.html#contacto" class="nav-cta">Pedir Orçamento</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" id="mobileClose">✕</button>
+    <a href="index.html">Início</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="index.html#contacto">Contacto</a>
+  </div>
 
   <!-- PAGE HEADER -->
   <div class="page-header">
@@ -288,6 +324,16 @@
   </footer>
 
   <script>
+    /* ── HAMBURGER ── */
+    (function() {
+      const hamburger = document.getElementById('hamburger');
+      const mobileNav = document.getElementById('mobileNav');
+      const mobileClose = document.getElementById('mobileClose');
+      hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+      mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+      mobileNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileNav.classList.remove('open')));
+    })();
+
     /* ── FADE-IN ── */
     const fadeEls = document.querySelectorAll('.fade-in');
     const io = new IntersectionObserver((entries) => {

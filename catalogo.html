@@ -638,18 +638,52 @@
     .footer-inner { max-width: 1280px; margin: 0 auto; padding: 3rem 2rem 2rem; }
     .footer-bottom { border-top: 1px solid rgba(245,239,226,0.1); padding-top: 1.5rem; margin-top: 2rem; font-size: 12px; text-align: center; color: rgba(245,239,226,0.3); }
 
+    /* ── HAMBURGER / MOBILE NAV ── */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .hamburger span { display: block; width: 22px; height: 1px; background: var(--dark); transition: all 0.3s; }
+    .mobile-nav {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--cream); z-index: 999;
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.5rem; font-style: italic; color: var(--dark);
+    }
+    .mobile-nav-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-size: 1.5rem; cursor: pointer; color: var(--muted);
+      background: none; border: none;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
       .product-grid { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 760px) {
       .product-grid { grid-template-columns: repeat(2, 1fr); }
-      .nav-links { display: none; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .nav-logo img { height: 50px; }
       .drawer-panel { width: 100vw; }
+      .cat-section-header {
+        grid-template-columns: 1fr;
+        grid-template-areas: "title" "search";
+        row-gap: 1rem;
+      }
+      .cat-section-header .cat-search { width: 100%; }
+      .cat-section-header .cat-search-field { width: 100%; }
+      .cat-section-header .cat-search-field input { width: 100%; }
+      .form-row { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .product-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
       .cat-btn { padding: 0.875rem 1rem; font-size: 10px; letter-spacing: 1.5px; }
+      .collection-item-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* ── CART FAB ── */
@@ -990,8 +1024,17 @@
         <li><a href="index.html#contacto">Contacto</a></li>
       </ul>
       <a href="index.html#contacto" class="nav-cta">Pedir Orçamento</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" id="mobileClose">✕</button>
+    <a href="index.html">Início</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="index.html#contacto">Contacto</a>
+  </div>
 
   <!-- PAGE HEADER -->
   <div class="page-header">
@@ -2575,6 +2618,18 @@
     if (new URLSearchParams(location.search).get('quote') === '1' && getCart().length > 0) {
       setTimeout(openQuote, 400);
     }
+
+    /* ── HAMBURGER ── */
+    (function() {
+      const hamburger = document.getElementById('hamburger');
+      const mobileNav = document.getElementById('mobileNav');
+      const mobileClose = document.getElementById('mobileClose');
+      if (hamburger) {
+        hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+        mobileNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileNav.classList.remove('open')));
+      }
+    })();
 
     /* ── PAGE TRANSITIONS ── */
     (function() {
