@@ -913,10 +913,11 @@
     /* ── PAGE TRANSITION ── */
     #pageTransition {
       position: fixed; inset: 0; z-index: 10000;
-      background: var(--cream-light);
-      opacity: 1;
-      transition: opacity 0.45s ease;
-      pointer-events: none;
+      background: var(--dark);
+      transform: translateX(0);
+      pointer-events: all;
+      transition: transform 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: transform;
     }
 
     /* ── TOAST ── */
@@ -2581,7 +2582,8 @@
       const overlay = document.getElementById('pageTransition');
 
       requestAnimationFrame(() => requestAnimationFrame(() => {
-        overlay.style.opacity = '0';
+        overlay.style.transform = 'translateX(-101%)';
+        setTimeout(() => { overlay.style.pointerEvents = 'none'; }, 580);
       }));
 
       document.addEventListener('click', function(e) {
@@ -2590,9 +2592,14 @@
         const href = link.getAttribute('href');
         if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || /^https?:\/\//.test(href)) return;
         e.preventDefault();
-        overlay.style.opacity = '1';
+        overlay.style.transition = 'none';
+        overlay.style.transform = 'translateX(101%)';
         overlay.style.pointerEvents = 'all';
-        setTimeout(() => { window.location.href = href; }, 440);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          overlay.style.transition = 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)';
+          overlay.style.transform = 'translateX(0)';
+          setTimeout(() => { window.location.href = href; }, 580);
+        }));
       });
     })();
 
