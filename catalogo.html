@@ -451,6 +451,24 @@
     }
     .collection-card .card-img-label { content: 'Ver Coleção'; }
 
+    /* ── SUBSECTION SEPARATORS ── */
+    .cat-subsection { margin-bottom: 3rem; }
+    .subcat-label {
+      display: flex; align-items: center; gap: 1rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.05rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 1.5rem; padding-bottom: 0.7rem;
+      border-bottom: 1px solid rgba(184,154,85,0.22);
+    }
+    .subcat-label::before {
+      content: ''; display: block;
+      width: 28px; height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      flex-shrink: 0;
+    }
+
     /* ── COLLECTION DRAWER ── */
     .collection-drawer {
       position: fixed; inset: 0; z-index: 480;
@@ -1071,7 +1089,22 @@
       <div class="cat-section-header">
         <h2>Têxteis</h2>
       </div>
-      <div class="product-grid" id="grid-texteis"></div>
+      <div class="cat-subsection">
+        <div class="subcat-label">Camilhas</div>
+        <div class="product-grid" id="grid-texteis-cm"></div>
+      </div>
+      <div class="cat-subsection">
+        <div class="subcat-label">Guardanapos</div>
+        <div class="product-grid" id="grid-texteis-gd"></div>
+      </div>
+      <div class="cat-subsection">
+        <div class="subcat-label">Laços</div>
+        <div class="product-grid" id="grid-texteis-lacos"></div>
+      </div>
+      <div class="cat-subsection">
+        <div class="subcat-label">Outros Têxteis</div>
+        <div class="product-grid" id="grid-texteis"></div>
+      </div>
     </div>
 
     <!-- LOUÇAS -->
@@ -1497,39 +1530,95 @@
       'lc-026': { cat: 'texteis-organza', ref: 'LC 026', name: 'Laço Organza Verde Lima', desc: 'Laço em organza na cor verde lima. Frescura e leveza para eventos ao ar livre e de verão.', images: ['https://placehold.co/600x900/90c030/faf7f2?text=LC+026'], specs: [['Cor', 'Verde Lima'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* CAMILHAS 3,3m D */
-      'cm-001': { cat: 'texteis-cm-areia', ref: 'CM 001', name: 'Camilha 3,3m D - Areia', desc: 'Camilha de mesa em tecido liso cor areia, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/d4b890/6b5f4a?text=CM+001'], specs: [['Cor', 'Areia'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-003': { cat: 'texteis-cm-areia', ref: 'CM 003', name: 'Camilha 3,3m D - Tostado', desc: 'Camilha de mesa em tecido liso cor tostado, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/c09060/faf7f2?text=CM+003'], specs: [['Cor', 'Tostado'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-004': { cat: 'texteis-cm-areia', ref: 'CM 004', name: 'Camilha 3,3m D - Azul', desc: 'Camilha de mesa em tecido liso cor azul, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/4080c0/faf7f2?text=CM+004'], specs: [['Cor', 'Azul'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-005': { cat: 'texteis-cm-areia', ref: 'CM 005', name: 'Camilha 3,3m D - Areia Branca', desc: 'Camilha de mesa em tecido liso cor areia branca, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/f0e8d8/6b5f4a?text=CM+005'], specs: [['Cor', 'Areia Branca'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-006': { cat: 'texteis-cm-adam', ref: 'CM 006', name: 'Camilha 3,3m D - Branca Adamascada', desc: 'Camilha de mesa em tecido adamascado branco, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/f8f5f0/6b5f4a?text=CM+006'], specs: [['Cor', 'Branco'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-007': { cat: 'texteis-cm-adam', ref: 'CM 007', name: 'Camilha 3,3m D - Bege Adamascada', desc: 'Camilha de mesa em tecido adamascado bege, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/e8d8b8/6b5f4a?text=CM+007'], specs: [['Cor', 'Bege'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-008': { cat: 'texteis-cm-adam', ref: 'CM 008', name: 'Camilha 3,3m D - Dourado Adamascado', desc: 'Camilha de mesa em tecido adamascado dourado, comprimento 3,3 metros.', images: ['Fotosdiversas/CM 008.png'], specs: [['Cor', 'Dourado'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-009': { cat: 'texteis-cm-adam', ref: 'CM 009', name: 'Camilha 3,3m D - Bordeaux Adamascado', desc: 'Camilha de mesa em tecido adamascado bordeaux, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/703040/faf7f2?text=CM+009'], specs: [['Cor', 'Bordeaux'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-012': { cat: 'texteis-cm-adam', ref: 'CM 012', name: 'Camilha 3,3m D - Verde Esmeralda Adamascado', desc: 'Camilha de mesa em tecido adamascado verde esmeralda, comprimento 3,3 metros.', images: ['Fotosdiversas/CM 012.png'], specs: [['Cor', 'Verde Esmeralda'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-001': { cat: 'texteis-cm-areia', ref: 'CM 001', name: 'Camilha 3,3m D - Areia', desc: 'Camilha de mesa em tecido liso cor areia, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 001.png'], specs: [['Cor', 'Areia'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-003': { cat: 'texteis-cm-areia', ref: 'CM 003', name: 'Camilha 3,3m D - Tostado', desc: 'Camilha de mesa em tecido liso cor tostado, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 003.jpg'], specs: [['Cor', 'Tostado'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-004': { cat: 'texteis-cm-areia', ref: 'CM 004', name: 'Camilha 3,3m D - Azul', desc: 'Camilha de mesa em tecido liso cor azul, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 004.jpg'], specs: [['Cor', 'Azul'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-005': { cat: 'texteis-cm-areia', ref: 'CM 005', name: 'Camilha 3,3m D - Areia Branca', desc: 'Camilha de mesa em tecido liso cor areia branca, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 005.png'], specs: [['Cor', 'Areia Branca'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-006': { cat: 'texteis-cm-adam', ref: 'CM 006', name: 'Camilha 3,3m D - Branca Adamascada', desc: 'Camilha de mesa em tecido adamascado branco, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 006.png'], specs: [['Cor', 'Branco'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-007': { cat: 'texteis-cm-adam', ref: 'CM 007', name: 'Camilha 3,3m D - Bege Adamascada', desc: 'Camilha de mesa em tecido adamascado bege, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 007.jpg'], specs: [['Cor', 'Bege'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-008': { cat: 'texteis-cm-adam', ref: 'CM 008', name: 'Camilha 3,3m D - Dourado Adamascado', desc: 'Camilha de mesa em tecido adamascado dourado, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 008.png'], specs: [['Cor', 'Dourado'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-009': { cat: 'texteis-cm-adam', ref: 'CM 009', name: 'Camilha 3,3m D - Bordeaux Adamascado', desc: 'Camilha de mesa em tecido adamascado bordeaux, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 009.png'], specs: [['Cor', 'Bordeaux'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-012': { cat: 'texteis-cm-adam', ref: 'CM 012', name: 'Camilha 3,3m D - Verde Esmeralda Adamascado', desc: 'Camilha de mesa em tecido adamascado verde esmeralda, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 012.png'], specs: [['Cor', 'Verde Esmeralda'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-014': { cat: 'texteis-cm-adam', ref: 'CM 014', name: 'Camilha 3,3m D - Lilás Adamascado', desc: 'Camilha de mesa em tecido adamascado lilás, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/c0a0d0/faf7f2?text=CM+014'], specs: [['Cor', 'Lilás'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-015': { cat: 'texteis-cm-renda', ref: 'CM 015', name: 'Camilha 3,3m D - Renda Branca', desc: 'Camilha de mesa em renda branca, comprimento 3,3 metros.', images: ['Fotosdiversas/CM 015.jpg'], specs: [['Cor', 'Branco'], ['Comprimento', '3,3 m'], ['Padrão', 'Renda']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-016': { cat: 'texteis-cm-renda', ref: 'CM 016', name: 'Camilha 3,3m D - Renda Pérola', desc: 'Camilha de mesa em renda pérola, comprimento 3,3 metros.', images: ['Fotosdiversas/CM 016.jpg'], specs: [['Cor', 'Pérola'], ['Comprimento', '3,3 m'], ['Padrão', 'Renda']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-017': { cat: 'texteis-cm-adam', ref: 'CM 017', name: 'Camilha 3,3m D - Preto/Prateado', desc: 'Camilha de mesa em tecido preto com detalhe prateado, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/1a1a1a/c0c0c8?text=CM+017'], specs: [['Cor', 'Preto/Prateado'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-018': { cat: 'texteis-cm-adam', ref: 'CM 018', name: 'Camilha 3,3m D - Preto/Violeta', desc: 'Camilha de mesa em tecido preto com detalhe violeta, comprimento 3,3 metros.', images: ['Fotosdiversas/CM 018.png'], specs: [['Cor', 'Preto/Violeta'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-019': { cat: 'texteis-cm-estampado', ref: 'CM 019', name: 'Camilha 3,3m D - Estampado Tradicional Azul', desc: 'Camilha de mesa em tecido estampado tradicional azul, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/4060a0/faf7f2?text=CM+019'], specs: [['Cor', 'Azul'], ['Comprimento', '3,3 m'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-020': { cat: 'texteis-cm-estampado', ref: 'CM 020', name: 'Camilha 3,3m D - Estampado Tradicional Burgundy', desc: 'Camilha de mesa em tecido estampado tradicional burgundy, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/702040/faf7f2?text=CM+020'], specs: [['Cor', 'Burgundy'], ['Comprimento', '3,3 m'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-015': { cat: 'texteis-cm-renda', ref: 'CM 015', name: 'Camilha 3,3m D - Renda Branca', desc: 'Camilha de mesa em renda branca, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 015.png'], specs: [['Cor', 'Branco'], ['Comprimento', '3,3 m'], ['Padrão', 'Renda']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-016': { cat: 'texteis-cm-renda', ref: 'CM 016', name: 'Camilha 3,3m D - Renda Pérola', desc: 'Camilha de mesa em renda pérola, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 016.jpg'], specs: [['Cor', 'Pérola'], ['Comprimento', '3,3 m'], ['Padrão', 'Renda']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-017': { cat: 'texteis-cm-adam', ref: 'CM 017', name: 'Camilha 3,3m D - Preto/Prateado', desc: 'Camilha de mesa em tecido preto com detalhe prateado, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 017.jpg'], specs: [['Cor', 'Preto/Prateado'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-018': { cat: 'texteis-cm-adam', ref: 'CM 018', name: 'Camilha 3,3m D - Preto/Violeta', desc: 'Camilha de mesa em tecido preto com detalhe violeta, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 018.jpg'], specs: [['Cor', 'Preto/Violeta'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-019': { cat: 'texteis-cm-estampado', ref: 'CM 019', name: 'Camilha 3,3m D - Estampado Tradicional Azul', desc: 'Camilha de mesa em tecido estampado tradicional azul, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 019.png'], specs: [['Cor', 'Azul'], ['Comprimento', '3,3 m'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-020': { cat: 'texteis-cm-estampado', ref: 'CM 020', name: 'Camilha 3,3m D - Estampado Tradicional Burgundy', desc: 'Camilha de mesa em tecido estampado tradicional burgundy, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 020.jpg'], specs: [['Cor', 'Burgundy'], ['Comprimento', '3,3 m'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-021': { cat: 'texteis-cm-tafeta', ref: 'CM 021', name: 'Camilha 3,3m D - Tafetá Cinza', desc: 'Camilha de mesa em tafetá cinza, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/808080/faf7f2?text=CM+021'], specs: [['Cor', 'Cinza'], ['Comprimento', '3,3 m'], ['Padrão', 'Tafetá']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-022': { cat: 'texteis-cm-tafeta', ref: 'CM 022', name: 'Camilha 3,3m D - Tafetá Lilás', desc: 'Camilha de mesa em tafetá lilás, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/c0a0d0/faf7f2?text=CM+022'], specs: [['Cor', 'Lilás'], ['Comprimento', '3,3 m'], ['Padrão', 'Tafetá']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-022': { cat: 'texteis-cm-tafeta', ref: 'CM 022', name: 'Camilha 3,3m D - Tafetá Lilás', desc: 'Camilha de mesa em tafetá lilás, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 022.jpg'], specs: [['Cor', 'Lilás'], ['Comprimento', '3,3 m'], ['Padrão', 'Tafetá']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-023': { cat: 'texteis-cm-cetim', ref: 'CM 023', name: 'Camilha 3,3m D - Cetim Branco', desc: 'Camilha de mesa em cetim branco, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/f8f6f0/6b5f4a?text=CM+023'], specs: [['Cor', 'Branco'], ['Comprimento', '3,3 m'], ['Padrão', 'Cetim']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* CAMILHAS MM 3,3m D */
       'cm-025': { cat: 'texteis-cmmm', ref: 'CM 025', name: 'Camilha MM 3,3m D - Branco', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor branco, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/f8f6f0/6b5f4a?text=CM+025'], specs: [['Cor', 'Branco'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-026': { cat: 'texteis-cmmm', ref: 'CM 026', name: 'Camilha MM 3,3m D - Pérola', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor pérola, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/ede4d0/6b5f4a?text=CM+026'], specs: [['Cor', 'Pérola'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-026': { cat: 'texteis-cmmm', ref: 'CM 026', name: 'Camilha MM 3,3m D - Pérola', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor pérola, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 026.png'], specs: [['Cor', 'Pérola'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-027': { cat: 'texteis-cmmm', ref: 'CM 027', name: 'Camilha MM 3,3m D - Marinho', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor azul marinho, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/203060/faf7f2?text=CM+027'], specs: [['Cor', 'Marinho'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-028': { cat: 'texteis-cmmm', ref: 'CM 028', name: 'Camilha MM 3,3m D - Vermelho', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor vermelho, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/c03030/faf7f2?text=CM+028'], specs: [['Cor', 'Vermelho'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-029': { cat: 'texteis-cmmm', ref: 'CM 029', name: 'Camilha MM 3,3m D - Bordeaux', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor bordeaux, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/702040/faf7f2?text=CM+029'], specs: [['Cor', 'Bordeaux'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-030': { cat: 'texteis-cmmm', ref: 'CM 030', name: 'Camilha MM 3,3m D - Rosa Fúchsia', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor rosa fúchsia, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/e040a0/faf7f2?text=CM+030'], specs: [['Cor', 'Rosa Fúchsia'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-028': { cat: 'texteis-cmmm', ref: 'CM 028', name: 'Camilha MM 3,3m D - Vermelho', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor vermelho, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 028.png'], specs: [['Cor', 'Vermelho'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-029': { cat: 'texteis-cmmm', ref: 'CM 029', name: 'Camilha MM 3,3m D - Bordeaux', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor bordeaux, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 029.png'], specs: [['Cor', 'Bordeaux'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-030': { cat: 'texteis-cmmm', ref: 'CM 030', name: 'Camilha MM 3,3m D - Rosa Fúchsia', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor rosa fúchsia, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 030.png'], specs: [['Cor', 'Rosa Fúchsia'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-031': { cat: 'texteis-cmmm', ref: 'CM 031', name: 'Camilha MM 3,3m D - Verde Lima', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor verde lima, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/90c030/faf7f2?text=CM+031'], specs: [['Cor', 'Verde Lima'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-032': { cat: 'texteis-cmmm', ref: 'CM 032', name: 'Camilha MM 3,3m D - Castanho', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor castanho, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/7a5030/faf7f2?text=CM+032'], specs: [['Cor', 'Castanho'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-033': { cat: 'texteis-cmmm', ref: 'CM 033', name: 'Camilha MM 3,3m D - Preto', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor preto, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/1a1a1a/f5efe2?text=CM+033'], specs: [['Cor', 'Preto'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-034': { cat: 'texteis-cmmm', ref: 'CM 034', name: 'Camilha MM 3,3m D - Rosa Bebé', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor rosa bebé, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/f5d0e0/6b5f4a?text=CM+034'], specs: [['Cor', 'Rosa Bebé'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-034': { cat: 'texteis-cmmm', ref: 'CM 034', name: 'Camilha MM 3,3m D - Rosa Bebé', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor rosa bebé, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 034.png'], specs: [['Cor', 'Rosa Bebé'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-035': { cat: 'texteis-cmmm', ref: 'CM 035', name: 'Camilha MM 3,3m D - Salmão', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor salmão, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/e0a080/faf7f2?text=CM+035'], specs: [['Cor', 'Salmão'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-036': { cat: 'texteis-cmmm', ref: 'CM 036', name: 'Camilha MM 3,3m D - Turquesa', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor turquesa, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/40b0b0/faf7f2?text=CM+036'], specs: [['Cor', 'Turquesa'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* GUARDANAPOS LISOS */
+      'gd-001': { cat: 'texteis-gd-liso', ref: 'GD 001', name: 'Guardanapo - Branco', desc: 'Guardanapo de mesa em tecido liso cor branco.', images: ['https://placehold.co/600x600/f8f6f0/6b5f4a?text=GD+001'], specs: [['Cor', 'Branco'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-002': { cat: 'texteis-gd-liso', ref: 'GD 002', name: 'Guardanapo - Pérola', desc: 'Guardanapo de mesa em tecido liso cor pérola.', images: ['https://placehold.co/600x600/ede4d0/6b5f4a?text=GD+002'], specs: [['Cor', 'Pérola'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-003': { cat: 'texteis-gd-liso', ref: 'GD 003', name: 'Guardanapo - Linho', desc: 'Guardanapo de mesa em tecido liso cor linho.', images: ['https://placehold.co/600x600/e8dcc0/6b5f4a?text=GD+003'], specs: [['Cor', 'Linho'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-004': { cat: 'texteis-gd-liso', ref: 'GD 004', name: 'Guardanapo - Cinza', desc: 'Guardanapo de mesa em tecido liso cor cinza.', images: ['Fotosdiversas/Guardanapos/GD 004.jpg'], specs: [['Cor', 'Cinza'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-005': { cat: 'texteis-gd-liso', ref: 'GD 005', name: 'Guardanapo - Azul Claro', desc: 'Guardanapo de mesa em tecido liso cor azul claro.', images: ['https://placehold.co/600x600/a0c0e0/faf7f2?text=GD+005'], specs: [['Cor', 'Azul Claro'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-006': { cat: 'texteis-gd-liso', ref: 'GD 006', name: 'Guardanapo - Azul Royal', desc: 'Guardanapo de mesa em tecido liso cor azul royal.', images: ['Fotosdiversas/Guardanapos/GD 006.jpg'], specs: [['Cor', 'Azul Royal'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-007': { cat: 'texteis-gd-liso', ref: 'GD 007', name: 'Guardanapo - Azul Marinho', desc: 'Guardanapo de mesa em tecido liso cor azul marinho.', images: ['https://placehold.co/600x600/203060/faf7f2?text=GD+007'], specs: [['Cor', 'Azul Marinho'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-009': { cat: 'texteis-gd-liso', ref: 'GD 009', name: 'Guardanapo - Verde Azeitona', desc: 'Guardanapo de mesa em tecido liso cor verde azeitona.', images: ['Fotosdiversas/Guardanapos/GD 009.jpg'], specs: [['Cor', 'Verde Azeitona'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-010': { cat: 'texteis-gd-liso', ref: 'GD 010', name: 'Guardanapo - Verde Alface', desc: 'Guardanapo de mesa em tecido liso cor verde alface.', images: ['Fotosdiversas/Guardanapos/GD 010.jpg'], specs: [['Cor', 'Verde Alface'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-011': { cat: 'texteis-gd-liso', ref: 'GD 011', name: 'Guardanapo - Areia', desc: 'Guardanapo de mesa em tecido liso cor areia.', images: ['Fotosdiversas/Guardanapos/GD 011.jpg'], specs: [['Cor', 'Areia'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-012': { cat: 'texteis-gd-liso', ref: 'GD 012', name: 'Guardanapo - Tostado', desc: 'Guardanapo de mesa em tecido liso cor tostado.', images: ['Fotosdiversas/Guardanapos/GD 012.jpg'], specs: [['Cor', 'Tostado'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-013': { cat: 'texteis-gd-liso', ref: 'GD 013', name: 'Guardanapo - Rosa Seco', desc: 'Guardanapo de mesa em tecido liso cor rosa seco.', images: ['Fotosdiversas/Guardanapos/GD 013.jpg'], specs: [['Cor', 'Rosa Seco'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-014': { cat: 'texteis-gd-liso', ref: 'GD 014', name: 'Guardanapo - Rosa Bebé', desc: 'Guardanapo de mesa em tecido liso cor rosa bebé.', images: ['https://placehold.co/600x600/f5d0e0/6b5f4a?text=GD+014'], specs: [['Cor', 'Rosa Bebé'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-015': { cat: 'texteis-gd-liso', ref: 'GD 015', name: 'Guardanapo - Salmão', desc: 'Guardanapo de mesa em tecido liso cor salmão.', images: ['Fotosdiversas/Guardanapos/GD 015.jpg'], specs: [['Cor', 'Salmão'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-016': { cat: 'texteis-gd-liso', ref: 'GD 016', name: 'Guardanapo - Rosa Fúchsia', desc: 'Guardanapo de mesa em tecido liso cor rosa fúchsia.', images: ['Fotosdiversas/Guardanapos/GD 016.jpg'], specs: [['Cor', 'Rosa Fúchsia'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-017': { cat: 'texteis-gd-liso', ref: 'GD 017', name: 'Guardanapo - Terracota', desc: 'Guardanapo de mesa em tecido liso cor terracota.', images: ['Fotosdiversas/Guardanapos/GD 017.jpg'], specs: [['Cor', 'Terracota'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-018': { cat: 'texteis-gd-liso', ref: 'GD 018', name: 'Guardanapo - Laranja', desc: 'Guardanapo de mesa em tecido liso cor laranja.', images: ['Fotosdiversas/Guardanapos/GD 018.jpg'], specs: [['Cor', 'Laranja'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-019': { cat: 'texteis-gd-liso', ref: 'GD 019', name: 'Guardanapo - Bordeaux', desc: 'Guardanapo de mesa em tecido liso cor bordeaux.', images: ['Fotosdiversas/Guardanapos/GD 019.jpg'], specs: [['Cor', 'Bordeaux'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-021': { cat: 'texteis-gd-liso', ref: 'GD 021', name: 'Guardanapo - Vermelho', desc: 'Guardanapo de mesa em tecido liso cor vermelho.', images: ['Fotosdiversas/Guardanapos/GD 021.jpg'], specs: [['Cor', 'Vermelho'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-022': { cat: 'texteis-gd-liso', ref: 'GD 022', name: 'Guardanapo - Verde Garrafa', desc: 'Guardanapo de mesa em tecido liso cor verde garrafa.', images: ['Fotosdiversas/Guardanapos/GD 022.jpg'], specs: [['Cor', 'Verde Garrafa'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-023': { cat: 'texteis-gd-liso', ref: 'GD 023', name: 'Guardanapo - Amarelo', desc: 'Guardanapo de mesa em tecido liso cor amarelo.', images: ['Fotosdiversas/Guardanapos/GD 023.jpg'], specs: [['Cor', 'Amarelo'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-036': { cat: 'texteis-gd-liso', ref: 'GD 036', name: 'Guardanapo - Camel', desc: 'Guardanapo de mesa em tecido liso cor camel.', images: ['https://placehold.co/600x600/c09050/faf7f2?text=GD+036'], specs: [['Cor', 'Camel'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-039': { cat: 'texteis-gd-liso', ref: 'GD 039', name: 'Guardanapo - Areia Branca', desc: 'Guardanapo de mesa em tecido liso cor areia branca.', images: ['Fotosdiversas/Guardanapos/GD 039.jpg'], specs: [['Cor', 'Areia Branca'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-040': { cat: 'texteis-gd-liso', ref: 'GD 040', name: 'Guardanapo - Joil Camel', desc: 'Guardanapo de mesa em tecido liso cor joil camel.', images: ['Fotosdiversas/Guardanapos/GD 040.jpg'], specs: [['Cor', 'Joil Camel'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-042': { cat: 'texteis-gd-liso', ref: 'GD 042', name: 'Guardanapo - Rosa', desc: 'Guardanapo de mesa em tecido liso cor rosa.', images: ['Fotosdiversas/Guardanapos/GD 042.jpg'], specs: [['Cor', 'Rosa'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-043': { cat: 'texteis-gd-liso', ref: 'GD 043', name: 'Guardanapo - Verde Eucalipto', desc: 'Guardanapo de mesa em tecido liso cor verde eucalipto.', images: ['Fotosdiversas/Guardanapos/GD 043.jpg'], specs: [['Cor', 'Verde Eucalipto'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-048': { cat: 'texteis-gd-liso', ref: 'GD 048', name: 'Guardanapo - Lavanda', desc: 'Guardanapo de mesa em tecido liso cor lavanda.', images: ['Fotosdiversas/Guardanapos/GD 048.jpg'], specs: [['Cor', 'Lavanda'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* GUARDANAPOS ESTAMPADOS */
+      'gd-008': { cat: 'texteis-gd-estampado', ref: 'GD 008', name: 'Guardanapo - Estampado Azul', desc: 'Guardanapo de mesa em tecido estampado azul.', images: ['Fotosdiversas/Guardanapos/GD 008.jpg'], specs: [['Padrão', 'Estampado Azul'], ['Tipo', 'Estampado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-020': { cat: 'texteis-gd-estampado', ref: 'GD 020', name: 'Guardanapo - Estampado Bourgundy', desc: 'Guardanapo de mesa em tecido estampado bourgundy.', images: ['Fotosdiversas/Guardanapos/GD 020.jpg'], specs: [['Padrão', 'Estampado Bourgundy'], ['Tipo', 'Estampado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* GUARDANAPOS ADAMASCADOS */
+      'gd-024': { cat: 'texteis-gd-adam', ref: 'GD 024', name: 'Guardanapo - Branco Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor branco.', images: ['Fotosdiversas/Guardanapos/GD 024.jpg'], specs: [['Cor', 'Branco'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-025': { cat: 'texteis-gd-adam', ref: 'GD 025', name: 'Guardanapo - Pérola Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor pérola.', images: ['Fotosdiversas/Guardanapos/GD 025.jpg'], specs: [['Cor', 'Pérola'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-026': { cat: 'texteis-gd-adam', ref: 'GD 026', name: 'Guardanapo - Bege Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor bege.', images: ['Fotosdiversas/Guardanapos/GD 026.jpg'], specs: [['Cor', 'Bege'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-027': { cat: 'texteis-gd-adam', ref: 'GD 027', name: 'Guardanapo - Roxo Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor roxo.', images: ['Fotosdiversas/Guardanapos/GD 027.jpg'], specs: [['Cor', 'Roxo'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-028': { cat: 'texteis-gd-adam', ref: 'GD 028', name: 'Guardanapo - Dourado Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor dourado.', images: ['Fotosdiversas/Guardanapos/GD 028.jpg'], specs: [['Cor', 'Dourado'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-029': { cat: 'texteis-gd-adam', ref: 'GD 029', name: 'Guardanapo - Cinza Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor cinza.', images: ['Fotosdiversas/Guardanapos/GD 029.jpg'], specs: [['Cor', 'Cinza'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-030': { cat: 'texteis-gd-adam', ref: 'GD 030', name: 'Guardanapo - Verde Água Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor verde água.', images: ['Fotosdiversas/Guardanapos/GD 030.jpg'], specs: [['Cor', 'Verde Água'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-031': { cat: 'texteis-gd-adam', ref: 'GD 031', name: 'Guardanapo - Lilás Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor lilás.', images: ['Fotosdiversas/Guardanapos/GD 031.jpg'], specs: [['Cor', 'Lilás'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-032': { cat: 'texteis-gd-adam', ref: 'GD 032', name: 'Guardanapo - Castanho Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor castanho.', images: ['Fotosdiversas/Guardanapos/GD 032.jpg'], specs: [['Cor', 'Castanho'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-033': { cat: 'texteis-gd-adam', ref: 'GD 033', name: 'Guardanapo - Bordeaux Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor bordeaux.', images: ['Fotosdiversas/Guardanapos/GD 033.jpg'], specs: [['Cor', 'Bordeaux'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-034': { cat: 'texteis-gd-adam', ref: 'GD 034', name: 'Guardanapo - Vermelho Escarlate Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor vermelho escarlate.', images: ['Fotosdiversas/Guardanapos/GD 034.jpg'], specs: [['Cor', 'Vermelho Escarlate'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-035': { cat: 'texteis-gd-adam', ref: 'GD 035', name: 'Guardanapo - Verde Garrafa Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor verde garrafa.', images: ['Fotosdiversas/Guardanapos/GD 035.jpg'], specs: [['Cor', 'Verde Garrafa'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-038': { cat: 'texteis-gd-adam', ref: 'GD 038', name: 'Guardanapo - Vermelho Escuro Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor vermelho escuro.', images: ['Fotosdiversas/Guardanapos/GD 038.jpg'], specs: [['Cor', 'Vermelho Escuro'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-044': { cat: 'texteis-gd-adam', ref: 'GD 044', name: 'Guardanapo - Preto Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor preto.', images: ['Fotosdiversas/Guardanapos/GD 044.jpg'], specs: [['Cor', 'Preto'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-045': { cat: 'texteis-gd-adam', ref: 'GD 045', name: 'Guardanapo - Camel Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor camel.', images: ['https://placehold.co/600x600/c09050/faf7f2?text=GD+045'], specs: [['Cor', 'Camel'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-046': { cat: 'texteis-gd-adam', ref: 'GD 046', name: 'Guardanapo - Cru Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor cru.', images: ['Fotosdiversas/Guardanapos/GD 046.jpg'], specs: [['Cor', 'Cru'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-047': { cat: 'texteis-gd-adam', ref: 'GD 047', name: 'Guardanapo - Rosa Adamascado', desc: 'Guardanapo de mesa em tecido adamascado cor rosa.', images: ['Fotosdiversas/Guardanapos/GD 047.jpg'], specs: [['Cor', 'Rosa'], ['Tipo', 'Adamascado'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* GUARDANAPOS CETIM */
+      'gd-037': { cat: 'texteis-gd-cetim', ref: 'GD 037', name: 'Guardanapo - Branco Cetim', desc: 'Guardanapo de mesa em cetim cor branco.', images: ['https://placehold.co/600x600/f8f6f0/6b5f4a?text=GD+037'], specs: [['Cor', 'Branco'], ['Tipo', 'Cetim'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'gd-041': { cat: 'texteis-gd-cetim', ref: 'GD 041', name: 'Guardanapo - Verde Pistácio Cetim', desc: 'Guardanapo de mesa em cetim cor verde pistácio.', images: ['Fotosdiversas/Guardanapos/GD 041.jpg'], specs: [['Cor', 'Verde Pistácio'], ['Tipo', 'Cetim'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* LOUÇAS */
       'lou-001': {
@@ -2081,7 +2170,7 @@
         items: ['ta-002','ta-003','ta-004','ta-005','ta-006','ta-007','ta-008','ta-009','ta-010'],
       },
       'col-cm-areia': {
-        cat: 'texteis',
+        cat: 'texteis-cm',
         ref: 'CM 001 – 005',
         name: 'Camilhas Areia',
         desc: 'Coleção de camilhas de mesa em tons neutros e areia com 3,3 metros de comprimento. Disponível em 4 variantes: Areia, Areia Branca, Tostado e Azul.',
@@ -2091,27 +2180,27 @@
         items: ['cm-005','cm-001','cm-003','cm-004'],
       },
       'col-cm-adamascadas': {
-        cat: 'texteis',
+        cat: 'texteis-cm',
         ref: 'CM 006 – 014',
         name: 'Camilhas Adamascadas',
         desc: 'Coleção de camilhas de mesa em tecido adamascado com 3,3 metros de comprimento. Disponível em 8 opções: branco, bege, dourado, bordeaux, verde esmeralda, lilás, preto/prateado e preto/violeta.',
         count: 8,
         priceHint: 'Sob consulta',
-        previewImage: 'Fotosdiversas/CM 008.png',
+        previewImage: 'Fotosdiversas/Camilhas/CM 008.png',
         items: ['cm-006','cm-007','cm-008','cm-009','cm-012','cm-014','cm-017','cm-018'],
       },
       'col-cm-renda': {
-        cat: 'texteis',
+        cat: 'texteis-cm',
         ref: 'CM 015 – 016',
         name: 'Camilhas Renda',
         desc: 'Coleção de camilhas de mesa em renda com 3,3 metros de comprimento. Disponível em 2 opções: branca e pérola.',
         count: 2,
         priceHint: 'Sob consulta',
-        previewImage: 'Fotosdiversas/CM 015.jpg',
+        previewImage: 'Fotosdiversas/Camilhas/CM 015.png',
         items: ['cm-015','cm-016'],
       },
       'col-cm-tafeta': {
-        cat: 'texteis',
+        cat: 'texteis-cm',
         ref: 'CM 021 – 022',
         name: 'Camilhas Tafetá',
         desc: 'Coleção de camilhas de mesa em tafetá com 3,3 metros de comprimento. Disponível em 2 cores: cinza e lilás.',
@@ -2121,7 +2210,7 @@
         items: ['cm-021','cm-022'],
       },
       'col-cm-cetim': {
-        cat: 'texteis',
+        cat: 'texteis-cm',
         ref: 'CM 023',
         name: 'Camilhas Cetim',
         desc: 'Camilha de mesa em cetim branco com 3,3 metros de comprimento. Brilho suave e elegância clássica.',
@@ -2131,7 +2220,7 @@
         items: ['cm-023'],
       },
       'col-cm-estampado': {
-        cat: 'texteis',
+        cat: 'texteis-cm',
         ref: 'CM 019 – 020',
         name: 'Camilhas Estampado Tradicional',
         desc: 'Coleção de camilhas de mesa em tecido estampado tradicional com 3,3 metros de comprimento. Disponível em azul e burgundy.',
@@ -2141,7 +2230,7 @@
         items: ['cm-019','cm-020'],
       },
       'col-cm-mm': {
-        cat: 'texteis',
+        cat: 'texteis-cm',
         ref: 'CM 025 – 036',
         name: 'Camilhas MM 3,3m D',
         desc: 'Coleção de camilhas de mesa em tecido 100% poliéster minimat, com 3,3 metros de comprimento. Disponível em 12 cores.',
@@ -2149,6 +2238,68 @@
         priceHint: 'Sob consulta',
         previewImage: 'https://placehold.co/600x400/ede4d0/8a7340?text=Camilhas+MM',
         items: ['cm-025','cm-026','cm-027','cm-028','cm-029','cm-030','cm-031','cm-032','cm-033','cm-034','cm-035','cm-036'],
+      },
+
+      /* GUARDANAPOS */
+      'col-gd-liso': {
+        cat: 'texteis-gd',
+        ref: 'GD 001 – 048',
+        name: 'Guardanapos Lisos',
+        desc: 'Coleção de guardanapos de mesa em tecido liso. Disponível em 27 cores para combinar com qualquer tema de evento.',
+        count: 27,
+        priceHint: 'Sob consulta',
+        previewImage: 'Fotosdiversas/Guardanapos/GD 004.jpg',
+        items: ['gd-001','gd-002','gd-003','gd-004','gd-005','gd-006','gd-007','gd-009','gd-010','gd-011','gd-012','gd-013','gd-014','gd-015','gd-016','gd-017','gd-018','gd-019','gd-021','gd-022','gd-023','gd-036','gd-039','gd-040','gd-042','gd-043','gd-048'],
+      },
+      'col-gd-adam': {
+        cat: 'texteis-gd',
+        ref: 'GD 024 – 047',
+        name: 'Guardanapos Adamascados',
+        desc: 'Coleção de guardanapos de mesa em tecido adamascado. Disponível em 17 cores com padrão adamascado elegante.',
+        count: 17,
+        priceHint: 'Sob consulta',
+        previewImage: 'Fotosdiversas/Guardanapos/GD 024.jpg',
+        items: ['gd-024','gd-025','gd-026','gd-027','gd-028','gd-029','gd-030','gd-031','gd-032','gd-033','gd-034','gd-035','gd-038','gd-044','gd-045','gd-046','gd-047'],
+      },
+      'col-gd-cetim': {
+        cat: 'texteis-gd',
+        ref: 'GD 037 – 041',
+        name: 'Guardanapos Cetim',
+        desc: 'Coleção de guardanapos de mesa em cetim. Brilho suave e toque luxuoso. Disponível em branco e verde pistácio.',
+        count: 2,
+        priceHint: 'Sob consulta',
+        previewImage: 'Fotosdiversas/Guardanapos/GD 041.jpg',
+        items: ['gd-037','gd-041'],
+      },
+      'col-gd-estampado': {
+        cat: 'texteis-gd',
+        ref: 'GD 008 – 020',
+        name: 'Guardanapos Estampados',
+        desc: 'Coleção de guardanapos de mesa em tecido estampado. Disponível em 2 padrões: azul e bourgundy.',
+        count: 2,
+        priceHint: 'Sob consulta',
+        previewImage: 'Fotosdiversas/Guardanapos/GD 008.jpg',
+        items: ['gd-008','gd-020'],
+      },
+      'col-lc-lisos': {
+        cat: 'texteis-lacos',
+        ref: 'LC 001 – 023',
+        name: 'Laços Lisos',
+        desc: 'Coleção de laços para cadeiras em tecido liso. Disponível em 20 cores para combinar com qualquer tema.',
+        count: 20,
+        priceHint: 'Sob consulta',
+        previewImage: 'https://placehold.co/600x900/f8f6f0/6b5f4a?text=La%C3%A7os+Lisos',
+        items: ['lc-001','lc-002','lc-003','lc-004','lc-005','lc-006','lc-007','lc-008','lc-009','lc-010','lc-011','lc-012','lc-013','lc-014','lc-015','lc-016','lc-017','lc-020','lc-021','lc-023'],
+      },
+      'col-lc-organza': {
+        cat: 'texteis-lacos',
+        ref: 'LC 018 – 026',
+        name: 'Laços Organza',
+        desc: 'Coleção de laços para cadeiras em organza translúcida. Disponível em 6 cores com acabamento leve e elegante.',
+        count: 6,
+        priceHint: 'Sob consulta',
+        previewImage: 'https://placehold.co/600x900/c8a840/faf7f2?text=La%C3%A7os+Organza',
+        items: ['lc-018','lc-019','lc-022','lc-024','lc-025','lc-026'],
       },
     };
 
@@ -2640,12 +2791,13 @@
     /* ─── CATEGORY TOOLBAR ─── */
     function initToolbar() {
       document.querySelectorAll('.cat-section').forEach(section => {
-        const header = section.querySelector('.cat-section-header');
-        const grid   = section.querySelector('.product-grid');
+        const header   = section.querySelector('.cat-section-header');
+        const allGrids = Array.from(section.querySelectorAll('.product-grid'));
+        const grid     = allGrids[0];
         if (!header || !grid) return;
 
         const countCards = () =>
-          Array.from(grid.querySelectorAll('.product-card'))
+          Array.from(section.querySelectorAll('.product-card'))
                .filter(c => c.style.display !== 'none').length;
 
         const toolbar = document.createElement('div');
@@ -2703,15 +2855,16 @@
           btn.addEventListener('click', () => {
             viewBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            grid.classList.remove('view-list');
-            if (btn.dataset.view === 'list') grid.classList.add('view-list');
+            allGrids.forEach(g => {
+              g.classList.remove('view-list');
+              if (btn.dataset.view === 'list') g.classList.add('view-list');
+            });
           });
         });
 
         /* ── count sync with search ── */
-        new MutationObserver(() => {
-          countEl.textContent = countCards();
-        }).observe(grid, { subtree: true, attributes: true, attributeFilter: ['style'] });
+        const _mo = new MutationObserver(() => { countEl.textContent = countCards(); });
+        allGrids.forEach(g => _mo.observe(g, { subtree: true, attributes: true, attributeFilter: ['style'] }));
       });
     }
 
