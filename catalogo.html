@@ -45,19 +45,10 @@
     }
     .nav-cta:hover { background: var(--gold); color: var(--white); }
 
-    /* ── PAGE HEADER ── */
-    .page-header {
-      background: var(--dark); padding: 4rem 2rem 3rem;
-      text-align: center;
-    }
-    .page-header .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
-    .page-header h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; color: var(--cream); letter-spacing: -0.02em; }
-    .page-header p { color: rgba(245,239,226,0.55); font-size: 14px; margin-top: 0.75rem; max-width: 480px; margin-left: auto; margin-right: auto; }
-
     /* ── CATEGORY TABS ── */
     .cat-nav-wrap {
-      background: var(--cream-light); border-bottom: 1px solid var(--cream-border);
-      position: sticky; top: 113px; z-index: 190;
+      background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.07);
+      position: sticky; top: 128px; z-index: 190;
     }
     .cat-nav {
       max-width: 1280px; margin: 0 auto; padding: 0 2rem;
@@ -66,55 +57,76 @@
     .cat-nav::-webkit-scrollbar { display: none; }
     .cat-btn {
       flex-shrink: 0; padding: 1rem 1.5rem; font-size: 11px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+      letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4);
       border: none; background: none; cursor: pointer;
       border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
     }
-    .cat-btn:hover { color: var(--dark); }
-    .cat-btn.active { color: var(--dark); border-bottom-color: var(--gold); }
-
-    /* ── MAIN WRAP ── */
-    .catalog-wrap { max-width: 1280px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    .cat-btn:hover { color: rgba(255,255,255,0.85); }
+    .cat-btn.active { color: var(--gold-light); border-bottom-color: var(--gold); }
 
     /* ── CATEGORY SECTION ── */
     .cat-section { display: none; }
     .cat-section.visible { display: block; }
-    .cat-section-header {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      grid-template-areas: "title search" "desc search";
-      row-gap: 0.75rem; column-gap: 3rem;
-      align-items: center;
-      padding: 3rem 0 2.25rem;
+
+    /* ── CATEGORY HERO ── */
+    .cat-hero {
+      position: relative;
+      height: 52vh; min-height: 340px; max-height: 520px;
+      background: var(--dark);
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cat-hero-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform 8s ease;
+    }
+    .cat-section.visible .cat-hero-bg { transform: scale(1.04); }
+    .cat-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(20,18,15,0.3) 0%, rgba(20,18,15,0.6) 55%, rgba(20,18,15,0.82) 100%);
+    }
+    .cat-hero::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px; z-index: 1;
+      background: linear-gradient(to bottom, transparent, var(--cream));
+      pointer-events: none;
+    }
+    .cat-hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+    }
+    .cat-hero-content h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      font-weight: 300; letter-spacing: -0.02em; line-height: 1;
+      color: white;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.25);
+    }
+    .cat-subnav {
+      display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;
+    }
+    .cat-subnav a {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+    .cat-subnav a:hover { color: white; border-bottom-color: var(--gold-light); }
+
+    /* ── CAT CONTENT & BAR ── */
+    .cat-content { max-width: 1280px; margin: 0 auto; padding: 0 2rem 5rem; }
+    .cat-bar {
+      padding: 1.5rem 0;
       border-bottom: 1px solid var(--cream-border);
       margin-bottom: 2.5rem;
-      position: relative;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .cat-section-header::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0;
-      width: 3.5rem; height: 3px;
-      background: var(--gold);
-      border-radius: 999px;
-    }
-    .cat-section-header h2 {
-      grid-area: title;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(3rem, 4.5vw, 4.5rem);
-      font-weight: 300; letter-spacing: -0.02em; line-height: 1;
-      color: var(--dark);
-    }
-    .cat-section-header p {
-      grid-area: desc;
-      color: var(--muted); font-size: 14px; line-height: 1.65; margin-top: 0;
-    }
-    .cat-section-header .cat-search {
-      grid-area: search;
-      margin-bottom: 0;
-      flex-direction: column; align-items: stretch; gap: 0.5rem;
-    }
-    .cat-section-header .cat-search-field input { width: 240px; }
+    .cat-bar-count { font-size: 13px; color: var(--muted); }
+    .cat-bar-count strong { color: var(--dark); font-weight: 700; }
 
     /* ── SUB-SECTION ── */
     .cat-subsection { margin-top: 3.5rem; }
@@ -624,7 +636,7 @@
       width: 280px; padding: 0.6rem 2.6rem 0.6rem 1.1rem;
       border: 1px solid var(--cream-border);
       border-radius: 999px;
-      background: var(--white);
+      background: var(--cream-light);
       font-family: 'Lato', sans-serif; font-size: 13px; color: var(--dark);
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
@@ -688,14 +700,8 @@
       .hamburger { display: flex; }
       .nav-logo img { height: 50px; }
       .drawer-panel { width: 100vw; }
-      .cat-section-header {
-        grid-template-columns: 1fr;
-        grid-template-areas: "title" "search";
-        row-gap: 1rem;
-      }
-      .cat-section-header .cat-search { width: 100%; }
-      .cat-section-header .cat-search-field { width: 100%; }
-      .cat-section-header .cat-search-field input { width: 100%; }
+      .cat-hero { height: 45vh; min-height: 280px; }
+      .cat-subnav { gap: 1.25rem; }
       .form-row { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
@@ -1054,13 +1060,6 @@
     <a href="index.html#contacto">Contacto</a>
   </div>
 
-  <!-- PAGE HEADER -->
-  <div class="page-header">
-    <div class="eyebrow">Moreira &amp; Araújo</div>
-    <h1>Catálogo de Material</h1>
-    <p>Seleccione uma categoria e clique em qualquer peça para ver todos os detalhes</p>
-  </div>
-
   <!-- CATEGORY TABS -->
   <div class="cat-nav-wrap">
     <div class="cat-nav">
@@ -1073,73 +1072,128 @@
     </div>
   </div>
 
-  <!-- CATALOG CONTENT -->
-  <div class="catalog-wrap">
-
-    <!-- MOBILIÁRIO -->
-    <div class="cat-section visible" id="cat-mobiliario">
-      <div class="cat-section-header">
+  <!-- MOBILIÁRIO -->
+  <div class="cat-section visible" id="cat-mobiliario">
+    <div class="cat-hero">
+      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II1.jpg')"></div>
+      <div class="cat-hero-overlay"></div>
+      <div class="cat-hero-content">
         <h2>Mobiliário</h2>
+      </div>
+    </div>
+    <div class="cat-content">
+      <div class="cat-bar">
+        <span class="cat-bar-count" id="count-mobiliario"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-mobiliario"></div>
     </div>
+  </div>
 
-    <!-- TÊXTEIS -->
-    <div class="cat-section" id="cat-texteis">
-      <div class="cat-section-header">
+  <!-- TÊXTEIS -->
+  <div class="cat-section" id="cat-texteis">
+    <div class="cat-hero">
+      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II2.jpg')"></div>
+      <div class="cat-hero-overlay"></div>
+      <div class="cat-hero-content">
         <h2>Têxteis</h2>
+        <div class="cat-subnav">
+          <a data-sub="sub-texteis-cm">Camilhas</a>
+          <a data-sub="sub-texteis-gd">Guardanapos</a>
+          <a data-sub="sub-texteis-lacos">Laços</a>
+          <a data-sub="sub-texteis-cmm">Caminhos de Mesa</a>
+        </div>
       </div>
-      <div class="cat-subsection">
+    </div>
+    <div class="cat-content">
+      <div class="cat-bar">
+        <span class="cat-bar-count" id="count-texteis"><strong>—</strong> produtos</span>
+      </div>
+      <div class="cat-subsection" id="sub-texteis-cm">
         <div class="subcat-label">Camilhas</div>
         <div class="product-grid" id="grid-texteis-cm"></div>
       </div>
-      <div class="cat-subsection">
+      <div class="cat-subsection" id="sub-texteis-gd">
         <div class="subcat-label">Guardanapos</div>
         <div class="product-grid" id="grid-texteis-gd"></div>
       </div>
-      <div class="cat-subsection">
+      <div class="cat-subsection" id="sub-texteis-lacos">
         <div class="subcat-label">Laços</div>
         <div class="product-grid" id="grid-texteis-lacos"></div>
       </div>
-      <div class="cat-subsection">
-        <div class="subcat-label">Outros Têxteis</div>
-        <div class="product-grid" id="grid-texteis"></div>
+      <div class="cat-subsection" id="sub-texteis-cmm">
+        <div class="subcat-label">Caminhos de Mesa</div>
+        <div class="product-grid" id="grid-texteis-cmm"></div>
       </div>
     </div>
+  </div>
 
-    <!-- LOUÇAS -->
-    <div class="cat-section" id="cat-loucas">
-      <div class="cat-section-header">
+  <!-- LOUÇAS -->
+  <div class="cat-section" id="cat-loucas">
+    <div class="cat-hero">
+      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II3.jpg')"></div>
+      <div class="cat-hero-overlay"></div>
+      <div class="cat-hero-content">
         <h2>Louças</h2>
+      </div>
+    </div>
+    <div class="cat-content">
+      <div class="cat-bar">
+        <span class="cat-bar-count" id="count-loucas"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-loucas"></div>
     </div>
+  </div>
 
-    <!-- DECORAÇÃO -->
-    <div class="cat-section" id="cat-decoracao">
-      <div class="cat-section-header">
+  <!-- DECORAÇÃO -->
+  <div class="cat-section" id="cat-decoracao">
+    <div class="cat-hero">
+      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II4.png')"></div>
+      <div class="cat-hero-overlay"></div>
+      <div class="cat-hero-content">
         <h2>Decoração</h2>
+      </div>
+    </div>
+    <div class="cat-content">
+      <div class="cat-bar">
+        <span class="cat-bar-count" id="count-decoracao"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-decoracao"></div>
     </div>
+  </div>
 
-    <!-- EXTERIOR -->
-    <div class="cat-section" id="cat-exterior">
-      <div class="cat-section-header">
+  <!-- EXTERIOR -->
+  <div class="cat-section" id="cat-exterior">
+    <div class="cat-hero">
+      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II5.jpg')"></div>
+      <div class="cat-hero-overlay"></div>
+      <div class="cat-hero-content">
         <h2>Exterior</h2>
+      </div>
+    </div>
+    <div class="cat-content">
+      <div class="cat-bar">
+        <span class="cat-bar-count" id="count-exterior"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-exterior"></div>
     </div>
+  </div>
 
-    <!-- OUTROS -->
-    <div class="cat-section" id="cat-outros">
-      <div class="cat-section-header">
+  <!-- OUTROS -->
+  <div class="cat-section" id="cat-outros">
+    <div class="cat-hero">
+      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II6.jpg')"></div>
+      <div class="cat-hero-overlay"></div>
+      <div class="cat-hero-content">
         <h2>Outros</h2>
+      </div>
+    </div>
+    <div class="cat-content">
+      <div class="cat-bar">
+        <span class="cat-bar-count" id="count-outros"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-outros"></div>
     </div>
-
-  </div><!-- /catalog-wrap -->
+  </div>
 
   <!-- DRAWER -->
   <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Detalhes do produto">
@@ -1289,41 +1343,6 @@
         price: 'Sob consulta',
         priceNote: 'Preço inclui entrega e recolha em Vila do Conde',
       },
-      'mob-002': {
-        cat: 'mobiliario',
-        ref: 'MOB-002',
-        name: 'Cadeira Tiffany',
-        desc: 'Cadeira clássica em resina de alta qualidade, disponível em branco e transparente. Ideal para cerimónias e jantares de gala.',
-        images: [
-          'Fotosdiversas/COPO_2_sem_fundo.png',
-        ],
-        specs: [
-          ['Material', 'Resina premium'],
-          ['Cores', 'Branco / Transparente'],
-          ['Stock', 'Consultar'],
-        ],
-        priceLabel: 'Preço por unidade / dia',
-        price: 'Sob consulta',
-        priceNote: 'Preços por quantidade disponíveis',
-      },
-      'mob-003': {
-        cat: 'mobiliario',
-        ref: 'MOB-003',
-        name: 'Cadeira Napoleão',
-        desc: 'Cadeira com estrutura em madeira de faia e assento almofadado. Elegância clássica para eventos de luxo e casamentos.',
-        images: [
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Cadeira+Napoleon',
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Vista+2',
-        ],
-        specs: [
-          ['Material', 'Madeira de faia'],
-          ['Assento', 'Almofadado'],
-          ['Stock', 'Consultar'],
-        ],
-        priceLabel: 'Preço por unidade / dia',
-        price: 'Sob consulta',
-        priceNote: 'Preços por quantidade disponíveis',
-      },
       'mob-004': {
         cat: 'mobiliario',
         ref: 'MOB-004',
@@ -1349,7 +1368,7 @@
         ref: 'CD 001',
         name: 'Cadeira Dobrável Castanha',
         desc: 'Cadeira dobrável em madeira com acabamento castanho. Robusta, elegante e fácil de transportar, ideal para qualquer tipo de evento.',
-        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+001'],
+        images: ['Fotosdiversas/Cadeiras/CD 001.png'],
         specs: [['Material', 'Madeira'], ['Acabamento', 'Castanho'], ['Tipo', 'Dobrável']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1393,7 +1412,7 @@
         ref: 'CD 005',
         name: 'Cadeira Dobrável Prateada c/ Coxim Tecido Pérola',
         desc: 'Cadeira dobrável prateada com coxim de tecido pérola. Combinação sofisticada para cerimónias e eventos de gala.',
-        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+005'],
+        images: ['Fotosdiversas/Cadeiras/CD 005.jpg'],
         specs: [['Material', 'Metal + Tecido'], ['Acabamento', 'Prateado / Pérola'], ['Tipo', 'Dobrável c/ coxim']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1404,7 +1423,7 @@
         ref: 'CD 006',
         name: 'Cadeira Dobrável Prateada c/ Coxim Pele Sintética',
         desc: 'Cadeira dobrável prateada com coxim de pele sintética castanha. Contraste elegante entre o metal prateado e o couro.',
-        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+006'],
+        images: ['Fotosdiversas/Cadeiras/CD 006.jpg'],
         specs: [['Material', 'Metal + Pele Sintética'], ['Acabamento', 'Prateado / Castanho'], ['Tipo', 'Dobrável c/ coxim']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1415,7 +1434,7 @@
         ref: 'CD 007',
         name: 'Cadeira Crossback Camel',
         desc: 'Cadeira crossback em madeira com acabamento camel. Design rústico e contemporâneo, muito popular em casamentos e eventos ao ar livre.',
-        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+007'],
+        images: ['Fotosdiversas/Cadeiras/CD 007.png'],
         specs: [['Material', 'Madeira'], ['Acabamento', 'Camel'], ['Tipo', 'Crossback']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1426,7 +1445,7 @@
         ref: 'CD 008',
         name: 'Cadeira Crossback Camel c/ Coxim Pérola',
         desc: 'Cadeira crossback camel com coxim de assento pérola. O coxim suaviza o assento e adiciona um toque refinado ao estilo rústico-chic.',
-        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+008'],
+        images: ['Fotosdiversas/Cadeiras/CD 008.jpg'],
         specs: [['Material', 'Madeira + Tecido'], ['Acabamento', 'Camel / Pérola'], ['Tipo', 'Crossback c/ coxim']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1437,66 +1456,11 @@
         ref: 'CD 009',
         name: 'Cadeira Imperial Dourada',
         desc: 'Cadeira imperial com estrutura dourada e assento almofadado. Presença majestosa para eventos de luxo, galas e cerimónias de prestígio.',
-        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+009'],
+        images: ['Fotosdiversas/Cadeiras/CD 009.png'],
         specs: [['Material', 'Metal + Tecido'], ['Acabamento', 'Dourado'], ['Tipo', 'Imperial']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
         priceNote: 'Preços por quantidade disponíveis',
-      },
-
-      /* TÊXTEIS */
-      'tex-001': {
-        cat: 'texteis',
-        ref: 'TEX-001',
-        name: 'Toalha de Mesa Redonda',
-        desc: 'Toalha em linho de alta qualidade para mesas redondas. Disponível em várias cores para combinar com o tema do evento.',
-        images: [
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Toalha+Redonda',
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Detalhe',
-        ],
-        specs: [
-          ['Material', 'Linho premium'],
-          ['Cores', 'Branco / Ivory / Cinza'],
-          ['Tamanho', 'Para mesa Ø 180 cm'],
-        ],
-        priceLabel: 'Preço por unidade / dia',
-        price: 'Sob consulta',
-        priceNote: 'Inclui lavagem e engomagem',
-      },
-      'tex-002': {
-        cat: 'texteis',
-        ref: 'TEX-002',
-        name: 'Capa de Cadeira com Laço',
-        desc: 'Capa em organza ou poliéster para cadeiras de banquete, com laço incluído. Transforma qualquer cadeira numa peça elegante.',
-        images: [
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Capa+Cadeira',
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Detalhe+Laco',
-        ],
-        specs: [
-          ['Material', 'Organza / Poliéster'],
-          ['Cores', 'Várias disponíveis'],
-          ['Stock', 'Consultar'],
-        ],
-        priceLabel: 'Preço por unidade / dia',
-        price: 'Sob consulta',
-        priceNote: 'Inclui laço e colocação',
-      },
-      'tex-003': {
-        cat: 'texteis',
-        ref: 'TEX-003',
-        name: 'Guardanapo de Linho',
-        desc: 'Guardanapos em linho lavado com acabamento elegante. Dobráveis em múltiplas formas para a apresentação da mesa.',
-        images: [
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Guardanapos',
-        ],
-        specs: [
-          ['Material', 'Linho'],
-          ['Tamanho', '50 × 50 cm'],
-          ['Cores', 'Branco / Ivory / Bege'],
-        ],
-        priceLabel: 'Preço por unidade / dia',
-        price: 'Sob consulta',
-        priceNote: 'Inclui lavagem após utilização',
       },
 
       /* LAÇOS LISOS */
@@ -1508,26 +1472,26 @@
       'lc-006': { cat: 'texteis-lisos', ref: 'LC 006', name: 'Laço Liso Verde Garrafa', desc: 'Laço liso em tecido na cor verde garrafa. Tom profundo e sofisticado para eventos com decoração natural.', images: ['Fotosdiversas/Laços/LC 006.jpg'], specs: [['Cor', 'Verde Garrafa'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lc-007': { cat: 'texteis-lisos', ref: 'LC 007', name: 'Laço Liso Rosa Seco', desc: 'Laço liso em tecido na cor rosa seco. Tom terroso e elegante muito popular em casamentos boho.', images: ['Fotosdiversas/Laços/LC 007.jpg'], specs: [['Cor', 'Rosa Seco'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lc-008': { cat: 'texteis-lisos', ref: 'LC 008', name: 'Laço Cetim Vermelho', desc: 'Laço em cetim na cor vermelha. Brilho suave e cor intensa para eventos de gala e Natal.', images: ['Fotosdiversas/Laços/LC 008.jpg'], specs: [['Cor', 'Vermelho'], ['Tipo', 'Cetim'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-009': { cat: 'texteis-lisos', ref: 'LC 009', name: 'Laço Liso Branco', desc: 'Laço liso em tecido branco. Clássico e versátil, perfeito para casamentos e batizados.', images: ['https://placehold.co/600x900/f8f6f0/6b5f4a?text=LC+009'], specs: [['Cor', 'Branco'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-010': { cat: 'texteis-lisos', ref: 'LC 010', name: 'Laço Liso Pérola', desc: 'Laço liso em tecido pérola. Tom suave e refinado para cerimónias elegantes.', images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=LC+010'], specs: [['Cor', 'Pérola'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-011': { cat: 'texteis-lisos', ref: 'LC 011', name: 'Laço Liso Marinho', desc: 'Laço liso em tecido azul marinho. Tom clássico e formal para eventos náuticos ou de gala.', images: ['https://placehold.co/600x900/203060/faf7f2?text=LC+011'], specs: [['Cor', 'Marinho'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-009': { cat: 'texteis-lisos', ref: 'LC 009', name: 'Laço Liso Branco', desc: 'Laço liso em tecido branco. Clássico e versátil, perfeito para casamentos e batizados.', images: ['Fotosdiversas/Laços/LC 009.png'], specs: [['Cor', 'Branco'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-010': { cat: 'texteis-lisos', ref: 'LC 010', name: 'Laço Liso Pérola', desc: 'Laço liso em tecido pérola. Tom suave e refinado para cerimónias elegantes.', images: ['Fotosdiversas/Laços/LC 010.png'], specs: [['Cor', 'Pérola'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-011': { cat: 'texteis-lisos', ref: 'LC 011', name: 'Laço Liso Marinho', desc: 'Laço liso em tecido azul marinho. Tom clássico e formal para eventos náuticos ou de gala.', images: ['Fotosdiversas/Laços/LC 011.jpg'], specs: [['Cor', 'Marinho'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lc-012': { cat: 'texteis-lisos', ref: 'LC 012', name: 'Laço Liso Bordeaux', desc: 'Laço liso em tecido bordeaux. Cor profunda e luxuosa para casamentos de outono/inverno.', images: ['Fotosdiversas/Laços/LC 012.jpg'], specs: [['Cor', 'Bordeaux'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-013': { cat: 'texteis-lisos', ref: 'LC 013', name: 'Laço Liso Preto', desc: 'Laço liso em tecido preto. Elegância atemporal para eventos formais e galas.', images: ['https://placehold.co/600x900/1a1a1a/f5efe2?text=LC+013'], specs: [['Cor', 'Preto'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-013': { cat: 'texteis-lisos', ref: 'LC 013', name: 'Laço Liso Preto', desc: 'Laço liso em tecido preto. Elegância atemporal para eventos formais e galas.', images: ['Fotosdiversas/Laços/LC 013.PNG'], specs: [['Cor', 'Preto'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lc-014': { cat: 'texteis-lisos', ref: 'LC 014', name: 'Laço Liso Castanho', desc: 'Laço liso em tecido castanho. Tom terroso e natural ideal para eventos rústicos e boho.', images: ['Fotosdiversas/Laços/LC 014.png'], specs: [['Cor', 'Castanho'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-015': { cat: 'texteis-lisos', ref: 'LC 015', name: 'Laço Liso Prateado Estreito', desc: 'Laço liso prateado de largura estreita. Acabamento metálico sofisticado para eventos de gala.', images: ['https://placehold.co/600x900/c0c0c8/faf7f2?text=LC+015'], specs: [['Cor', 'Prateado'], ['Largura', 'Estreito'], ['Tipo', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-015': { cat: 'texteis-lisos', ref: 'LC 015', name: 'Laço Liso Prateado Estreito', desc: 'Laço liso prateado de largura estreita. Acabamento metálico sofisticado para eventos de gala.', images: ['Fotosdiversas/Laços/LC 015.jpg'], specs: [['Cor', 'Prateado'], ['Largura', 'Estreito'], ['Tipo', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lc-016': { cat: 'texteis-lisos', ref: 'LC 016', name: 'Laço Liso Prateado Largo', desc: 'Laço liso prateado de largura larga. Presença marcante com acabamento metálico elegante.', images: ['Fotosdiversas/Laços/LC 016.jpg'], specs: [['Cor', 'Prateado'], ['Largura', 'Largo'], ['Tipo', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lc-017': { cat: 'texteis-lisos', ref: 'LC 017', name: 'Laço Liso Dourado', desc: 'Laço liso na cor dourada. Brilho e luxo para eventos de gala e casamentos premium.', images: ['Fotosdiversas/Laços/LC 017.jpg'], specs: [['Cor', 'Dourado'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lc-020': { cat: 'texteis-lisos', ref: 'LC 020', name: 'Laço Liso Laranja', desc: 'Laço liso em tecido laranja. Cor vibrante e alegre para eventos festivos e de verão.', images: ['Fotosdiversas/Laços/LC 020.png'], specs: [['Cor', 'Laranja'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-021': { cat: 'texteis-lisos', ref: 'LC 021', name: 'Laço Liso Lilás', desc: 'Laço liso em tecido lilás. Tom suave e romântico ideal para casamentos primaverais.', images: ['https://placehold.co/600x900/c0a0d0/faf7f2?text=LC+021'], specs: [['Cor', 'Lilás'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-023': { cat: 'texteis-lisos', ref: 'LC 023', name: 'Laço Liso Cinza', desc: 'Laço liso em tecido cinza. Tom neutro e moderno que combina com qualquer paleta de cores.', images: ['https://placehold.co/600x900/909090/faf7f2?text=LC+023'], specs: [['Cor', 'Cinza'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-021': { cat: 'texteis-lisos', ref: 'LC 021', name: 'Laço Liso Lilás', desc: 'Laço liso em tecido lilás. Tom suave e romântico ideal para casamentos primaverais.', images: ['Fotosdiversas/Laços/LC 021.png'], specs: [['Cor', 'Lilás'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-023': { cat: 'texteis-lisos', ref: 'LC 023', name: 'Laço Liso Cinza', desc: 'Laço liso em tecido cinza. Tom neutro e moderno que combina com qualquer paleta de cores.', images: ['Fotosdiversas/Laços/LC 023.png'], specs: [['Cor', 'Cinza'], ['Tipo', 'Liso'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* LAÇOS ORGANZA */
-      'lc-018': { cat: 'texteis-organza', ref: 'LC 018', name: 'Laço Organza Vermelho', desc: 'Laço em organza na cor vermelha. Tecido translúcido e leve que confere elegância e movimento.', images: ['https://placehold.co/600x900/c03030/faf7f2?text=LC+018'], specs: [['Cor', 'Vermelho'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-019': { cat: 'texteis-organza', ref: 'LC 019', name: 'Laço Organza Preto', desc: 'Laço em organza na cor preta. Elegância sofisticada com leveza do tecido translúcido.', images: ['https://placehold.co/600x900/1a1a1a/f5efe2?text=LC+019'], specs: [['Cor', 'Preto'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-018': { cat: 'texteis-organza', ref: 'LC 018', name: 'Laço Organza Vermelho', desc: 'Laço em organza na cor vermelha. Tecido translúcido e leve que confere elegância e movimento.', images: ['Fotosdiversas/Laços/LC 018.png'], specs: [['Cor', 'Vermelho'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-019': { cat: 'texteis-organza', ref: 'LC 019', name: 'Laço Organza Preto', desc: 'Laço em organza na cor preta. Elegância sofisticada com leveza do tecido translúcido.', images: ['Fotosdiversas/Laços/LC 019.png'], specs: [['Cor', 'Preto'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lc-022': { cat: 'texteis-organza', ref: 'LC 022', name: 'Laço Organza Dourado', desc: 'Laço em organza na cor dourada. Brilho delicado e luxuoso para eventos de gala.', images: ['Fotosdiversas/Laços/LC 022.jpg'], specs: [['Cor', 'Dourado'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-024': { cat: 'texteis-organza', ref: 'LC 024', name: 'Laço Organza Azul', desc: 'Laço em organza na cor azul. Leveza e elegância com o efeito translúcido do tecido.', images: ['https://placehold.co/600x900/4060c0/faf7f2?text=LC+024'], specs: [['Cor', 'Azul'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-024': { cat: 'texteis-organza', ref: 'LC 024', name: 'Laço Organza Azul', desc: 'Laço em organza na cor azul. Leveza e elegância com o efeito translúcido do tecido.', images: ['Fotosdiversas/Laços/LC 024.jpeg'], specs: [['Cor', 'Azul'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lc-025': { cat: 'texteis-organza', ref: 'LC 025', name: 'Laço Organza Amarelo', desc: 'Laço em organza na cor amarela. Leveza e alegria para eventos de primavera e verão.', images: ['Fotosdiversas/Laços/LC 025.png'], specs: [['Cor', 'Amarelo'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lc-026': { cat: 'texteis-organza', ref: 'LC 026', name: 'Laço Organza Verde Lima', desc: 'Laço em organza na cor verde lima. Frescura e leveza para eventos ao ar livre e de verão.', images: ['https://placehold.co/600x900/90c030/faf7f2?text=LC+026'], specs: [['Cor', 'Verde Lima'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lc-026': { cat: 'texteis-organza', ref: 'LC 026', name: 'Laço Organza Verde Lima', desc: 'Laço em organza na cor verde lima. Frescura e leveza para eventos ao ar livre e de verão.', images: ['Fotosdiversas/Laços/LC 026.png'], specs: [['Cor', 'Verde Lima'], ['Tipo', 'Organza'], ['Uso', 'Decoração de cadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* CAMILHAS 3,3m D */
       'cm-001': { cat: 'texteis-cm-areia', ref: 'CM 001', name: 'Camilha 3,3m D - Areia', desc: 'Camilha de mesa em tecido liso cor areia, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 001.png'], specs: [['Cor', 'Areia'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
@@ -1539,30 +1503,30 @@
       'cm-008': { cat: 'texteis-cm-adam', ref: 'CM 008', name: 'Camilha 3,3m D - Dourado Adamascado', desc: 'Camilha de mesa em tecido adamascado dourado, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 008.png'], specs: [['Cor', 'Dourado'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-009': { cat: 'texteis-cm-adam', ref: 'CM 009', name: 'Camilha 3,3m D - Bordeaux Adamascado', desc: 'Camilha de mesa em tecido adamascado bordeaux, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 009.png'], specs: [['Cor', 'Bordeaux'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-012': { cat: 'texteis-cm-adam', ref: 'CM 012', name: 'Camilha 3,3m D - Verde Esmeralda Adamascado', desc: 'Camilha de mesa em tecido adamascado verde esmeralda, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 012.png'], specs: [['Cor', 'Verde Esmeralda'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-014': { cat: 'texteis-cm-adam', ref: 'CM 014', name: 'Camilha 3,3m D - Lilás Adamascado', desc: 'Camilha de mesa em tecido adamascado lilás, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/c0a0d0/faf7f2?text=CM+014'], specs: [['Cor', 'Lilás'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-014': { cat: 'texteis-cm-adam', ref: 'CM 014', name: 'Camilha 3,3m D - Lilás Adamascado', desc: 'Camilha de mesa em tecido adamascado lilás, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 014.png'], specs: [['Cor', 'Lilás'], ['Comprimento', '3,3 m'], ['Padrão', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-015': { cat: 'texteis-cm-renda', ref: 'CM 015', name: 'Camilha 3,3m D - Renda Branca', desc: 'Camilha de mesa em renda branca, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 015.png'], specs: [['Cor', 'Branco'], ['Comprimento', '3,3 m'], ['Padrão', 'Renda']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-016': { cat: 'texteis-cm-renda', ref: 'CM 016', name: 'Camilha 3,3m D - Renda Pérola', desc: 'Camilha de mesa em renda pérola, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 016.jpg'], specs: [['Cor', 'Pérola'], ['Comprimento', '3,3 m'], ['Padrão', 'Renda']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-017': { cat: 'texteis-cm-adam', ref: 'CM 017', name: 'Camilha 3,3m D - Preto/Prateado', desc: 'Camilha de mesa em tecido preto com detalhe prateado, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 017.jpg'], specs: [['Cor', 'Preto/Prateado'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-018': { cat: 'texteis-cm-adam', ref: 'CM 018', name: 'Camilha 3,3m D - Preto/Violeta', desc: 'Camilha de mesa em tecido preto com detalhe violeta, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 018.jpg'], specs: [['Cor', 'Preto/Violeta'], ['Comprimento', '3,3 m'], ['Padrão', 'Liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-019': { cat: 'texteis-cm-estampado', ref: 'CM 019', name: 'Camilha 3,3m D - Estampado Tradicional Azul', desc: 'Camilha de mesa em tecido estampado tradicional azul, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 019.png'], specs: [['Cor', 'Azul'], ['Comprimento', '3,3 m'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-020': { cat: 'texteis-cm-estampado', ref: 'CM 020', name: 'Camilha 3,3m D - Estampado Tradicional Burgundy', desc: 'Camilha de mesa em tecido estampado tradicional burgundy, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 020.jpg'], specs: [['Cor', 'Burgundy'], ['Comprimento', '3,3 m'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-021': { cat: 'texteis-cm-tafeta', ref: 'CM 021', name: 'Camilha 3,3m D - Tafetá Cinza', desc: 'Camilha de mesa em tafetá cinza, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/808080/faf7f2?text=CM+021'], specs: [['Cor', 'Cinza'], ['Comprimento', '3,3 m'], ['Padrão', 'Tafetá']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-021': { cat: 'texteis-cm-tafeta', ref: 'CM 021', name: 'Camilha 3,3m D - Tafetá Cinza', desc: 'Camilha de mesa em tafetá cinza, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 021.png'], specs: [['Cor', 'Cinza'], ['Comprimento', '3,3 m'], ['Padrão', 'Tafetá']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-022': { cat: 'texteis-cm-tafeta', ref: 'CM 022', name: 'Camilha 3,3m D - Tafetá Lilás', desc: 'Camilha de mesa em tafetá lilás, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 022.jpg'], specs: [['Cor', 'Lilás'], ['Comprimento', '3,3 m'], ['Padrão', 'Tafetá']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-023': { cat: 'texteis-cm-cetim', ref: 'CM 023', name: 'Camilha 3,3m D - Cetim Branco', desc: 'Camilha de mesa em cetim branco, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/f8f6f0/6b5f4a?text=CM+023'], specs: [['Cor', 'Branco'], ['Comprimento', '3,3 m'], ['Padrão', 'Cetim']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* CAMILHAS MM 3,3m D */
-      'cm-025': { cat: 'texteis-cmmm', ref: 'CM 025', name: 'Camilha MM 3,3m D - Branco', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor branco, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/f8f6f0/6b5f4a?text=CM+025'], specs: [['Cor', 'Branco'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-025': { cat: 'texteis-cmmm', ref: 'CM 025', name: 'Camilha MM 3,3m D - Branco', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor branco, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 025.png'], specs: [['Cor', 'Branco'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-026': { cat: 'texteis-cmmm', ref: 'CM 026', name: 'Camilha MM 3,3m D - Pérola', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor pérola, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 026.png'], specs: [['Cor', 'Pérola'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-027': { cat: 'texteis-cmmm', ref: 'CM 027', name: 'Camilha MM 3,3m D - Marinho', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor azul marinho, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/203060/faf7f2?text=CM+027'], specs: [['Cor', 'Marinho'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-027': { cat: 'texteis-cmmm', ref: 'CM 027', name: 'Camilha MM 3,3m D - Marinho', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor azul marinho, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 027.png'], specs: [['Cor', 'Marinho'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-028': { cat: 'texteis-cmmm', ref: 'CM 028', name: 'Camilha MM 3,3m D - Vermelho', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor vermelho, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 028.png'], specs: [['Cor', 'Vermelho'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-029': { cat: 'texteis-cmmm', ref: 'CM 029', name: 'Camilha MM 3,3m D - Bordeaux', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor bordeaux, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 029.png'], specs: [['Cor', 'Bordeaux'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-030': { cat: 'texteis-cmmm', ref: 'CM 030', name: 'Camilha MM 3,3m D - Rosa Fúchsia', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor rosa fúchsia, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 030.png'], specs: [['Cor', 'Rosa Fúchsia'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-031': { cat: 'texteis-cmmm', ref: 'CM 031', name: 'Camilha MM 3,3m D - Verde Lima', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor verde lima, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/90c030/faf7f2?text=CM+031'], specs: [['Cor', 'Verde Lima'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-032': { cat: 'texteis-cmmm', ref: 'CM 032', name: 'Camilha MM 3,3m D - Castanho', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor castanho, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/7a5030/faf7f2?text=CM+032'], specs: [['Cor', 'Castanho'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-033': { cat: 'texteis-cmmm', ref: 'CM 033', name: 'Camilha MM 3,3m D - Preto', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor preto, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/1a1a1a/f5efe2?text=CM+033'], specs: [['Cor', 'Preto'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-031': { cat: 'texteis-cmmm', ref: 'CM 031', name: 'Camilha MM 3,3m D - Verde Lima', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor verde lima, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 031.png'], specs: [['Cor', 'Verde Lima'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-032': { cat: 'texteis-cmmm', ref: 'CM 032', name: 'Camilha MM 3,3m D - Castanho', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor castanho, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 032.png'], specs: [['Cor', 'Castanho'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-033': { cat: 'texteis-cmmm', ref: 'CM 033', name: 'Camilha MM 3,3m D - Preto', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor preto, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 033.jpg'], specs: [['Cor', 'Preto'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cm-034': { cat: 'texteis-cmmm', ref: 'CM 034', name: 'Camilha MM 3,3m D - Rosa Bebé', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor rosa bebé, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 034.png'], specs: [['Cor', 'Rosa Bebé'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-035': { cat: 'texteis-cmmm', ref: 'CM 035', name: 'Camilha MM 3,3m D - Salmão', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor salmão, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/e0a080/faf7f2?text=CM+035'], specs: [['Cor', 'Salmão'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cm-036': { cat: 'texteis-cmmm', ref: 'CM 036', name: 'Camilha MM 3,3m D - Turquesa', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor turquesa, comprimento 3,3 metros.', images: ['https://placehold.co/600x400/40b0b0/faf7f2?text=CM+036'], specs: [['Cor', 'Turquesa'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-035': { cat: 'texteis-cmmm', ref: 'CM 035', name: 'Camilha MM 3,3m D - Salmão', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor salmão, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 035.png'], specs: [['Cor', 'Salmão'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cm-036': { cat: 'texteis-cmmm', ref: 'CM 036', name: 'Camilha MM 3,3m D - Turquesa', desc: 'Camilha de mesa em tecido 100% poliéster minimat cor turquesa, comprimento 3,3 metros.', images: ['Fotosdiversas/Camilhas/CM 036.png'], specs: [['Cor', 'Turquesa'], ['Material', '100% Poliéster Minimat'], ['Comprimento', '3,3 m']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* GUARDANAPOS LISOS */
       'gd-001': { cat: 'texteis-gd-liso', ref: 'GD 001', name: 'Guardanapo - Branco', desc: 'Guardanapo de mesa em tecido liso cor branco.', images: ['https://placehold.co/600x600/f8f6f0/6b5f4a?text=GD+001'], specs: [['Cor', 'Branco'], ['Tipo', 'Liso'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
@@ -1619,6 +1583,20 @@
       /* GUARDANAPOS CETIM */
       'gd-037': { cat: 'texteis-gd-cetim', ref: 'GD 037', name: 'Guardanapo - Branco Cetim', desc: 'Guardanapo de mesa em cetim cor branco.', images: ['https://placehold.co/600x600/f8f6f0/6b5f4a?text=GD+037'], specs: [['Cor', 'Branco'], ['Tipo', 'Cetim'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'gd-041': { cat: 'texteis-gd-cetim', ref: 'GD 041', name: 'Guardanapo - Verde Pistácio Cetim', desc: 'Guardanapo de mesa em cetim cor verde pistácio.', images: ['Fotosdiversas/Guardanapos/GD 041.jpg'], specs: [['Cor', 'Verde Pistácio'], ['Tipo', 'Cetim'], ['Tamanho', '50 × 50 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* CAMINHOS DE MESA */
+      'cmm-001': { cat: 'texteis-cmm-item', ref: 'CMM 001', name: 'Caminho de Mesa - Tostado', desc: 'Caminho de mesa em tecido texturizado cor tostado.', images: ['https://placehold.co/600x400/c09060/faf7f2?text=CMM+001'], specs: [['Cor', 'Tostado'], ['Tipo', 'Texturizado'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-002': { cat: 'texteis-cmm-item', ref: 'CMM 002', name: 'Caminho de Mesa - Rosa Fúchsia', desc: 'Caminho de mesa em tecido liso cor rosa fúchsia.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 002.png'], specs: [['Cor', 'Rosa Fúchsia'], ['Tipo', 'Liso'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-003': { cat: 'texteis-cmm-item', ref: 'CMM 003', name: 'Caminho de Mesa - Verde Água', desc: 'Caminho de mesa em tecido texturizado cor verde água.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 003.jpg'], specs: [['Cor', 'Verde Água'], ['Tipo', 'Texturizado'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-004': { cat: 'texteis-cmm-item', ref: 'CMM 004', name: 'Caminho de Mesa - Vermelho', desc: 'Caminho de mesa em tecido liso cor vermelho.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 004.jpg'], specs: [['Cor', 'Vermelho'], ['Tipo', 'Liso'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-005': { cat: 'texteis-cmm-item', ref: 'CMM 005', name: 'Caminho de Mesa - Cinza Cetim', desc: 'Caminho de mesa em tecido cetim cor cinza.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 005.jpg'], specs: [['Cor', 'Cinza Cetim'], ['Tipo', 'Liso'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-007': { cat: 'texteis-cmm-item', ref: 'CMM 007', name: 'Caminho de Mesa - Rosa Velho', desc: 'Caminho de mesa em tecido liso cor rosa velho.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 007.jpg'], specs: [['Cor', 'Rosa Velho'], ['Tipo', 'Liso'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-008': { cat: 'texteis-cmm-item', ref: 'CMM 008', name: 'Caminho de Mesa - Verde Garrafa', desc: 'Caminho de mesa em tecido liso cor verde garrafa.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 008.jpg'], specs: [['Cor', 'Verde Garrafa'], ['Tipo', 'Liso'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-009': { cat: 'texteis-cmm-item', ref: 'CMM 009', name: 'Caminho de Mesa - Preto', desc: 'Caminho de mesa em tecido liso cor preto.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 009.png'], specs: [['Cor', 'Preto'], ['Tipo', 'Liso'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-010': { cat: 'texteis-cmm-item', ref: 'CMM 010', name: 'Caminho de Mesa - Verde Lima', desc: 'Caminho de mesa em tecido liso cor verde lima.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 010.jpg'], specs: [['Cor', 'Verde Lima'], ['Tipo', 'Liso'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-011': { cat: 'texteis-cmm-item', ref: 'CMM 011', name: 'Caminho de Mesa - Vermelho Adamascado', desc: 'Caminho de mesa em tecido adamascado cor vermelho.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 011.png'], specs: [['Cor', 'Vermelho'], ['Tipo', 'Adamascado'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-012': { cat: 'texteis-cmm-item', ref: 'CMM 012', name: 'Caminho de Mesa - Areia com Frosque', desc: 'Caminho de mesa em tecido areia com frosque.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 012.png'], specs: [['Cor', 'Areia'], ['Tipo', 'Com Frosque'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cmm-013': { cat: 'texteis-cmm-item', ref: 'CMM 013', name: 'Caminho de Mesa - Tostado com Frosques', desc: 'Caminho de mesa em tecido tostado com frosques.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 013.png'], specs: [['Cor', 'Tostado'], ['Tipo', 'Com Frosques'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* LOUÇAS */
       'lou-001': {
@@ -2099,26 +2077,6 @@
 
     /* ─── COLLECTIONS ─── */
     const COLLECTIONS = {
-      'col-lacos-lisos': {
-        cat: 'texteis',
-        ref: 'LC 001 – 023',
-        name: 'Laços Lisos',
-        desc: 'Coleção de laços para cadeiras em tecido liso. Disponível em 20 cores: do branco pérola ao bordeaux, passando por dourados e prateados.',
-        count: 20,
-        priceHint: 'Sob consulta',
-        previewImage: 'https://placehold.co/600x900/ede4d0/8a7340?text=La%C3%A7os+Lisos',
-        items: ['lc-001','lc-002','lc-003','lc-004','lc-005','lc-006','lc-007','lc-008','lc-009','lc-010','lc-011','lc-012','lc-013','lc-014','lc-015','lc-016','lc-017','lc-020','lc-021','lc-023'],
-      },
-      'col-lacos-organza': {
-        cat: 'texteis',
-        ref: 'LC 018 – 026',
-        name: 'Laços Organza',
-        desc: 'Coleção de laços para cadeiras em organza translúcida. Disponível em 6 cores com efeito leve e elegante.',
-        count: 6,
-        priceHint: 'Sob consulta',
-        previewImage: 'https://placehold.co/600x900/ede4d0/8a7340?text=La%C3%A7os+Organza',
-        items: ['lc-018','lc-019','lc-022','lc-024','lc-025','lc-026'],
-      },
       'col-cd007': {
         cat: 'mobiliario',
         ref: 'CD 007 – 008',
@@ -2126,7 +2084,7 @@
         desc: 'Cadeira crossback em madeira camel, disponível simples ou com coxim de assento pérola.',
         count: 2,
         priceHint: 'Sob consulta',
-        previewImage: 'https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+007',
+        previewImage: 'Fotosdiversas/Cadeiras/CD 007.png',
         items: ['cd-007', 'cd-008'],
       },
       'col-cd004': {
@@ -2136,7 +2094,7 @@
         desc: 'Cadeira dobrável com acabamento prateado, disponível simples ou com coxim de tecido pérola / pele sintética castanha.',
         count: 3,
         priceHint: 'Sob consulta',
-        previewImage: 'https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+004',
+        previewImage: 'Fotosdiversas/Cadeiras/CD 005.jpg',
         items: ['cd-004', 'cd-005', 'cd-006'],
       },
       'col-cd001': {
@@ -2146,7 +2104,7 @@
         desc: 'Cadeira dobrável em madeira castanha, disponível simples ou com coxim de tecido pérola / pele sintética castanha.',
         count: 3,
         priceHint: 'Sob consulta',
-        previewImage: 'https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+001',
+        previewImage: 'Fotosdiversas/Cadeiras/CD 001.png',
         items: ['cd-001', 'cd-002', 'cd-003'],
       },
       'col-talheres-dourados': {
@@ -2176,7 +2134,7 @@
         desc: 'Coleção de camilhas de mesa em tons neutros e areia com 3,3 metros de comprimento. Disponível em 4 variantes: Areia, Areia Branca, Tostado e Azul.',
         count: 4,
         priceHint: 'Sob consulta',
-        previewImage: 'https://placehold.co/600x400/d4b890/6b5f4a?text=Camilhas+Areia',
+        previewImage: 'Fotosdiversas/Camilhas/CM 001.png',
         items: ['cm-005','cm-001','cm-003','cm-004'],
       },
       'col-cm-adamascadas': {
@@ -2206,7 +2164,7 @@
         desc: 'Coleção de camilhas de mesa em tafetá com 3,3 metros de comprimento. Disponível em 2 cores: cinza e lilás.',
         count: 2,
         priceHint: 'Sob consulta',
-        previewImage: 'https://placehold.co/600x400/c0a0d0/faf7f2?text=Camilhas+Tafet%C3%A1',
+        previewImage: 'Fotosdiversas/Camilhas/CM 021.png',
         items: ['cm-021','cm-022'],
       },
       'col-cm-cetim': {
@@ -2226,7 +2184,7 @@
         desc: 'Coleção de camilhas de mesa em tecido estampado tradicional com 3,3 metros de comprimento. Disponível em azul e burgundy.',
         count: 2,
         priceHint: 'Sob consulta',
-        previewImage: 'https://placehold.co/600x400/4060a0/faf7f2?text=Estampado+Tradicional',
+        previewImage: 'Fotosdiversas/Camilhas/CM 019.png',
         items: ['cm-019','cm-020'],
       },
       'col-cm-mm': {
@@ -2236,7 +2194,7 @@
         desc: 'Coleção de camilhas de mesa em tecido 100% poliéster minimat, com 3,3 metros de comprimento. Disponível em 12 cores.',
         count: 12,
         priceHint: 'Sob consulta',
-        previewImage: 'https://placehold.co/600x400/ede4d0/8a7340?text=Camilhas+MM',
+        previewImage: 'Fotosdiversas/Camilhas/CM 026.png',
         items: ['cm-025','cm-026','cm-027','cm-028','cm-029','cm-030','cm-031','cm-032','cm-033','cm-034','cm-035','cm-036'],
       },
 
@@ -2300,6 +2258,28 @@
         priceHint: 'Sob consulta',
         previewImage: 'Fotosdiversas/Laços/LC 022.jpg',
         items: ['lc-018','lc-019','lc-022','lc-024','lc-025','lc-026'],
+      },
+
+      /* CAMINHOS DE MESA */
+      'col-cmm-lisos': {
+        cat: 'texteis-cmm',
+        ref: 'CMM 002 – 010',
+        name: 'Caminhos de Mesa Lisos',
+        desc: 'Coleção de caminhos de mesa em tecido liso. Disponível em 7 cores para combinar com qualquer tema de evento.',
+        count: 7,
+        priceHint: 'Sob consulta',
+        previewImage: 'Fotosdiversas/Caminhos de Mesa/CMM 007.jpg',
+        items: ['cmm-002','cmm-004','cmm-005','cmm-007','cmm-008','cmm-009','cmm-010'],
+      },
+      'col-cmm-texturizados': {
+        cat: 'texteis-cmm',
+        ref: 'CMM 001 – 013',
+        name: 'Caminhos de Mesa Texturizados',
+        desc: 'Coleção de caminhos de mesa em tecido adamascado e com frosques. Acabamentos ricos para eventos de prestígio.',
+        count: 5,
+        priceHint: 'Sob consulta',
+        previewImage: 'Fotosdiversas/Caminhos de Mesa/CMM 011.png',
+        items: ['cmm-001','cmm-003','cmm-011','cmm-012','cmm-013'],
       },
     };
 
@@ -2513,9 +2493,36 @@
         catSections.forEach(s => s.classList.remove('visible'));
         btn.classList.add('active');
         document.getElementById('cat-' + btn.dataset.cat).classList.add('visible');
-        window.scrollTo({ top: document.querySelector('.cat-nav-wrap').offsetTop - 70, behavior: 'smooth' });
+        const navWrap = document.querySelector('.cat-nav-wrap');
+        window.scrollTo({ top: navWrap.offsetTop - 70, behavior: 'smooth' });
       });
     });
+
+    /* ─── SUBNAV SCROLL ─── */
+    document.querySelectorAll('.cat-subnav a[data-sub]').forEach(a => {
+      a.addEventListener('click', () => {
+        const target = document.getElementById(a.dataset.sub);
+        if (!target) return;
+        const navH = (document.querySelector('.cat-nav-wrap')?.offsetHeight || 0) + 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - navH;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
+    /* ─── PRODUCT COUNTS ─── */
+    function updateCounts() {
+      const map = { mobiliario: 0, texteis: 0, loucas: 0, decoracao: 0, exterior: 0, outros: 0 };
+      document.querySelectorAll('.product-grid').forEach(grid => {
+        const n = grid.children.length;
+        const id = grid.id.replace('grid-', '');
+        if (id.startsWith('texteis')) map.texteis += n;
+        else if (id in map) map[id] += n;
+      });
+      Object.entries(map).forEach(([cat, n]) => {
+        const el = document.getElementById('count-' + cat);
+        if (el) el.innerHTML = '<strong>' + n + '</strong> produto' + (n !== 1 ? 's' : '');
+      });
+    }
 
     /* ─── CART ─── */
     function getCart() { return JSON.parse(localStorage.getItem('ma_cart') || '[]'); }
@@ -2731,7 +2738,8 @@
     /* ─── CATEGORY SEARCH ─── */
     function initSearch() {
       document.querySelectorAll('.cat-section').forEach(section => {
-        const header = section.querySelector('.cat-section-header');
+        const bar = section.querySelector('.cat-bar');
+        if (!bar) return;
 
         /* Build search bar */
         const wrap = document.createElement('div');
@@ -2745,7 +2753,7 @@
           </div>
           <div class="cat-search-count"></div>
         `;
-        header.appendChild(wrap);
+        bar.appendChild(wrap);
 
         /* No-results message (appended once, before closing of section) */
         const noRes = document.createElement('div');
@@ -2791,10 +2799,10 @@
     /* ─── CATEGORY TOOLBAR ─── */
     function initToolbar() {
       document.querySelectorAll('.cat-section').forEach(section => {
-        const header   = section.querySelector('.cat-section-header');
+        const bar      = section.querySelector('.cat-bar');
         const allGrids = Array.from(section.querySelectorAll('.product-grid'));
         const grid     = allGrids[0];
-        if (!header || !grid) return;
+        if (!bar || !grid) return;
 
         const countCards = () =>
           Array.from(section.querySelectorAll('.product-card'))
@@ -2825,7 +2833,7 @@
             </div>
           </div>`;
 
-        header.after(toolbar);
+        bar.after(toolbar);
 
         const countEl  = toolbar.querySelector('.cat-toolbar-count span');
         const select   = toolbar.querySelector('.cat-sort-select');
@@ -2870,6 +2878,7 @@
 
     /* ─── INIT ─── */
     renderGrid();
+    updateCounts();
     initSearch();
     initToolbar();
     updateCartBadge();
