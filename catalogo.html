@@ -6,7 +6,7 @@
   <title>Catálogo — Moreira &amp; Araújo Eventos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&family=Raleway:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,22 +47,26 @@
 
     /* ── CATEGORY TABS ── */
     .cat-nav-wrap {
-      background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.07);
-      position: sticky; top: 128px; z-index: 190;
+      position: absolute; bottom: 0; left: 0; right: 0;
+      z-index: 5;
     }
     .cat-nav {
-      padding: 0 8rem;
-      display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+      padding: 0 18rem 1.75rem;
+      display: flex; gap: 2.5rem; overflow-x: auto; scrollbar-width: none;
     }
     .cat-nav::-webkit-scrollbar { display: none; }
     .cat-btn {
-      flex-shrink: 0; padding: 1rem 1.5rem; font-size: 11px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4);
+      flex-shrink: 0; padding: 0; font-size: 12px; font-weight: 500; font-family: 'Montserrat', sans-serif;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
       border: none; background: none; cursor: pointer;
-      border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+      border-bottom: 1.5px solid transparent;
+      padding-bottom: 4px;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .cat-btn:hover { color: rgba(255,255,255,0.85); }
-    .cat-btn.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+    .cat-btn:hover { color: rgba(255,255,255,0.9); }
+    .cat-btn.active { color: #fff; border-bottom-color: var(--gold); }
+
 
     /* ── CATEGORY SECTION ── */
     .cat-section { display: none; }
@@ -79,17 +83,13 @@
     .cat-hero-bg {
       position: absolute; inset: 0;
       background-size: cover; background-position: center;
+      transform: scale(1);
       transition: transform 8s ease;
     }
-    .cat-section.visible .cat-hero-bg { transform: scale(1.04); }
+    .cat-hero-bg.animated { transform: scale(1.04); }
     .cat-hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(20,18,15,0.3) 0%, rgba(20,18,15,0.6) 55%, rgba(20,18,15,0.82) 100%);
-    }
-    .cat-hero::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px; z-index: 1;
-      background: linear-gradient(to bottom, transparent, var(--cream));
-      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(20,18,15,0.2) 0%, rgba(20,18,15,0.45) 50%, rgba(20,18,15,0.78) 80%, rgba(20,18,15,0.88) 100%);
     }
     .cat-hero-content {
       position: relative; z-index: 2;
@@ -118,7 +118,7 @@
     .cat-subnav a:hover { color: white; border-bottom-color: var(--gold-light); }
 
     /* ── CAT CONTENT & BAR ── */
-    .cat-content { padding: 0 8rem 5rem; }
+    .cat-content { padding: 0 18rem 5rem; }
     .cat-bar {
       padding: 1.5rem 0;
       border-bottom: 1px solid var(--cream-border);
@@ -158,14 +158,14 @@
 
     /* ── PRODUCT CARD ── */
     .product-card {
-      background: var(--cream-light);
-      border: 1px solid var(--cream-border);
+      background: #fff;
+      border: 1px solid rgba(224,213,192,0.6);
       border-radius: 12px;
       cursor: pointer;
       transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 1px 4px rgba(20,18,15,0.04);
+      box-shadow: 0 2px 12px rgba(20,18,15,0.07), 0 1px 3px rgba(20,18,15,0.04);
     }
     .product-card::after {
       content: '';
@@ -229,7 +229,7 @@
     }
     .card-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.1rem; font-weight: 500; line-height: 1.3;
+      font-size: 1.25rem; font-weight: 700; line-height: 1.3;
       color: var(--dark);
     }
     .card-price {
@@ -495,7 +495,7 @@
     .collection-drawer.open .drawer-backdrop { background: rgba(20,18,15,0.42); }
     .collection-panel {
       position: absolute; top: 0; right: 0; bottom: 0;
-      width: min(700px, 100vw);
+      width: min(860px, 100vw);
       background: var(--cream-light);
       transform: translateX(100%);
       transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
@@ -520,11 +520,12 @@
     .collection-panel-desc { color: var(--muted); font-size: 13px; margin-top: 0.4rem; line-height: 1.6; }
     .collection-panel-body { padding: 1.75rem 2rem 3rem; flex: 1; }
     .collection-item-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
     }
     .collection-item-card {
-      background: var(--cream); border: 1px solid var(--cream-border);
+      background: #fff; border: 1px solid rgba(224,213,192,0.6);
       cursor: pointer; position: relative; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(20,18,15,0.06);
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     }
     .collection-item-card::before {
@@ -548,7 +549,7 @@
     }
     .ci-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.95rem; font-weight: 500; line-height: 1.3; color: var(--dark);
+      font-size: 1.25rem; font-weight: 700; line-height: 1.3; color: var(--dark);
       min-height: 2.6rem;
     }
     .ci-add-btn {
@@ -558,7 +559,7 @@
       border: 1.5px solid var(--gold); border-radius: 999px;
       background: linear-gradient(to right, var(--gold) 50%, transparent 50%);
       background-size: 200% 100%; background-position: left center;
-      color: var(--dark); cursor: pointer;
+      color: #fff; cursor: pointer;
       transition: background-position 0.35s cubic-bezier(0.4,0,0.2,1), color 0.35s ease, transform 0.15s ease, box-shadow 0.2s ease;
       box-shadow: 0 2px 6px rgba(184,154,85,0.2);
     }
@@ -1060,27 +1061,50 @@
     <a href="index.html#contacto">Contacto</a>
   </div>
 
-  <!-- CATEGORY TABS -->
-  <div class="cat-nav-wrap">
-    <div class="cat-nav">
-      <button class="cat-btn active" data-cat="mobiliario">Mobiliário</button>
-      <button class="cat-btn" data-cat="texteis">Têxteis</button>
-      <button class="cat-btn" data-cat="loucas">Louças</button>
-      <button class="cat-btn" data-cat="decoracao">Decoração</button>
-      <button class="cat-btn" data-cat="exterior">Exterior</button>
-      <button class="cat-btn" data-cat="outros">Outros</button>
+  <!-- SHARED HERO + TABS -->
+  <div class="cat-hero" id="shared-cat-hero">
+    <div class="cat-hero-bg animated" id="shared-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II1.jpg')"></div>
+    <div class="cat-hero-overlay"></div>
+    <div class="cat-hero-content">
+      <h2 id="shared-hero-title">Mobiliário</h2>
+      <div class="cat-subnav cat-hero-subnav" id="shared-hero-subnav-texteis" style="display:none">
+        <a data-sub="sub-texteis-cm">Camilhas</a>
+        <a data-sub="sub-texteis-gd">Guardanapos</a>
+        <a data-sub="sub-texteis-lacos">Laços</a>
+        <a data-sub="sub-texteis-cmm">Caminhos de Mesa</a>
+        <a data-sub="sub-texteis-thr">Toalhas Retangulares</a>
+        <a data-sub="sub-texteis-thq">Toalhas Quadradas</a>
+        <a data-sub="sub-texteis-alm">Almofadas</a>
+      </div>
+      <div class="cat-subnav cat-hero-subnav" id="shared-hero-subnav-decoracao" style="display:none">
+        <a data-sub="sub-decoracao-mc">Marcadores de Mesa</a>
+      </div>
+      <div class="cat-subnav cat-hero-subnav" id="shared-hero-subnav-loucas" style="display:none">
+<a data-sub="sub-loucas-cpp">Copos Premium</a>
+        <a data-sub="sub-loucas-cp">Copos</a>
+      </div>
+      <div class="cat-subnav cat-hero-subnav" id="shared-hero-subnav-exterior" style="display:none">
+        <a data-sub="sub-exterior-sb">Sofás Bambu</a>
+        <a data-sub="sub-exterior-comp">Complementos</a>
+      </div>
+      <div class="cat-subnav cat-hero-subnav" id="shared-hero-subnav-outros" style="display:none">
+        <a data-sub="sub-outros-com">Complementos de Mesa</a>
+      </div>
+    </div>
+    <div class="cat-nav-wrap">
+      <div class="cat-nav">
+        <button class="cat-btn active" data-cat="mobiliario">Mobiliário</button>
+        <button class="cat-btn" data-cat="texteis">Têxteis</button>
+        <button class="cat-btn" data-cat="loucas">Louças</button>
+        <button class="cat-btn" data-cat="decoracao">Decoração</button>
+        <button class="cat-btn" data-cat="exterior">Exterior</button>
+        <button class="cat-btn" data-cat="outros">Outros</button>
+      </div>
     </div>
   </div>
 
   <!-- MOBILIÁRIO -->
   <div class="cat-section visible" id="cat-mobiliario">
-    <div class="cat-hero">
-      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II1.jpg')"></div>
-      <div class="cat-hero-overlay"></div>
-      <div class="cat-hero-content">
-        <h2>Mobiliário</h2>
-      </div>
-    </div>
     <div class="cat-content">
       <div class="cat-bar">
         <span class="cat-bar-count" id="count-mobiliario"><strong>—</strong> produtos</span>
@@ -1091,19 +1115,6 @@
 
   <!-- TÊXTEIS -->
   <div class="cat-section" id="cat-texteis">
-    <div class="cat-hero">
-      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II2.jpg')"></div>
-      <div class="cat-hero-overlay"></div>
-      <div class="cat-hero-content">
-        <h2>Têxteis</h2>
-        <div class="cat-subnav">
-          <a data-sub="sub-texteis-cm">Camilhas</a>
-          <a data-sub="sub-texteis-gd">Guardanapos</a>
-          <a data-sub="sub-texteis-lacos">Laços</a>
-          <a data-sub="sub-texteis-cmm">Caminhos de Mesa</a>
-        </div>
-      </div>
-    </div>
     <div class="cat-content">
       <div class="cat-bar">
         <span class="cat-bar-count" id="count-texteis"><strong>—</strong> produtos</span>
@@ -1124,74 +1135,82 @@
         <div class="subcat-label">Caminhos de Mesa</div>
         <div class="product-grid" id="grid-texteis-cmm"></div>
       </div>
+      <div class="cat-subsection" id="sub-texteis-thr">
+        <div class="subcat-label">Toalhas Retangulares</div>
+        <div class="product-grid" id="grid-texteis-thr"></div>
+      </div>
+      <div class="cat-subsection" id="sub-texteis-thq">
+        <div class="subcat-label">Toalhas Quadradas</div>
+        <div class="product-grid" id="grid-texteis-thq"></div>
+      </div>
+      <div class="cat-subsection" id="sub-texteis-alm">
+        <div class="subcat-label">Almofadas</div>
+        <div class="product-grid" id="grid-texteis-alm"></div>
+      </div>
     </div>
   </div>
 
   <!-- LOUÇAS -->
   <div class="cat-section" id="cat-loucas">
-    <div class="cat-hero">
-      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II3.jpg')"></div>
-      <div class="cat-hero-overlay"></div>
-      <div class="cat-hero-content">
-        <h2>Louças</h2>
-      </div>
-    </div>
     <div class="cat-content">
       <div class="cat-bar">
         <span class="cat-bar-count" id="count-loucas"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-loucas"></div>
+      <div class="cat-subsection" id="sub-loucas-cpp">
+        <div class="subcat-label">Copos Premium</div>
+        <div class="product-grid" id="grid-loucas-cpp"></div>
+      </div>
+      <div class="cat-subsection" id="sub-loucas-cp">
+        <div class="subcat-label">Copos</div>
+        <div class="product-grid" id="grid-loucas-cp"></div>
+      </div>
     </div>
   </div>
 
   <!-- DECORAÇÃO -->
   <div class="cat-section" id="cat-decoracao">
-    <div class="cat-hero">
-      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II4.png')"></div>
-      <div class="cat-hero-overlay"></div>
-      <div class="cat-hero-content">
-        <h2>Decoração</h2>
-      </div>
-    </div>
     <div class="cat-content">
       <div class="cat-bar">
         <span class="cat-bar-count" id="count-decoracao"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-decoracao"></div>
+      <div class="cat-subsection" id="sub-decoracao-mc">
+        <div class="subcat-label">Marcadores de Mesa</div>
+        <div class="product-grid" id="grid-decoracao-mc"></div>
+      </div>
     </div>
   </div>
 
   <!-- EXTERIOR -->
   <div class="cat-section" id="cat-exterior">
-    <div class="cat-hero">
-      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II5.jpg')"></div>
-      <div class="cat-hero-overlay"></div>
-      <div class="cat-hero-content">
-        <h2>Exterior</h2>
-      </div>
-    </div>
     <div class="cat-content">
       <div class="cat-bar">
         <span class="cat-bar-count" id="count-exterior"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-exterior"></div>
+      <div class="cat-subsection" id="sub-exterior-sb">
+        <div class="subcat-label">Sofás Bambu</div>
+        <div class="product-grid" id="grid-exterior-sb"></div>
+      </div>
+      <div class="cat-subsection" id="sub-exterior-comp">
+        <div class="subcat-label">Complementos de Exterior</div>
+        <div class="product-grid" id="grid-exterior-comp"></div>
+      </div>
     </div>
   </div>
 
   <!-- OUTROS -->
   <div class="cat-section" id="cat-outros">
-    <div class="cat-hero">
-      <div class="cat-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II6.jpg')"></div>
-      <div class="cat-hero-overlay"></div>
-      <div class="cat-hero-content">
-        <h2>Outros</h2>
-      </div>
-    </div>
     <div class="cat-content">
       <div class="cat-bar">
         <span class="cat-bar-count" id="count-outros"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-outros"></div>
+      <div class="cat-subsection" id="sub-outros-com">
+        <div class="subcat-label">Complementos de Mesa</div>
+        <div class="product-grid" id="grid-outros-com"></div>
+      </div>
     </div>
   </div>
 
@@ -1598,60 +1617,40 @@
       'cmm-012': { cat: 'texteis-cmm-item', ref: 'CMM 012', name: 'Caminho de Mesa - Areia com Frosque', desc: 'Caminho de mesa em tecido areia com frosque.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 012.png'], specs: [['Cor', 'Areia'], ['Tipo', 'Com Frosque'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cmm-013': { cat: 'texteis-cmm-item', ref: 'CMM 013', name: 'Caminho de Mesa - Tostado com Frosques', desc: 'Caminho de mesa em tecido tostado com frosques.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 013.png'], specs: [['Cor', 'Tostado'], ['Tipo', 'Com Frosques'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
-      /* LOUÇAS */
-      'lou-001': {
-        cat: 'loucas',
-        ref: 'LOU-001',
-        name: 'Serviço de Jantar Branco',
-        desc: 'Serviço de jantar completo em porcelana branca de alta qualidade. Inclui prato de sopa, prato raso e prato de sobremesa.',
-        images: [
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Servico+Jantar',
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Detalhe',
-        ],
-        specs: [
-          ['Material', 'Porcelana'],
-          ['Peças', '3 pratos por pessoa'],
-          ['Stock', 'Consultar'],
-        ],
-        priceLabel: 'Preço por pessoa / dia',
-        price: 'Sob consulta',
-        priceNote: 'Inclui lavagem após utilização',
-      },
-      'lou-002': {
-        cat: 'loucas',
-        ref: 'LOU-002',
-        name: 'Copos de Cristal',
-        desc: 'Conjunto de copos em cristal: água, vinho tinto, vinho branco e champanhe. Brilho e elegância para qualquer mesa.',
-        images: [
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Copos+Cristal',
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Detalhe',
-        ],
-        specs: [
-          ['Material', 'Cristal'],
-          ['Peças', '4 copos por pessoa'],
-          ['Stock', 'Consultar'],
-        ],
-        priceLabel: 'Preço por pessoa / dia',
-        price: 'Sob consulta',
-        priceNote: 'Inclui lavagem após utilização',
-      },
-      'lou-003': {
-        cat: 'loucas',
-        ref: 'LOU-003',
-        name: 'Talheres em Inox',
-        desc: 'Faqueiro completo em inox brilhante: faca, garfo, colher e colher de sobremesa. Acabamento espelhado de alta qualidade.',
-        images: [
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Talheres',
-        ],
-        specs: [
-          ['Material', 'Inox 18/10'],
-          ['Peças', '4 talheres por pessoa'],
-          ['Acabamento', 'Brilhante'],
-        ],
-        priceLabel: 'Preço por pessoa / dia',
-        price: 'Sob consulta',
-        priceNote: 'Inclui lavagem após utilização',
-      },
+      /* COPOS PREMIUM */
+      'cpp-001': { cat: 'loucas-cpp', ref: 'CPP 001', name: 'Copo Verde', desc: 'Copo em vidro na cor verde.', images: ['Fotosdiversas/Louças/Copos/CPP 001.png'], specs: [['Cor', 'Verde']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-002': { cat: 'loucas-cpp', ref: 'CPP 002', name: 'Copo Picos Azul', desc: 'Copo picos em vidro na cor azul.', images: ['Fotosdiversas/Louças/Copos/CPP 002.png'], specs: [['Cor', 'Azul'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-003': { cat: 'loucas-cpp', ref: 'CPP 003', name: 'Copo Picos Dourado', desc: 'Copo picos em vidro dourado.', images: ['Fotosdiversas/Louças/Copos/CPP 003.png'], specs: [['Cor', 'Dourado'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-004': { cat: 'loucas-cpp', ref: 'CPP 004', name: 'Copo Picos Rosa', desc: 'Copo picos em vidro na cor rosa.', images: ['Fotosdiversas/Louças/Copos/CPP 004.png'], specs: [['Cor', 'Rosa'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-005': { cat: 'loucas-cpp', ref: 'CPP 005', name: 'Copo Picos Vermelho', desc: 'Copo picos em vidro na cor vermelha.', images: ['Fotosdiversas/Louças/Copos/CPP 005.png'], specs: [['Cor', 'Vermelho'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-006': { cat: 'loucas-cpp', ref: 'CPP 006', name: 'Copo Picos Transparente', desc: 'Copo picos em vidro transparente.', images: ['Fotosdiversas/Louças/Copos/CPP 006.jpg'], specs: [['Cor', 'Transparente'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-007': { cat: 'loucas-cpp', ref: 'CPP 007', name: 'Copo Fio Dourado 36cl', desc: 'Copo com fio dourado. Capacidade: 36 cl.', images: ['Fotosdiversas/Louças/Copos/CPP 007.png'], specs: [['Capacidade', '36 cl'], ['Acabamento', 'Fio dourado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-008': { cat: 'loucas-cpp', ref: 'CPP 008', name: 'Copo Fio Dourado 30cl', desc: 'Copo com fio dourado. Capacidade: 30 cl.', images: ['Fotosdiversas/Louças/Copos/CPP 008.png'], specs: [['Capacidade', '30 cl'], ['Acabamento', 'Fio dourado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-009': { cat: 'loucas-cpp', ref: 'CPP 009', name: 'Copo Fio Dourado 25cl', desc: 'Copo com fio dourado. Capacidade: 25 cl.', images: ['Fotosdiversas/Louças/Copos/CPP 009.png'], specs: [['Capacidade', '25 cl'], ['Acabamento', 'Fio dourado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* COPOS */
+      'cp-001': { cat: 'loucas-cp', ref: 'CP 001', name: 'Copo de Vinho 36cl', desc: 'Copo de vinho em vidro. Capacidade: 36 cl.', images: ['Fotosdiversas/Louças/Copos/CP 001.jpg'], specs: [['Capacidade', '36 cl'], ['Tipo', 'Vinho']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cp-002': { cat: 'loucas-cp', ref: 'CP 002', name: 'Copo de Água 36cl', desc: 'Copo de água em vidro. Capacidade: 36 cl.', images: ['Fotosdiversas/Louças/Copos/CP 002.jpg'], specs: [['Capacidade', '36 cl'], ['Tipo', 'Água']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cp-003': { cat: 'loucas-cp', ref: 'CP 003', name: 'Copo de Vinho Tinto 30cl', desc: 'Copo de vinho tinto em vidro. Capacidade: 30 cl.', images: ['Fotosdiversas/Louças/Copos/CP 003.png'], specs: [['Capacidade', '30 cl'], ['Tipo', 'Vinho tinto']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cp-004': { cat: 'loucas-cp', ref: 'CP 004', name: 'Copo de Vinho Branco 25cl', desc: 'Copo de vinho branco em vidro. Capacidade: 25 cl.', images: ['Fotosdiversas/Louças/Copos/CP 004.png'], specs: [['Capacidade', '25 cl'], ['Tipo', 'Vinho branco']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cp-005': { cat: 'loucas-cp', ref: 'CP 005', name: 'Copo de Vinho Tinto 25cl', desc: 'Copo de vinho tinto em vidro. Capacidade: 25 cl.', images: ['Fotosdiversas/Louças/Copos/CP 005.png'], specs: [['Capacidade', '25 cl'], ['Tipo', 'Vinho tinto']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cp-006': { cat: 'loucas-cp', ref: 'CP 006', name: 'Copo de Vinho Branco 19cl', desc: 'Copo de vinho branco em vidro. Capacidade: 19 cl.', images: ['Fotosdiversas/Louças/Copos/CP 006.png'], specs: [['Capacidade', '19 cl'], ['Tipo', 'Vinho branco']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cp-007': { cat: 'loucas-cp', ref: 'CP 007', name: 'Copo Flute 19cl', desc: 'Copo flute em vidro. Capacidade: 19 cl.', images: ['Fotosdiversas/Louças/Copos/CP 007.png'], specs: [['Capacidade', '19 cl'], ['Tipo', 'Flute']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cp-008': { cat: 'loucas-cp', ref: 'CP 008', name: 'Copo de Vinho Branco 32cl', desc: 'Copo de vinho branco em vidro. Capacidade: 32 cl.', images: ['Fotosdiversas/Louças/Copos/CP 008.jpg'], specs: [['Capacidade', '32 cl'], ['Tipo', 'Vinho branco']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cp-009': { cat: 'loucas-cp', ref: 'CP 009', name: 'Copo de Vinho do Porto 17cl', desc: 'Copo de vinho do porto em vidro. Capacidade: 17 cl.', images: ['Fotosdiversas/Louças/Copos/CP 009.jpg'], specs: [['Capacidade', '17 cl'], ['Tipo', 'Vinho do Porto']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cp-010': { cat: 'loucas-cp', ref: 'CP 010', name: 'Copo de Shot 50cl', desc: 'Copo de shot em vidro. Capacidade: 50 cl.', images: ['Fotosdiversas/Louças/Copos/CP 010.png'], specs: [['Capacidade', '50 cl'], ['Tipo', 'Shot']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* LOUÇAS — PRATOS E CHÁVENAS */
+      'lou-p001': { cat: 'loucas', ref: 'LOU 001', name: 'Prato Raso Cerâmica Branca 26D', desc: 'Prato raso em cerâmica branca. Diâmetro 26 cm.', images: ['Fotosdiversas/Louças/LOU 001.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Diâmetro', '26 cm'], ['Forma', 'Redondo']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p002': { cat: 'loucas', ref: 'LOU 002', name: 'Prato Sobremesa Cerâmica Branca 20D', desc: 'Prato de sobremesa em cerâmica branca. Diâmetro 20 cm.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=LOU+002'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Diâmetro', '20 cm'], ['Forma', 'Redondo']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p003': { cat: 'loucas', ref: 'LOU 003', name: 'Prato Raso Quadrado Cerâmica Branca 26cm', desc: 'Prato raso quadrado em cerâmica branca. 26 × 26 cm.', images: ['Fotosdiversas/Louças/LOU 003.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Dimensão', '26 × 26 cm'], ['Forma', 'Quadrado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p004': { cat: 'loucas', ref: 'LOU 004', name: 'Prato Sobremesa Quadrado Cerâmica Branca 20cm', desc: 'Prato de sobremesa quadrado em cerâmica branca. 20 × 20 cm.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=LOU+004'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Dimensão', '20 × 20 cm'], ['Forma', 'Quadrado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p005': { cat: 'loucas', ref: 'LOU 005', name: 'Pires Cerâmica Branca 17D', desc: 'Pires em cerâmica branca. Diâmetro 17 cm.', images: ['Fotosdiversas/Louças/LOU 005.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Diâmetro', '17 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p006': { cat: 'loucas', ref: 'LOU 006', name: 'Taça de Consommé Cerâmica Branca', desc: 'Taça de consommé em cerâmica branca.', images: ['Fotosdiversas/Louças/LOU 006.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Tipo', 'Consommé']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p007': { cat: 'loucas', ref: 'LOU 007', name: 'Taça de Consommé com Pires Cerâmica Branca', desc: 'Taça de consommé com pires em cerâmica branca.', images: ['Fotosdiversas/Louças/LOU 007.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Tipo', 'Consommé + Pires']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p008': { cat: 'loucas', ref: 'LOU 008', name: 'Prato de Pão Cerâmica Branca 16D', desc: 'Prato de pão em cerâmica branca. Diâmetro 16 cm.', images: ['Fotosdiversas/Louças/LOU 008.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Diâmetro', '16 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p009': { cat: 'loucas', ref: 'LOU 009', name: 'Chávena Almoçadeira Cerâmica Branca', desc: 'Chávena almoçadeira em cerâmica branca.', images: ['Fotosdiversas/Louças/LOU 009.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Tipo', 'Almoçadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p010': { cat: 'loucas', ref: 'LOU 010', name: 'Chávena Almoçadeira Cerâmica Branca c/ Pires', desc: 'Chávena almoçadeira com pires em cerâmica branca.', images: ['Fotosdiversas/Louças/LOU 010.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Tipo', 'Almoçadeira + Pires']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       'copo-cd001': {
         cat: 'loucas',
@@ -1827,13 +1826,29 @@
       },
 
       /* TALHERES PRATEADOS */
+      'ta-001': {
+        cat: 'loucas-talheres-prata',
+        ref: 'TA 001',
+        name: 'Conjunto de Talheres Prateados',
+        desc: 'Conjunto de talheres em aço inoxidável com acabamento espelhado.',
+        images: [
+          'Fotosdiversas/Louças/Talheres/TA 001.png',
+        ],
+        specs: [
+          ['Material', 'Aço inoxidável'],
+          ['Acabamento', 'Espelhado'],
+        ],
+        priceLabel: 'Preço por conjunto / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preço disponível mediante quantidade',
+      },
       'ta-002': {
         cat: 'loucas-talheres-prata',
         ref: 'TA 002',
         name: 'Garfo de Peixe',
         desc: 'Garfo de peixe em aço inoxidável com acabamento espelhado. Design clássico e elegante para serviços de peixe.',
         images: [
-          'Fotosdiversas/P2.jpg',
+          'Fotosdiversas/Louças/Talheres/TA 002.png',
         ],
         specs: [
           ['Material', 'Aço inoxidável'],
@@ -1850,7 +1865,7 @@
         name: 'Faca de Peixe',
         desc: 'Faca de peixe em aço inoxidável com lâmina arredondada e acabamento espelhado. Par ideal com o garfo TA 002.',
         images: [
-          'Fotosdiversas/P3.jpg',
+          'Fotosdiversas/Louças/Talheres/TA 003.png',
         ],
         specs: [
           ['Material', 'Aço inoxidável'],
@@ -1867,7 +1882,7 @@
         name: 'Garfo de Carne',
         desc: 'Garfo de carne em aço inoxidável com quatro dentes e acabamento espelhado. Robusto e elegante para serviços de carne.',
         images: [
-          'Fotosdiversas/P4.jpg',
+          'Fotosdiversas/Louças/Talheres/TA 004.png',
         ],
         specs: [
           ['Material', 'Aço inoxidável'],
@@ -1884,7 +1899,7 @@
         name: 'Faca de Carne',
         desc: 'Faca de carne em aço inoxidável com lâmina serrilhada e cabo em inox espelhado. Corte preciso e apresentação impecável.',
         images: [
-          'Fotosdiversas/P5.jpg',
+          'Fotosdiversas/Louças/Talheres/TA 005.png',
         ],
         specs: [
           ['Material', 'Aço inoxidável'],
@@ -1901,7 +1916,7 @@
         name: 'Colher de Sopa',
         desc: 'Colher de sopa em aço inoxidável de grande dimensão com acabamento espelhado. Peça essencial para qualquer serviço de jantar.',
         images: [
-          'Fotosdiversas/P6.jpg',
+          'Fotosdiversas/Louças/Talheres/TA 006.png',
         ],
         specs: [
           ['Material', 'Aço inoxidável'],
@@ -1918,7 +1933,7 @@
         name: 'Faca de Bife',
         desc: 'Faca de bife em aço inoxidável com lâmina de corte reforçada e cabo ergonómico espelhado. Ideal para eventos com serviço de grelhados.',
         images: [
-          'Fotosdiversas/P7.jpg',
+          'Fotosdiversas/Louças/Talheres/TA 007.jpg',
         ],
         specs: [
           ['Material', 'Aço inoxidável'],
@@ -1935,7 +1950,7 @@
         name: 'Garfo de Sobremesa',
         desc: 'Garfo de sobremesa em aço inoxidável de dimensão reduzida com acabamento espelhado. Elegante para doces e sobremesas.',
         images: [
-          'Fotosdiversas/P8.jpg',
+          'Fotosdiversas/Louças/Talheres/TA 008.png',
         ],
         specs: [
           ['Material', 'Aço inoxidável'],
@@ -1952,7 +1967,7 @@
         name: 'Faca de Sobremesa',
         desc: 'Faca de sobremesa em aço inoxidável com lâmina curta e acabamento espelhado. Complemento perfeito para o serviço de sobremesa.',
         images: [
-          'Fotosdiversas/P9.jpg',
+          'Fotosdiversas/Louças/Talheres/TA 009.png',
         ],
         specs: [
           ['Material', 'Aço inoxidável'],
@@ -1969,7 +1984,7 @@
         name: 'Colher de Sobremesa',
         desc: 'Colher de sobremesa em aço inoxidável de dimensão intermédia com acabamento espelhado. Perfeita para mousses, sorvetes e doces finos.',
         images: [
-          'Fotosdiversas/P10.jpg',
+          'Fotosdiversas/Louças/Talheres/TA 010.png',
         ],
         specs: [
           ['Material', 'Aço inoxidável'],
@@ -2055,6 +2070,57 @@
         priceNote: 'Disponível em conjunto lounge',
       },
 
+      /* TÊXTEIS — Almofadas */
+      'alm-001': { cat: 'texteis-alm', ref: 'ALM 001', name: 'Almofada —Estampado Burgundy', desc: 'Almofada 50x50 cm com padrão estampado na cor burgundy.', images: ['Fotosdiversas/Almofadas/ALM 001.png'], specs: [['Dimensões', '50x50 cm'], ['Cor', 'Burgundy'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'alm-002': { cat: 'texteis-alm', ref: 'ALM 002', name: 'Almofada —Estampado Azul', desc: 'Almofada 50x50 cm com padrão estampado na cor azul.', images: ['Fotosdiversas/Almofadas/ALM 002.png'], specs: [['Dimensões', '50x50 cm'], ['Cor', 'Azul'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'alm-003': { cat: 'texteis-alm', ref: 'ALM 003', name: 'Almofada —Mostarda', desc: 'Almofada 50x50 cm na cor mostarda.', images: ['Fotosdiversas/Almofadas/ALM 003.png'], specs: [['Dimensões', '50x50 cm'], ['Cor', 'Mostarda']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'alm-004': { cat: 'texteis-alm', ref: 'ALM 004', name: 'Almofada —Riscas Bege', desc: 'Almofada 50x50 cm com padrão riscas bege.', images: ['Fotosdiversas/Almofadas/ALM 004.png'], specs: [['Dimensões', '50x50 cm'], ['Cor', 'Bege'], ['Padrão', 'Riscas']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'alm-005': { cat: 'texteis-alm', ref: 'ALM 005', name: 'Almofada —Frosques Bege', desc: 'Almofada 50x50 cm com padrão frosques bege.', images: ['Fotosdiversas/Almofadas/ALM 005.png'], specs: [['Dimensões', '50x50 cm'], ['Cor', 'Bege'], ['Padrão', 'Frosques']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'alm-021': { cat: 'texteis-alm', ref: 'ALM 021', name: 'Almofada —Estampado Burgundy', desc: 'Almofada 50x30 cm com padrão estampado na cor burgundy.', images: ['Fotosdiversas/Almofadas/ALM 021.png'], specs: [['Dimensões', '50x30 cm'], ['Cor', 'Burgundy'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'alm-022': { cat: 'texteis-alm', ref: 'ALM 022', name: 'Almofada —Estampado Azul', desc: 'Almofada 50x30 cm com padrão estampado na cor azul.', images: ['Fotosdiversas/Almofadas/ALM 022.png'], specs: [['Dimensões', '50x30 cm'], ['Cor', 'Azul'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'alm-023': { cat: 'texteis-alm', ref: 'ALM 023', name: 'Almofada —Mostarda', desc: 'Almofada 50x30 cm na cor mostarda.', images: ['Fotosdiversas/Almofadas/ALM 023.png'], specs: [['Dimensões', '50x30 cm'], ['Cor', 'Mostarda']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'alm-024': { cat: 'texteis-alm', ref: 'ALM 024', name: 'Almofada —Riscas Bege', desc: 'Almofada 50x30 cm com padrão riscas bege.', images: ['Fotosdiversas/Almofadas/ALM 024.png'], specs: [['Dimensões', '50x30 cm'], ['Cor', 'Bege'], ['Padrão', 'Riscas']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'alm-025': { cat: 'texteis-alm', ref: 'ALM 025', name: 'Almofada —Frosques Bege', desc: 'Almofada 50x30 cm com padrão frosques bege.', images: ['Fotosdiversas/Almofadas/ALM 025.png'], specs: [['Dimensões', '50x30 cm'], ['Cor', 'Bege'], ['Padrão', 'Frosques']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'thwc-01': { cat: 'texteis-alm', ref: 'THWC 01', name: 'Toalhete Branco', desc: 'Toalhete branco. Dimensões: 30x30 cm.', images: ['Fotosdiversas/Almofadas/THWC 01.png'], specs: [['Dimensões', '30x30 cm'], ['Cor', 'Branco']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+
+      /* LOUÇAS — Complementos de Mesa */
+      'com-001': { cat: 'outros-com', ref: 'COM 001', name: 'Prato de Bolo D33 com Pé + Tampa', desc: 'Prato de bolo com pé e tampa. Diâmetro 33 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 001.jpg'], specs: [['Diâmetro', '33 cm'], ['Componentes', 'Pé + Tampa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-002': { cat: 'outros-com', ref: 'COM 002', name: 'Prato de Bolo D33 com Pé', desc: 'Prato de bolo com pé. Diâmetro 33 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 002.jpg'], specs: [['Diâmetro', '33 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-003': { cat: 'outros-com', ref: 'COM 003', name: 'Prato de Bolo 3N', desc: 'Prato de bolo 3 níveis.', images: ['Fotosdiversas/Complementos Mesa/COM 003.png'], specs: [['Níveis', '3']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-004': { cat: 'outros-com', ref: 'COM 004', name: 'Prato de Bolo D32', desc: 'Prato de bolo. Diâmetro 32 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 004.png'], specs: [['Diâmetro', '32 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-005': { cat: 'outros-com', ref: 'COM 005', name: 'Taça de Cocktail', desc: 'Taça de cocktail em vidro.', images: ['Fotosdiversas/Complementos Mesa/COM 005.png'], specs: [['Tipo', 'Cocktail']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-006': { cat: 'outros-com', ref: 'COM 006', name: 'Taça de Gelado', desc: 'Taça de gelado em vidro.', images: ['Fotosdiversas/Complementos Mesa/COM 006.png'], specs: [['Tipo', 'Gelado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-007': { cat: 'outros-com', ref: 'COM 007', name: 'Caneca com Asa 1L', desc: 'Caneca com asa. Capacidade: 1 L.', images: ['Fotosdiversas/Complementos Mesa/COM 007.jpg'], specs: [['Capacidade', '1 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-008': { cat: 'outros-com', ref: 'COM 008', name: 'Pinça de Servir', desc: 'Pinça de servir inox.', images: ['Fotosdiversas/Complementos Mesa/COM 008.png'], specs: [['Material', 'Inox']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-009': { cat: 'outros-com', ref: 'COM 009', name: 'Pinça Multiusos', desc: 'Pinça multiusos inox.', images: ['Fotosdiversas/Complementos Mesa/COM 009.jpg'], specs: [['Material', 'Inox']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-010': { cat: 'outros-com', ref: 'COM 010', name: 'Pinça Dourada Multiusos', desc: 'Pinça multiusos com acabamento dourado.', images: ['Fotosdiversas/Complementos Mesa/COM 010.jpg'], specs: [['Acabamento', 'Dourado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-011': { cat: 'outros-com', ref: 'COM 011', name: 'Frapé Inox 5L', desc: 'Frapé em inox. Capacidade: 5 L.', images: ['Fotosdiversas/Complementos Mesa/COM 011.png'], specs: [['Material', 'Inox'], ['Capacidade', '5 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-012': { cat: 'outros-com', ref: 'COM 012', name: 'Champanheira Acrílica 8L', desc: 'Champanheira em acrílico. Capacidade: 8 L.', images: ['Fotosdiversas/Complementos Mesa/COM 012.png'], specs: [['Material', 'Acrílico'], ['Capacidade', '8 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-013': { cat: 'outros-com', ref: 'COM 013', name: 'Dispensador de Bebidas 8L', desc: 'Dispensador de bebidas. Capacidade: 8 L.', images: ['Fotosdiversas/Complementos Mesa/COM 013.png'], specs: [['Capacidade', '8 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-014': { cat: 'outros-com', ref: 'COM 014', name: 'Dispensador de Bebidas 10L', desc: 'Dispensador de bebidas. Capacidade: 10 L.', images: ['Fotosdiversas/Complementos Mesa/COM 014.png'], specs: [['Capacidade', '10 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-015': { cat: 'outros-com', ref: 'COM 015', name: 'Espelho D40 cm', desc: 'Espelho circular. Diâmetro 40 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 015.png'], specs: [['Diâmetro', '40 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-016': { cat: 'outros-com', ref: 'COM 016', name: 'Espelho D35 cm', desc: 'Espelho circular. Diâmetro 35 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 016.png'], specs: [['Diâmetro', '35 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-017': { cat: 'outros-com', ref: 'COM 017', name: 'Conjunto 3 Castiçais Dourados', desc: 'Conjunto de 3 castiçais com acabamento dourado.', images: ['Fotosdiversas/Complementos Mesa/COM 017.png'], specs: [['Quantidade', '3 unidades'], ['Acabamento', 'Dourado']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'com-018': { cat: 'outros-com', ref: 'COM 018', name: 'Aquário 1L', desc: 'Aquário decorativo. Capacidade: 1 L.', images: ['Fotosdiversas/Complementos Mesa/COM 018.png'], specs: [['Capacidade', '1 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-019': { cat: 'outros-com', ref: 'COM 019', name: 'Aquário 0,5L', desc: 'Aquário decorativo. Capacidade: 0,5 L.', images: ['Fotosdiversas/Complementos Mesa/COM 019.png'], specs: [['Capacidade', '0,5 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-020': { cat: 'outros-com', ref: 'COM 020', name: 'Candeeiro sem Fios 40cm', desc: 'Candeeiro sem fios. Altura: 40 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 020.png'], specs: [['Altura', '40 cm'], ['Alimentação', 'Sem fios']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+
+      /* EXTERIOR — Sofás Bambu */
+      'sb-001': { cat: 'exterior-sb', ref: 'SB 001', name: 'Módulo Sofá de Centro (Bambu)', desc: 'Módulo sofá de centro em bambu para uso exterior.', images: ['Fotosdiversas/Complementos Exterior/SB 001.png'], specs: [['Material', 'Bambu'], ['Uso', 'Exterior']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'sb-002': { cat: 'exterior-sb', ref: 'SB 002', name: 'Módulo Sofá de Canto (Bambu)', desc: 'Módulo sofá de canto em bambu para uso exterior.', images: ['Fotosdiversas/Complementos Exterior/SB 002.png'], specs: [['Material', 'Bambu'], ['Uso', 'Exterior']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'sb-003': { cat: 'exterior-sb', ref: 'SB 003', name: 'Módulo Mesa de Centro (Bambu)', desc: 'Módulo mesa de centro em bambu para uso exterior.', images: ['Fotosdiversas/Complementos Exterior/SB 003.png'], specs: [['Material', 'Bambu'], ['Uso', 'Exterior']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'sb-004': { cat: 'exterior-sb', ref: 'SB 004', name: 'Módulo Poltrona (Bambu)', desc: 'Módulo poltrona em bambu para uso exterior.', images: ['Fotosdiversas/Complementos Exterior/SB 004.jpg'], specs: [['Material', 'Bambu'], ['Uso', 'Exterior']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'cl-001': { cat: 'exterior-sb', ref: 'CL 001', name: 'Conjunto Sofás Bambu 4 Pax', desc: '1 sofá de canto + 3 sofás de centro + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 001.jpg'], specs: [['Composição', '1 canto + 3 centro + 1 mesa'], ['Capacidade', '4 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'cl-002': { cat: 'exterior-sb', ref: 'CL 002', name: 'Conjunto Sofás Bambu 4 Pax', desc: '2 sofás de canto + 2 sofás de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 002.jpg'], specs: [['Composição', '2 canto + 2 centro'], ['Capacidade', '4 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'cl-003': { cat: 'exterior-sb', ref: 'CL 003', name: 'Conjunto Sofás Bambu 4 Pax', desc: '2 sofás de canto + 2 poltronas + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 003.jpg'], specs: [['Composição', '2 canto + 2 poltronas + 1 mesa'], ['Capacidade', '4 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'cl-004': { cat: 'exterior-sb', ref: 'CL 004', name: 'Conjunto Sofás Bambu 5 Pax', desc: '3 sofás de canto + 2 sofás de centro + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 004.jpg'], specs: [['Composição', '3 canto + 2 centro + 1 mesa'], ['Capacidade', '5 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'cl-005': { cat: 'exterior-sb', ref: 'CL 005', name: 'Conjunto Sofás Bambu 5 Pax', desc: '4 sofás de canto + 1 sofá de centro + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 005.jpg'], specs: [['Composição', '4 canto + 1 centro + 1 mesa'], ['Capacidade', '5 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'cl-006': { cat: 'exterior-sb', ref: 'CL 006', name: 'Conjunto Sofás Bambu 5 Pax', desc: '3 sofás de canto + 2 sofás de centro + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 006.jpg'], specs: [['Composição', '3 canto + 2 centro + 1 mesa'], ['Capacidade', '5 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'cl-007': { cat: 'exterior-sb', ref: 'CL 007', name: 'Conjunto Sofás Bambu 6 Pax', desc: '3 sofás de canto + 2 sofás de centro + 1 poltrona + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 007.jpg'], specs: [['Composição', '3 canto + 2 centro + 1 poltrona + 1 mesa'], ['Capacidade', '6 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'bar-001': { cat: 'exterior-comp', ref: 'BAR 01', name: 'Bar em Madeira', desc: 'Bar em madeira para eventos de exterior.', images: ['Fotosdiversas/Complementos Exterior/BAR 001.png'], specs: [['Dimensões', '170x110x50 cm'], ['Material', 'Madeira']], priceLabel: 'Preço por dia', price: 'Sob consulta', priceNote: '' },
+      'ad-001': { cat: 'exterior-comp', ref: 'AD 001', name: 'Arco Dourado', desc: 'Arco dourado decorativo para eventos.', images: ['Fotosdiversas/Complementos Exterior/AD 001.png'], specs: [['Dimensões', '80x180 cm'], ['Cor', 'Dourado']], priceLabel: 'Preço por dia', price: 'Sob consulta', priceNote: '' },
+      'gs-001': { cat: 'exterior-comp', ref: 'GS 001', name: 'Guarda-Sol', desc: 'Guarda-sol para eventos de exterior.', images: ['Fotosdiversas/Complementos Exterior/GS 001.png'], specs: [['Diâmetro', '300 cm']], priceLabel: 'Preço por dia', price: 'Sob consulta', priceNote: '' },
+
       /* OUTROS */
       'out-001': {
         cat: 'outros',
@@ -2073,7 +2139,35 @@
         price: 'Sob consulta',
         priceNote: 'Preço varia com dimensão',
       },
-    };
+
+      /* MARCADORES DE MESA */
+      'mc-001': { cat: 'decoracao-mc', ref: 'MC 001', name: 'Prato Marcador Vidro Fio Dourado', desc: 'Prato marcador em vidro com fio dourado. Elegante e sofisticado para mesas de gala.', images: ['Fotosdiversas/Marcadores de Mesa/MC 001.png'], specs: [['Material', 'Vidro'], ['Acabamento', 'Fio dourado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'mc-002': { cat: 'decoracao-mc', ref: 'MC 002', name: 'Prato Marcador Dourado', desc: 'Prato marcador na cor dourada. Clássico e elegante para decoração de mesa.', images: ['Fotosdiversas/Marcadores de Mesa/MC 002.png'], specs: [['Cor', 'Dourado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'mc-003': { cat: 'decoracao-mc', ref: 'MC 003', name: 'Prato Marcador Prateado', desc: 'Prato marcador na cor prateada. Sofisticado e versátil para todo o tipo de eventos.', images: ['Fotosdiversas/Marcadores de Mesa/MC 003.png'], specs: [['Cor', 'Prateado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'mc-004': { cat: 'decoracao-mc', ref: 'MC 004', name: 'Prato Marcador de Vime', desc: 'Prato marcador em vime natural. Ideal para eventos rústicos e ao ar livre.', images: ['Fotosdiversas/Marcadores de Mesa/MC 004.png'], specs: [['Material', 'Vime']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'mc-005': { cat: 'decoracao-mc', ref: 'MC 005', name: 'Capa de Marcador Rosa + Renda Pérola', desc: 'Capa de marcador D35 em tecido rosa com renda pérola.', images: ['Fotosdiversas/Marcadores de Mesa/MC 005.png'], specs: [['Diâmetro', 'D35'], ['Cor', 'Rosa'], ['Acabamento', 'Renda pérola']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'mc-006': { cat: 'decoracao-mc', ref: 'MC 006', name: 'Capa de Marcador Azul + Renda Pérola', desc: 'Capa de marcador D35 em tecido azul com renda pérola.', images: ['Fotosdiversas/Marcadores de Mesa/MC 006.png'], specs: [['Diâmetro', 'D35'], ['Cor', 'Azul'], ['Acabamento', 'Renda pérola']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'mc-007': { cat: 'decoracao-mc', ref: 'MC 007', name: 'Capa de Marcador Amarelo + Renda Pérola', desc: 'Capa de marcador D35 em tecido amarelo com renda pérola.', images: ['Fotosdiversas/Marcadores de Mesa/MC 007.png'], specs: [['Diâmetro', 'D35'], ['Cor', 'Amarelo'], ['Acabamento', 'Renda pérola']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'mc-008': { cat: 'decoracao-mc', ref: 'MC 008', name: 'Capa de Marcador Cinza + Renda Pérola', desc: 'Capa de marcador D35 em tecido cinza com renda pérola.', images: ['Fotosdiversas/Marcadores de Mesa/MC 008.png'], specs: [['Diâmetro', 'D35'], ['Cor', 'Cinza'], ['Acabamento', 'Renda pérola']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'mc-009': { cat: 'decoracao-mc', ref: 'MC 009', name: 'Marcador Linhado com Franja', desc: 'Marcador em tecido linhado com acabamento em franja. Peça rústica e elegante.', images: ['Fotosdiversas/Marcadores de Mesa/MC 009.png'], specs: [['Material', 'Linho'], ['Acabamento', 'Franja']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* TOALHAS RETANGULARES */
+      'thr-001': { cat: 'texteis-thr', ref: 'THR 001', name: 'Toalha Retangular Tostado', desc: 'Toalha retangular em tecido tostado. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+001'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Tostado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-002': { cat: 'texteis-thr', ref: 'THR 002', name: 'Toalha Retangular Estampado Burgundy', desc: 'Toalha retangular com estampado burgundy. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+002'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Estampado Burgundy']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-003': { cat: 'texteis-thr', ref: 'THR 003', name: 'Toalha Retangular Branco Adamascado', desc: 'Toalha retangular em tecido adamascado branco. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+003'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-004': { cat: 'texteis-thr', ref: 'THR 004', name: 'Toalha Retangular Areia', desc: 'Toalha retangular na cor areia. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+004'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Areia']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-005': { cat: 'texteis-thr', ref: 'THR 005', name: 'Toalha Retangular Branca Lisa Cetim', desc: 'Toalha retangular em cetim branco liso. Dimensões: 1,5x3m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+005'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Branco'], ['Tecido', 'Cetim liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-006': { cat: 'texteis-thr', ref: 'THR 006', name: 'Toalha Retangular Branca Adamascada', desc: 'Toalha retangular em tecido adamascado branco. Dimensões: 1,5x3m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+006'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-007': { cat: 'texteis-thr', ref: 'THR 007', name: 'Toalha Retangular Verde Esmeralda Adamascada', desc: 'Toalha retangular em tecido adamascado verde esmeralda. Dimensões: 1,5x3m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+007'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Verde Esmeralda'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-008': { cat: 'texteis-thr', ref: 'THR 008', name: 'Toalha Retangular Renda Pérola', desc: 'Toalha retangular com renda pérola. Dimensões: 2,5x6,5m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+008'], specs: [['Dimensão', '2,5 × 6,5 m'], ['Acabamento', 'Renda Pérola']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-009': { cat: 'texteis-thr', ref: 'THR 009', name: 'Toalha Xadrez Vermelho', desc: 'Toalha xadrez vermelha disponível em várias medidas.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+009'], specs: [['Cor', 'Vermelho'], ['Padrão', 'Xadrez'], ['Medidas', 'Várias']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-010': { cat: 'texteis-thr', ref: 'THR 010', name: 'Toalha Xadrez Azul', desc: 'Toalha xadrez azul disponível em várias medidas.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+010'], specs: [['Cor', 'Azul'], ['Padrão', 'Xadrez'], ['Medidas', 'Várias']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+
+      /* TOALHAS QUADRADAS */
+      'thq-001': { cat: 'texteis-thq', ref: 'THQ 001', name: 'Toalha Quadrada Branca Adamascada', desc: 'Toalha quadrada em tecido adamascado branco.', images: ['Fotosdiversas/Toalhas quadradas/THQ 001.png'], specs: [['Dimensão', '2,3 m × 2,3 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thq-002': { cat: 'texteis-thq', ref: 'THQ 002', name: 'Toalha Quadrada Verde Esmeralda Adamascada', desc: 'Toalha quadrada em tecido adamascado verde esmeralda.', images: ['Fotosdiversas/Toalhas quadradas/THQ 002.jpg'], specs: [['Dimensão', '2,3 m × 2,3 m'], ['Cor', 'Verde Esmeralda'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thq-003': { cat: 'texteis-thq', ref: 'THQ 003', name: 'Toalha Quadrada Rústica Adamascada', desc: 'Toalha quadrada em tecido adamascado rústico.', images: ['Fotosdiversas/Toalhas quadradas/THQ 003.png'], specs: [['Dimensão', '2,3 m × 2,3 m'], ['Estilo', 'Rústico'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thq-004': { cat: 'texteis-thq', ref: 'THQ 004', name: 'Toalha Quadrada Renda Pérola', desc: 'Toalha quadrada com renda pérola.', images: ['Fotosdiversas/Toalhas quadradas/THQ 004.png'], specs: [['Dimensão', '2,3 m × 2,3 m'], ['Acabamento', 'Renda Pérola']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },    };
 
     /* ─── COLLECTIONS ─── */
     const COLLECTIONS = {
@@ -2119,13 +2213,13 @@
       },
       'col-talheres-prateados': {
         cat: 'loucas',
-        ref: 'TA 002 – 010',
+        ref: 'TA 001 – 010',
         name: 'Talheres Prateados',
         desc: 'Conjunto completo de talheres em aço inoxidável com acabamento espelhado. Clássico e versátil para qualquer tipo de evento.',
-        count: 9,
+        count: 10,
         priceHint: 'Sob consulta',
-        previewImage: 'Fotosdiversas/P2.jpg',
-        items: ['ta-002','ta-003','ta-004','ta-005','ta-006','ta-007','ta-008','ta-009','ta-010'],
+        previewImage: 'Fotosdiversas/Louças/Talheres/TA 001.png',
+        items: ['ta-001','ta-002','ta-003','ta-004','ta-005','ta-006','ta-007','ta-008','ta-009','ta-010'],
       },
       'col-cm-areia': {
         cat: 'texteis-cm',
@@ -2486,6 +2580,17 @@
     /* ─── CATEGORY TABS ─── */
     const catBtns = document.querySelectorAll('.cat-btn');
     const catSections = document.querySelectorAll('.cat-section');
+    const sharedHeroBg    = document.getElementById('shared-hero-bg');
+    const sharedHeroTitle = document.getElementById('shared-hero-title');
+
+    const heroData = {
+      mobiliario: { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II1.jpg', title: 'Mobiliário',  subnav: null       },
+      texteis:    { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II2.jpg', title: 'Têxteis',     subnav: 'texteis'  },
+      loucas:     { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II3.jpg', title: 'Louças',      subnav: 'loucas'   },
+      decoracao:  { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II4.png', title: 'Decoração',   subnav: 'decoracao'},
+      exterior:   { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II5.jpg', title: 'Exterior',    subnav: 'exterior' },
+      outros:     { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II6.jpg', title: 'Outros',      subnav: 'outros'   },
+    };
 
     catBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -2493,17 +2598,33 @@
         catSections.forEach(s => s.classList.remove('visible'));
         btn.classList.add('active');
         document.getElementById('cat-' + btn.dataset.cat).classList.add('visible');
-        const navWrap = document.querySelector('.cat-nav-wrap');
-        window.scrollTo({ top: navWrap.offsetTop - 70, behavior: 'smooth' });
+
+        const data = heroData[btn.dataset.cat];
+        if (data && sharedHeroBg) {
+          sharedHeroBg.classList.remove('animated');
+          sharedHeroBg.style.backgroundImage = `url('${data.bg}')`;
+          sharedHeroTitle.textContent = data.title;
+          document.querySelectorAll('.cat-hero-subnav').forEach(el => el.style.display = 'none');
+          if (data.subnav) {
+            const sub = document.getElementById('shared-hero-subnav-' + data.subnav);
+            if (sub) sub.style.display = 'flex';
+          }
+          void sharedHeroBg.offsetWidth;
+          sharedHeroBg.classList.add('animated');
+        }
+
+        const hero = document.getElementById('shared-cat-hero');
+        window.scrollTo({ top: hero.offsetTop - 70, behavior: 'smooth' });
       });
     });
 
     /* ─── SUBNAV SCROLL ─── */
-    document.querySelectorAll('.cat-subnav a[data-sub]').forEach(a => {
+    document.querySelectorAll('.cat-hero-subnav a[data-sub]').forEach(a => {
       a.addEventListener('click', () => {
         const target = document.getElementById(a.dataset.sub);
         if (!target) return;
-        const navH = (document.querySelector('.cat-nav-wrap')?.offsetHeight || 0) + 80;
+        const heroEl = document.getElementById('shared-cat-hero');
+        const navH = (heroEl?.offsetHeight || 0) + 20;
         const top = target.getBoundingClientRect().top + window.scrollY - navH;
         window.scrollTo({ top, behavior: 'smooth' });
       });
@@ -2516,6 +2637,10 @@
         const n = grid.children.length;
         const id = grid.id.replace('grid-', '');
         if (id.startsWith('texteis')) map.texteis += n;
+        else if (id.startsWith('loucas')) map.loucas += n;
+        else if (id.startsWith('decoracao')) map.decoracao += n;
+        else if (id.startsWith('exterior')) map.exterior += n;
+        else if (id.startsWith('outros')) map.outros += n;
         else if (id in map) map[id] += n;
       });
       Object.entries(map).forEach(([cat, n]) => {
