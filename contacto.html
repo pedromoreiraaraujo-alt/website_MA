@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — Moreira &amp; Araújo Eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5efe2; --cream-light: #faf7f2; --cream-mid: #ede4d0;
+      --cream-border: #e0d5c0; --dark: #14120f; --dark-soft: #2a2520;
+      --muted: #6b5f4a; --gold: #b89a55; --gold-light: #d4b87a;
+      --gold-dark: #8a7340; --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--dark); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--cream-light);
+      border-bottom: 1px solid var(--cream-border);
+      padding: 1.5rem 2rem;
+    }
+    .nav-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-style: italic; color: var(--dark); }
+    .nav-logo .amp { font-family: Georgia, serif; font-style: italic; color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); transition: color 0.2s; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--dark); }
+    .nav-cta {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      border: 1px solid var(--gold); color: var(--gold); padding: 0.5rem 1.25rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--white); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--dark); transition: transform 0.3s, opacity 0.3s; }
+    .mobile-nav {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: var(--cream-light);
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; font-style: italic; color: var(--dark); }
+    .mobile-nav a.active { color: var(--gold); }
+    .mobile-nav-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--muted); }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: var(--dark); padding: 5rem 2rem 4rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url('Fotosdiversas/Imagens_Slides_iniciais/II1.jpg');
+      background-size: cover; background-position: center 40%;
+      opacity: 0.2; pointer-events: none;
+    }
+    .page-header .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); opacity: 0.8; margin-bottom: 1rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+      position: relative;
+    }
+    .page-header .eyebrow::before, .page-header .eyebrow::after {
+      content: ''; display: block; width: 32px; height: 1px; background: var(--gold); opacity: 0.5;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 300; color: var(--cream-light);
+      letter-spacing: -0.02em; line-height: 1.08;
+      position: relative;
+    }
+
+    /* MAIN */
+    .contact-wrap {
+      max-width: 1200px; margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+      display: grid; grid-template-columns: 1fr 1.55fr; gap: 6rem; align-items: start;
+    }
+
+    /* INFO SIDE */
+    .contact-info-side .eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.75rem;
+    }
+    .contact-info-side h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.4rem; font-weight: 300; line-height: 1.15;
+      letter-spacing: -0.02em; margin-bottom: 1rem;
+    }
+    .contact-info-side > p {
+      font-size: 0.9rem; color: var(--muted); line-height: 1.85; margin-bottom: 3rem;
+    }
+
+    .contact-detail {
+      display: flex; gap: 1.1rem; align-items: flex-start; margin-bottom: 2rem;
+    }
+    .contact-detail-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--cream-mid); border: 1px solid var(--cream-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); flex-shrink: 0;
+    }
+    .contact-detail-body { display: flex; flex-direction: column; }
+    .contact-detail-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.2rem;
+    }
+    .contact-detail-value { font-size: 0.9rem; color: var(--dark-soft); line-height: 1.7; }
+    .contact-detail-value a { color: var(--dark-soft); transition: color 0.2s; }
+    .contact-detail-value a:hover { color: var(--gold-dark); }
+
+    .contact-divider { width: 48px; height: 1px; background: var(--cream-border); margin: 2.5rem 0; }
+
+    .contact-social { display: flex; gap: 0.6rem; }
+    .contact-social-link {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid var(--cream-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .contact-social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,154,85,0.06); }
+
+    /* FORM SIDE */
+    .contact-form-side {
+      background: var(--white);
+      border: 1px solid var(--cream-border);
+      padding: 3rem;
+      box-shadow: 0 4px 40px rgba(20,18,15,0.06), 0 1px 4px rgba(20,18,15,0.03);
+    }
+    .contact-form-side h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.9rem; font-weight: 400; margin-bottom: 0.4rem;
+    }
+    .contact-form-side > p {
+      font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 2.5rem;
+    }
+
+    .form-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--cream-light);
+      border: 1px solid var(--cream-border);
+      padding: 0.85rem 1rem;
+      font-family: 'Lato', sans-serif; font-size: 0.9rem;
+      color: var(--dark); outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--muted); opacity: 0.5; }
+    .form-group select option { background: var(--cream-light); color: var(--dark); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); background: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-select-wrapper { position: relative; }
+    .form-select-wrapper::after {
+      content: ''; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent; border-right: 5px solid transparent;
+      border-top: 5px solid var(--muted); pointer-events: none;
+    }
+
+    .btn-submit {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      background: var(--gold); color: var(--dark);
+      padding: 1rem 2.5rem; width: 100%;
+      font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-submit:hover { background: var(--gold-dark); transform: translateY(-2px); }
+    .btn-submit:active { transform: translateY(0); }
+
+    .form-note {
+      font-size: 0.78rem; color: var(--muted); opacity: 0.65;
+      text-align: center; margin-top: 1rem; line-height: 1.6;
+    }
+
+    .form-success {
+      display: none; text-align: center; padding: 3rem 1rem;
+    }
+    .form-success-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(184,154,85,0.1); border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); margin: 0 auto 1.5rem;
+    }
+    .form-success h4 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.8rem; font-weight: 400; margin-bottom: 0.75rem;
+    }
+    .form-success p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    /* FOOTER */
+    footer { background: var(--dark); color: rgba(245,239,226,0.45); padding: 0 2rem; border-top: 1px solid rgba(184,154,85,0.15); }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+      gap: 4rem; padding: 4rem 0 3.5rem;
+      border-bottom: 1px solid rgba(245,239,226,0.07);
+    }
+    .footer-brand { display: flex; flex-direction: column; }
+    .footer-logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.6rem; font-style: italic; color: var(--cream-light); line-height: 1; margin-bottom: 0.5rem; }
+    .footer-logo .amp { font-family: Georgia, serif; font-style: italic; color: var(--gold); }
+    .footer-tagline { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(245,239,226,0.28); margin-bottom: 1.5rem; }
+    .footer-est { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 1.5rem; }
+    .footer-est::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+    .footer-desc { font-size: 0.85rem; line-height: 1.85; max-width: 280px; color: rgba(245,239,226,0.38); margin-bottom: 2rem; flex: 1; }
+    .footer-social { display: flex; gap: 0.6rem; margin-top: auto; }
+    .footer-social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(184,154,85,0.2); display: flex; align-items: center; justify-content: center; color: rgba(245,239,226,0.4); transition: border-color 0.2s, color 0.2s, background 0.2s; }
+    .footer-social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,154,85,0.08); }
+    .footer-col { display: flex; flex-direction: column; }
+    .footer-col h4 { font-family: 'Lato', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+    .footer-links li { font-size: 0.875rem; color: rgba(245,239,226,0.45); }
+    .footer-links a { font-size: 0.875rem; color: rgba(245,239,226,0.45); transition: color 0.2s, padding-left 0.2s; }
+    .footer-links a:hover { color: var(--cream-light); padding-left: 6px; }
+    .footer-col-divider { width: 24px; height: 1px; background: rgba(184,154,85,0.3); margin: 1.75rem 0; }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.85rem; color: rgba(245,239,226,0.45); margin-bottom: 0.9rem; }
+    .footer-contact-item svg { flex-shrink: 0; margin-top: 3px; color: var(--gold); opacity: 0.6; }
+    .footer-contact-item a { color: rgba(245,239,226,0.45); transition: color 0.2s; }
+    .footer-contact-item a:hover { color: var(--cream-light); }
+    .footer-hours { font-size: 0.8rem; color: rgba(245,239,226,0.28); line-height: 1.9; margin-top: 0.25rem; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; padding: 1.75rem 0; color: rgba(245,239,226,0.28); }
+    .footer-bottom a { color: rgba(245,239,226,0.28); transition: color 0.2s; }
+    .footer-bottom a:hover { color: rgba(245,239,226,0.6); }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form-side { padding: 2rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="height:80px;width:auto;display:block;"></a>
+      <ul class="nav-links">
+        <li><a href="index.html" aria-label="Início"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="contacto.html" class="active">Contacto</a></li>
+      </ul>
+      <a href="contacto.html" class="nav-cta">Pedir Orçamento</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" id="mobileClose">✕</button>
+    <a href="index.html">Início</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contacto.html" class="active">Contacto</a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="eyebrow">Moreira &amp; Araújo</div>
+    <h1>Contacto</h1>
+  </div>
+
+  <!-- MAIN -->
+  <div class="contact-wrap">
+
+    <!-- Info -->
+    <div class="contact-info-side">
+      <div class="eyebrow">Fale Connosco</div>
+      <h2>Estamos à sua disposição</h2>
+      <p>Entre em contacto para pedir um orçamento sem compromisso, tirar dúvidas ou agendar uma visita ao nosso showroom em Vila do Conde.</p>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-detail-body">
+          <div class="contact-detail-label">Email</div>
+          <div class="contact-detail-value"><a href="mailto:geral.moreiraearaujo@gmail.com">geral.moreiraearaujo@gmail.com</a></div>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="contact-detail-body">
+          <div class="contact-detail-label">Telefone</div>
+          <div class="contact-detail-value">
+            <a href="tel:+351910060114">910 060 114</a><br>
+            <a href="tel:+351252651538">252 651 538</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="contact-detail-body">
+          <div class="contact-detail-label">Morada</div>
+          <div class="contact-detail-value">Vila do Conde, Portugal</div>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="contact-detail-body">
+          <div class="contact-detail-label">Horário</div>
+          <div class="contact-detail-value">
+            Segunda a Sexta: 9h – 18h<br>
+            Sábado: 9h – 13h
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-divider"></div>
+
+      <div class="contact-social">
+        <a href="https://www.facebook.com/moreiraearaujo2001/?locale=pt_PT" target="_blank" rel="noopener" class="contact-social-link" aria-label="Facebook">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="contact-form-side">
+      <div id="contactFormWrap">
+      <h3>Pedido de Orçamento</h3>
+      <p>Preencha o formulário e entraremos em contacto em menos de 24 horas.</p>
+
+      <form class="form-grid" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome *</label>
+            <input type="text" id="nome" name="nome" placeholder="O seu nome" required>
+          </div>
+          <div class="form-group">
+            <label for="empresa">Empresa / Organização</label>
+            <input type="text" id="empresa" name="empresa" placeholder="Opcional">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="email@exemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="9XX XXX XXX">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tipo">Tipo de Evento *</label>
+            <div class="form-select-wrapper">
+              <select id="tipo" name="tipo" required>
+                <option value="" disabled selected>Selecionar...</option>
+                <option value="casamento">Casamento</option>
+                <option value="batizado">Batizado / Comunhão</option>
+                <option value="empresarial">Evento Empresarial</option>
+                <option value="gala">Gala / Jantar de Gala</option>
+                <option value="aniversario">Aniversário</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="data">Data do Evento</label>
+            <input type="date" id="data" name="data">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="convidados">Nº de Convidados</label>
+            <input type="number" id="convidados" name="convidados" placeholder="Ex: 150" min="1">
+          </div>
+          <div class="form-group">
+            <label for="local">Local do Evento</label>
+            <input type="text" id="local" name="local" placeholder="Ex: Quinta dos Pinheiros">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="mensagem">Mensagem / Material pretendido</label>
+          <textarea id="mensagem" name="mensagem" placeholder="Descreva o que precisa — mesas, cadeiras, têxteis, decoração..."></textarea>
+        </div>
+
+        <div>
+          <button type="submit" class="btn-submit" id="contactSubmitBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Enviar Pedido
+          </button>
+          <p class="form-note">Os seus dados são tratados de forma confidencial e nunca partilhados com terceiros.</p>
+        </div>
+      </form>
+      </div>
+
+      <div class="form-success" id="contactSuccess">
+        <div class="form-success-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h4>Pedido enviado!</h4>
+        <p>Obrigado pelo seu contacto. Entraremos em contacto consigo em menos de 24 horas.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">Moreira <span class="amp">&</span> Araújo</div>
+          <div class="footer-tagline">Eventos · Aluguer de Material</div>
+          <div class="footer-est">Est. 2001</div>
+          <p class="footer-desc">Confecção de atoalhados para hotelaria desde 2001. Aluguer de material para eventos de luxo em todo Portugal desde 2008.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/moreiraearaujo2001/?locale=pt_PT" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Catálogo</h4>
+          <ul class="footer-links">
+            <li><a href="catalogo.html">Mobiliário</a></li>
+            <li><a href="catalogo.html">Louça &amp; Cristalaria</a></li>
+            <li><a href="catalogo.html">Têxteis</a></li>
+            <li><a href="catalogo.html">Decoração</a></li>
+            <li><a href="catalogo.html">Exterior</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <ul class="footer-links">
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <div class="footer-contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:geral.moreiraearaujo@gmail.com">geral.moreiraearaujo@gmail.com</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            <div><a href="tel:+351910060114">910 060 114</a><br><a href="tel:+351252651538">252 651 538</a></div>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Vila do Conde, Portugal</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div class="footer-hours">Seg. a Sex.: 9h–18h<br>Sábado: 9h–13h</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Moreira &amp; Araújo, Lda. Todos os direitos reservados.</span>
+        <span><a href="#">Política de Privacidade</a> &nbsp;·&nbsp; <a href="#">Termos e Condições</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const hamburger = document.getElementById('hamburger');
+      const mobileNav = document.getElementById('mobileNav');
+      const mobileClose = document.getElementById('mobileClose');
+      hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+      mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+      mobileNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileNav.classList.remove('open')));
+    })();
+
+    /* ── EmailJS ── */
+    const EMAILJS_SERVICE  = 'service_hedx7n4';
+    const EMAILJS_TEMPLATE = 'template_fo7ukql';
+    const EMAILJS_KEY      = 'RHarKQcbP-Dabtyb1';
+    emailjs.init({ publicKey: EMAILJS_KEY });
+
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+
+      const nome      = data.get('nome')        || '';
+      const email     = data.get('email')       || '';
+      const tel       = data.get('telefone')    || '';
+      const empresa   = data.get('empresa')     || '';
+      const tipo      = data.get('tipo')        || '';
+      const dataEvt   = data.get('data')        || '';
+      const convid    = data.get('convidados')  || '';
+      const local     = data.get('local')       || '';
+      const msg       = data.get('mensagem')    || '';
+
+      const detalhes = [
+        empresa   ? `Empresa: ${empresa}`            : '',
+        tipo      ? `Tipo de evento: ${tipo}`        : '',
+        dataEvt   ? `Data: ${dataEvt}`               : '',
+        convid    ? `Nº convidados: ${convid}`        : '',
+        local     ? `Local: ${local}`                : '',
+      ].filter(Boolean).join('\n');
+
+      const btn = document.getElementById('contactSubmitBtn');
+      btn.textContent = 'A enviar…';
+      btn.disabled = true;
+
+      try {
+        await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+          from_name:   nome,
+          from_email:  email,
+          telefone:    tel || '—',
+          artigos:     detalhes || '—',
+          observacoes: msg || '—',
+          reply_to:    email,
+        });
+        document.getElementById('contactFormWrap').style.display = 'none';
+        document.getElementById('contactSuccess').style.display  = 'block';
+      } catch (err) {
+        console.error('EmailJS error:', err);
+        btn.textContent = 'Erro — Tente novamente';
+        btn.disabled = false;
+        btn.style.background = '#c05050';
+        btn.style.color = '#fff';
+      }
+    });
+  </script>
+
+</body>
+</html>

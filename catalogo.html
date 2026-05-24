@@ -66,6 +66,8 @@
     }
     .cat-btn:hover { color: rgba(255,255,255,0.9); }
     .cat-btn.active { color: #fff; border-bottom-color: var(--gold); }
+    .cat-btn-packs { color: var(--gold-light) !important; }
+    .cat-btn-packs.active { color: #fff !important; }
 
 
     /* ── CATEGORY SECTION ── */
@@ -205,6 +207,20 @@
       transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
     }
     .product-card:hover .card-img img { transform: scale(1.07); }
+    .card-img-scene {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0; z-index: 1;
+      transition: opacity 5s cubic-bezier(0.45, 0, 0.55, 1), transform 5s cubic-bezier(0.45, 0, 0.55, 1);
+      transition-delay: 1.2s;
+    }
+    .product-card:hover .card-img-scene { opacity: 1; transform: scale(1.04); }
+    .card-img.has-scene img:not(.card-img-scene) {
+      transition: opacity 5.5s cubic-bezier(0.45, 0, 0.55, 1), transform 5.5s cubic-bezier(0.45, 0, 0.55, 1);
+      transition-delay: 1.2s;
+    }
+    .product-card:hover .card-img.has-scene img:not(.card-img-scene) { opacity: 0; transform: scale(1.04); }
+    .card-img-overlay { z-index: 2; }
     .card-img-overlay {
       position: absolute; inset: 0;
       background: rgba(20,18,15,0);
@@ -307,20 +323,26 @@
     /* Drawer image */
     .drawer-img-wrap {
       width: 100%; aspect-ratio: 4/3;
-      background: var(--dark); position: relative; overflow: hidden;
+      background: var(--cream-mid); position: relative; overflow: hidden;
       flex-shrink: 0;
     }
     .drawer-img-wrap img {
       width: 100%; height: 100%; object-fit: cover;
       transition: opacity 0.2s;
     }
-    .drawer-img-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(20,18,15,0.35) 0%, transparent 50%);
-      pointer-events: none;
+    .drawer-img-wrap::after { display: none; }
+    #drawerMainImg { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+    .drawer-img-nav {
+      position: absolute; right: 1rem; bottom: 1rem;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(20,18,15,0.55); backdrop-filter: blur(6px);
+      border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      z-index: 10;
     }
+    .drawer-img-nav:hover { background: rgba(20,18,15,0.8); transform: scale(1.08); }
+    .drawer-img-nav svg { display: block; }
+
     .drawer-thumbs {
       display: flex; gap: 0.5rem; padding: 0.75rem 1.5rem 0;
     }
@@ -691,9 +713,124 @@
       background: none; border: none;
     }
 
+    /* ── PACKS ── */
+    .packs-intro {
+      max-width: 640px; margin: 0 0 3rem;
+    }
+    .packs-intro p {
+      font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-top: 0.75rem;
+    }
+
+    .packs-grid {
+      display: flex; flex-direction: column; gap: 2.5rem;
+    }
+
+    .pack-card {
+      display: grid; grid-template-columns: 420px 1fr;
+      background: #fff;
+      border: 1px solid var(--cream-border);
+      box-shadow: 0 2px 24px rgba(20,18,15,0.05), 0 1px 4px rgba(20,18,15,0.03);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .pack-card:hover { box-shadow: 0 8px 48px rgba(20,18,15,0.10), 0 2px 8px rgba(20,18,15,0.05); }
+    .pack-card:nth-child(even) { grid-template-columns: 1fr 420px; }
+    .pack-card:nth-child(even) .pack-img { order: 2; }
+    .pack-card:nth-child(even) .pack-body { order: 1; }
+
+    .pack-img {
+      position: relative; overflow: hidden; min-height: 400px;
+    }
+    .pack-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 7s ease;
+    }
+    .pack-card:hover .pack-img img { transform: scale(1.04); }
+    .pack-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(20,18,15,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .pack-card:nth-child(even) .pack-img-overlay {
+      background: linear-gradient(to left, rgba(20,18,15,0.15) 0%, transparent 60%);
+    }
+    .pack-badge {
+      position: absolute; top: 1.25rem; left: 1.25rem;
+      background: var(--gold); color: var(--dark);
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+    }
+
+    .pack-body {
+      padding: 2.75rem 3rem;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+
+    .pack-event-type {
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.6rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .pack-event-type::before { content: ''; display: block; width: 20px; height: 1px; background: var(--gold); }
+
+    .pack-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem; font-weight: 400; line-height: 1.15;
+      letter-spacing: -0.02em; margin-bottom: 0.75rem;
+    }
+    .pack-desc {
+      font-size: 0.875rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.75rem;
+    }
+
+    .pack-includes-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--dark); opacity: 0.4; margin-bottom: 1rem;
+    }
+    .pack-items {
+      display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 2rem; flex: 1;
+    }
+    .pack-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.875rem; color: var(--dark-soft);
+    }
+    .pack-item-thumb {
+      width: 40px; height: 40px; border-radius: 4px; overflow: hidden;
+      border: 1px solid var(--cream-border); flex-shrink: 0; background: var(--cream-light);
+    }
+    .pack-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .pack-item-name { line-height: 1.3; }
+    .pack-item-cat {
+      font-size: 10px; color: var(--muted); letter-spacing: 0.5px;
+    }
+
+    .pack-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.75rem; border-top: 1px solid var(--cream-border);
+      gap: 1rem;
+    }
+    .pack-price {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem; font-style: italic; color: var(--muted);
+    }
+    .pack-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--dark); color: var(--cream-light);
+      padding: 0.75rem 1.5rem; font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      font-family: 'Lato', sans-serif;
+    }
+    .pack-cta:hover { background: var(--dark-soft); transform: translateY(-2px); }
+    .pack-cta:active { transform: translateY(0); }
+    .pack-cta svg { flex-shrink: 0; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
       .product-grid { grid-template-columns: repeat(3, 1fr); }
+      .pack-card { grid-template-columns: 1fr !important; }
+      .pack-card:nth-child(even) .pack-img { order: 0; }
+      .pack-card:nth-child(even) .pack-body { order: 0; }
+      .pack-img { min-height: 280px; }
     }
     @media (max-width: 760px) {
       .product-grid { grid-template-columns: repeat(2, 1fr); }
@@ -709,6 +846,7 @@
       .product-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
       .cat-btn { padding: 0.875rem 1rem; font-size: 10px; letter-spacing: 1.5px; }
       .collection-item-grid { grid-template-columns: repeat(2, 1fr); }
+      .pack-body { padding: 1.75rem 1.5rem; }
     }
 
     /* ── CART FAB ── */
@@ -1046,9 +1184,9 @@
         <li><a href="index.html" aria-label="Início" style="display:flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a></li>
         <li><a href="catalogo.html" class="active">Catálogo</a></li>
         <li><a href="sobre.html">Sobre</a></li>
-        <li><a href="index.html#contacto">Contacto</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
       </ul>
-      <a href="index.html#contacto" class="nav-cta">Pedir Orçamento</a>
+      <a href="contacto.html" class="nav-cta">Pedir Orçamento</a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -1058,7 +1196,7 @@
     <a href="index.html">Início</a>
     <a href="catalogo.html">Catálogo</a>
     <a href="sobre.html">Sobre</a>
-    <a href="index.html#contacto">Contacto</a>
+    <a href="contacto.html">Contacto</a>
   </div>
 
   <!-- SHARED HERO + TABS -->
@@ -1067,6 +1205,10 @@
     <div class="cat-hero-overlay"></div>
     <div class="cat-hero-content">
       <h2 id="shared-hero-title">Mobiliário</h2>
+      <div class="cat-subnav cat-hero-subnav" id="shared-hero-subnav-mobiliario" style="display:none">
+        <a data-sub="sub-mobiliario-mesas">Mesas</a>
+        <a data-sub="sub-mobiliario-cadeiras">Cadeiras</a>
+      </div>
       <div class="cat-subnav cat-hero-subnav" id="shared-hero-subnav-texteis" style="display:none">
         <a data-sub="sub-texteis-cm">Camilhas</a>
         <a data-sub="sub-texteis-gd">Guardanapos</a>
@@ -1099,6 +1241,7 @@
         <button class="cat-btn" data-cat="decoracao">Decoração</button>
         <button class="cat-btn" data-cat="exterior">Exterior</button>
         <button class="cat-btn" data-cat="outros">Outros</button>
+        <button class="cat-btn cat-btn-packs" data-cat="packs">Packs</button>
       </div>
     </div>
   </div>
@@ -1110,6 +1253,14 @@
         <span class="cat-bar-count" id="count-mobiliario"><strong>—</strong> produtos</span>
       </div>
       <div class="product-grid" id="grid-mobiliario"></div>
+      <div class="cat-subsection" id="sub-mobiliario-mesas">
+        <div class="subcat-label">Mesas</div>
+        <div class="product-grid" id="grid-mobiliario-mesas"></div>
+      </div>
+      <div class="cat-subsection" id="sub-mobiliario-cadeiras">
+        <div class="subcat-label">Cadeiras</div>
+        <div class="product-grid" id="grid-mobiliario-cadeiras"></div>
+      </div>
     </div>
   </div>
 
@@ -1214,6 +1365,165 @@
     </div>
   </div>
 
+  <!-- PACKS -->
+  <div class="cat-section" id="cat-packs">
+    <div class="cat-content">
+      <div class="cat-bar">
+        <span class="cat-bar-count"><strong>3</strong> packs</span>
+      </div>
+
+      <div class="packs-intro">
+        <p>Conjuntos pré-configurados pensados para os eventos mais comuns. Cada pack inclui itens complementares já disponíveis no nosso catálogo — basta escolher, personalizar quantidades e pedir orçamento.</p>
+      </div>
+
+      <div class="packs-grid">
+
+        <!-- PACK 1 -->
+        <div class="pack-card">
+          <div class="pack-img">
+            <img src="Fotosdiversas/Imagens_Slides_iniciais/II2.jpg" alt="Mesa de Casamento Clássico">
+            <div class="pack-img-overlay"></div>
+            <span class="pack-badge">Pack</span>
+          </div>
+          <div class="pack-body">
+            <div>
+              <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
+              <h3 class="pack-title">Mesa de Casamento Clássico</h3>
+              <p class="pack-desc">Composição completa para uma mesa de casamento com elegância atemporal. Inclui toalha, guardanapos coordenados, talheres prateados, copos premium, caminhos de mesa e marcadores.</p>
+              <div class="pack-includes-label">Inclui</div>
+              <div class="pack-items">
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Toalhas/THR 001.jpg" alt="Toalha Retangular"></div>
+                  <div><div class="pack-item-name">Toalha Retangular</div><div class="pack-item-cat">Têxteis · 1 un.</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Camilhas/CM 001.png" alt="Caminhos de Mesa"></div>
+                  <div><div class="pack-item-name">Caminhos de Mesa</div><div class="pack-item-cat">Têxteis · 2 un.</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 004.jpg" alt="Guardanapos"></div>
+                  <div><div class="pack-item-name">Guardanapos Lisos</div><div class="pack-item-cat">Têxteis · 10 un.</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres Prateados"></div>
+                  <div><div class="pack-item-name">Talheres Prateados</div><div class="pack-item-cat">Louças · 10 jogos</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CPP 001.png" alt="Copos Premium"></div>
+                  <div><div class="pack-item-name">Copos Premium</div><div class="pack-item-cat">Louças · 20 un.</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Marcadores de Mesa/MC 001.png" alt="Marcadores"></div>
+                  <div><div class="pack-item-name">Marcadores de Mesa</div><div class="pack-item-cat">Decoração · 10 un.</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="pack-footer">
+              <span class="pack-price">Preço sob consulta</span>
+              <button class="pack-cta" onclick="window.location='contacto.html'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Pedir Orçamento
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PACK 2 -->
+        <div class="pack-card">
+          <div class="pack-img">
+            <img src="Fotosdiversas/Imagens_Slides_iniciais/II5.jpg" alt="Cocktail Lounge Exterior">
+            <div class="pack-img-overlay"></div>
+            <span class="pack-badge">Pack</span>
+          </div>
+          <div class="pack-body">
+            <div>
+              <div class="pack-event-type">Cocktail · Receção Exterior</div>
+              <h3 class="pack-title">Lounge Exterior</h3>
+              <p class="pack-desc">Ambiente lounge ao ar livre com sofás de bambu, complementos de assento e decoração. Ideal para recepções de casamento, festas de empresa ou eventos de cocktail.</p>
+              <div class="pack-includes-label">Inclui</div>
+              <div class="pack-items">
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Exterior/SB 001.png" alt="Sofá Bambu"></div>
+                  <div><div class="pack-item-name">Módulos Sofá Bambu</div><div class="pack-item-cat">Exterior · 4 módulos</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Exterior/CL 001.png" alt="Chaise Longue"></div>
+                  <div><div class="pack-item-name">Chaise Longue Bambu</div><div class="pack-item-cat">Exterior · 2 un.</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Almofadas/ALM 001.png" alt="Almofadas"></div>
+                  <div><div class="pack-item-name">Almofadas Decorativas</div><div class="pack-item-cat">Têxteis · 8 un.</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Exterior/AD 001.png" alt="Arco Dourado"></div>
+                  <div><div class="pack-item-name">Arco Dourado</div><div class="pack-item-cat">Exterior · 1 un.</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Exterior/GS 001.jpg" alt="Guarda-Sol"></div>
+                  <div><div class="pack-item-name">Guarda-Sol</div><div class="pack-item-cat">Exterior · 2 un.</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="pack-footer">
+              <span class="pack-price">Preço sob consulta</span>
+              <button class="pack-cta" onclick="window.location='contacto.html'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Pedir Orçamento
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PACK 3 -->
+        <div class="pack-card">
+          <div class="pack-img">
+            <img src="Fotosdiversas/Imagens_Slides_iniciais/II1.jpg" alt="Gala Empresarial">
+            <div class="pack-img-overlay"></div>
+            <span class="pack-badge">Pack</span>
+          </div>
+          <div class="pack-body">
+            <div>
+              <div class="pack-event-type">Gala · Jantar Empresarial</div>
+              <h3 class="pack-title">Gala Empresarial</h3>
+              <p class="pack-desc">Montagem completa para um jantar de gala corporativo. Mobiliário, têxteis de mesa e louça selecionados para transmitir profissionalismo e sofisticação.</p>
+              <div class="pack-includes-label">Inclui</div>
+              <div class="pack-items">
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Cadeiras/CD 001.png" alt="Cadeiras"></div>
+                  <div><div class="pack-item-name">Cadeiras de Evento</div><div class="pack-item-cat">Mobiliário · Por pedido</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Toalhas/THR 001.jpg" alt="Toalhas"></div>
+                  <div><div class="pack-item-name">Toalhas Retangulares</div><div class="pack-item-cat">Têxteis · Por mesa</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 024.jpg" alt="Guardanapos Adamascados"></div>
+                  <div><div class="pack-item-name">Guardanapos Adamascados</div><div class="pack-item-cat">Têxteis · Por pax</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres"></div>
+                  <div><div class="pack-item-name">Talheres Prateados</div><div class="pack-item-cat">Louças · Por pax</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Mesa/COM 017.png" alt="Castiçais"></div>
+                  <div><div class="pack-item-name">Castiçais Dourados</div><div class="pack-item-cat">Decoração · Por mesa</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="pack-footer">
+              <span class="pack-price">Preço sob consulta</span>
+              <button class="pack-cta" onclick="window.location='contacto.html'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Pedir Orçamento
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- DRAWER -->
   <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Detalhes do produto">
     <div class="drawer-backdrop" id="drawerBackdrop"></div>
@@ -1224,6 +1534,11 @@
       </button>
       <div class="drawer-img-wrap">
         <img id="drawerMainImg" src="" alt="">
+        <button class="drawer-img-nav" id="drawerImgNav" style="display:none" title="Ver cenário">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6,3 11,8 6,13"/>
+          </svg>
+        </button>
       </div>
       <div class="drawer-thumbs" id="drawerThumbs"></div>
       <div class="drawer-info" id="drawerInfo"></div>
@@ -1344,7 +1659,7 @@
 
       /* MOBILIÁRIO */
       'mob-001': {
-        cat: 'mobiliario',
+        cat: 'mobiliario-mesas',
         ref: 'MS 001',
         name: 'Mesa Redonda',
         desc: 'Mesa redonda elegante ideal para banquetes e jantares. Disponível em diferentes diâmetros para 8 a 12 pessoas.',
@@ -1363,7 +1678,7 @@
         priceNote: 'Preço inclui entrega e recolha em Vila do Conde',
       },
       'mob-004': {
-        cat: 'mobiliario',
+        cat: 'mobiliario-mesas',
         ref: 'MOB-004',
         name: 'Mesa Rectangular',
         desc: 'Mesa rectangular em madeira para banquetes. Combinável com outras para criar configurações personalizadas.',
@@ -1471,7 +1786,7 @@
         priceNote: 'Preços por quantidade disponíveis',
       },
       'cd-009': {
-        cat: 'mobiliario',
+        cat: 'mobiliario-cadeiras',
         ref: 'CD 009',
         name: 'Cadeira Imperial Dourada',
         desc: 'Cadeira imperial com estrutura dourada e assento almofadado. Presença majestosa para eventos de luxo, galas e cerimónias de prestígio.',
@@ -1618,8 +1933,8 @@
       'cmm-013': { cat: 'texteis-cmm-item', ref: 'CMM 013', name: 'Caminho de Mesa - Tostado com Frosques', desc: 'Caminho de mesa em tecido tostado com frosques.', images: ['Fotosdiversas/Caminhos de Mesa/CMM 013.png'], specs: [['Cor', 'Tostado'], ['Tipo', 'Com Frosques'], ['Uso', 'Caminho de mesa']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* COPOS PREMIUM */
-      'cpp-001': { cat: 'loucas-cpp', ref: 'CPP 001', name: 'Copo Verde', desc: 'Copo em vidro na cor verde.', images: ['Fotosdiversas/Louças/Copos/CPP 001.png'], specs: [['Cor', 'Verde']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'cpp-002': { cat: 'loucas-cpp', ref: 'CPP 002', name: 'Copo Picos Azul', desc: 'Copo picos em vidro na cor azul.', images: ['Fotosdiversas/Louças/Copos/CPP 002.png'], specs: [['Cor', 'Azul'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-001': { cat: 'loucas-cpp', ref: 'CPP 001', name: 'Copo Verde', desc: 'Copo em vidro na cor verde.', images: ['Fotosdiversas/Louças/Copos/CPP 001.png'], hoverImage: 'Fotosdiversas/Imagens_Slides_iniciais/II2.jpg', specs: [['Cor', 'Verde']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'cpp-002': { cat: 'loucas-cpp', ref: 'CPP 002', name: 'Copo Picos Azul', desc: 'Copo picos em vidro na cor azul.', images: ['Fotosdiversas/Louças/Copos/CPP 002.png'], hoverImage: 'Fotosdiversas/Fotos secundárias/FS 001.png', specs: [['Cor', 'Azul'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cpp-003': { cat: 'loucas-cpp', ref: 'CPP 003', name: 'Copo Picos Dourado', desc: 'Copo picos em vidro dourado.', images: ['Fotosdiversas/Louças/Copos/CPP 003.png'], specs: [['Cor', 'Dourado'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cpp-004': { cat: 'loucas-cpp', ref: 'CPP 004', name: 'Copo Picos Rosa', desc: 'Copo picos em vidro na cor rosa.', images: ['Fotosdiversas/Louças/Copos/CPP 004.png'], specs: [['Cor', 'Rosa'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'cpp-005': { cat: 'loucas-cpp', ref: 'CPP 005', name: 'Copo Picos Vermelho', desc: 'Copo picos em vidro na cor vermelha.', images: ['Fotosdiversas/Louças/Copos/CPP 005.png'], specs: [['Cor', 'Vermelho'], ['Padrão', 'Picos']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
@@ -1997,78 +2312,8 @@
       },
 
       /* DECORAÇÃO */
-      'dec-001': {
-        cat: 'decoracao',
-        ref: 'DEC-001',
-        name: 'Candelabro Alto',
-        desc: 'Candelabro de metal dourado de grande dimensão, ideal para centros de mesa ou decoração de corredor. Cria uma atmosfera sofisticada e romântica.',
-        images: [
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Candelabro+Alto',
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Detalhe',
-        ],
-        specs: [
-          ['Material', 'Metal dourado'],
-          ['Altura', '80 cm'],
-          ['Stock', 'Consultar'],
-        ],
-        priceLabel: 'Preço por unidade / dia',
-        price: 'Sob consulta',
-        priceNote: 'Velas não incluídas',
-      },
-      'dec-002': {
-        cat: 'decoracao',
-        ref: 'DEC-002',
-        name: 'Arco Floral',
-        desc: 'Estrutura metálica dourada em arco para decoração de cerimónias. Compatível com flores naturais e artificiais.',
-        images: [
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Arco+Floral',
-        ],
-        specs: [
-          ['Material', 'Metal dourado'],
-          ['Dimensões', '200 × 220 cm'],
-          ['Montagem', 'Incluída'],
-        ],
-        priceLabel: 'Preço por evento',
-        price: 'Sob consulta',
-        priceNote: 'Flores e decoração não incluídas',
-      },
 
       /* EXTERIOR */
-      'ext-001': {
-        cat: 'exterior',
-        ref: 'EXT-001',
-        name: 'Tenda de Eventos',
-        desc: 'Tenda estrutural para eventos ao ar livre, resistente ao vento e chuva. Ideal para casamentos, festas e eventos corporativos em espaço exterior.',
-        images: [
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Tenda+Eventos',
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Interior',
-        ],
-        specs: [
-          ['Dimensões', 'Consultar tamanhos'],
-          ['Montagem', 'Incluída'],
-          ['Capacidade', 'Consultar'],
-        ],
-        priceLabel: 'Preço por evento',
-        price: 'Sob consulta',
-        priceNote: 'Inclui montagem e desmontagem',
-      },
-      'ext-002': {
-        cat: 'exterior',
-        ref: 'EXT-002',
-        name: 'Pufes de Exterior',
-        desc: 'Pufes em rattan sintético resistentes ao exterior. Ideais para lounges e zonas de convívio em eventos ao ar livre.',
-        images: [
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Pufes',
-        ],
-        specs: [
-          ['Material', 'Rattan sintético'],
-          ['Cores', 'Natural / Branco'],
-          ['Stock', 'Consultar'],
-        ],
-        priceLabel: 'Preço por unidade / dia',
-        price: 'Sob consulta',
-        priceNote: 'Disponível em conjunto lounge',
-      },
 
       /* TÊXTEIS — Almofadas */
       'alm-001': { cat: 'texteis-alm', ref: 'ALM 001', name: 'Almofada —Estampado Burgundy', desc: 'Almofada 50x50 cm com padrão estampado na cor burgundy.', images: ['Fotosdiversas/Almofadas/ALM 001.png'], specs: [['Dimensões', '50x50 cm'], ['Cor', 'Burgundy'], ['Padrão', 'Estampado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
@@ -2098,12 +2343,12 @@
       'com-012': { cat: 'outros-com', ref: 'COM 012', name: 'Champanheira Acrílica 8L', desc: 'Champanheira em acrílico. Capacidade: 8 L.', images: ['Fotosdiversas/Complementos Mesa/COM 012.png'], specs: [['Material', 'Acrílico'], ['Capacidade', '8 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
       'com-013': { cat: 'outros-com', ref: 'COM 013', name: 'Dispensador de Bebidas 8L', desc: 'Dispensador de bebidas. Capacidade: 8 L.', images: ['Fotosdiversas/Complementos Mesa/COM 013.png'], specs: [['Capacidade', '8 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
       'com-014': { cat: 'outros-com', ref: 'COM 014', name: 'Dispensador de Bebidas 10L', desc: 'Dispensador de bebidas. Capacidade: 10 L.', images: ['Fotosdiversas/Complementos Mesa/COM 014.png'], specs: [['Capacidade', '10 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
-      'com-015': { cat: 'outros-com', ref: 'COM 015', name: 'Espelho D40 cm', desc: 'Espelho circular. Diâmetro 40 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 015.png'], specs: [['Diâmetro', '40 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
-      'com-016': { cat: 'outros-com', ref: 'COM 016', name: 'Espelho D35 cm', desc: 'Espelho circular. Diâmetro 35 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 016.png'], specs: [['Diâmetro', '35 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
-      'com-017': { cat: 'outros-com', ref: 'COM 017', name: 'Conjunto 3 Castiçais Dourados', desc: 'Conjunto de 3 castiçais com acabamento dourado.', images: ['Fotosdiversas/Complementos Mesa/COM 017.png'], specs: [['Quantidade', '3 unidades'], ['Acabamento', 'Dourado']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
-      'com-018': { cat: 'outros-com', ref: 'COM 018', name: 'Aquário 1L', desc: 'Aquário decorativo. Capacidade: 1 L.', images: ['Fotosdiversas/Complementos Mesa/COM 018.png'], specs: [['Capacidade', '1 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
-      'com-019': { cat: 'outros-com', ref: 'COM 019', name: 'Aquário 0,5L', desc: 'Aquário decorativo. Capacidade: 0,5 L.', images: ['Fotosdiversas/Complementos Mesa/COM 019.png'], specs: [['Capacidade', '0,5 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
-      'com-020': { cat: 'outros-com', ref: 'COM 020', name: 'Candeeiro sem Fios 40cm', desc: 'Candeeiro sem fios. Altura: 40 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 020.png'], specs: [['Altura', '40 cm'], ['Alimentação', 'Sem fios']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-015': { cat: 'decoracao', ref: 'COM 015', name: 'Espelho D40 cm', desc: 'Espelho circular. Diâmetro 40 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 015.png'], specs: [['Diâmetro', '40 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-016': { cat: 'decoracao', ref: 'COM 016', name: 'Espelho D35 cm', desc: 'Espelho circular. Diâmetro 35 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 016.png'], specs: [['Diâmetro', '35 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-017': { cat: 'decoracao', ref: 'COM 017', name: 'Conjunto 3 Castiçais Dourados', desc: 'Conjunto de 3 castiçais com acabamento dourado.', images: ['Fotosdiversas/Complementos Mesa/COM 017.png'], specs: [['Quantidade', '3 unidades'], ['Acabamento', 'Dourado']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'com-018': { cat: 'decoracao', ref: 'COM 018', name: 'Aquário 1L', desc: 'Aquário decorativo. Capacidade: 1 L.', images: ['Fotosdiversas/Complementos Mesa/COM 018.png'], specs: [['Capacidade', '1 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-019': { cat: 'decoracao', ref: 'COM 019', name: 'Aquário 0,5L', desc: 'Aquário decorativo. Capacidade: 0,5 L.', images: ['Fotosdiversas/Complementos Mesa/COM 019.png'], specs: [['Capacidade', '0,5 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-020': { cat: 'decoracao', ref: 'COM 020', name: 'Candeeiro sem Fios 40cm', desc: 'Candeeiro sem fios. Altura: 40 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 020.png'], specs: [['Altura', '40 cm'], ['Alimentação', 'Sem fios']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
 
       /* EXTERIOR — Sofás Bambu */
       'sb-001': { cat: 'exterior-sb', ref: 'SB 001', name: 'Módulo Sofá de Centro (Bambu)', desc: 'Módulo sofá de centro em bambu para uso exterior.', images: ['Fotosdiversas/Complementos Exterior/SB 001.png'], specs: [['Material', 'Bambu'], ['Uso', 'Exterior']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
@@ -2122,23 +2367,6 @@
       'gs-001': { cat: 'exterior-comp', ref: 'GS 001', name: 'Guarda-Sol', desc: 'Guarda-sol para eventos de exterior.', images: ['Fotosdiversas/Complementos Exterior/GS 001.png'], specs: [['Diâmetro', '300 cm']], priceLabel: 'Preço por dia', price: 'Sob consulta', priceNote: '' },
 
       /* OUTROS */
-      'out-001': {
-        cat: 'outros',
-        ref: 'OUT-001',
-        name: 'Palco Modular',
-        desc: 'Sistema de palco modular em alumínio, configurável em várias dimensões. Inclui escadas de acesso e proteções laterais.',
-        images: [
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Palco+Modular',
-        ],
-        specs: [
-          ['Material', 'Alumínio'],
-          ['Altura', '40 / 60 / 80 cm'],
-          ['Montagem', 'Incluída'],
-        ],
-        priceLabel: 'Preço por evento',
-        price: 'Sob consulta',
-        priceNote: 'Preço varia com dimensão',
-      },
 
       /* MARCADORES DE MESA */
       'mc-001': { cat: 'decoracao-mc', ref: 'MC 001', name: 'Prato Marcador Vidro Fio Dourado', desc: 'Prato marcador em vidro com fio dourado. Elegante e sofisticado para mesas de gala.', images: ['Fotosdiversas/Marcadores de Mesa/MC 001.png'], specs: [['Material', 'Vidro'], ['Acabamento', 'Fio dourado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
@@ -2172,7 +2400,7 @@
     /* ─── COLLECTIONS ─── */
     const COLLECTIONS = {
       'col-cd007': {
-        cat: 'mobiliario',
+        cat: 'mobiliario-cadeiras',
         ref: 'CD 007 – 008',
         name: 'Cadeira Crossback Camel',
         desc: 'Cadeira crossback em madeira camel, disponível simples ou com coxim de assento pérola.',
@@ -2182,7 +2410,7 @@
         items: ['cd-007', 'cd-008'],
       },
       'col-cd004': {
-        cat: 'mobiliario',
+        cat: 'mobiliario-cadeiras',
         ref: 'CD 004 – 006',
         name: 'Cadeira Dobrável Prateada',
         desc: 'Cadeira dobrável com acabamento prateado, disponível simples ou com coxim de tecido pérola / pele sintética castanha.',
@@ -2192,7 +2420,7 @@
         items: ['cd-004', 'cd-005', 'cd-006'],
       },
       'col-cd001': {
-        cat: 'mobiliario',
+        cat: 'mobiliario-cadeiras',
         ref: 'CD 001 – 003',
         name: 'Cadeira Dobrável Castanha',
         desc: 'Cadeira dobrável em madeira castanha, disponível simples ou com coxim de tecido pérola / pele sintética castanha.',
@@ -2390,8 +2618,9 @@
         card.setAttribute('role', 'button');
         card.setAttribute('aria-label', 'Ver detalhes: ' + p.name);
         card.innerHTML = `
-          <div class="card-img">
+          <div class="card-img${p.hoverImage ? ' has-scene' : ''}">
             <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
+            ${p.hoverImage ? `<img class="card-img-scene" src="${p.hoverImage}" alt="${p.name} — cenário" loading="lazy">` : ''}
             <div class="card-img-overlay"><span class="card-img-label">Ver Detalhes</span></div>
           </div>
           <div class="card-body">
@@ -2445,6 +2674,42 @@
       const mainImg = document.getElementById('drawerMainImg');
       mainImg.src = p.images[0];
       mainImg.alt = p.name;
+
+      /* Image nav arrow (cycles between product and scene image) */
+      const navBtn = document.getElementById('drawerImgNav');
+      if (p.hoverImage) {
+        navBtn.style.display = 'flex';
+        let showingScene = false;
+        navBtn.onclick = () => {
+          showingScene = !showingScene;
+          const newSrc = showingScene ? p.hoverImage : p.images[0];
+          const dir = showingScene ? 1 : -1;
+          const wrap = mainImg.parentElement;
+          const incoming = document.createElement('img');
+          incoming.src = newSrc;
+          incoming.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:translateX(${dir*100}%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);z-index:1;`;
+          wrap.appendChild(incoming);
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            incoming.style.transform = 'translateX(0)';
+            mainImg.style.transform = `translateX(${-dir*100}%)`;
+          }));
+          incoming.addEventListener('transitionend', () => {
+            // Reset mainImg off-screen (no transition) before making it visible
+            mainImg.style.transition = 'none';
+            mainImg.src = newSrc;
+            mainImg.style.transform = '';
+            void mainImg.offsetWidth; // force reflow so snap is applied
+            // Only remove incoming after mainImg is painted in place
+            requestAnimationFrame(() => {
+              incoming.remove();
+              navBtn.querySelector('svg').style.transform = showingScene ? 'rotate(180deg)' : '';
+              requestAnimationFrame(() => { mainImg.style.transition = 'transform 0.35s cubic-bezier(0.4,0,0.2,1)'; });
+            });
+          }, { once: true });
+        };
+      } else {
+        navBtn.style.display = 'none';
+      }
 
       /* Thumbnails */
       const thumbsEl = document.getElementById('drawerThumbs');
@@ -2584,12 +2849,13 @@
     const sharedHeroTitle = document.getElementById('shared-hero-title');
 
     const heroData = {
-      mobiliario: { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II1.jpg', title: 'Mobiliário',  subnav: null       },
+      mobiliario: { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II1.jpg', title: 'Mobiliário',  subnav: 'mobiliario'},
       texteis:    { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II2.jpg', title: 'Têxteis',     subnav: 'texteis'  },
       loucas:     { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II3.jpg', title: 'Louças',      subnav: 'loucas'   },
       decoracao:  { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II4.png', title: 'Decoração',   subnav: 'decoracao'},
       exterior:   { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II5.jpg', title: 'Exterior',    subnav: 'exterior' },
       outros:     { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II6.jpg', title: 'Outros',      subnav: 'outros'   },
+      packs:      { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II1.jpg', title: 'Packs',       subnav: null       },
     };
 
     catBtns.forEach(btn => {
@@ -2636,7 +2902,8 @@
       document.querySelectorAll('.product-grid').forEach(grid => {
         const n = grid.children.length;
         const id = grid.id.replace('grid-', '');
-        if (id.startsWith('texteis')) map.texteis += n;
+        if (id.startsWith('mobiliario')) map.mobiliario += n;
+        else if (id.startsWith('texteis')) map.texteis += n;
         else if (id.startsWith('loucas')) map.loucas += n;
         else if (id.startsWith('decoracao')) map.decoracao += n;
         else if (id.startsWith('exterior')) map.exterior += n;
