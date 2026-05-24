@@ -32,6 +32,7 @@
     }
     .nav-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
     .nav-logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-style: italic; color: var(--dark); }
+    .nav-logo img { height: 56px; width: auto; }
     .nav-logo .amp { font-family: Georgia, serif; font-style: italic; color: var(--gold); }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); transition: color 0.2s; display: flex; align-items: center; }
@@ -251,6 +252,7 @@
     @media (max-width: 960px) {
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
+      .nav-logo img { height: 44px; }
       .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     }
@@ -267,7 +269,7 @@
   <!-- NAV -->
   <nav>
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="height:80px;width:auto;display:block;"></a>
+      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="width:auto;display:block;"></a>
       <ul class="nav-links">
         <li><a href="index.html" aria-label="Início"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a></li>
         <li><a href="catalogo.html">Catálogo</a></li>

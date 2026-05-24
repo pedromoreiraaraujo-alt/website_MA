@@ -119,6 +119,7 @@
       font-style: italic;
       color: var(--dark);
     }
+    .nav-logo img { height: 56px; width: auto; }
 
     .nav-logo .amp {
       font-family: Georgia, serif;
@@ -1211,7 +1212,7 @@
       .footer-top { grid-template-columns: 1fr 1fr; gap: 3rem; }
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
-      .nav-logo img { height: 50px; }
+      .nav-logo img { height: 44px; }
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero-right { height: 55vw; max-height: 480px; }
       .hero-left { padding: 7rem 2.5rem 4rem; }
@@ -1233,16 +1234,27 @@
       .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
     }
 
+    @media (max-width: 760px) {
+      .recent-carousel { padding: 0; }
+      .recent-viewport { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; width: 100%; }
+      .recent-viewport::-webkit-scrollbar { display: none; }
+      .recent-track { transform: none !important; }
+      .recent-track .recent-card { flex: 0 0 calc(50vw - 1.5rem); }
+      .recent-nav { display: none; }
+      .recent-dots { display: none; }
+    }
     @media (max-width: 600px) {
       .categories-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
       .category-card { min-height: 220px; }
       .featured-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
       .recent-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .recent-track .recent-card { flex: 0 0 calc(100vw - 2rem); }
       .cta-band-aside { grid-template-columns: 1fr; }
       .process-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .hero-left { padding: 6rem 1.5rem 3rem; }
     }
 
     /* ── PAGE TRANSITION ── */
@@ -1366,7 +1378,7 @@
   <!-- Navigation -->
   <nav id="navbar">
     <div class="nav-inner">
-      <a href="#" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="height:80px;width:auto;display:block;"></a>
+      <a href="#" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="width:auto;display:block;"></a>
       <ul class="nav-links">
         <li><a href="catalogo.html">Catálogo</a></li>
         <li><a href="sobre.html">Sobre</a></li>
@@ -1906,6 +1918,7 @@
       }
 
       function goTo(idx, animate) {
+        if (window.innerWidth <= 760) return;
         if (animate === false) {
           track.style.transition = 'none';
         } else {

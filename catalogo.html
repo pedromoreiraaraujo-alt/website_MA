@@ -34,6 +34,7 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-style: italic; color: var(--dark); }
+    .nav-logo img { height: 56px; width: auto; }
     .nav-logo .amp { font-family: Georgia, serif; font-style: italic; color: var(--gold); }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
@@ -199,8 +200,9 @@
     .card-img {
       width: 100%; aspect-ratio: 1;
       overflow: hidden; position: relative;
-      background: var(--cream-mid);
+      background: var(--dark-soft);
       border-radius: 11px 11px 0 0;
+      display: flex; align-items: center; justify-content: center;
     }
     .card-img img {
       width: 100%; height: 100%; object-fit: cover;
@@ -732,6 +734,7 @@
       box-shadow: 0 2px 24px rgba(20,18,15,0.05), 0 1px 4px rgba(20,18,15,0.03);
       overflow: hidden;
       transition: box-shadow 0.3s;
+      cursor: pointer; text-decoration: none; color: inherit;
     }
     .pack-card:hover { box-shadow: 0 8px 48px rgba(20,18,15,0.10), 0 2px 8px rgba(20,18,15,0.05); }
     .pack-card:nth-child(even) { grid-template-columns: 1fr 420px; }
@@ -836,15 +839,20 @@
       .product-grid { grid-template-columns: repeat(2, 1fr); }
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
-      .nav-logo img { height: 50px; }
+      .nav-logo img { height: 44px; }
       .drawer-panel { width: 100vw; }
-      .cat-hero { height: 45vh; min-height: 280px; }
-      .cat-subnav { gap: 1.25rem; }
+      .cat-hero { height: 40vh; min-height: 240px; }
+      .cat-bar { padding: 0 1rem; }
+      .cat-bar-inner { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap; padding-bottom: 4px; }
+      .cat-bar-inner::-webkit-scrollbar { display: none; }
+      .cat-subnav { gap: 1.25rem; overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; }
+      .cat-subnav::-webkit-scrollbar { display: none; }
       .form-row { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .product-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-      .cat-btn { padding: 0.875rem 1rem; font-size: 10px; letter-spacing: 1.5px; }
+      .cat-btn { padding: 0.875rem 1rem; font-size: 10px; letter-spacing: 1.5px; white-space: nowrap; }
+      .cat-btn-packs { padding: 0.875rem 1rem; font-size: 10px; letter-spacing: 1.5px; white-space: nowrap; }
       .collection-item-grid { grid-template-columns: repeat(2, 1fr); }
       .pack-body { padding: 1.75rem 1.5rem; }
     }
@@ -1179,7 +1187,7 @@
   <!-- NAV -->
   <nav>
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="height:80px;width:auto;display:block;"></a>
+      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="width:auto;display:block;"></a>
       <ul class="nav-links">
         <li><a href="index.html" aria-label="Início" style="display:flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a></li>
         <li><a href="catalogo.html" class="active">Catálogo</a></li>
@@ -1369,7 +1377,7 @@
   <div class="cat-section" id="cat-packs">
     <div class="cat-content">
       <div class="cat-bar">
-        <span class="cat-bar-count"><strong>3</strong> packs</span>
+        <span class="cat-bar-count"><strong>6</strong> packs</span>
       </div>
 
       <div class="packs-intro">
@@ -1379,7 +1387,7 @@
       <div class="packs-grid">
 
         <!-- PACK 1 -->
-        <div class="pack-card">
+        <a href="pack.html?id=casamento" class="pack-card" style="display:grid;">
           <div class="pack-img">
             <img src="Fotosdiversas/Imagens_Slides_iniciais/II2.jpg" alt="Mesa de Casamento Clássico">
             <div class="pack-img-overlay"></div>
@@ -1426,10 +1434,10 @@
               </button>
             </div>
           </div>
-        </div>
+        </a>
 
         <!-- PACK 2 -->
-        <div class="pack-card">
+        <a href="pack.html?id=lounge" class="pack-card" style="display:grid;grid-template-columns:1fr 420px;">
           <div class="pack-img">
             <img src="Fotosdiversas/Imagens_Slides_iniciais/II5.jpg" alt="Cocktail Lounge Exterior">
             <div class="pack-img-overlay"></div>
@@ -1472,10 +1480,10 @@
               </button>
             </div>
           </div>
-        </div>
+        </a>
 
         <!-- PACK 3 -->
-        <div class="pack-card">
+        <a href="pack.html?id=gala" class="pack-card" style="display:grid;">
           <div class="pack-img">
             <img src="Fotosdiversas/Imagens_Slides_iniciais/II1.jpg" alt="Gala Empresarial">
             <div class="pack-img-overlay"></div>
@@ -1518,7 +1526,181 @@
               </button>
             </div>
           </div>
-        </div>
+        </a>
+
+        <!-- PACK VENEZA -->
+        <a href="pack.html?id=veneza" class="pack-card" style="display:grid;grid-template-columns:1fr 420px;">
+          <div class="pack-img">
+            <img src="Fotosdiversas/Imagens_Slides_iniciais/II3.jpg" alt="Pack Veneza">
+            <div class="pack-img-overlay"></div>
+            <span class="pack-badge">Pack</span>
+          </div>
+          <div class="pack-body">
+            <div>
+              <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
+              <h3 class="pack-title">Veneza</h3>
+              <p class="pack-desc">Uma composição de requinte para uma mesa de casamento de 10 pessoas. Combina louça de cerâmica branca com detalhes a fio dourado, cristalaria completa (água, branco, tinto e flutes) e têxteis em pérola tostado.</p>
+              <div class="pack-includes-label">Inclui (15 referências)</div>
+              <div class="pack-items">
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Cadeiras/CD 001.png" alt="Cadeiras"></div>
+                  <div><div class="pack-item-name">1 Mesa + 10 Cadeiras com Coxim</div><div class="pack-item-cat">Mobiliário</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Toalhas/THQ 001.jpg" alt="Toalha Quadrada Renda Pérola"></div>
+                  <div><div class="pack-item-name">1 Toalha Quadrada Renda Pérola</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Camilhas/CM 001.png" alt="Camilha Tostado"></div>
+                  <div><div class="pack-item-name">1 Camilha Tostado</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 004.jpg" alt="Guardanapos Pérola"></div>
+                  <div><div class="pack-item-name">10 Guardanapos Pérola</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Marcadores de Mesa/MC 001.png" alt="Prato Marcador Fio Dourado"></div>
+                  <div><div class="pack-item-name">10 Pratos Marcadores Fio Dourado</div><div class="pack-item-cat">Decoração</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/LOU 001.png" alt="Pratos Cerâmica Branca"></div>
+                  <div><div class="pack-item-name">20 Pratos Raso + 20 Pratos Sobremesa (Cerâmica Branca)</div><div class="pack-item-cat">Louças</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CPP 001.png" alt="Copos Fio Dourado"></div>
+                  <div><div class="pack-item-name">10 Taças Consommé · 10 Copos Água · 10 Vinho Branco · 10 Vinho Tinto · 10 Flutes</div><div class="pack-item-cat">Louças · Fio Dourado</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres Dourados"></div>
+                  <div><div class="pack-item-name">10 Jogos de Talheres Dourados (8 peças)</div><div class="pack-item-cat">Louças</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Mesa/COM 017.png" alt="Candeeiro Sem Fios"></div>
+                  <div><div class="pack-item-name">1 Candeeiro Sem Fios</div><div class="pack-item-cat">Decoração</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="pack-footer">
+              <span class="pack-price">Preço sob consulta</span>
+              <button class="pack-cta" onclick="window.location='contacto.html'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Pedir Orçamento
+              </button>
+            </div>
+          </div>
+        </a>
+
+        <!-- PACK TOSCANA -->
+        <a href="pack.html?id=toscana" class="pack-card" style="display:grid;">
+          <div class="pack-img">
+            <img src="Fotosdiversas/Imagens_Slides_iniciais/II6.jpg" alt="Pack Toscana">
+            <div class="pack-img-overlay"></div>
+            <span class="pack-badge">Pack</span>
+          </div>
+          <div class="pack-body">
+            <div>
+              <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
+              <h3 class="pack-title">Toscana</h3>
+              <p class="pack-desc">Composição elegante com toques naturais e verdes. Cerâmica branca, cristalaria completa com copo verde de água, talheres dourados e guardanapos verdes para uma mesa cheia de personalidade.</p>
+              <div class="pack-includes-label">Inclui (13 referências)</div>
+              <div class="pack-items">
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Cadeiras/CD 001.png" alt="Mesa e Cadeiras"></div>
+                  <div><div class="pack-item-name">1 Mesa + 10 Cadeiras com Coxim</div><div class="pack-item-cat">Mobiliário</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Camilhas/CM 001.png" alt="Camilha Tostado"></div>
+                  <div><div class="pack-item-name">1 Camilha Tostado</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 004.jpg" alt="Guardanapos Verdes"></div>
+                  <div><div class="pack-item-name">10 Guardanapos Verdes</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Marcadores de Mesa/MC 001.png" alt="Prato Marcador"></div>
+                  <div><div class="pack-item-name">10 Pratos Marcadores Fio Dourado</div><div class="pack-item-cat">Decoração</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/LOU 001.png" alt="Pratos"></div>
+                  <div><div class="pack-item-name">20 Pratos Raso + 20 Pratos Sobremesa · 10 Taças Consommé</div><div class="pack-item-cat">Louças · Cerâmica Branca</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CPP 001.png" alt="Copos"></div>
+                  <div><div class="pack-item-name">10 Copos Verde Água · 10 Vinho Branco · 10 Vinho Tinto · 10 Flutes</div><div class="pack-item-cat">Louças · Cristalaria</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres Dourados"></div>
+                  <div><div class="pack-item-name">10 Jogos Talheres Dourados (8 peças)</div><div class="pack-item-cat">Louças</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="pack-footer">
+              <span class="pack-price">Preço sob consulta</span>
+              <button class="pack-cta" onclick="event.preventDefault();window.location='contacto.html'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Pedir Orçamento
+              </button>
+            </div>
+          </div>
+        </a>
+
+        <!-- PACK LYON -->
+        <a href="pack.html?id=lyon" class="pack-card" style="display:grid;grid-template-columns:1fr 420px;">
+          <div class="pack-img">
+            <img src="Fotosdiversas/Imagens_Slides_iniciais/II4.png" alt="Pack Lyon">
+            <div class="pack-img-overlay"></div>
+            <span class="pack-badge">Pack</span>
+          </div>
+          <div class="pack-body">
+            <div>
+              <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
+              <h3 class="pack-title">Lyon</h3>
+              <p class="pack-desc">Composição sofisticada com camilha adamascada bege, cerâmica branca, cristalaria verde completa e talheres dourados. O candeeiro sem fios cria um ambiente quente e intimista.</p>
+              <div class="pack-includes-label">Inclui (14 referências)</div>
+              <div class="pack-items">
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Cadeiras/CD 001.png" alt="Mesa e Cadeiras"></div>
+                  <div><div class="pack-item-name">1 Mesa + 10 Cadeiras</div><div class="pack-item-cat">Mobiliário</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Camilhas/CM 001.png" alt="Camilha Bege Adamascada"></div>
+                  <div><div class="pack-item-name">1 Camilha Bege Adamascada</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 004.jpg" alt="Guardanapos Verdes"></div>
+                  <div><div class="pack-item-name">10 Guardanapos Verdes</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Marcadores de Mesa/MC 001.png" alt="Prato Marcador"></div>
+                  <div><div class="pack-item-name">10 Pratos Marcadores Fio Dourado</div><div class="pack-item-cat">Decoração</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/LOU 001.png" alt="Pratos"></div>
+                  <div><div class="pack-item-name">20 Pratos Raso + 20 Pratos Sobremesa · 10 Taças Consommé</div><div class="pack-item-cat">Louças · Cerâmica Branca</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CPP 001.png" alt="Copos"></div>
+                  <div><div class="pack-item-name">10 Copos Verde Água · 10 Vinho Branco · 10 Vinho Tinto · 10 Flutes</div><div class="pack-item-cat">Louças · Cristalaria</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres"></div>
+                  <div><div class="pack-item-name">10 Jogos Talheres (8 peças)</div><div class="pack-item-cat">Louças</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Mesa/COM 017.png" alt="Candeeiro"></div>
+                  <div><div class="pack-item-name">1 Candeeiro Sem Fios</div><div class="pack-item-cat">Decoração</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="pack-footer">
+              <span class="pack-price">Preço sob consulta</span>
+              <button class="pack-cta" onclick="event.preventDefault();window.location='contacto.html'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Pedir Orçamento
+              </button>
+            </div>
+          </div>
+        </a>
 
       </div>
     </div>
@@ -1664,9 +1846,9 @@
         name: 'Mesa Redonda',
         desc: 'Mesa redonda elegante ideal para banquetes e jantares. Disponível em diferentes diâmetros para 8 a 12 pessoas.',
         images: [
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Mesa+Redonda',
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Vista+2',
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Vista+3',
+          'https://placehold.co/800x600/2a2520/b89a55?text=Mesa+Redonda',
+          'https://placehold.co/800x600/2a2520/b89a55?text=Vista+2',
+          'https://placehold.co/800x600/2a2520/b89a55?text=Vista+3',
         ],
         specs: [
           ['Dimensões', 'Ø 180 cm'],
@@ -1683,8 +1865,8 @@
         name: 'Mesa Rectangular',
         desc: 'Mesa rectangular em madeira para banquetes. Combinável com outras para criar configurações personalizadas.',
         images: [
-          'https://placehold.co/800x600/e0d5c0/6b5f4a?text=Mesa+Rectangular',
-          'https://placehold.co/800x600/ede4d0/6b5f4a?text=Vista+2',
+          'https://placehold.co/800x600/2a2520/b89a55?text=Mesa+Rectangular',
+          'https://placehold.co/800x600/2a2520/b89a55?text=Vista+2',
         ],
         specs: [
           ['Dimensões', '180 × 90 cm'],
@@ -1713,7 +1895,7 @@
         ref: 'CD 002',
         name: 'Cadeira Dobrável Castanha c/ Coxim Tecido Pérola',
         desc: 'Cadeira dobrável castanha com coxim de assento em tecido pérola. Conforto e elegância para cerimónias e jantares de gala.',
-        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+002'],
+        images: ['https://placehold.co/600x900/2a2520/b89a55?text=CD+002'],
         specs: [['Material', 'Madeira + Tecido'], ['Acabamento', 'Castanho / Pérola'], ['Tipo', 'Dobrável c/ coxim']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1724,7 +1906,7 @@
         ref: 'CD 003',
         name: 'Cadeira Dobrável Castanha c/ Coxim Pele Sintética',
         desc: 'Cadeira dobrável castanha com coxim de pele sintética castanha. Acabamento premium para eventos de luxo.',
-        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+003'],
+        images: ['https://placehold.co/600x900/2a2520/b89a55?text=CD+003'],
         specs: [['Material', 'Madeira + Pele Sintética'], ['Acabamento', 'Castanho'], ['Tipo', 'Dobrável c/ coxim']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1735,7 +1917,7 @@
         ref: 'CD 004',
         name: 'Cadeira Dobrável Prateada',
         desc: 'Cadeira dobrável com acabamento prateado. Elegante e versátil, perfeita para eventos com decoração moderna ou clássica.',
-        images: ['https://placehold.co/600x900/ede4d0/6b5f4a?text=CD+004'],
+        images: ['https://placehold.co/600x900/2a2520/b89a55?text=CD+004'],
         specs: [['Material', 'Metal / Madeira'], ['Acabamento', 'Prateado'], ['Tipo', 'Dobrável']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1957,9 +2139,9 @@
 
       /* LOUÇAS — PRATOS E CHÁVENAS */
       'lou-p001': { cat: 'loucas', ref: 'LOU 001', name: 'Prato Raso Cerâmica Branca 26D', desc: 'Prato raso em cerâmica branca. Diâmetro 26 cm.', images: ['Fotosdiversas/Louças/LOU 001.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Diâmetro', '26 cm'], ['Forma', 'Redondo']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lou-p002': { cat: 'loucas', ref: 'LOU 002', name: 'Prato Sobremesa Cerâmica Branca 20D', desc: 'Prato de sobremesa em cerâmica branca. Diâmetro 20 cm.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=LOU+002'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Diâmetro', '20 cm'], ['Forma', 'Redondo']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p002': { cat: 'loucas', ref: 'LOU 002', name: 'Prato Sobremesa Cerâmica Branca 20D', desc: 'Prato de sobremesa em cerâmica branca. Diâmetro 20 cm.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=LOU+002'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Diâmetro', '20 cm'], ['Forma', 'Redondo']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lou-p003': { cat: 'loucas', ref: 'LOU 003', name: 'Prato Raso Quadrado Cerâmica Branca 26cm', desc: 'Prato raso quadrado em cerâmica branca. 26 × 26 cm.', images: ['Fotosdiversas/Louças/LOU 003.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Dimensão', '26 × 26 cm'], ['Forma', 'Quadrado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'lou-p004': { cat: 'loucas', ref: 'LOU 004', name: 'Prato Sobremesa Quadrado Cerâmica Branca 20cm', desc: 'Prato de sobremesa quadrado em cerâmica branca. 20 × 20 cm.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=LOU+004'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Dimensão', '20 × 20 cm'], ['Forma', 'Quadrado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'lou-p004': { cat: 'loucas', ref: 'LOU 004', name: 'Prato Sobremesa Quadrado Cerâmica Branca 20cm', desc: 'Prato de sobremesa quadrado em cerâmica branca. 20 × 20 cm.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=LOU+004'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Dimensão', '20 × 20 cm'], ['Forma', 'Quadrado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lou-p005': { cat: 'loucas', ref: 'LOU 005', name: 'Pires Cerâmica Branca 17D', desc: 'Pires em cerâmica branca. Diâmetro 17 cm.', images: ['Fotosdiversas/Louças/LOU 005.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Diâmetro', '17 cm']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lou-p006': { cat: 'loucas', ref: 'LOU 006', name: 'Taça de Consommé Cerâmica Branca', desc: 'Taça de consommé em cerâmica branca.', images: ['Fotosdiversas/Louças/LOU 006.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Tipo', 'Consommé']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lou-p007': { cat: 'loucas', ref: 'LOU 007', name: 'Taça de Consommé com Pires Cerâmica Branca', desc: 'Taça de consommé com pires em cerâmica branca.', images: ['Fotosdiversas/Louças/LOU 007.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Tipo', 'Consommé + Pires']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
@@ -2380,16 +2562,16 @@
       'mc-009': { cat: 'decoracao-mc', ref: 'MC 009', name: 'Marcador Linhado com Franja', desc: 'Marcador em tecido linhado com acabamento em franja. Peça rústica e elegante.', images: ['Fotosdiversas/Marcadores de Mesa/MC 009.png'], specs: [['Material', 'Linho'], ['Acabamento', 'Franja']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* TOALHAS RETANGULARES */
-      'thr-001': { cat: 'texteis-thr', ref: 'THR 001', name: 'Toalha Retangular Tostado', desc: 'Toalha retangular em tecido tostado. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+001'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Tostado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-002': { cat: 'texteis-thr', ref: 'THR 002', name: 'Toalha Retangular Estampado Burgundy', desc: 'Toalha retangular com estampado burgundy. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+002'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Estampado Burgundy']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-003': { cat: 'texteis-thr', ref: 'THR 003', name: 'Toalha Retangular Branco Adamascado', desc: 'Toalha retangular em tecido adamascado branco. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+003'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-004': { cat: 'texteis-thr', ref: 'THR 004', name: 'Toalha Retangular Areia', desc: 'Toalha retangular na cor areia. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+004'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Areia']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-005': { cat: 'texteis-thr', ref: 'THR 005', name: 'Toalha Retangular Branca Lisa Cetim', desc: 'Toalha retangular em cetim branco liso. Dimensões: 1,5x3m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+005'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Branco'], ['Tecido', 'Cetim liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-006': { cat: 'texteis-thr', ref: 'THR 006', name: 'Toalha Retangular Branca Adamascada', desc: 'Toalha retangular em tecido adamascado branco. Dimensões: 1,5x3m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+006'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-007': { cat: 'texteis-thr', ref: 'THR 007', name: 'Toalha Retangular Verde Esmeralda Adamascada', desc: 'Toalha retangular em tecido adamascado verde esmeralda. Dimensões: 1,5x3m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+007'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Verde Esmeralda'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-008': { cat: 'texteis-thr', ref: 'THR 008', name: 'Toalha Retangular Renda Pérola', desc: 'Toalha retangular com renda pérola. Dimensões: 2,5x6,5m.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+008'], specs: [['Dimensão', '2,5 × 6,5 m'], ['Acabamento', 'Renda Pérola']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-009': { cat: 'texteis-thr', ref: 'THR 009', name: 'Toalha Xadrez Vermelho', desc: 'Toalha xadrez vermelha disponível em várias medidas.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+009'], specs: [['Cor', 'Vermelho'], ['Padrão', 'Xadrez'], ['Medidas', 'Várias']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-010': { cat: 'texteis-thr', ref: 'THR 010', name: 'Toalha Xadrez Azul', desc: 'Toalha xadrez azul disponível em várias medidas.', images: ['https://placehold.co/800x600/ede4d0/6b5f4a?text=THR+010'], specs: [['Cor', 'Azul'], ['Padrão', 'Xadrez'], ['Medidas', 'Várias']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-001': { cat: 'texteis-thr', ref: 'THR 001', name: 'Toalha Retangular Tostado', desc: 'Toalha retangular em tecido tostado. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+001'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Tostado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-002': { cat: 'texteis-thr', ref: 'THR 002', name: 'Toalha Retangular Estampado Burgundy', desc: 'Toalha retangular com estampado burgundy. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+002'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Estampado Burgundy']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-003': { cat: 'texteis-thr', ref: 'THR 003', name: 'Toalha Retangular Branco Adamascado', desc: 'Toalha retangular em tecido adamascado branco. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+003'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-004': { cat: 'texteis-thr', ref: 'THR 004', name: 'Toalha Retangular Areia', desc: 'Toalha retangular na cor areia. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+004'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Areia']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-005': { cat: 'texteis-thr', ref: 'THR 005', name: 'Toalha Retangular Branca Lisa Cetim', desc: 'Toalha retangular em cetim branco liso. Dimensões: 1,5x3m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+005'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Branco'], ['Tecido', 'Cetim liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-006': { cat: 'texteis-thr', ref: 'THR 006', name: 'Toalha Retangular Branca Adamascada', desc: 'Toalha retangular em tecido adamascado branco. Dimensões: 1,5x3m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+006'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-007': { cat: 'texteis-thr', ref: 'THR 007', name: 'Toalha Retangular Verde Esmeralda Adamascada', desc: 'Toalha retangular em tecido adamascado verde esmeralda. Dimensões: 1,5x3m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+007'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Verde Esmeralda'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-008': { cat: 'texteis-thr', ref: 'THR 008', name: 'Toalha Retangular Renda Pérola', desc: 'Toalha retangular com renda pérola. Dimensões: 2,5x6,5m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+008'], specs: [['Dimensão', '2,5 × 6,5 m'], ['Acabamento', 'Renda Pérola']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-009': { cat: 'texteis-thr', ref: 'THR 009', name: 'Toalha Xadrez Vermelho', desc: 'Toalha xadrez vermelha disponível em várias medidas.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+009'], specs: [['Cor', 'Vermelho'], ['Padrão', 'Xadrez'], ['Medidas', 'Várias']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-010': { cat: 'texteis-thr', ref: 'THR 010', name: 'Toalha Xadrez Azul', desc: 'Toalha xadrez azul disponível em várias medidas.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+010'], specs: [['Cor', 'Azul'], ['Padrão', 'Xadrez'], ['Medidas', 'Várias']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* TOALHAS QUADRADAS */
       'thq-001': { cat: 'texteis-thq', ref: 'THQ 001', name: 'Toalha Quadrada Branca Adamascada', desc: 'Toalha quadrada em tecido adamascado branco.', images: ['Fotosdiversas/Toalhas quadradas/THQ 001.png'], specs: [['Dimensão', '2,3 m × 2,3 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
@@ -2619,8 +2801,8 @@
         card.setAttribute('aria-label', 'Ver detalhes: ' + p.name);
         card.innerHTML = `
           <div class="card-img${p.hoverImage ? ' has-scene' : ''}">
-            <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
-            ${p.hoverImage ? `<img class="card-img-scene" src="${p.hoverImage}" alt="${p.name} — cenário" loading="lazy">` : ''}
+            <img src="${p.images[0]}" alt="${p.name}" loading="eager" onerror="this.style.display='none'">
+            ${p.hoverImage ? `<img class="card-img-scene" src="${p.hoverImage}" alt="${p.name} — cenário" loading="eager" onerror="this.style.display='none'">` : ''}
             <div class="card-img-overlay"><span class="card-img-label">Ver Detalhes</span></div>
           </div>
           <div class="card-body">
@@ -2646,7 +2828,7 @@
         card.setAttribute('aria-label', 'Ver coleção: ' + col.name);
         card.innerHTML = `
           <div class="card-img">
-            <img src="${col.previewImage}" alt="${col.name}" loading="lazy">
+            <img src="${col.previewImage}" alt="${col.name}" loading="eager" onerror="this.style.display='none'">
             <div class="card-img-overlay"><span class="card-img-label">Ver Coleção</span></div>
             <span class="collection-count-pill">${col.count} peças</span>
           </div>
