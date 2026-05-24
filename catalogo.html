@@ -834,15 +834,19 @@
       .pack-card:nth-child(even) .pack-img { order: 0; }
       .pack-card:nth-child(even) .pack-body { order: 0; }
       .pack-img { min-height: 280px; }
+      .cat-content { padding: 0 2rem 4rem; }
+      .cat-nav { padding: 0 2rem 1.75rem; }
     }
     @media (max-width: 760px) {
+      .cat-content { padding: 0 1rem 3rem; }
+      .cat-nav { padding: 0 1rem 1.75rem; }
       .product-grid { grid-template-columns: repeat(2, 1fr); }
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       .nav-logo img { height: 44px; }
       .drawer-panel { width: 100vw; }
       .cat-hero { height: 40vh; min-height: 240px; }
-      .cat-bar { padding: 0 1rem; }
+      .cat-bar { padding: 0; }
       .cat-bar-inner { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap; padding-bottom: 4px; }
       .cat-bar-inner::-webkit-scrollbar { display: none; }
       .cat-subnav { gap: 1.25rem; overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; }
