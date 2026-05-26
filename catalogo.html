@@ -724,11 +724,11 @@
     }
 
     .packs-grid {
-      display: flex; flex-direction: column; gap: 2.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
     }
 
     .pack-card {
-      display: grid; grid-template-columns: 420px 1fr;
+      display: grid; grid-template-columns: 2fr 3fr;
       background: #fff;
       border: 1px solid var(--cream-border);
       box-shadow: 0 2px 24px rgba(20,18,15,0.05), 0 1px 4px rgba(20,18,15,0.03);
@@ -737,12 +737,9 @@
       cursor: pointer; text-decoration: none; color: inherit;
     }
     .pack-card:hover { box-shadow: 0 8px 48px rgba(20,18,15,0.10), 0 2px 8px rgba(20,18,15,0.05); }
-    .pack-card:nth-child(even) { grid-template-columns: 1fr 420px; }
-    .pack-card:nth-child(even) .pack-img { order: 2; }
-    .pack-card:nth-child(even) .pack-body { order: 1; }
 
     .pack-img {
-      position: relative; overflow: hidden; min-height: 400px;
+      position: relative; overflow: hidden; min-height: 300px;
     }
     .pack-img img {
       width: 100%; height: 100%; object-fit: cover;
@@ -758,82 +755,97 @@
       background: linear-gradient(to left, rgba(20,18,15,0.15) 0%, transparent 60%);
     }
     .pack-badge {
-      position: absolute; top: 1.25rem; left: 1.25rem;
+      position: absolute; top: 1rem; left: 1rem;
       background: var(--gold); color: var(--dark);
       font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-      padding: 0.3rem 0.75rem;
+      padding: 0.2rem 0.6rem;
     }
 
     .pack-body {
-      padding: 2.75rem 3rem;
-      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 1.75rem 2.25rem;
+      display: flex; flex-direction: column; justify-content: center; gap: 0;
     }
 
     .pack-event-type {
       font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.6rem;
+      color: var(--gold); margin-bottom: 0.45rem;
       display: flex; align-items: center; gap: 0.5rem;
     }
     .pack-event-type::before { content: ''; display: block; width: 20px; height: 1px; background: var(--gold); }
 
     .pack-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2rem; font-weight: 400; line-height: 1.15;
-      letter-spacing: -0.02em; margin-bottom: 0.75rem;
+      font-size: 1.85rem; font-weight: 400; line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 0.55rem;
     }
     .pack-desc {
-      font-size: 0.875rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.75rem;
+      font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 0;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
 
-    .pack-includes-label {
+    .pack-includes-label, .pack-items, .pack-footer { display: none; }
+
+    .pack-ver {
+      margin-top: 1rem;
       font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--dark); opacity: 0.4; margin-bottom: 1rem;
+      color: var(--gold); display: flex; align-items: center; gap: 0.4rem;
+      transition: gap 0.2s;
     }
-    .pack-items {
-      display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 2rem; flex: 1;
-    }
-    .pack-item {
-      display: flex; align-items: center; gap: 0.75rem;
-      font-size: 0.875rem; color: var(--dark-soft);
-    }
-    .pack-item-thumb {
-      width: 40px; height: 40px; border-radius: 4px; overflow: hidden;
-      border: 1px solid var(--cream-border); flex-shrink: 0; background: var(--cream-light);
-    }
-    .pack-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .pack-item-name { line-height: 1.3; }
-    .pack-item-cat {
-      font-size: 10px; color: var(--muted); letter-spacing: 0.5px;
-    }
+    .pack-card:hover .pack-ver { gap: 0.75rem; }
 
-    .pack-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 1.75rem; border-top: 1px solid var(--cream-border);
-      gap: 1rem;
+    /* Pack inside drawer */
+    .drawer-pack-badge {
+      display: inline-block; background: var(--gold); color: var(--dark);
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 0.2rem 0.6rem; margin-bottom: 0.75rem;
     }
-    .pack-price {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.1rem; font-style: italic; color: var(--muted);
+    .drawer-pack-event {
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.4rem;
+      display: flex; align-items: center; gap: 0.5rem;
     }
-    .pack-cta {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--dark); color: var(--cream-light);
-      padding: 0.75rem 1.5rem; font-size: 10px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase; border: none; cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      font-family: 'Lato', sans-serif;
+    .drawer-pack-event::before { content: ''; display: block; width: 16px; height: 1px; background: var(--gold); }
+    .drawer-pack-stats {
+      display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1.25rem 0;
+      padding: 1rem 0; border-top: 1px solid var(--cream-border); border-bottom: 1px solid var(--cream-border);
     }
-    .pack-cta:hover { background: var(--dark-soft); transform: translateY(-2px); }
-    .pack-cta:active { transform: translateY(0); }
-    .pack-cta svg { flex-shrink: 0; }
+    .drawer-pack-stat-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.2rem;
+    }
+    .drawer-pack-stat-value {
+      font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--dark);
+    }
+    .drawer-pack-items-header {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold-dark); margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .drawer-pack-items-header::after { content: ''; flex: 1; height: 1px; background: var(--cream-border); }
+    .drawer-pack-cat { margin-bottom: 1.25rem; }
+    .drawer-pack-cat-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.5rem;
+    }
+    .drawer-pack-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--cream-border);
+    }
+    .drawer-pack-item:last-child { border-bottom: none; }
+    .drawer-pack-item-thumb {
+      width: 64px; height: 64px; flex-shrink: 0;
+      overflow: hidden; background: var(--cream-mid);
+    }
+    .drawer-pack-item-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .drawer-pack-item-name { flex: 1; font-size: 0.875rem; color: var(--dark); line-height: 1.35; }
+    .drawer-pack-item-qty { font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; white-space: nowrap; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
       .product-grid { grid-template-columns: repeat(3, 1fr); }
+      .packs-grid { grid-template-columns: 1fr; }
       .pack-card { grid-template-columns: 1fr !important; }
-      .pack-card:nth-child(even) .pack-img { order: 0; }
-      .pack-card:nth-child(even) .pack-body { order: 0; }
-      .pack-img { min-height: 280px; }
+      .pack-img { min-height: 220px; }
       .cat-content { padding: 0 2rem 4rem; }
       .cat-nav { padding: 0 2rem 1.75rem; }
     }
@@ -1213,7 +1225,7 @@
 
   <!-- SHARED HERO + TABS -->
   <div class="cat-hero" id="shared-cat-hero">
-    <div class="cat-hero-bg animated" id="shared-hero-bg" style="background-image:url('Fotosdiversas/Imagens_Slides_iniciais/II1.jpg')"></div>
+    <div class="cat-hero-bg animated" id="shared-hero-bg" style="background-image:url('Fotosdiversas/Fotos_fundo/Mobiliário.png')"></div>
     <div class="cat-hero-overlay"></div>
     <div class="cat-hero-content">
       <h2 id="shared-hero-title">Mobiliário</h2>
@@ -1381,7 +1393,7 @@
   <div class="cat-section" id="cat-packs">
     <div class="cat-content">
       <div class="cat-bar">
-        <span class="cat-bar-count"><strong>6</strong> packs</span>
+        <span class="cat-bar-count"><strong>8</strong> packs</span>
       </div>
 
       <div class="packs-intro">
@@ -1390,152 +1402,10 @@
 
       <div class="packs-grid">
 
-        <!-- PACK 1 -->
-        <a href="pack.html?id=casamento" class="pack-card" style="display:grid;">
-          <div class="pack-img">
-            <img src="Fotosdiversas/Imagens_Slides_iniciais/II2.jpg" alt="Mesa de Casamento Clássico">
-            <div class="pack-img-overlay"></div>
-            <span class="pack-badge">Pack</span>
-          </div>
-          <div class="pack-body">
-            <div>
-              <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
-              <h3 class="pack-title">Mesa de Casamento Clássico</h3>
-              <p class="pack-desc">Composição completa para uma mesa de casamento com elegância atemporal. Inclui toalha, guardanapos coordenados, talheres prateados, copos premium, caminhos de mesa e marcadores.</p>
-              <div class="pack-includes-label">Inclui</div>
-              <div class="pack-items">
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Toalhas/THR 001.jpg" alt="Toalha Retangular"></div>
-                  <div><div class="pack-item-name">Toalha Retangular</div><div class="pack-item-cat">Têxteis · 1 un.</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Camilhas/CM 001.png" alt="Caminhos de Mesa"></div>
-                  <div><div class="pack-item-name">Caminhos de Mesa</div><div class="pack-item-cat">Têxteis · 2 un.</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 004.jpg" alt="Guardanapos"></div>
-                  <div><div class="pack-item-name">Guardanapos Lisos</div><div class="pack-item-cat">Têxteis · 10 un.</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres Prateados"></div>
-                  <div><div class="pack-item-name">Talheres Prateados</div><div class="pack-item-cat">Louças · 10 jogos</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CPP 001.png" alt="Copos Premium"></div>
-                  <div><div class="pack-item-name">Copos Premium</div><div class="pack-item-cat">Louças · 20 un.</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Marcadores de Mesa/MC 001.png" alt="Marcadores"></div>
-                  <div><div class="pack-item-name">Marcadores de Mesa</div><div class="pack-item-cat">Decoração · 10 un.</div></div>
-                </div>
-              </div>
-            </div>
-            <div class="pack-footer">
-              <span class="pack-price">Preço sob consulta</span>
-              <button class="pack-cta" onclick="window.location='contacto.html'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                Pedir Orçamento
-              </button>
-            </div>
-          </div>
-        </a>
-
-        <!-- PACK 2 -->
-        <a href="pack.html?id=lounge" class="pack-card" style="display:grid;grid-template-columns:1fr 420px;">
-          <div class="pack-img">
-            <img src="Fotosdiversas/Imagens_Slides_iniciais/II5.jpg" alt="Cocktail Lounge Exterior">
-            <div class="pack-img-overlay"></div>
-            <span class="pack-badge">Pack</span>
-          </div>
-          <div class="pack-body">
-            <div>
-              <div class="pack-event-type">Cocktail · Receção Exterior</div>
-              <h3 class="pack-title">Lounge Exterior</h3>
-              <p class="pack-desc">Ambiente lounge ao ar livre com sofás de bambu, complementos de assento e decoração. Ideal para recepções de casamento, festas de empresa ou eventos de cocktail.</p>
-              <div class="pack-includes-label">Inclui</div>
-              <div class="pack-items">
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Exterior/SB 001.png" alt="Sofá Bambu"></div>
-                  <div><div class="pack-item-name">Módulos Sofá Bambu</div><div class="pack-item-cat">Exterior · 4 módulos</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Exterior/CL 001.png" alt="Chaise Longue"></div>
-                  <div><div class="pack-item-name">Chaise Longue Bambu</div><div class="pack-item-cat">Exterior · 2 un.</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Almofadas/ALM 001.png" alt="Almofadas"></div>
-                  <div><div class="pack-item-name">Almofadas Decorativas</div><div class="pack-item-cat">Têxteis · 8 un.</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Exterior/AD 001.png" alt="Arco Dourado"></div>
-                  <div><div class="pack-item-name">Arco Dourado</div><div class="pack-item-cat">Exterior · 1 un.</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Exterior/GS 001.jpg" alt="Guarda-Sol"></div>
-                  <div><div class="pack-item-name">Guarda-Sol</div><div class="pack-item-cat">Exterior · 2 un.</div></div>
-                </div>
-              </div>
-            </div>
-            <div class="pack-footer">
-              <span class="pack-price">Preço sob consulta</span>
-              <button class="pack-cta" onclick="window.location='contacto.html'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                Pedir Orçamento
-              </button>
-            </div>
-          </div>
-        </a>
-
-        <!-- PACK 3 -->
-        <a href="pack.html?id=gala" class="pack-card" style="display:grid;">
-          <div class="pack-img">
-            <img src="Fotosdiversas/Imagens_Slides_iniciais/II1.jpg" alt="Gala Empresarial">
-            <div class="pack-img-overlay"></div>
-            <span class="pack-badge">Pack</span>
-          </div>
-          <div class="pack-body">
-            <div>
-              <div class="pack-event-type">Gala · Jantar Empresarial</div>
-              <h3 class="pack-title">Gala Empresarial</h3>
-              <p class="pack-desc">Montagem completa para um jantar de gala corporativo. Mobiliário, têxteis de mesa e louça selecionados para transmitir profissionalismo e sofisticação.</p>
-              <div class="pack-includes-label">Inclui</div>
-              <div class="pack-items">
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Cadeiras/CD 001.png" alt="Cadeiras"></div>
-                  <div><div class="pack-item-name">Cadeiras de Evento</div><div class="pack-item-cat">Mobiliário · Por pedido</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Toalhas/THR 001.jpg" alt="Toalhas"></div>
-                  <div><div class="pack-item-name">Toalhas Retangulares</div><div class="pack-item-cat">Têxteis · Por mesa</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 024.jpg" alt="Guardanapos Adamascados"></div>
-                  <div><div class="pack-item-name">Guardanapos Adamascados</div><div class="pack-item-cat">Têxteis · Por pax</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres"></div>
-                  <div><div class="pack-item-name">Talheres Prateados</div><div class="pack-item-cat">Louças · Por pax</div></div>
-                </div>
-                <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Mesa/COM 017.png" alt="Castiçais"></div>
-                  <div><div class="pack-item-name">Castiçais Dourados</div><div class="pack-item-cat">Decoração · Por mesa</div></div>
-                </div>
-              </div>
-            </div>
-            <div class="pack-footer">
-              <span class="pack-price">Preço sob consulta</span>
-              <button class="pack-cta" onclick="window.location='contacto.html'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                Pedir Orçamento
-              </button>
-            </div>
-          </div>
-        </a>
-
         <!-- PACK VENEZA -->
-        <a href="pack.html?id=veneza" class="pack-card" style="display:grid;grid-template-columns:1fr 420px;">
+        <div class="pack-card" role="button" tabindex="0" onclick="openPackDrawer('veneza')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPackDrawer('veneza')}">
           <div class="pack-img">
-            <img src="Fotosdiversas/Imagens_Slides_iniciais/II3.jpg" alt="Pack Veneza">
+            <img src="Fotosdiversas/Packs/Veneza.jpg" alt="Pack Veneza">
             <div class="pack-img-overlay"></div>
             <span class="pack-badge">Pack</span>
           </div>
@@ -1544,10 +1414,11 @@
               <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
               <h3 class="pack-title">Veneza</h3>
               <p class="pack-desc">Uma composição de requinte para uma mesa de casamento de 10 pessoas. Combina louça de cerâmica branca com detalhes a fio dourado, cristalaria completa (água, branco, tinto e flutes) e têxteis em pérola tostado.</p>
+              <span class="pack-ver">Ver Pack <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
               <div class="pack-includes-label">Inclui (15 referências)</div>
               <div class="pack-items">
                 <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Cadeiras/CD 001.png" alt="Cadeiras"></div>
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Cadeiras/CD 009.png" alt="Cadeiras"></div>
                   <div><div class="pack-item-name">1 Mesa + 10 Cadeiras com Coxim</div><div class="pack-item-cat">Mobiliário</div></div>
                 </div>
                 <div class="pack-item">
@@ -1571,15 +1442,15 @@
                   <div><div class="pack-item-name">20 Pratos Raso + 20 Pratos Sobremesa (Cerâmica Branca)</div><div class="pack-item-cat">Louças</div></div>
                 </div>
                 <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CPP 001.png" alt="Copos Fio Dourado"></div>
-                  <div><div class="pack-item-name">10 Taças Consommé · 10 Copos Água · 10 Vinho Branco · 10 Vinho Tinto · 10 Flutes</div><div class="pack-item-cat">Louças · Fio Dourado</div></div>
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CP 002.jpg" alt="Copos Baixos de Água"></div>
+                  <div><div class="pack-item-name">10 Copos Baixos de Água · 10 VB · 10 VT · 10 Flutes (Fio Dourado)</div><div class="pack-item-cat">Louças · Cristalaria</div></div>
                 </div>
                 <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres Dourados"></div>
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TAD 002.png" alt="Talheres Dourados"></div>
                   <div><div class="pack-item-name">10 Jogos de Talheres Dourados (8 peças)</div><div class="pack-item-cat">Louças</div></div>
                 </div>
                 <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Mesa/COM 017.png" alt="Candeeiro Sem Fios"></div>
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Complementos Mesa/COM 020.png" alt="Candeeiro Sem Fios"></div>
                   <div><div class="pack-item-name">1 Candeeiro Sem Fios</div><div class="pack-item-cat">Decoração</div></div>
                 </div>
               </div>
@@ -1592,12 +1463,12 @@
               </button>
             </div>
           </div>
-        </a>
+        </div>
 
         <!-- PACK TOSCANA -->
-        <a href="pack.html?id=toscana" class="pack-card" style="display:grid;">
+        <div class="pack-card" role="button" tabindex="0" onclick="openPackDrawer('toscana')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPackDrawer('toscana')}">
           <div class="pack-img">
-            <img src="Fotosdiversas/Imagens_Slides_iniciais/II6.jpg" alt="Pack Toscana">
+            <img src="Fotosdiversas/Packs/Toscana.jpg" alt="Pack Toscana">
             <div class="pack-img-overlay"></div>
             <span class="pack-badge">Pack</span>
           </div>
@@ -1606,6 +1477,7 @@
               <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
               <h3 class="pack-title">Toscana</h3>
               <p class="pack-desc">Composição elegante com toques naturais e verdes. Cerâmica branca, cristalaria completa com copo verde de água, talheres dourados e guardanapos verdes para uma mesa cheia de personalidade.</p>
+              <span class="pack-ver">Ver Pack <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
               <div class="pack-includes-label">Inclui (13 referências)</div>
               <div class="pack-items">
                 <div class="pack-item">
@@ -1613,11 +1485,11 @@
                   <div><div class="pack-item-name">1 Mesa + 10 Cadeiras com Coxim</div><div class="pack-item-cat">Mobiliário</div></div>
                 </div>
                 <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Camilhas/CM 001.png" alt="Camilha Tostado"></div>
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Camilhas/CM 003.png" alt="Camilha Tostado"></div>
                   <div><div class="pack-item-name">1 Camilha Tostado</div><div class="pack-item-cat">Têxteis</div></div>
                 </div>
                 <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 004.jpg" alt="Guardanapos Verdes"></div>
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 009.jpg" alt="Guardanapos Verdes"></div>
                   <div><div class="pack-item-name">10 Guardanapos Verdes</div><div class="pack-item-cat">Têxteis</div></div>
                 </div>
                 <div class="pack-item">
@@ -1630,10 +1502,10 @@
                 </div>
                 <div class="pack-item">
                   <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CPP 001.png" alt="Copos"></div>
-                  <div><div class="pack-item-name">10 Copos Verde Água · 10 Vinho Branco · 10 Vinho Tinto · 10 Flutes</div><div class="pack-item-cat">Louças · Cristalaria</div></div>
+                  <div><div class="pack-item-name">10 Copos Verde Água · 10 VB · 10 VT · 10 Flutes</div><div class="pack-item-cat">Louças · Cristalaria</div></div>
                 </div>
                 <div class="pack-item">
-                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres Dourados"></div>
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TAD 002.png" alt="Talheres Dourados"></div>
                   <div><div class="pack-item-name">10 Jogos Talheres Dourados (8 peças)</div><div class="pack-item-cat">Louças</div></div>
                 </div>
               </div>
@@ -1646,12 +1518,12 @@
               </button>
             </div>
           </div>
-        </a>
+        </div>
 
         <!-- PACK LYON -->
-        <a href="pack.html?id=lyon" class="pack-card" style="display:grid;grid-template-columns:1fr 420px;">
+        <div class="pack-card" role="button" tabindex="0" onclick="openPackDrawer('lyon')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPackDrawer('lyon')}">
           <div class="pack-img">
-            <img src="Fotosdiversas/Imagens_Slides_iniciais/II4.png" alt="Pack Lyon">
+            <img src="Fotosdiversas/Packs/Lyon.jpg" alt="Pack Lyon">
             <div class="pack-img-overlay"></div>
             <span class="pack-badge">Pack</span>
           </div>
@@ -1660,6 +1532,7 @@
               <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
               <h3 class="pack-title">Lyon</h3>
               <p class="pack-desc">Composição sofisticada com camilha adamascada bege, cerâmica branca, cristalaria verde completa e talheres dourados. O candeeiro sem fios cria um ambiente quente e intimista.</p>
+              <span class="pack-ver">Ver Pack <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
               <div class="pack-includes-label">Inclui (14 referências)</div>
               <div class="pack-items">
                 <div class="pack-item">
@@ -1704,7 +1577,117 @@
               </button>
             </div>
           </div>
-        </a>
+        </div>
+
+        <!-- PACK FLORENÇA -->
+        <div class="pack-card" role="button" tabindex="0" onclick="openPackDrawer('florenca')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPackDrawer('florenca')}">
+          <div class="pack-img">
+            <img src="Fotosdiversas/Imagens_Slides_iniciais/II2.jpg" alt="Pack Florença">
+            <div class="pack-img-overlay"></div>
+            <span class="pack-badge">Pack</span>
+          </div>
+          <div class="pack-body">
+            <div>
+              <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
+              <h3 class="pack-title">Florença</h3>
+              <p class="pack-desc">Composição luminosa com cadeiras crossback, caminho de mesa areia branca e cristalaria verde. Talheres dourados e guardanapos areia branca completam uma mesa com personalidade e leveza.</p>
+              <span class="pack-ver">Ver Pack <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              <div class="pack-includes-label">Inclui (13 referências)</div>
+              <div class="pack-items">
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Cadeiras/CD 007.png" alt="Mesa e Cadeiras Crossback"></div>
+                  <div><div class="pack-item-name">1 Mesa + 10 Cadeiras Crossback</div><div class="pack-item-cat">Mobiliário</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Camilhas/CM 005.png" alt="Camilha Areia Branca"></div>
+                  <div><div class="pack-item-name">1 Camilha Areia Branca</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 039.jpg" alt="Guardanapos Areia Branca"></div>
+                  <div><div class="pack-item-name">10 Guardanapos Areia Branca</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Marcadores de Mesa/MC 001.png" alt="Prato Marcador"></div>
+                  <div><div class="pack-item-name">10 Pratos Marcadores Fio Dourado</div><div class="pack-item-cat">Decoração</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/LOU 001.png" alt="Pratos"></div>
+                  <div><div class="pack-item-name">20 Pratos Raso + 20 Pratos Sobremesa · 10 Taças Consommé</div><div class="pack-item-cat">Louças · Cerâmica Branca</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CPP 001.png" alt="Copos"></div>
+                  <div><div class="pack-item-name">10 Verde Água · 10 VB Fio Dourado · 10 VT Fio Dourado · 10 Flutes</div><div class="pack-item-cat">Louças · Cristalaria</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TAD 002.png" alt="Talheres Dourados"></div>
+                  <div><div class="pack-item-name">10 Jogos Talheres Dourados (8 peças)</div><div class="pack-item-cat">Louças</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="pack-footer">
+              <span class="pack-price">Preço sob consulta</span>
+              <button class="pack-cta" onclick="event.preventDefault();window.location='contacto.html'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Pedir Orçamento
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PACK CANNES -->
+        <div class="pack-card" role="button" tabindex="0" onclick="openPackDrawer('cannes')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPackDrawer('cannes')}">
+          <div class="pack-img">
+            <img src="Fotosdiversas/Packs/Cannes.png" alt="Pack Cannes">
+            <div class="pack-img-overlay"></div>
+            <span class="pack-badge">Pack</span>
+          </div>
+          <div class="pack-body">
+            <div>
+              <div class="pack-event-type">Casamento · Mesa de 10 pax</div>
+              <h3 class="pack-title">Cannes</h3>
+              <p class="pack-desc">Elegância clássica com mesa retangular, toalhas de renda e cristalaria refinada. Uma composição atemporal para casamentos de requinte.</p>
+              <span class="pack-ver">Ver Pack <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              <div class="pack-includes-label">Inclui (13 referências)</div>
+              <div class="pack-items">
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Cadeiras/CD 009.png" alt="Mesa Retangular e Cadeiras"></div>
+                  <div><div class="pack-item-name">1 Mesa Retangular + 10 Cadeiras</div><div class="pack-item-cat">Mobiliário</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Camilhas/CM 008.png" alt="Toalhas Retangulares"></div>
+                  <div><div class="pack-item-name">Toalhas Retangulares</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Guardanapos/GD 001.png" alt="Guardanapos"></div>
+                  <div><div class="pack-item-name">10 Guardanapos</div><div class="pack-item-cat">Têxteis</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Marcadores de Mesa/MC 003.png" alt="Prato Marcador"></div>
+                  <div><div class="pack-item-name">10 Pratos Marcadores</div><div class="pack-item-cat">Decoração</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/LOU 001.png" alt="Pratos"></div>
+                  <div><div class="pack-item-name">20 Pratos Raso + 20 Pratos Sobremesa · 10 Taças Consommé</div><div class="pack-item-cat">Louças · Cerâmica Branca</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Copos/CP 002.jpg" alt="Copos"></div>
+                  <div><div class="pack-item-name">10 Água · 10 Vinho Branco · 10 Vinho Tinto · 10 Flutes</div><div class="pack-item-cat">Louças · Cristalaria</div></div>
+                </div>
+                <div class="pack-item">
+                  <div class="pack-item-thumb"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Talheres"></div>
+                  <div><div class="pack-item-name">10 Jogos Talheres (8 peças)</div><div class="pack-item-cat">Louças</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="pack-footer">
+              <span class="pack-price">Preço sob consulta</span>
+              <button class="pack-cta" onclick="event.preventDefault();window.location='contacto.html'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Pedir Orçamento
+              </button>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -1840,6 +1823,74 @@
   </footer>
 
   <script>
+    /* ─── PACK DATA ─── */
+    const PACKS = {
+      lyon: { id:'lyon', title:'Lyon', event:'Casamento · Mesa de 10 pax', image:'Fotosdiversas/Packs/Lyon.jpg', desc:'Composição sofisticada com camilha adamascada bege, cerâmica branca, cristalaria verde completa e talheres dourados. O candeeiro sem fios cria um ambiente quente e intimista.', stats:[{label:'Tipo de evento',value:'Casamento'},{label:'Capacidade',value:'10 pax / mesa'},{label:'Referências',value:'14 artigos'}], categories:[{label:'Mobiliário',items:[{thumb:'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa',name:'Mesa',qty:'1 un.'},{thumb:'Fotosdiversas/Cadeiras/CD 001.png',name:'Cadeiras',qty:'10 un.'}]},{label:'Têxteis',items:[{thumb:'Fotosdiversas/Camilhas/CM 001.png',name:'Camilha Bege Adamascada',qty:'1 un.'},{thumb:'Fotosdiversas/Guardanapos/GD 009.jpg',name:'Guardanapos Verdes',qty:'10 un.'}]},{label:'Louças — Pratos',items:[{thumb:'Fotosdiversas/Marcadores de Mesa/MC 001.png',name:'Prato Marcador Fio Dourado',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/LOU 001.png',name:'Prato Raso Cerâmica Branca',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 001.png',name:'Prato de Sobremesa',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 006.png',name:'Taça de Consommé',qty:'10 un.'}]},{label:'Louças — Cristalaria',items:[{thumb:'Fotosdiversas/Louças/Copos/CPP 001.png',name:'Copo Verde de Água',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CPP 001.png',name:'Copo de Vinho Branco',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CPP 002.png',name:'Copo de Vinho Tinto',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CPP 001.png',name:'Flutes',qty:'10 un.'}]},{label:'Louças — Talheres',items:[{thumb:'Fotosdiversas/Louças/Talheres/TA 001.png',name:'Talheres (8 peças)',qty:'10 jogos'}]},{label:'Decoração',items:[{thumb:'Fotosdiversas/Complementos Mesa/COM 017.png',name:'Candeeiro Sem Fios',qty:'1 un.'}]}] },
+      toscana: { id:'toscana', title:'Toscana', event:'Casamento · Mesa de 10 pax', image:'Fotosdiversas/Packs/Toscana.jpg', desc:'Composição elegante com toques naturais e verdes. Cerâmica branca, cristalaria completa com copo verde de água, talheres dourados e guardanapos verdes para uma mesa cheia de personalidade e frescura.', stats:[{label:'Tipo de evento',value:'Casamento'},{label:'Capacidade',value:'10 pax / mesa'},{label:'Referências',value:'13 artigos'}], categories:[{label:'Mobiliário',items:[{thumb:'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa',name:'Mesa',qty:'1 un.'},{thumb:'Fotosdiversas/Cadeiras/CD 002.png',name:'Cadeiras com Coxim',qty:'10 un.'}]},{label:'Têxteis',items:[{thumb:'Fotosdiversas/Camilhas/CM 003.png',name:'Camilha Tostado',qty:'1 un.'},{thumb:'Fotosdiversas/Guardanapos/GD 009.jpg',name:'Guardanapos Verdes',qty:'10 un.'}]},{label:'Louças — Pratos',items:[{thumb:'Fotosdiversas/Marcadores de Mesa/MC 001.png',name:'Prato Marcador Fio Dourado',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/LOU 001.png',name:'Prato Raso Cerâmica Branca',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 001.png',name:'Prato de Sobremesa',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 006.png',name:'Taça de Consommé',qty:'10 un.'}]},{label:'Louças — Cristalaria',items:[{thumb:'Fotosdiversas/Louças/Copos/CPP 001.png',name:'Copo Verde de Água',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CPP 009.png',name:'Copo de Vinho Branco',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CPP 007.png',name:'Copo de Vinho Tinto',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CP 007.png',name:'Flutes',qty:'10 un.'}]},{label:'Louças — Talheres',items:[{thumb:'Fotosdiversas/Louças/Talheres/TAD 002.png',name:'Talheres Dourados (8 peças)',qty:'10 jogos'}]}] },
+      veneza: { id:'veneza', title:'Veneza', event:'Casamento · Mesa de 10 pax', image:'Fotosdiversas/Packs/Veneza.jpg', desc:'Uma composição de requinte para uma mesa de casamento de 10 pessoas. Combina louça de cerâmica branca com detalhes a fio dourado, cristalaria completa e têxteis em pérola e tostado.', stats:[{label:'Tipo de evento',value:'Casamento'},{label:'Capacidade',value:'10 pax / mesa'},{label:'Referências',value:'15 artigos'}], categories:[{label:'Mobiliário',items:[{thumb:'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa',name:'Mesa',qty:'1 un.'},{thumb:'Fotosdiversas/Cadeiras/CD 009.png',name:'Cadeiras com Coxim',qty:'10 un.'}]},{label:'Têxteis',items:[{thumb:'Fotosdiversas/Toalhas quadradas/THQ 004.png',name:'Toalha Quadrada Renda Pérola',qty:'1 un.'},{thumb:'Fotosdiversas/Camilhas/CM 001.png',name:'Camilha Tostado',qty:'1 un.'},{thumb:'Fotosdiversas/Guardanapos/GD 002.png',name:'Guardanapos Pérola',qty:'10 un.'}]},{label:'Louças — Pratos',items:[{thumb:'Fotosdiversas/Marcadores de Mesa/MC 001.png',name:'Prato Marcador Fio Dourado',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/LOU 001.png',name:'Prato Raso Cerâmica Branca',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 001.png',name:'Prato de Sobremesa',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 006.png',name:'Taça de Consommé',qty:'10 un.'}]},{label:'Louças — Cristalaria',items:[{thumb:'Fotosdiversas/Louças/Copos/CP 002.jpg',name:'Copos Baixos de Água',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CPP 008.png',name:'Copo Fio Dourado Vinho Branco',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CPP 007.png',name:'Copo Fio Dourado Vinho Tinto',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CP 007.png',name:'Flutes',qty:'10 un.'}]},{label:'Louças — Talheres',items:[{thumb:'Fotosdiversas/Louças/Talheres/TAD 002.png',name:'Talheres Dourados (8 peças)',qty:'10 jogos'}]},{label:'Decoração',items:[{thumb:'Fotosdiversas/Complementos Mesa/COM 020.png',name:'Candeeiro Sem Fios',qty:'1 un.'}]}] },
+      florenca: { id:'florenca', title:'Florença', event:'Casamento · Mesa de 10 pax', image:'Fotosdiversas/Imagens_Slides_iniciais/II2.jpg', desc:'Composição luminosa com cadeiras crossback, caminho de mesa areia branca e cristalaria verde. Talheres dourados e guardanapos areia branca completam uma mesa de casamento com personalidade e leveza.', stats:[{label:'Tipo de evento',value:'Casamento'},{label:'Capacidade',value:'10 pax / mesa'},{label:'Referências',value:'13 artigos'}], categories:[{label:'Mobiliário',items:[{thumb:'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa',name:'Mesa de Jantar',qty:'1 un.'},{thumb:'Fotosdiversas/Cadeiras/CD 007.png',name:'Cadeiras Crossback',qty:'10 un.'}]},{label:'Têxteis',items:[{thumb:'Fotosdiversas/Camilhas/CM 005.png',name:'Camilha Areia Branca',qty:'1 un.'},{thumb:'Fotosdiversas/Guardanapos/GD 039.jpg',name:'Guardanapos Areia Branca',qty:'10 un.'}]},{label:'Louças — Pratos',items:[{thumb:'Fotosdiversas/Marcadores de Mesa/MC 001.png',name:'Prato Marcador Fio Dourado',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/LOU 001.png',name:'Prato Raso Cerâmica Branca',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 002.png',name:'Prato de Sobremesa',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 006.png',name:'Taça de Consommé',qty:'10 un.'}]},{label:'Louças — Cristalaria',items:[{thumb:'Fotosdiversas/Louças/Copos/CPP 001.png',name:'Copo Verde de Água',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CPP 008.png',name:'Copo de Vinho Branco Fio Dourado',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CPP 007.png',name:'Copo de Vinho Tinto Fio Dourado',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CP 007.png',name:'Flutes',qty:'10 un.'}]},{label:'Louças — Talheres',items:[{thumb:'Fotosdiversas/Louças/Talheres/TAD 002.png',name:'Talheres Dourados (8 peças)',qty:'10 jogos'}]}] },
+      cannes: { id:'cannes', title:'Cannes', event:'Casamento · Mesa de 10 pax', image:'Fotosdiversas/Packs/Cannes.png', desc:'Elegância clássica com mesa retangular, toalhas de renda e cristalaria refinada. Uma composição atemporal para casamentos de requinte.', stats:[{label:'Tipo de evento',value:'Casamento'},{label:'Capacidade',value:'10 pax / mesa'},{label:'Referências',value:'13 artigos'}], categories:[{label:'Mobiliário',items:[{thumb:'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa',name:'Mesa Retangular',qty:'1 un.'},{thumb:'Fotosdiversas/Cadeiras/CD 009.png',name:'Cadeiras',qty:'10 un.'}]},{label:'Têxteis',items:[{thumb:'Fotosdiversas/Camilhas/CM 008.png',name:'Toalhas Retangulares',qty:'1 un.'},{thumb:'Fotosdiversas/Guardanapos/GD 001.png',name:'Guardanapos',qty:'10 un.'}]},{label:'Louças — Pratos',items:[{thumb:'Fotosdiversas/Marcadores de Mesa/MC 003.png',name:'Prato Marcador',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/LOU 001.png',name:'Prato Raso Cerâmica Branca',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 002.png',name:'Prato de Sobremesa',qty:'20 un.'},{thumb:'Fotosdiversas/Louças/LOU 006.png',name:'Taça de Consommé',qty:'10 un.'}]},{label:'Louças — Cristalaria',items:[{thumb:'Fotosdiversas/Louças/Copos/CP 002.jpg',name:'Copos de Água',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CP 006.png',name:'Copo de Vinho Branco',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CP 005.png',name:'Copo de Vinho Tinto',qty:'10 un.'},{thumb:'Fotosdiversas/Louças/Copos/CP 007.png',name:'Flutes',qty:'10 un.'}]},{label:'Louças — Talheres',items:[{thumb:'Fotosdiversas/Louças/Talheres/TA 001.png',name:'Talheres (8 peças)',qty:'10 jogos'}]}] },
+    };
+
+    function openPackDrawer(id) {
+      const pack = PACKS[id];
+      if (!pack) return;
+
+      const mainImg = document.getElementById('drawerMainImg');
+      mainImg.src = pack.image;
+      mainImg.alt = pack.title;
+      document.getElementById('drawerImgNav').style.display = 'none';
+      document.getElementById('drawerThumbs').innerHTML = '';
+
+      document.getElementById('drawerInfo').innerHTML = `
+        <span class="drawer-pack-badge">Pack</span>
+        <div class="drawer-pack-event">${pack.event}</div>
+        <h2 class="drawer-name">${pack.title}</h2>
+        <p class="drawer-desc">${pack.desc}</p>
+        <div class="drawer-pack-stats">
+          ${pack.stats.map(s => `<div><div class="drawer-pack-stat-label">${s.label}</div><div class="drawer-pack-stat-value">${s.value}</div></div>`).join('')}
+        </div>
+        <div class="drawer-actions">
+          <div class="qty-selector">
+            <button class="qty-btn" onclick="changeDrawerQty(-1)">−</button>
+            <input type="number" class="qty-value" id="drawerQtyVal" value="1" min="1">
+            <button class="qty-btn" onclick="changeDrawerQty(1)">+</button>
+          </div>
+          <button class="btn-add-cart" onclick="
+            var qty=Math.max(1,parseInt(document.getElementById('drawerQtyVal').value)||1);
+            var cart=getCart();
+            var ex=cart.find(function(i){return i.id==='pack-${id}'});
+            if(ex){ex.qty+=qty;}else{cart.push({id:'pack-${id}',ref:'Pack ${pack.title}',name:'Pack ${pack.title}',image:'${pack.image}',qty:qty});}
+            saveCart(cart);updateCartBadge();
+            showToast('+ '+qty+'× Pack ${pack.title}'+(qty>1?' adicionados':' adicionado'));
+            var b=this;var o=b.innerHTML;b.innerHTML='✓ Adicionado';b.classList.add('btn-added');
+            setTimeout(function(){b.innerHTML=o;b.classList.remove('btn-added');},1200);
+          ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Adicionar ao Carrinho
+          </button>
+        </div>
+        <div style="margin-top:1.75rem;">
+          <div class="drawer-pack-items-header">O que está incluído</div>
+          ${pack.categories.map(cat => `
+            <div class="drawer-pack-cat">
+              <div class="drawer-pack-cat-label">${cat.label}</div>
+              ${cat.items.map(item => `
+                <div class="drawer-pack-item">
+                  <div class="drawer-pack-item-thumb"><img src="${item.thumb}" alt="${item.name}" loading="lazy"></div>
+                  <div class="drawer-pack-item-name">${item.name}</div>
+                  <div class="drawer-pack-item-qty">${item.qty}</div>
+                </div>`).join('')}
+            </div>`).join('')}
+        </div>
+      `;
+
+      const drawer = document.getElementById('drawer');
+      drawer.classList.add('open');
+      drawer.querySelector('.drawer-panel').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+
     /* ─── PRODUCT DATA ─── */
     const PRODUCTS = {
 
@@ -1899,7 +1950,7 @@
         ref: 'CD 002',
         name: 'Cadeira Dobrável Castanha c/ Coxim Tecido Pérola',
         desc: 'Cadeira dobrável castanha com coxim de assento em tecido pérola. Conforto e elegância para cerimónias e jantares de gala.',
-        images: ['https://placehold.co/600x900/2a2520/b89a55?text=CD+002'],
+        images: ['Fotosdiversas/Cadeiras/CD 002.png'],
         specs: [['Material', 'Madeira + Tecido'], ['Acabamento', 'Castanho / Pérola'], ['Tipo', 'Dobrável c/ coxim']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1910,7 +1961,7 @@
         ref: 'CD 003',
         name: 'Cadeira Dobrável Castanha c/ Coxim Pele Sintética',
         desc: 'Cadeira dobrável castanha com coxim de pele sintética castanha. Acabamento premium para eventos de luxo.',
-        images: ['https://placehold.co/600x900/2a2520/b89a55?text=CD+003'],
+        images: ['Fotosdiversas/Cadeiras/CD 003.png'],
         specs: [['Material', 'Madeira + Pele Sintética'], ['Acabamento', 'Castanho'], ['Tipo', 'Dobrável c/ coxim']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -1921,7 +1972,7 @@
         ref: 'CD 004',
         name: 'Cadeira Dobrável Prateada',
         desc: 'Cadeira dobrável com acabamento prateado. Elegante e versátil, perfeita para eventos com decoração moderna ou clássica.',
-        images: ['https://placehold.co/600x900/2a2520/b89a55?text=CD+004'],
+        images: ['Fotosdiversas/Cadeiras/CD 004.png'],
         specs: [['Material', 'Metal / Madeira'], ['Acabamento', 'Prateado'], ['Tipo', 'Dobrável']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -2153,32 +2204,31 @@
       'lou-p009': { cat: 'loucas', ref: 'LOU 009', name: 'Chávena Almoçadeira Cerâmica Branca', desc: 'Chávena almoçadeira em cerâmica branca.', images: ['Fotosdiversas/Louças/LOU 009.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Tipo', 'Almoçadeira']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'lou-p010': { cat: 'loucas', ref: 'LOU 010', name: 'Chávena Almoçadeira Cerâmica Branca c/ Pires', desc: 'Chávena almoçadeira com pires em cerâmica branca.', images: ['Fotosdiversas/Louças/LOU 010.png'], specs: [['Material', 'Cerâmica'], ['Cor', 'Branca'], ['Tipo', 'Almoçadeira + Pires']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
-      'copo-cd001': {
-        cat: 'loucas',
-        ref: 'CD 001',
-        name: 'Copo Fio Dourado',
-        desc: 'Copo em vidro com fio dourado decorativo. Elegante e sofisticado, ideal para serviços de mesa em eventos de luxo.',
+      /* TALHERES DOURADOS */
+      'tad-001': {
+        cat: 'loucas-talheres',
+        ref: 'TAD 001',
+        name: 'Conjunto de Talheres Dourados (8 peças)',
+        desc: 'Conjunto completo de 8 peças de talheres em aço inoxidável com acabamento PVD dourado mate. Inclui garfo, faca, colher de sopa, garfo e faca de peixe, garfo, faca e colher de sobremesa.',
         images: [
-          'Fotosdiversas/Copo_novo.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 001.png',
         ],
         specs: [
-          ['Material', 'Vidro'],
-          ['Acabamento', 'Fio dourado'],
-          ['Uso', 'Serviço de mesa'],
+          ['Material', 'Inox + PVD dourado'],
+          ['Acabamento', 'Dourado mate'],
+          ['Composição', '8 peças por jogo'],
         ],
-        priceLabel: 'Preço por unidade / dia',
+        priceLabel: 'Preço por jogo / dia (s/ IVA)',
         price: 'Sob consulta',
-        priceNote: 'Preço disponível mediante quantidade',
+        priceNote: 'IVA à taxa em vigor (23%) não incluído',
       },
-
-      /* TALHERES DOURADOS */
       'tad-002': {
         cat: 'loucas-talheres',
         ref: 'TAD 002',
         name: 'Garfo de Peixe',
         desc: 'Garfo de peixe dourado em aço inoxidável com acabamento PVD dourado mate. Design elegante e atemporal para serviços de luxo.',
         images: [
-          'Fotosdiversas/I2.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 002.png',
         ],
         specs: [
           ['Material', 'Inox + PVD dourado'],
@@ -2195,7 +2245,7 @@
         name: 'Faca de Peixe',
         desc: 'Faca de peixe dourada com lâmina arredondada em aço inoxidável com acabamento PVD dourado. Par perfeito com o garfo TAD 002.',
         images: [
-          'Fotosdiversas/I3.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 003.png',
         ],
         specs: [
           ['Material', 'Inox + PVD dourado'],
@@ -2212,7 +2262,7 @@
         name: 'Garfo de Carne',
         desc: 'Garfo de carne dourado em aço inoxidável com acabamento PVD. Quatro dentes para serviços de carne em ambiente requintado.',
         images: [
-          'Fotosdiversas/I4.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 004.png',
         ],
         specs: [
           ['Material', 'Inox + PVD dourado'],
@@ -2229,7 +2279,7 @@
         name: 'Faca de Carne',
         desc: 'Faca de carne dourada com lâmina em aço inoxidável e acabamento PVD dourado. Corte preciso com estética premium.',
         images: [
-          'Fotosdiversas/I5.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 005.png',
         ],
         specs: [
           ['Material', 'Inox + PVD dourado'],
@@ -2246,7 +2296,7 @@
         name: 'Colher de Sopa',
         desc: 'Colher de sopa dourada de grande dimensão, em aço inoxidável com revestimento PVD dourado. Peça central de qualquer serviço de jantar elegante.',
         images: [
-          'Fotosdiversas/I6.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 006.png',
         ],
         specs: [
           ['Material', 'Inox + PVD dourado'],
@@ -2263,7 +2313,7 @@
         name: 'Garfo de Sobremesa',
         desc: 'Garfo de sobremesa dourado de dimensão reduzida, em aço inoxidável com acabamento PVD. Ideal para doces e sobremesas finas.',
         images: [
-          'Fotosdiversas/I7.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 007.png',
         ],
         specs: [
           ['Material', 'Inox + PVD dourado'],
@@ -2280,7 +2330,7 @@
         name: 'Faca de Sobremesa',
         desc: 'Faca de sobremesa dourada com lâmina curta em aço inoxidável com acabamento PVD. Complementa o serviço completo de sobremesa.',
         images: [
-          'Fotosdiversas/I8.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 008.png',
         ],
         specs: [
           ['Material', 'Inox + PVD dourado'],
@@ -2297,7 +2347,7 @@
         name: 'Colher de Sobremesa',
         desc: 'Colher de sobremesa dourada de dimensão intermédia, em aço inoxidável com revestimento PVD. Perfeita para mousses, sorvetes e doces.',
         images: [
-          'Fotosdiversas/I9.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 009.png',
         ],
         specs: [
           ['Material', 'Inox + PVD dourado'],
@@ -2314,7 +2364,7 @@
         name: 'Colher de Chá',
         desc: 'Colher de chá dourada de pequena dimensão, em aço inoxidável com acabamento PVD dourado. Ideal para café, chá e petit fours.',
         images: [
-          'Fotosdiversas/I10.jpg',
+          'Fotosdiversas/Louças/Talheres/TAD 010.png',
         ],
         specs: [
           ['Material', 'Inox + PVD dourado'],
@@ -2617,13 +2667,13 @@
       },
       'col-talheres-dourados': {
         cat: 'loucas',
-        ref: 'TAD 002 – 010',
+        ref: 'TAD 001 – 010',
         name: 'Talheres Dourados',
-        desc: 'Coleção completa de talheres em aço inoxidável com acabamento PVD dourado mate. Design elegante e atemporal para serviços de luxo.',
-        count: 9,
+        desc: 'Coleção completa de talheres em aço inoxidável com acabamento PVD dourado mate. Disponível em conjunto de 8 peças ou por peça individual.',
+        count: 10,
         priceHint: 'a partir de 0,50 € / unid.',
-        previewImage: 'Fotosdiversas/Foto talheres dourados.png',
-        items: ['tad-002','tad-003','tad-004','tad-005','tad-006','tad-007','tad-008','tad-009','tad-010'],
+        previewImage: 'Fotosdiversas/Louças/Talheres/TAD 001.png',
+        items: ['tad-001','tad-002','tad-003','tad-004','tad-005','tad-006','tad-007','tad-008','tad-009','tad-010'],
       },
       'col-talheres-prateados': {
         cat: 'loucas',
@@ -3035,13 +3085,13 @@
     const sharedHeroTitle = document.getElementById('shared-hero-title');
 
     const heroData = {
-      mobiliario: { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II1.jpg', title: 'Mobiliário',  subnav: 'mobiliario'},
-      texteis:    { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II2.jpg', title: 'Têxteis',     subnav: 'texteis'  },
-      loucas:     { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II3.jpg', title: 'Louças',      subnav: 'loucas'   },
-      decoracao:  { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II4.png', title: 'Decoração',   subnav: 'decoracao'},
-      exterior:   { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II5.jpg', title: 'Exterior',    subnav: 'exterior' },
-      outros:     { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II6.jpg', title: 'Outros',      subnav: 'outros'   },
-      packs:      { bg: 'Fotosdiversas/Imagens_Slides_iniciais/II1.jpg', title: 'Packs',       subnav: null       },
+      mobiliario: { bg: 'Fotosdiversas/Fotos_fundo/Mobiliário.png', title: 'Mobiliário',  subnav: 'mobiliario'},
+      texteis:    { bg: 'Fotosdiversas/Fotos_fundo/Texteis.jpg',   title: 'Têxteis',     subnav: 'texteis'  },
+      loucas:     { bg: 'Fotosdiversas/Fotos_fundo/Louças.jpg',    title: 'Louças',      subnav: 'loucas'   },
+      decoracao:  { bg: 'Fotosdiversas/Fotos_fundo/Decoração.jpg', title: 'Decoração',   subnav: 'decoracao'},
+      exterior:   { bg: 'Fotosdiversas/Fotos_fundo/Exterior.jpg',  title: 'Exterior',    subnav: 'exterior' },
+      outros:     { bg: 'Fotosdiversas/Fotos_fundo/Outros.jpg',    title: 'Outros',      subnav: 'outros'   },
+      packs:      { bg: 'Fotosdiversas/Fotos_fundo/Packs.jpg',      title: 'Packs',      subnav: null       },
     };
 
     catBtns.forEach(btn => {
@@ -3463,6 +3513,7 @@
     if (new URLSearchParams(location.search).get('quote') === '1' && getCart().length > 0) {
       setTimeout(openQuote, 400);
     }
+
 
     /* ── HAMBURGER ── */
     (function() {

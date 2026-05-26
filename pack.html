@@ -38,139 +38,145 @@
     .mobile-nav a { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; font-style: italic; color: var(--dark); }
     .mobile-nav-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--muted); }
 
-    /* HERO */
-    .pack-hero {
-      position: relative; height: 48vh; min-height: 340px; overflow: hidden;
-      display: flex; align-items: flex-end;
+    /* PACK INTRO — two-column */
+    .pack-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      border-bottom: 1px solid var(--cream-border);
     }
-    .pack-hero-bg {
+    .pack-intro-img {
+      background: var(--dark);
+      overflow: hidden; position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .pack-intro-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
       position: absolute; inset: 0;
-      background-size: cover; background-position: center;
-      transform: scale(1.04); transition: transform 8s ease;
     }
-    .pack-hero-bg.animated { transform: scale(1); }
-    .pack-hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(20,18,15,0.85) 0%, rgba(20,18,15,0.3) 50%, rgba(20,18,15,0.1) 100%);
+    .pack-intro-back {
+      position: absolute; top: 1.5rem; left: 1.5rem; z-index: 2;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); transition: color 0.2s;
+      background: rgba(245,239,226,0.85); padding: 0.4rem 0.85rem;
     }
-    .pack-hero-content {
-      position: relative; z-index: 1;
-      max-width: 1200px; width: 100%; margin: 0 auto;
-      padding: 0 2rem 3.5rem;
+    .pack-intro-back:hover { color: var(--dark); }
+    .pack-intro-info {
+      background: #d9cdb8; color: var(--dark);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 4rem 3.5rem;
+      gap: 0;
     }
-    .pack-hero-badge {
+    .pack-intro-badge {
       display: inline-block; background: var(--gold); color: var(--dark);
       font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-      padding: 0.3rem 0.75rem; margin-bottom: 1rem;
+      padding: 0.3rem 0.75rem; align-self: flex-start; margin-bottom: 1.5rem;
     }
-    .pack-hero-event {
-      font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-      color: rgba(245,239,226,0.6); margin-bottom: 0.6rem;
-      display: flex; align-items: center; gap: 0.5rem;
+    .pack-intro-event {
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.6rem;
     }
-    .pack-hero-event::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); opacity: 0.6; }
-    .pack-hero-title {
+    .pack-intro-event::before { content: ''; display: block; width: 20px; height: 1px; background: var(--gold); }
+    .pack-intro-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 300;
-      color: var(--cream-light); line-height: 1.05; letter-spacing: -0.02em;
+      font-size: clamp(2.8rem, 4vw, 4rem); font-weight: 300;
+      color: var(--dark); line-height: 1.05; letter-spacing: -0.02em;
+      margin-bottom: 1.75rem;
     }
-    .pack-hero-back {
-      position: absolute; top: 2rem; left: 2rem; z-index: 2;
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-      color: rgba(245,239,226,0.6); transition: color 0.2s;
+    .pack-intro-desc {
+      font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+      font-size: 1.1rem; color: var(--muted); line-height: 1.8;
+      margin-bottom: 2rem; border-top: 1px solid rgba(20,18,15,0.12); padding-top: 1.75rem;
     }
-    .pack-hero-back:hover { color: var(--cream-light); }
-
-    /* SUMMARY STRIP */
-    .pack-summary-strip {
-      background: var(--dark); color: var(--cream-light);
-      padding: 0;
+    .pack-intro-stats {
+      display: flex; gap: 2.5rem; flex-wrap: wrap; align-items: center;
+      margin-bottom: 2.5rem;
     }
-    .pack-summary-inner {
-      max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr auto;
-      align-items: center; gap: 3rem;
-      padding: 2rem 2rem;
-    }
-    .pack-summary-left { display: flex; gap: 3rem; align-items: center; flex-wrap: wrap; }
-    .pack-summary-stat { }
     .pack-summary-stat-label {
       font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: rgba(245,239,226,0.4); margin-bottom: 0.3rem;
+      color: var(--muted); margin-bottom: 0.3rem;
     }
     .pack-summary-stat-value {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.15rem; color: var(--cream-light);
+      font-size: 1.1rem; color: var(--dark);
     }
-    .pack-summary-divider { width: 1px; height: 2.5rem; background: rgba(245,239,226,0.12); flex-shrink: 0; }
+    .pack-summary-divider { width: 1px; height: 2rem; background: rgba(20,18,15,0.15); flex-shrink: 0; }
     .pack-summary-cta {
       display: inline-flex; align-items: center; gap: 0.5rem;
       background: var(--gold); color: var(--dark);
-      padding: 0.8rem 1.75rem;
+      padding: 0.85rem 1.75rem; align-self: flex-start;
       font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
       border: none; cursor: pointer; white-space: nowrap;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s;
     }
-    .pack-summary-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .pack-summary-cta:hover { background: var(--gold-light); }
 
-    /* DESC STRIP */
-    .pack-desc-strip {
-      border-bottom: 1px solid var(--cream-border);
-      padding: 2.5rem 2rem;
-    }
-    .pack-desc-inner {
-      max-width: 1200px; margin: 0 auto;
-    }
-    .pack-detail-desc {
-      font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
-      font-size: 1.18rem; color: var(--muted); line-height: 1.85; max-width: 700px;
-    }
-
-    /* ITEMS GRID SECTION */
-    .pack-items-section {
-      max-width: 1200px; margin: 0 auto;
-      padding: 3rem 2rem 5rem;
+    /* ITEMS inside dark panel */
+    .pack-items-panel {
+      border-top: 1px solid rgba(20,18,15,0.12);
+      padding-top: 2rem;
+      margin-top: 2rem;
     }
     .pack-items-header {
       font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 2.5rem;
+      color: var(--gold-dark); margin-bottom: 2rem;
       display: flex; align-items: center; gap: 0.75rem;
     }
-    .pack-items-header::after { content: ''; flex: 1; height: 1px; background: var(--cream-border); }
+    .pack-items-header::after { content: ''; flex: 1; height: 1px; background: rgba(20,18,15,0.12); }
 
-    .pack-category-group { margin-bottom: 3rem; }
+    .pack-category-group { margin-bottom: 2rem; }
     .pack-category-label {
       font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 1.25rem;
+      color: var(--muted); margin-bottom: 1rem;
     }
 
     .pack-detail-items {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.75rem;
     }
     .pack-detail-item {
       display: flex; flex-direction: column;
-      background: var(--white); border: 1px solid var(--cream-border);
+      background: var(--white);
       overflow: hidden; position: relative;
-      transition: box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(20,18,15,0.06), 0 1px 2px rgba(20,18,15,0.04);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
     }
-    .pack-detail-item:hover { box-shadow: 0 6px 24px rgba(20,18,15,0.08); transform: translateY(-2px); }
+    @media (hover: hover) and (pointer: fine) {
+      .pack-detail-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 32px rgba(184,154,85,0.18), 0 4px 12px rgba(20,18,15,0.1);
+      }
+      .pack-detail-item:hover .pack-detail-thumb::after { opacity: 1; }
+      .pack-detail-item:hover .pack-detail-thumb img { transform: scale(1.05); }
+    }
     .pack-detail-thumb {
       width: 100%; aspect-ratio: 1; overflow: hidden;
-      background: var(--cream-light); flex-shrink: 0;
+      background: var(--cream-light); flex-shrink: 0; position: relative;
     }
-    .pack-detail-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .pack-detail-thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(184,154,85,0.15) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.25s ease; pointer-events: none;
+    }
+    .pack-detail-thumb img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
     .pack-detail-item-body {
-      padding: 0.75rem 0.75rem 0.6rem;
-      flex: 1; display: flex; flex-direction: column; gap: 0.25rem;
+      padding: 0.8rem 0.85rem 0.75rem;
+      flex: 1; display: flex; flex-direction: column; gap: 0.3rem;
     }
     .pack-detail-item-name {
-      font-size: 0.82rem; font-weight: 700; color: var(--dark); line-height: 1.3;
+      font-size: 0.8rem; font-weight: 700; color: var(--dark); line-height: 1.35;
     }
     .pack-detail-qty {
-      font-size: 0.78rem; color: var(--gold); font-weight: 700; letter-spacing: 0.3px;
+      font-size: 0.7rem; font-weight: 700; color: var(--gold);
+      letter-spacing: 0.5px; text-transform: uppercase;
     }
 
     /* RELATED PACKS */
@@ -207,6 +213,71 @@
       padding: 0.2rem 0.5rem; margin-bottom: 0.5rem; align-self: flex-start;
     }
 
+    /* QUANTITY SELECTOR */
+    .pack-cta-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .qty-selector { display: flex; align-items: center; gap: 0.4rem; height: 44px; }
+    .qty-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid rgba(20,18,15,0.25);
+      background: transparent; color: var(--dark);
+      font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .qty-btn:hover { border-color: var(--gold); background: var(--gold); color: var(--dark); transform: scale(1.08); }
+    .qty-btn:active { transform: scale(0.95); }
+    .qty-value {
+      width: 44px; text-align: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 500;
+      border: none; background: transparent; color: var(--dark);
+      height: 44px; padding: 0;
+    }
+    .qty-value::-webkit-inner-spin-button,
+    .qty-value::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .qty-value[type=number] { -moz-appearance: textfield; }
+
+    /* ADD TO CART */
+    .btn-add-cart {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--dark); color: var(--cream-light);
+      padding: 0.85rem 1.75rem;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      border: none; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-add-cart:hover { background: var(--dark-soft); }
+    .btn-add-cart.btn-added { background: var(--gold); color: var(--dark); }
+
+    /* CART FAB */
+    .cart-fab {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 400;
+      width: 56px; height: 56px;
+      background: var(--dark); border: 1px solid rgba(184,154,85,0.3);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s, border-color 0.2s;
+    }
+    .cart-fab:hover { background: var(--dark-soft); border-color: var(--gold); transform: scale(1.06); }
+    .cart-fab:active { transform: scale(0.97); }
+    .cart-fab svg { width: 22px; height: 22px; stroke: var(--cream-light); fill: none; stroke-width: 1.5; stroke-linecap: round; }
+    .cart-badge {
+      position: absolute; top: -5px; right: -5px;
+      min-width: 20px; height: 20px; padding: 0 5px;
+      background: var(--gold); color: var(--dark);
+      font-size: 10px; font-weight: 700; border-radius: 10px;
+      display: none; align-items: center; justify-content: center;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 6rem; right: 2rem; z-index: 500;
+      background: var(--dark); color: var(--cream-light);
+      padding: 0.75rem 1.25rem; font-size: 0.82rem; font-weight: 500;
+      transform: translateY(8px); opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
     /* FOOTER */
     footer { background: var(--dark); color: rgba(245,239,226,0.45); padding: 2rem; border-top: 1px solid rgba(184,154,85,0.15); }
     .footer-bottom-simple { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: rgba(245,239,226,0.28); }
@@ -217,22 +288,21 @@
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       .nav-logo img { height: 44px; }
-      .pack-summary-inner { grid-template-columns: 1fr; gap: 1.5rem; }
-      .pack-summary-cta { width: 100%; justify-content: center; }
+      .pack-intro { grid-template-columns: 1fr; }
+      .pack-intro-img { position: relative; height: 55vw; min-height: 260px; }
+      .pack-intro-info { padding: 2.5rem 2rem; }
+      .pack-summary-cta { align-self: stretch; justify-content: center; }
       .related-grid { grid-template-columns: 1fr 1fr; }
-      .pack-detail-items { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
     }
     @media (max-width: 600px) {
-      .pack-hero { height: 42vh; min-height: 260px; }
-      .pack-hero-content { padding: 0 1.25rem 2.5rem; }
-      .related-grid { grid-template-columns: 1fr; }
-      .pack-summary-left { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+      .pack-intro-img { height: 65vw; }
+      .pack-intro-info { padding: 2rem 1.25rem; }
+      .pack-intro-title { font-size: 2.5rem; }
+      .pack-intro-stats { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
       .pack-summary-divider { display: none; }
       .pack-summary-stat { display: flex; flex-direction: row; align-items: baseline; gap: 0.75rem; }
-      .pack-summary-inner { padding: 1.5rem 1.25rem; }
-      .pack-desc-strip { padding: 1.75rem 1.25rem; }
+      .related-grid { grid-template-columns: 1fr; }
       .pack-items-section { padding: 2rem 1.25rem 4rem; }
-      .pack-detail-items { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
       .footer-bottom-simple { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
   </style>
@@ -261,43 +331,41 @@
     <a href="contacto.html">Contacto</a>
   </div>
 
-  <!-- HERO -->
-  <div class="pack-hero">
-    <a href="catalogo.html?cat=packs" class="pack-hero-back">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      Todos os Packs
-    </a>
-    <div class="pack-hero-bg" id="heroBg"></div>
-    <div class="pack-hero-overlay"></div>
-    <div class="pack-hero-content">
-      <span class="pack-hero-badge">Pack</span>
-      <div class="pack-hero-event" id="heroEvent"></div>
-      <h1 class="pack-hero-title" id="heroTitle"></h1>
+  <!-- PACK INTRO -->
+  <div class="pack-intro">
+    <div class="pack-intro-img">
+      <a href="catalogo.html?cat=packs" class="pack-intro-back">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Todos os Packs
+      </a>
+      <img id="heroBg" src="" alt="">
     </div>
-  </div>
-
-  <!-- SUMMARY STRIP -->
-  <div class="pack-summary-strip">
-    <div class="pack-summary-inner">
-      <div class="pack-summary-left" id="summaryStats"></div>
+    <div class="pack-intro-info">
+      <span class="pack-intro-badge">Pack</span>
+      <div class="pack-intro-event" id="heroEvent"></div>
+      <h1 class="pack-intro-title" id="heroTitle"></h1>
+      <p class="pack-intro-desc" id="packDesc"></p>
+      <div class="pack-intro-stats" id="summaryStats"></div>
+      <div class="pack-cta-row">
+        <div class="qty-selector">
+          <button class="qty-btn" onclick="changeQty(-1)" type="button">−</button>
+          <input type="number" class="qty-value" id="packQtyVal" value="1" min="1">
+          <button class="qty-btn" onclick="changeQty(1)" type="button">+</button>
+        </div>
+        <button class="btn-add-cart" id="addCartBtn" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          Adicionar ao Carrinho
+        </button>
+      </div>
       <button class="pack-summary-cta" id="summaryCta">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         Pedir Orçamento
       </button>
+      <div class="pack-items-panel">
+        <div class="pack-items-header">O que está incluído</div>
+        <div id="packItemsWrap"></div>
+      </div>
     </div>
-  </div>
-
-  <!-- DESCRIPTION -->
-  <div class="pack-desc-strip">
-    <div class="pack-desc-inner">
-      <p class="pack-detail-desc" id="packDesc"></p>
-    </div>
-  </div>
-
-  <!-- ITEMS -->
-  <div class="pack-items-section">
-    <div class="pack-items-header">O que está incluído</div>
-    <div id="packItemsWrap"></div>
   </div>
 
   <!-- RELATED -->
@@ -307,6 +375,15 @@
       <div class="related-grid" id="relatedGrid"></div>
     </div>
   </div>
+
+  <!-- CART FAB -->
+  <button class="cart-fab" id="cartFab" aria-label="Ver carrinho" onclick="window.location='catalogo.html'">
+    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <span class="cart-badge" id="cartBadge">0</span>
+  </button>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
 
   <!-- FOOTER -->
   <footer>
@@ -319,122 +396,11 @@
   <script>
     /* ── PACK DATA ── */
     const PACKS = {
-      casamento: {
-        id: 'casamento',
-        title: 'Mesa de Casamento Clássico',
-        event: 'Casamento · Mesa de 10 pax',
-        image: 'Fotosdiversas/Imagens_Slides_iniciais/II2.jpg',
-        desc: 'Composição completa para uma mesa de casamento com elegância atemporal. Inclui toalha, guardanapos coordenados, talheres prateados, copos premium, caminhos de mesa e marcadores de mesa.',
-        stats: [
-          { label: 'Tipo de evento', value: 'Casamento' },
-          { label: 'Capacidade', value: '10 pax / mesa' },
-          { label: 'Referências', value: '6 categorias' },
-        ],
-        categories: [
-          {
-            label: 'Têxteis',
-            items: [
-              { thumb: 'Fotosdiversas/Toalhas/THR 001.jpg', name: 'Toalha Retangular', cat: 'Têxteis', qty: '1 un.' },
-              { thumb: 'Fotosdiversas/Camilhas/CM 001.png',  name: 'Caminhos de Mesa', cat: 'Têxteis', qty: '2 un.' },
-              { thumb: 'Fotosdiversas/Guardanapos/GD 004.jpg', name: 'Guardanapos Lisos', cat: 'Têxteis', qty: '10 un.' },
-            ],
-          },
-          {
-            label: 'Louças',
-            items: [
-              { thumb: 'Fotosdiversas/Louças/Talheres/TA 001.png', name: 'Talheres Prateados', cat: 'Louças', qty: '10 jogos' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png',   name: 'Copos Premium', cat: 'Louças', qty: '20 un.' },
-            ],
-          },
-          {
-            label: 'Decoração',
-            items: [
-              { thumb: 'Fotosdiversas/Marcadores de Mesa/MC 001.png', name: 'Marcadores de Mesa', cat: 'Decoração', qty: '10 un.' },
-            ],
-          },
-        ],
-      },
-
-      lounge: {
-        id: 'lounge',
-        title: 'Lounge Exterior',
-        event: 'Cocktail · Receção Exterior',
-        image: 'Fotosdiversas/Imagens_Slides_iniciais/II5.jpg',
-        desc: 'Ambiente lounge ao ar livre com sofás de bambu, complementos de assento e decoração. Ideal para receções de casamento, festas de empresa ou eventos de cocktail.',
-        stats: [
-          { label: 'Tipo de evento', value: 'Cocktail / Receção' },
-          { label: 'Ambiente', value: 'Exterior' },
-          { label: 'Referências', value: '5 artigos' },
-        ],
-        categories: [
-          {
-            label: 'Mobiliário Exterior',
-            items: [
-              { thumb: 'Fotosdiversas/Complementos Exterior/SB 001.png', name: 'Módulos Sofá Bambu', cat: 'Exterior', qty: '4 módulos' },
-              { thumb: 'Fotosdiversas/Complementos Exterior/CL 001.png', name: 'Chaise Longue Bambu', cat: 'Exterior', qty: '2 un.' },
-              { thumb: 'Fotosdiversas/Complementos Exterior/GS 001.jpg', name: 'Guarda-Sol', cat: 'Exterior', qty: '2 un.' },
-            ],
-          },
-          {
-            label: 'Têxteis',
-            items: [
-              { thumb: 'Fotosdiversas/Almofadas/ALM 001.png', name: 'Almofadas Decorativas', cat: 'Têxteis', qty: '8 un.' },
-            ],
-          },
-          {
-            label: 'Decoração',
-            items: [
-              { thumb: 'Fotosdiversas/Complementos Exterior/AD 001.png', name: 'Arco Dourado', cat: 'Exterior', qty: '1 un.' },
-            ],
-          },
-        ],
-      },
-
-      gala: {
-        id: 'gala',
-        title: 'Gala Empresarial',
-        event: 'Gala · Jantar Empresarial',
-        image: 'Fotosdiversas/Imagens_Slides_iniciais/II1.jpg',
-        desc: 'Montagem completa para um jantar de gala corporativo. Mobiliário, têxteis de mesa e louça selecionados para transmitir profissionalismo e sofisticação.',
-        stats: [
-          { label: 'Tipo de evento', value: 'Jantar de Gala' },
-          { label: 'Ambiente', value: 'Interior' },
-          { label: 'Referências', value: '5 categorias' },
-        ],
-        categories: [
-          {
-            label: 'Mobiliário',
-            items: [
-              { thumb: 'Fotosdiversas/Cadeiras/CD 001.png', name: 'Cadeiras de Evento', cat: 'Mobiliário', qty: 'Por pedido' },
-            ],
-          },
-          {
-            label: 'Têxteis',
-            items: [
-              { thumb: 'Fotosdiversas/Toalhas/THR 001.jpg',      name: 'Toalhas Retangulares',     cat: 'Têxteis', qty: 'Por mesa' },
-              { thumb: 'Fotosdiversas/Guardanapos/GD 024.jpg',   name: 'Guardanapos Adamascados',  cat: 'Têxteis', qty: 'Por pax' },
-            ],
-          },
-          {
-            label: 'Louças',
-            items: [
-              { thumb: 'Fotosdiversas/Louças/Talheres/TA 001.png', name: 'Talheres Prateados', cat: 'Louças', qty: 'Por pax' },
-            ],
-          },
-          {
-            label: 'Decoração',
-            items: [
-              { thumb: 'Fotosdiversas/Complementos Mesa/COM 017.png', name: 'Castiçais Dourados', cat: 'Decoração', qty: 'Por mesa' },
-            ],
-          },
-        ],
-      },
-
       lyon: {
         id: 'lyon',
         title: 'Lyon',
         event: 'Casamento · Mesa de 10 pax',
-        image: 'Fotosdiversas/Imagens_Slides_iniciais/II4.png',
+        image: 'Fotosdiversas/Packs/Lyon.jpg',
         desc: 'Composição sofisticada com camilha adamascada bege, cerâmica branca, cristalaria verde completa e talheres dourados. O candeeiro sem fios cria um ambiente quente e intimista.',
         stats: [
           { label: 'Tipo de evento', value: 'Casamento' },
@@ -445,14 +411,15 @@
           {
             label: 'Mobiliário',
             items: [
-              { thumb: 'Fotosdiversas/Cadeiras/CD 001.png', name: '1 Mesa + 10 Cadeiras', cat: 'Mobiliário', qty: '11 un.' },
+              { thumb: 'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa', name: 'Mesa', slug: 'mob-001', cat: 'Mobiliário', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Cadeiras/CD 001.png', name: 'Cadeiras',                  cat: 'Mobiliário', qty: '10 un.' },
             ],
           },
           {
             label: 'Têxteis',
             items: [
               { thumb: 'Fotosdiversas/Camilhas/CM 001.png',    name: 'Camilha Bege Adamascada', cat: 'Têxteis', qty: '1 un.' },
-              { thumb: 'Fotosdiversas/Guardanapos/GD 004.jpg', name: 'Guardanapos Verdes',       cat: 'Têxteis', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Guardanapos/GD 009.jpg', name: 'Guardanapos Verdes',       cat: 'Têxteis', qty: '10 un.' },
             ],
           },
           {
@@ -461,7 +428,7 @@
               { thumb: 'Fotosdiversas/Marcadores de Mesa/MC 001.png', name: 'Prato Marcador Fio Dourado', cat: 'Decoração', qty: '10 un.' },
               { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato Raso Cerâmica Branca', cat: 'Louças',    qty: '20 un.' },
               { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato de Sobremesa',          cat: 'Louças',    qty: '20 un.' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png',      name: 'Taça de Consommé',            cat: 'Louças',    qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 006.png',             name: 'Taça de Consommé',            cat: 'Louças',    qty: '10 un.' },
             ],
           },
           {
@@ -492,7 +459,7 @@
         id: 'toscana',
         title: 'Toscana',
         event: 'Casamento · Mesa de 10 pax',
-        image: 'Fotosdiversas/Imagens_Slides_iniciais/II6.jpg',
+        image: 'Fotosdiversas/Packs/Toscana.jpg',
         desc: 'Composição elegante com toques naturais e verdes. Cerâmica branca, cristalaria completa com copo verde de água, talheres dourados e guardanapos verdes para uma mesa cheia de personalidade e frescura.',
         stats: [
           { label: 'Tipo de evento', value: 'Casamento' },
@@ -503,14 +470,15 @@
           {
             label: 'Mobiliário',
             items: [
-              { thumb: 'Fotosdiversas/Cadeiras/CD 001.png', name: '1 Mesa + 10 Cadeiras com Coxim', cat: 'Mobiliário', qty: '11 un.' },
+              { thumb: 'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa', name: 'Mesa', slug: 'mob-001', cat: 'Mobiliário', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Cadeiras/CD 002.png', name: 'Cadeiras com Coxim',                        cat: 'Mobiliário', qty: '10 un.' },
             ],
           },
           {
             label: 'Têxteis',
             items: [
-              { thumb: 'Fotosdiversas/Camilhas/CM 001.png',    name: 'Camilha Tostado',      cat: 'Têxteis', qty: '1 un.' },
-              { thumb: 'Fotosdiversas/Guardanapos/GD 004.jpg', name: 'Guardanapos Verdes',    cat: 'Têxteis', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Camilhas/CM 003.png',    name: 'Camilha Tostado',   cat: 'Têxteis', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Guardanapos/GD 009.jpg', name: 'Guardanapos Verdes', cat: 'Têxteis', qty: '10 un.' },
             ],
           },
           {
@@ -519,22 +487,22 @@
               { thumb: 'Fotosdiversas/Marcadores de Mesa/MC 001.png', name: 'Prato Marcador Fio Dourado', cat: 'Decoração', qty: '10 un.' },
               { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato Raso Cerâmica Branca', cat: 'Louças',    qty: '20 un.' },
               { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato de Sobremesa',          cat: 'Louças',    qty: '20 un.' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png',      name: 'Taça de Consommé',            cat: 'Louças',    qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 006.png',             name: 'Taça de Consommé',            cat: 'Louças',    qty: '10 un.' },
             ],
           },
           {
             label: 'Louças — Cristalaria',
             items: [
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png', name: 'Copo Verde de Água',        cat: 'Louças', qty: '10 un.' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png', name: 'Copo de Vinho Branco',      cat: 'Louças', qty: '10 un.' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 002.png', name: 'Copo de Vinho Tinto',       cat: 'Louças', qty: '10 un.' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png', name: 'Flutes',                     cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png', name: 'Copo Verde de Água',   cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CPP 009.png', name: 'Copo de Vinho Branco', cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CPP 007.png', name: 'Copo de Vinho Tinto',  cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CP 007.png',  name: 'Flutes',                cat: 'Louças', qty: '10 un.' },
             ],
           },
           {
             label: 'Louças — Talheres',
             items: [
-              { thumb: 'Fotosdiversas/Louças/Talheres/TA 001.png', name: 'Talheres Dourados (8 peças)', cat: 'Louças', qty: '10 jogos' },
+              { thumb: 'Fotosdiversas/Louças/Talheres/TAD 002.png', name: 'Talheres Dourados (8 peças)', cat: 'Louças', qty: '10 jogos' },
             ],
           },
         ],
@@ -544,7 +512,7 @@
         id: 'veneza',
         title: 'Veneza',
         event: 'Casamento · Mesa de 10 pax',
-        image: 'Fotosdiversas/Imagens_Slides_iniciais/II3.jpg',
+        image: 'Fotosdiversas/Packs/Veneza.jpg',
         desc: 'Uma composição de requinte para uma mesa de casamento de 10 pessoas. Combina louça de cerâmica branca com detalhes a fio dourado, cristalaria completa para água, vinho branco, vinho tinto e champagne, e têxteis em pérola e tostado.',
         stats: [
           { label: 'Tipo de evento', value: 'Casamento' },
@@ -555,45 +523,152 @@
           {
             label: 'Mobiliário',
             items: [
-              { thumb: 'Fotosdiversas/Cadeiras/CD 001.png', name: '1 Mesa + 10 Cadeiras com Coxim', cat: 'Mobiliário', qty: '11 un.' },
+              { thumb: 'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa', name: 'Mesa', slug: 'mob-001', cat: 'Mobiliário', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Cadeiras/CD 009.png', name: 'Cadeiras com Coxim',                        cat: 'Mobiliário', qty: '10 un.' },
             ],
           },
           {
             label: 'Têxteis',
             items: [
-              { thumb: 'Fotosdiversas/Toalhas/THQ 001.jpg',      name: 'Toalha Quadrada Renda Pérola', cat: 'Têxteis', qty: '1 un.' },
-              { thumb: 'Fotosdiversas/Camilhas/CM 001.png',      name: 'Camilha Tostado',              cat: 'Têxteis', qty: '1 un.' },
-              { thumb: 'Fotosdiversas/Guardanapos/GD 004.jpg',   name: 'Guardanapos Pérola',           cat: 'Têxteis', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Toalhas quadradas/THQ 004.png', name: 'Toalha Quadrada Renda Pérola', cat: 'Têxteis', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Camilhas/CM 001.png',    name: 'Camilha Tostado',              cat: 'Têxteis', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Guardanapos/GD 002.png', name: 'Guardanapos Pérola',           cat: 'Têxteis', qty: '10 un.' },
             ],
           },
           {
             label: 'Louças — Pratos',
             items: [
-              { thumb: 'Fotosdiversas/Marcadores de Mesa/MC 001.png', name: 'Prato Marcador Fio Dourado',    cat: 'Decoração', qty: '10 un.' },
-              { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato Raso Cerâmica Branca',    cat: 'Louças',    qty: '20 un.' },
-              { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato de Sobremesa',             cat: 'Louças',    qty: '20 un.' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png',      name: 'Taça de Consommé',              cat: 'Louças',    qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Marcadores de Mesa/MC 001.png', name: 'Prato Marcador Fio Dourado', cat: 'Decoração', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato Raso Cerâmica Branca', cat: 'Louças',    qty: '20 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato de Sobremesa',          cat: 'Louças',    qty: '20 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 006.png',             name: 'Taça de Consommé',            cat: 'Louças',    qty: '10 un.' },
             ],
           },
           {
             label: 'Louças — Cristalaria',
             items: [
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png', name: 'Copo Fio Dourado de Água',         cat: 'Louças', qty: '10 un.' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png', name: 'Copo Fio Dourado de Vinho Branco', cat: 'Louças', qty: '10 un.' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 002.png', name: 'Copo Fio Dourado de Vinho Tinto',  cat: 'Louças', qty: '10 un.' },
-              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png', name: 'Flutes',                            cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CP 002.jpg',  name: 'Copos Baixos de Água',             cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CPP 008.png', name: 'Copo Fio Dourado de Vinho Branco', cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CPP 007.png', name: 'Copo Fio Dourado de Vinho Tinto',  cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CP 007.png',  name: 'Flutes',                            cat: 'Louças', qty: '10 un.' },
             ],
           },
           {
             label: 'Louças — Talheres',
             items: [
-              { thumb: 'Fotosdiversas/Louças/Talheres/TA 001.png', name: 'Talheres Dourados (8 peças)', cat: 'Louças', qty: '10 jogos' },
+              { thumb: 'Fotosdiversas/Louças/Talheres/TAD 002.png', name: 'Talheres Dourados (8 peças)', cat: 'Louças', qty: '10 jogos' },
             ],
           },
           {
             label: 'Decoração',
             items: [
-              { thumb: 'Fotosdiversas/Complementos Mesa/COM 017.png', name: 'Candeeiro Sem Fios', cat: 'Decoração', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Complementos Mesa/COM 020.png', name: 'Candeeiro Sem Fios', cat: 'Decoração', qty: '1 un.' },
+            ],
+          },
+        ],
+      },
+
+      florenca: {
+        id: 'florenca',
+        title: 'Florença',
+        event: 'Casamento · Mesa de 10 pax',
+        image: 'Fotosdiversas/Imagens_Slides_iniciais/II2.jpg',
+        desc: 'Composição luminosa com cadeiras crossback, caminho de mesa areia branca e cristalaria verde. Talheres dourados e guardanapos areia branca completam uma mesa de casamento com personalidade e leveza.',
+        stats: [
+          { label: 'Tipo de evento', value: 'Casamento' },
+          { label: 'Capacidade', value: '10 pax / mesa' },
+          { label: 'Referências', value: '13 artigos' },
+        ],
+        categories: [
+          {
+            label: 'Mobiliário',
+            items: [
+              { thumb: 'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa', name: 'Mesa de Jantar', slug: 'mob-001', cat: 'Mobiliário', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Cadeiras/CD 007.png', name: 'Cadeiras Crossback', cat: 'Mobiliário', qty: '10 un.' },
+            ],
+          },
+          {
+            label: 'Têxteis',
+            items: [
+              { thumb: 'Fotosdiversas/Camilhas/CM 005.png',    name: 'Camilha Areia Branca',    cat: 'Têxteis', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Guardanapos/GD 039.jpg', name: 'Guardanapos Areia Branca', cat: 'Têxteis', qty: '10 un.' },
+            ],
+          },
+          {
+            label: 'Louças — Pratos',
+            items: [
+              { thumb: 'Fotosdiversas/Marcadores de Mesa/MC 001.png', name: 'Prato Marcador Fio Dourado', cat: 'Decoração', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato Raso Cerâmica Branca', cat: 'Louças',    qty: '20 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 002.png',            name: 'Prato de Sobremesa',          cat: 'Louças',    qty: '20 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 006.png',            name: 'Taça de Consommé',            cat: 'Louças',    qty: '10 un.' },
+            ],
+          },
+          {
+            label: 'Louças — Cristalaria',
+            items: [
+              { thumb: 'Fotosdiversas/Louças/Copos/CPP 001.png', name: 'Copo Verde de Água',               cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CPP 008.png', name: 'Copo de Vinho Branco Fio Dourado', cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CPP 007.png', name: 'Copo de Vinho Tinto Fio Dourado',  cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CP 007.png',  name: 'Flutes',                            cat: 'Louças', qty: '10 un.' },
+            ],
+          },
+          {
+            label: 'Louças — Talheres',
+            items: [
+              { thumb: 'Fotosdiversas/Louças/Talheres/TAD 002.png', name: 'Talheres Dourados (8 peças)', cat: 'Louças', qty: '10 jogos' },
+            ],
+          },
+        ],
+      },
+
+      cannes: {
+        id: 'cannes',
+        title: 'Cannes',
+        event: 'Casamento · Mesa de 10 pax',
+        image: 'Fotosdiversas/Packs/Cannes.png',
+        desc: 'Elegância clássica com mesa retangular, toalhas de renda e cristalaria refinada. Uma composição atemporal para casamentos de requinte.',
+        stats: [
+          { label: 'Tipo de evento', value: 'Casamento' },
+          { label: 'Capacidade', value: '10 pax / mesa' },
+          { label: 'Referências', value: '13 artigos' },
+        ],
+        categories: [
+          {
+            label: 'Mobiliário',
+            items: [
+              { thumb: 'https://placehold.co/400x400/f5efe2/b89a55?text=Mesa', name: 'Mesa Retangular', slug: 'mob-001', cat: 'Mobiliário', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Cadeiras/CD 009.png', name: 'Cadeiras',         cat: 'Mobiliário', qty: '10 un.' },
+            ],
+          },
+          {
+            label: 'Têxteis',
+            items: [
+              { thumb: 'Fotosdiversas/Camilhas/CM 008.png',    name: 'Toalhas Retangulares', cat: 'Têxteis', qty: '1 un.' },
+              { thumb: 'Fotosdiversas/Guardanapos/GD 001.png', name: 'Guardanapos',           cat: 'Têxteis', qty: '10 un.' },
+            ],
+          },
+          {
+            label: 'Louças — Pratos',
+            items: [
+              { thumb: 'Fotosdiversas/Marcadores de Mesa/MC 003.png', name: 'Prato Marcador',             cat: 'Decoração', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 001.png',            name: 'Prato Raso Cerâmica Branca', cat: 'Louças',    qty: '20 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 002.png',            name: 'Prato de Sobremesa',          cat: 'Louças',    qty: '20 un.' },
+              { thumb: 'Fotosdiversas/Louças/LOU 006.png',            name: 'Taça de Consommé',            cat: 'Louças',    qty: '10 un.' },
+            ],
+          },
+          {
+            label: 'Louças — Cristalaria',
+            items: [
+              { thumb: 'Fotosdiversas/Louças/Copos/CP 002.jpg', name: 'Copos de Água',        cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CP 006.png', name: 'Copo de Vinho Branco', cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CP 005.png', name: 'Copo de Vinho Tinto',  cat: 'Louças', qty: '10 un.' },
+              { thumb: 'Fotosdiversas/Louças/Copos/CP 007.png', name: 'Flutes',                cat: 'Louças', qty: '10 un.' },
+            ],
+          },
+          {
+            label: 'Louças — Talheres',
+            items: [
+              { thumb: 'Fotosdiversas/Louças/Talheres/TA 001.png', name: 'Talheres (8 peças)', cat: 'Louças', qty: '10 jogos' },
             ],
           },
         ],
@@ -612,10 +687,10 @@
 
       document.title = pack.title + ' — Moreira & Araújo';
 
-      /* Hero */
+      /* Intro */
       const bg = document.getElementById('heroBg');
-      bg.style.backgroundImage = `url('${pack.image}')`;
-      setTimeout(() => bg.classList.add('animated'), 50);
+      bg.src = pack.image;
+      bg.alt = pack.title;
       document.getElementById('heroEvent').textContent = pack.event;
       document.getElementById('heroTitle').textContent = pack.title;
 
@@ -650,8 +725,7 @@
                   <div class="pack-detail-item-name">${item.name}</div>
                   <div class="pack-detail-qty">${item.qty}</div>
                 </div>
-              </div>
-            `).join('')}
+              </div>`).join('')}
           </div>
         </div>
       `).join('');
@@ -670,7 +744,53 @@
       `).join('');
     }
 
+    /* ── CART ── */
+    function getCart() { return JSON.parse(localStorage.getItem('ma_cart') || '[]'); }
+    function saveCart(c) { localStorage.setItem('ma_cart', JSON.stringify(c)); }
+
+    function updateCartBadge() {
+      const total = getCart().reduce((sum, i) => sum + i.qty, 0);
+      const badge = document.getElementById('cartBadge');
+      badge.textContent = total;
+      badge.style.display = total > 0 ? 'flex' : 'none';
+    }
+
+    function changeQty(delta) {
+      const el = document.getElementById('packQtyVal');
+      el.value = Math.max(1, (parseInt(el.value) || 1) + delta);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
     render();
+    updateCartBadge();
+
+    document.getElementById('addCartBtn').addEventListener('click', function() {
+      const id = new URLSearchParams(location.search).get('id') || 'lyon';
+      const pack = PACKS[id];
+      if (!pack) return;
+      const qty = Math.max(1, parseInt(document.getElementById('packQtyVal').value) || 1);
+      const cart = getCart();
+      const existing = cart.find(item => item.id === 'pack-' + id);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({ id: 'pack-' + id, ref: 'Pack ' + pack.title, name: 'Pack ' + pack.title, image: pack.image, qty: qty });
+      }
+      saveCart(cart);
+      updateCartBadge();
+      showToast('+ ' + qty + '× Pack ' + pack.title + (qty > 1 ? ' adicionados' : ' adicionado'));
+      const btn = this;
+      const origHtml = btn.innerHTML;
+      btn.innerHTML = '✓ Adicionado';
+      btn.classList.add('btn-added');
+      setTimeout(() => { btn.innerHTML = origHtml; btn.classList.remove('btn-added'); }, 1200);
+    });
 
     /* Mobile nav */
     (function() {
