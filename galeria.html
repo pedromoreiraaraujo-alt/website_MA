@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeria — Moreira &amp; Araújo Eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5efe2; --cream-light: #faf7f2; --cream-mid: #ede4d0;
+      --cream-border: #e0d5c0; --dark: #14120f; --dark-soft: #2a2520;
+      --muted: #6b5f4a; --gold: #b89a55; --gold-light: #d4b87a;
+      --gold-dark: #8a7340; --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--dark); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--cream-light);
+      border-bottom: 1px solid var(--cream-border);
+      padding: 1.5rem 2rem;
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo img { height: 56px; width: auto; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); transition: color 0.2s; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--dark); }
+    .nav-cta {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      border: 1px solid var(--gold); color: var(--gold); padding: 0.5rem 1.25rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--white); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: var(--dark); padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url('Fotosdiversas/Fotos secundárias/FS 001.jpg');
+      background-size: cover; background-position: center 30%;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+    .page-header::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(20,18,15,0.4) 0%, rgba(20,18,15,0.1) 50%, rgba(20,18,15,0.5) 100%);
+      pointer-events: none;
+    }
+    .page-header .eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.75rem; position: relative; z-index: 1;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300;
+      color: var(--cream); letter-spacing: -0.02em; position: relative; z-index: 1;
+    }
+    .page-header p {
+      color: rgba(245,239,226,0.55); font-size: 14px; margin-top: 0.75rem;
+      max-width: 480px; margin-left: auto; margin-right: auto; position: relative; z-index: 1;
+    }
+
+    /* ── GALLERY SECTION ── */
+    .gallery-wrap { max-width: 1400px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    .gallery-columns {
+      columns: 3;
+      column-gap: 1.25rem;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(20,18,15,0.55) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item:hover::after { opacity: 1; }
+
+    /* zoom icon on hover */
+    .gallery-item .zoom-icon {
+      position: absolute; bottom: 1rem; right: 1rem; z-index: 2;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(245,239,226,0.6);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cream-light);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+    .gallery-item:hover .zoom-icon { opacity: 1; transform: translateY(0); }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(20,18,15,0.96);
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-img {
+      max-width: 90vw; max-height: 90vh;
+      object-fit: contain;
+      display: block;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+    .lightbox-close {
+      position: fixed; top: 1.5rem; right: 2rem;
+      font-size: 1.5rem; color: rgba(245,239,226,0.6);
+      background: none; border: none; cursor: pointer;
+      line-height: 1; padding: 0.5rem;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: var(--cream-light); }
+    .lightbox-nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: rgba(245,239,226,0.5);
+      padding: 1rem; font-size: 1.75rem; line-height: 1;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .lightbox-nav:hover { color: var(--cream-light); }
+    .lightbox-nav.prev { left: 1rem; }
+    .lightbox-nav.next { right: 1rem; }
+    .lightbox-nav:hover.prev { transform: translateY(-50%) translateX(-3px); }
+    .lightbox-nav:hover.next { transform: translateY(-50%) translateX(3px); }
+    .lightbox-counter {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      font-size: 11px; letter-spacing: 2px; color: rgba(245,239,226,0.4);
+    }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); color: rgba(245,239,226,0.45); padding: 4rem 2rem 2rem; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem; padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(245,239,226,0.07); margin-bottom: 2rem;
+    }
+    .footer-logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; font-style: italic; color: var(--cream-light); margin-bottom: 0.5rem; }
+    .footer-logo .amp { font-family: Georgia, serif; font-style: italic; color: var(--gold); }
+    .footer-tagline { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(245,239,226,0.3); margin-bottom: 1.5rem; }
+    .footer-desc { font-size: 0.875rem; line-height: 1.8; max-width: 260px; }
+    .footer-col h4 { font-family: 'Lato', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-links a { font-size: 0.875rem; color: rgba(245,239,226,0.45); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cream-light); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
+
+    /* ── FADE-IN ── */
+    .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── PAGE TRANSITION ── */
+    #pageTransition {
+      position: fixed; inset: 0; z-index: 10000;
+      background: var(--cream-light);
+      opacity: 1;
+      pointer-events: all;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ── HAMBURGER / MOBILE NAV ── */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .hamburger span { display: block; width: 22px; height: 1px; background: var(--dark); transition: all 0.3s; }
+    .mobile-nav {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--cream); z-index: 999;
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.5rem; font-style: italic; color: var(--dark);
+    }
+    .mobile-nav a.active { color: var(--gold); }
+    .mobile-nav-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-size: 1.5rem; cursor: pointer; color: var(--muted);
+      background: none; border: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .nav-logo img { height: 44px; }
+      .gallery-columns { columns: 2; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 600px) {
+      .gallery-columns { columns: 1; }
+      .gallery-wrap { padding: 2.5rem 1rem 4rem; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .lightbox-nav.prev { left: 0.25rem; }
+      .lightbox-nav.next { right: 0.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="pageTransition"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Moreira &amp; Araújo" style="width:auto;display:block;"></a>
+      <ul class="nav-links">
+        <li><a href="index.html" aria-label="Início" style="display:flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="galeria.html" class="active">Galeria</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+      <a href="contacto.html" class="nav-cta">Pedir Orçamento</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" id="mobileClose">✕</button>
+    <a href="index.html">Início</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="galeria.html" class="active">Galeria</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contacto.html">Contacto</a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="eyebrow">Moreira &amp; Araújo</div>
+    <h1>Galeria</h1>
+    <p>Momentos de elegância em eventos reais</p>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="gallery-wrap">
+    <div class="gallery-columns fade-in" id="galleryGrid">
+      <div class="gallery-item" data-index="0">
+        <img src="Fotosdiversas/Fotos secundárias/FS 001.jpg" alt="Evento 1" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="1">
+        <img src="Fotosdiversas/Fotos secundárias/FS 002.jpg" alt="Evento 2" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="2">
+        <img src="Fotosdiversas/Fotos secundárias/FS 003.jpg" alt="Evento 3" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="3">
+        <img src="Fotosdiversas/Fotos secundárias/FS 004.jpg" alt="Evento 4" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="4">
+        <img src="Fotosdiversas/Fotos secundárias/FS 005.jpg" alt="Evento 5" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="5">
+        <img src="Fotosdiversas/Fotos secundárias/FS 006.jpg" alt="Evento 6" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="6">
+        <img src="Fotosdiversas/Fotos secundárias/FS 007.jpg" alt="Evento 7" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="7">
+        <img src="Fotosdiversas/Fotos secundárias/FS 008.JPG" alt="Evento 8" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="8">
+        <img src="Fotosdiversas/Fotos secundárias/FS 009.jpg" alt="Evento 9" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="9">
+        <img src="Fotosdiversas/Fotos secundárias/FS 010.jpg" alt="Evento 10" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="10">
+        <img src="Fotosdiversas/Fotos secundárias/FS 011.jpg" alt="Evento 11" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="11">
+        <img src="Fotosdiversas/Fotos secundárias/FS 012.jpg" alt="Evento 12" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="12">
+        <img src="Fotosdiversas/Fotos secundárias/FS 013.jpg" alt="Evento 13" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="13">
+        <img src="Fotosdiversas/Fotos secundárias/FS 014.jpg" alt="Evento 14" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="14">
+        <img src="Fotosdiversas/Fotos secundárias/FS 015.jpg" alt="Evento 15" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="15">
+        <img src="Fotosdiversas/Fotos secundárias/FS 016.jpg" alt="Evento 16" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="16">
+        <img src="Fotosdiversas/Fotos secundárias/FS 017.jpg" alt="Evento 17" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="17">
+        <img src="Fotosdiversas/Fotos secundárias/FS 018.jpg" alt="Evento 18" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="18">
+        <img src="Fotosdiversas/Fotos secundárias/FS 019.png" alt="Evento 19" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="19">
+        <img src="Fotosdiversas/Fotos secundárias/FS 020.png" alt="Evento 20" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="20">
+        <img src="Fotosdiversas/Fotos secundárias/FS 021.png" alt="Evento 21" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+      <div class="gallery-item" data-index="21">
+        <img src="Fotosdiversas/Fotos secundárias/FS 022.jpg" alt="Evento 22" loading="lazy">
+        <span class="zoom-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagem ampliada">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">✕</button>
+    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Anterior">&#8592;</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav next" id="lightboxNext" aria-label="Seguinte">&#8594;</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">Moreira <span class="amp">&</span> Araújo</div>
+          <div class="footer-tagline">Eventos · Aluguer de Material</div>
+          <p class="footer-desc">Especialistas em aluguer de material para eventos de luxo em todo Portugal. Qualidade, elegância e serviço personalizado.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Catálogo</h4>
+          <ul class="footer-links">
+            <li><a href="catalogo.html">Mobiliário</a></li>
+            <li><a href="catalogo.html">Louça &amp; Cristalaria</a></li>
+            <li><a href="catalogo.html">Têxteis</a></li>
+            <li><a href="catalogo.html">Decoração</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <ul class="footer-links">
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="galeria.html">Galeria</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:geral.moreiraearaujo@gmail.com">geral.moreiraearaujo@gmail.com</a></li>
+            <li><a href="tel:+351910060114">910 060 114 / 252 651 538</a></li>
+            <li>Vila do Conde, Portugal</li>
+            <li style="margin-top:0.75rem;">Seg. a Sex.: 9h–18h</li>
+            <li>Sábado: 9h–13h</li>
+            <li style="margin-top:1rem;"><a href="https://www.facebook.com/moreiraearaujo2001/?locale=pt_PT" target="_blank" rel="noopener">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Moreira &amp; Araújo. Todos os direitos reservados.</span>
+        <span>Política de Privacidade &nbsp;·&nbsp; Termos e Condições</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── HAMBURGER ── */
+    (function() {
+      const hamburger = document.getElementById('hamburger');
+      const mobileNav = document.getElementById('mobileNav');
+      const mobileClose = document.getElementById('mobileClose');
+      hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+      mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+      mobileNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileNav.classList.remove('open')));
+    })();
+
+    /* ── FADE-IN ── */
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -32px 0px' });
+    fadeEls.forEach(el => io.observe(el));
+
+    /* ── PAGE TRANSITIONS ── */
+    (function() {
+      const overlay = document.getElementById('pageTransition');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        overlay.style.opacity = '0';
+        setTimeout(() => { overlay.style.pointerEvents = 'none'; }, 420);
+      }));
+      document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href]');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || /^https?:\/\//.test(href)) return;
+        e.preventDefault();
+        overlay.style.pointerEvents = 'all';
+        overlay.style.opacity = '1';
+        setTimeout(() => { window.location.href = href; }, 380);
+      });
+    })();
+
+    /* ── LIGHTBOX ── */
+    (function() {
+      const items = Array.from(document.querySelectorAll('.gallery-item'));
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxCounter = document.getElementById('lightboxCounter');
+      const lightboxClose = document.getElementById('lightboxClose');
+      const lightboxPrev = document.getElementById('lightboxPrev');
+      const lightboxNext = document.getElementById('lightboxNext');
+      let current = 0;
+
+      function openAt(idx) {
+        current = (idx + items.length) % items.length;
+        const img = items[current].querySelector('img');
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightboxCounter.textContent = (current + 1) + ' / ' + items.length;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      items.forEach((item, i) => {
+        item.addEventListener('click', () => openAt(i));
+      });
+
+      lightboxClose.addEventListener('click', close);
+      lightboxPrev.addEventListener('click', () => openAt(current - 1));
+      lightboxNext.addEventListener('click', () => openAt(current + 1));
+
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) close();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') openAt(current - 1);
+        if (e.key === 'ArrowRight') openAt(current + 1);
+      });
+    })();
+  </script>
+</body>
+</html>

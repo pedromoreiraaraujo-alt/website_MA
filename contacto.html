@@ -199,6 +199,39 @@
       text-align: center; margin-top: 1rem; line-height: 1.6;
     }
 
+    /* CART PREVIEW */
+    .cart-preview-box {
+      border: 1px solid var(--cream-border);
+      background: var(--cream-light);
+    }
+    .cart-preview-empty {
+      padding: 1rem 1.25rem;
+      font-size: 0.85rem; color: var(--muted); opacity: 0.6;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .cart-preview-empty a { color: var(--gold); text-decoration: underline; opacity: 1; }
+    .cart-preview-item {
+      display: flex; align-items: center; gap: 0.85rem;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--cream-border);
+    }
+    .cart-preview-item:last-child { border-bottom: none; }
+    .cart-preview-thumb {
+      width: 44px; height: 44px; object-fit: cover; flex-shrink: 0;
+      background: var(--cream-mid);
+    }
+    .cart-preview-info { flex: 1; min-width: 0; }
+    .cart-preview-name { font-size: 0.85rem; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart-preview-ref { font-size: 0.72rem; color: var(--muted); opacity: 0.7; }
+    .cart-preview-qty { font-size: 0.8rem; font-weight: 700; color: var(--gold); white-space: nowrap; flex-shrink: 0; }
+    .cart-preview-remove {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); opacity: 0.45; font-size: 0.9rem; line-height: 1;
+      padding: 0 0 0 0.5rem; transition: opacity 0.2s;
+      flex-shrink: 0;
+    }
+    .cart-preview-remove:hover { opacity: 0.8; }
+
     .form-success {
       display: none; text-align: center; padding: 3rem 1rem;
     }
@@ -273,6 +306,7 @@
       <ul class="nav-links">
         <li><a href="index.html" aria-label="Início"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a></li>
         <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="galeria.html">Galeria</a></li>
         <li><a href="sobre.html">Sobre</a></li>
         <li><a href="contacto.html" class="active">Contacto</a></li>
       </ul>
@@ -285,6 +319,7 @@
     <button class="mobile-nav-close" id="mobileClose">✕</button>
     <a href="index.html">Início</a>
     <a href="catalogo.html">Catálogo</a>
+    <a href="galeria.html">Galeria</a>
     <a href="sobre.html">Sobre</a>
     <a href="contacto.html" class="active">Contacto</a>
   </div>
@@ -372,51 +407,23 @@
             <input type="text" id="nome" name="nome" placeholder="O seu nome" required>
           </div>
           <div class="form-group">
-            <label for="empresa">Empresa / Organização</label>
-            <input type="text" id="empresa" name="empresa" placeholder="Opcional">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
             <label for="email">Email *</label>
             <input type="email" id="email" name="email" placeholder="email@exemplo.com" required>
           </div>
-          <div class="form-group">
-            <label for="telefone">Telefone</label>
-            <input type="tel" id="telefone" name="telefone" placeholder="9XX XXX XXX">
-          </div>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="tipo">Tipo de Evento *</label>
-            <div class="form-select-wrapper">
-              <select id="tipo" name="tipo" required>
-                <option value="" disabled selected>Selecionar...</option>
-                <option value="casamento">Casamento</option>
-                <option value="batizado">Batizado / Comunhão</option>
-                <option value="empresarial">Evento Empresarial</option>
-                <option value="gala">Gala / Jantar de Gala</option>
-                <option value="aniversario">Aniversário</option>
-                <option value="outro">Outro</option>
-              </select>
+        <div class="form-group">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="9XX XXX XXX">
+        </div>
+
+        <div class="form-group">
+          <label>Material Selecionado</label>
+          <div class="cart-preview-box" id="cartPreviewBox">
+            <div class="cart-preview-empty" id="cartPreviewEmpty">
+              <span>Nenhum item selecionado — </span><a href="catalogo.html">ir ao catálogo</a>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="data">Data do Evento</label>
-            <input type="date" id="data" name="data">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="convidados">Nº de Convidados</label>
-            <input type="number" id="convidados" name="convidados" placeholder="Ex: 150" min="1">
-          </div>
-          <div class="form-group">
-            <label for="local">Local do Evento</label>
-            <input type="text" id="local" name="local" placeholder="Ex: Quinta dos Pinheiros">
+            <div id="cartPreviewList"></div>
           </div>
         </div>
 
@@ -515,6 +522,48 @@
       mobileNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileNav.classList.remove('open')));
     })();
 
+    /* ── CART PREVIEW ── */
+    function getCart() { return JSON.parse(localStorage.getItem('ma_cart') || '[]'); }
+    function saveCart(c) { localStorage.setItem('ma_cart', JSON.stringify(c)); }
+
+    function renderCartPreview() {
+      const cart = getCart();
+      const emptyEl = document.getElementById('cartPreviewEmpty');
+      const listEl  = document.getElementById('cartPreviewList');
+      listEl.innerHTML = '';
+
+      if (!cart.length) {
+        emptyEl.style.display = 'flex';
+        return;
+      }
+      emptyEl.style.display = 'none';
+      cart.forEach(function(item) {
+        const row = document.createElement('div');
+        row.className = 'cart-preview-item';
+        row.innerHTML = `
+          <img class="cart-preview-thumb" src="${item.image}" alt="${item.name}" onerror="this.style.visibility='hidden'">
+          <div class="cart-preview-info">
+            <div class="cart-preview-name">${item.name}</div>
+            <div class="cart-preview-ref">${item.ref}</div>
+          </div>
+          <div class="cart-preview-qty">×${item.qty}</div>
+          <button class="cart-preview-remove" data-id="${item.id}" aria-label="Remover" title="Remover">✕</button>
+        `;
+        listEl.appendChild(row);
+      });
+
+      listEl.querySelectorAll('.cart-preview-remove').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const id = this.dataset.id;
+          const updated = getCart().filter(function(i) { return i.id !== id; });
+          saveCart(updated);
+          renderCartPreview();
+        });
+      });
+    }
+
+    renderCartPreview();
+
     /* ── EmailJS ── */
     const EMAILJS_SERVICE  = 'service_hedx7n4';
     const EMAILJS_TEMPLATE = 'template_fo7ukql';
@@ -525,23 +574,17 @@
       e.preventDefault();
       const data = new FormData(this);
 
-      const nome      = data.get('nome')        || '';
-      const email     = data.get('email')       || '';
-      const tel       = data.get('telefone')    || '';
-      const empresa   = data.get('empresa')     || '';
-      const tipo      = data.get('tipo')        || '';
-      const dataEvt   = data.get('data')        || '';
-      const convid    = data.get('convidados')  || '';
-      const local     = data.get('local')       || '';
-      const msg       = data.get('mensagem')    || '';
+      const nome    = data.get('nome')     || '';
+      const email   = data.get('email')    || '';
+      const tel     = data.get('telefone') || '';
+      const msg     = data.get('mensagem') || '';
 
-      const detalhes = [
-        empresa   ? `Empresa: ${empresa}`            : '',
-        tipo      ? `Tipo de evento: ${tipo}`        : '',
-        dataEvt   ? `Data: ${dataEvt}`               : '',
-        convid    ? `Nº convidados: ${convid}`        : '',
-        local     ? `Local: ${local}`                : '',
-      ].filter(Boolean).join('\n');
+      const cart = getCart();
+      const cartText = cart.length
+        ? cart.map(function(i) { return `${i.ref} — ${i.name} (×${i.qty})`; }).join('\n')
+        : '—';
+
+      const detalhes = `Material selecionado:\n${cartText}`;
 
       const btn = document.getElementById('contactSubmitBtn');
       btn.textContent = 'A enviar…';
