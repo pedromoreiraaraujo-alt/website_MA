@@ -194,6 +194,20 @@
     .btn-submit:hover { background: var(--gold-dark); transform: translateY(-2px); }
     .btn-submit:active { transform: translateY(0); }
 
+    .form-consent {
+      display: flex; align-items: flex-start; gap: 0.65rem;
+    }
+    .form-consent input[type="checkbox"] {
+      width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px;
+      accent-color: var(--gold); cursor: pointer;
+    }
+    .form-consent label {
+      font-size: 0.78rem; color: var(--muted); line-height: 1.6;
+      letter-spacing: 0; text-transform: none; font-weight: 400; cursor: pointer;
+    }
+    .form-consent a { color: var(--gold-dark); text-decoration: underline; }
+    .form-consent a:hover { color: var(--gold); }
+
     .form-note {
       font-size: 0.78rem; color: var(--muted); opacity: 0.65;
       text-align: center; margin-top: 1rem; line-height: 1.6;
@@ -437,6 +451,11 @@
         <div class="form-group">
           <label for="mensagem">Mensagem / Material pretendido</label>
           <textarea id="mensagem" name="mensagem" placeholder="Descreva o que precisa — mesas, cadeiras, têxteis, decoração..."></textarea>
+        </div>
+
+        <div class="form-consent">
+          <input type="checkbox" id="rgpd" name="rgpd" required>
+          <label for="rgpd">Concordo com a <a href="politica-privacidade.html" target="_blank">Política de Privacidade</a> e autorizo o tratamento dos meus dados pessoais para resposta ao presente pedido de orçamento.</label>
         </div>
 
         <div>
