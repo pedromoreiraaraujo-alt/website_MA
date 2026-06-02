@@ -171,7 +171,7 @@
 
     .hero-left {
       display: flex; flex-direction: column; justify-content: space-between;
-      padding: 7rem 4rem 4.5rem;
+      padding: 9rem 4rem 4.5rem;
       padding-left: max(2rem, calc((100vw - 4rem - 1200px) / 2 + 2rem));
       background: var(--cream-light);
       position: relative;
@@ -1226,11 +1226,20 @@
     }
 
     @media (max-width: 760px) {
-      .recent-carousel { padding: 0; }
+      .recent-carousel { padding: 0; position: relative; }
+      .recent-carousel::after {
+        content: '';
+        position: absolute; top: 0; right: 0; bottom: 0;
+        width: 80px;
+        background: linear-gradient(to right, transparent, var(--cream));
+        pointer-events: none;
+        z-index: 2;
+      }
       .recent-viewport { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; width: 100%; }
       .recent-viewport::-webkit-scrollbar { display: none; }
+      .recent-nav { display: none; }
       .recent-track .recent-card[aria-hidden="true"] { display: none; }
-      .recent-track .recent-card { flex: 0 0 calc(50vw - 1.5rem); }
+      .recent-track .recent-card { flex: 0 0 calc(80vw); }
     }
     @media (max-width: 600px) {
       .stats-inner { gap: 0; }
