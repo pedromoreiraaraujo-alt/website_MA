@@ -477,7 +477,7 @@
       will-change: transform;
     }
     .recent-track .recent-card {
-      flex: 0 0 calc(33.333% - 1.667rem);
+      flex: 0 0 calc(25% - 1.875rem);
     }
     .recent-dots { display: none; }
     .recent-card-img-scene {
@@ -487,52 +487,69 @@
       transition: opacity 5s cubic-bezier(0.45,0,0.55,1), transform 5s cubic-bezier(0.45,0,0.55,1);
       transition-delay: 1.2s;
     }
-    .recent-card:hover .recent-card-img-scene { opacity: 1; transform: scale(1.03); }
+    .recent-card:hover .recent-card-img-scene { opacity: 1; transform: scale(1.04); }
     .recent-card-img.has-scene img:not(.recent-card-img-scene) {
       transition: opacity 5.5s cubic-bezier(0.45,0,0.55,1), transform 5.5s cubic-bezier(0.45,0,0.55,1);
       transition-delay: 1.2s;
     }
-    .recent-card:hover .recent-card-img.has-scene img:not(.recent-card-img-scene) { opacity: 0; transform: scale(1.03); }
+    .recent-card:hover .recent-card-img.has-scene img:not(.recent-card-img-scene) { opacity: 0; transform: scale(1.04); }
     .recent-nav {
       position: absolute; top: 40%;
       width: 36px; height: 36px; border-radius: 50%;
-      background: transparent; border: 1px solid rgba(20,18,15,0.18);
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(245,239,226,0.25);
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: border-color 0.2s, background 0.2s, transform 0.2s;
       z-index: 10;
     }
-    .recent-nav:hover { background: var(--cream-light); border-color: var(--gold); transform: scale(1.08); }
+    .recent-nav:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); transform: scale(1.08); }
     .recent-nav:active { transform: scale(0.96); }
     .recent-nav.prev { left: 0; }
     .recent-nav.next { right: 0; }
 
     .recent-card {
-      background: transparent;
+      background: #fff;
+      border: 1px solid rgba(224,213,192,0.6);
+      border-radius: 12px;
+      overflow: hidden;
       cursor: pointer;
-      transition: opacity 0.3s ease;
+      position: relative;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 2px 12px rgba(20,18,15,0.07), 0 1px 3px rgba(20,18,15,0.04);
       text-decoration: none; color: inherit; display: block;
     }
-    .recent-card:hover { opacity: 0.88; }
+    .recent-card:hover {
+      border-color: rgba(184,154,85,0.3);
+      box-shadow: 0 12px 32px rgba(20,18,15,0.12), 0 3px 8px rgba(20,18,15,0.07);
+      transform: translateY(-5px);
+    }
 
     .recent-card-img {
-      width: 100%; aspect-ratio: 3/4;
+      width: 100%; aspect-ratio: 1;
       overflow: hidden; position: relative;
-      background: var(--cream-mid);
+      background: #f5f0e8;
+      border-radius: 11px 11px 0 0;
+      display: flex; align-items: center; justify-content: center;
     }
     .recent-card-img img {
       width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
     }
-    .recent-card:hover .recent-card-img img { transform: scale(1.04); }
+    .recent-card:hover .recent-card-img img { transform: scale(1.07); }
 
-    .recent-card-body { padding: 1.25rem 0 0; }
+    .recent-card-body { padding: 1rem 1.1rem 1.25rem; text-align: center; }
     .recent-card-cat {
-      font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.5rem;
+      font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem; position: relative;
+    }
+    .recent-card-cat::after {
+      content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 32px; height: 1px; background: rgba(184,154,85,0.3);
     }
     .recent-card-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.5rem; font-weight: 400; color: rgba(245,239,226,0.9); line-height: 1.25;
+      font-size: 1.35rem; font-weight: 900; line-height: 1.2;
+      color: var(--dark);
     }
     .recent-card-price { display: none; }
 
@@ -1515,90 +1532,80 @@
           <a href="catalogo.html" class="recent-card">
             <div class="recent-card-img"><img src="Fotosdiversas/Louças/Copos/CPP 007.png" alt="Copo Fio Dourado" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Louças</div>
+              <span class="recent-card-cat">CPP 007</span>
               <div class="recent-card-name">Copo Fio Dourado</div>
-              <div class="recent-card-price">Sob consulta</div>
             </div>
           </a>
 
           <a href="catalogo.html" class="recent-card">
             <div class="recent-card-img"><img src="Fotosdiversas/Cadeiras/CD 009.png" alt="Cadeira Imperial Dourada" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Mobiliário</div>
+              <span class="recent-card-cat">CD 009</span>
               <div class="recent-card-name">Cadeira Imperial Dourada</div>
-              <div class="recent-card-price">Sob consulta</div>
             </div>
           </a>
 
           <a href="catalogo.html" class="recent-card">
             <div class="recent-card-img"><img src="Fotosdiversas/Louças/Talheres/TA 001.png" alt="Conjunto Talheres Prateados" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Louças</div>
-              <div class="recent-card-name">Conjunto Talheres Prateados</div>
-              <div class="recent-card-price">Sob consulta</div>
+              <span class="recent-card-cat">TA 001–010</span>
+              <div class="recent-card-name">Talheres Prateados</div>
             </div>
           </a>
 
           <a href="catalogo.html" class="recent-card">
             <div class="recent-card-img"><img src="Fotosdiversas/Almofadas/ALM 001.png" alt="Almofada Estampado Burgundy" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Têxteis</div>
-              <div class="recent-card-name">Almofada — Estampado Burgundy</div>
-              <div class="recent-card-price">Sob consulta</div>
+              <span class="recent-card-cat">ALM 001</span>
+              <div class="recent-card-name">Almofada Burgundy</div>
             </div>
           </a>
 
           <a href="catalogo.html" class="recent-card">
-            <div class="recent-card-img"><img src="Fotosdiversas/Marcadores de Mesa/MC 001.png" alt="Prato Marcador Vidro Fio Dourado" loading="lazy"></div>
+            <div class="recent-card-img"><img src="Fotosdiversas/Marcadores de Mesa/MC 001.png" alt="Prato Marcador Fio Dourado" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Decoração</div>
+              <span class="recent-card-cat">MC 001</span>
               <div class="recent-card-name">Prato Marcador Fio Dourado</div>
-              <div class="recent-card-price">Sob consulta</div>
             </div>
           </a>
 
-          <a href="catalogo.html" class="recent-card" data-hover-img="Fotosdiversas/Imagens_Slides_iniciais/II2.jpg">
+          <a href="catalogo.html" class="recent-card">
             <div class="recent-card-img"><img src="Fotosdiversas/Louças/Copos/CPP 001.png" alt="Copo Verde" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Louças</div>
+              <span class="recent-card-cat">CPP 001</span>
               <div class="recent-card-name">Copo Verde</div>
-              <div class="recent-card-price">Sob consulta</div>
             </div>
           </a>
 
           <a href="catalogo.html" class="recent-card">
             <div class="recent-card-img"><img src="Fotosdiversas/Complementos Exterior/SB 001.png" alt="Módulo Sofá Bambu" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Exterior</div>
+              <span class="recent-card-cat">SB 001</span>
               <div class="recent-card-name">Módulo Sofá Bambu</div>
-              <div class="recent-card-price">Sob consulta</div>
             </div>
           </a>
 
           <a href="catalogo.html" class="recent-card">
             <div class="recent-card-img"><img src="Fotosdiversas/Louças/LOU 001.png" alt="Prato de Jantar" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Louças</div>
-              <div class="recent-card-name">Prato de Jantar</div>
-              <div class="recent-card-price">Sob consulta</div>
+              <span class="recent-card-cat">LOU 001</span>
+              <div class="recent-card-name">Prato Raso Cerâmica Branca</div>
             </div>
           </a>
 
           <a href="catalogo.html" class="recent-card">
             <div class="recent-card-img"><img src="Fotosdiversas/Complementos Exterior/AD 001.png" alt="Arco Dourado" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Exterior</div>
+              <span class="recent-card-cat">AD 001</span>
               <div class="recent-card-name">Arco Dourado</div>
-              <div class="recent-card-price">Sob consulta</div>
             </div>
           </a>
 
           <a href="catalogo.html" class="recent-card">
             <div class="recent-card-img"><img src="Fotosdiversas/Complementos Mesa/COM 017.png" alt="Conjunto Castiçais Dourados" loading="lazy"></div>
             <div class="recent-card-body">
-              <div class="recent-card-cat">Outros</div>
+              <span class="recent-card-cat">COM 017</span>
               <div class="recent-card-name">Conjunto Castiçais Dourados</div>
-              <div class="recent-card-price">Sob consulta</div>
             </div>
           </a>
 
