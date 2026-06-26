@@ -164,58 +164,26 @@
     /* ── CONTACT BANNER ── */
     .cat-contact-banner {
       margin-top: 4rem;
-      position: relative;
-      overflow: hidden;
-      padding: 2.8rem 3.5rem;
-      background: linear-gradient(120deg, #ede4cf 0%, #faf7f2 55%, #f0e8d5 100%);
-      border-radius: 3px;
-      display: flex; align-items: center; justify-content: space-between; gap: 2.5rem;
+      padding: 2rem 2.5rem;
+      background: var(--cream-light);
+      border-left: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
       flex-wrap: wrap;
-      box-shadow:
-        0 1px 0 rgba(255,255,255,0.85) inset,
-        0 2px 8px rgba(184,154,85,0.1),
-        0 10px 40px rgba(20,18,15,0.06);
-    }
-    .cat-contact-banner::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 8% 50%, rgba(184,154,85,0.2) 0%, transparent 52%),
-        radial-gradient(ellipse at 90% 25%, rgba(212,184,122,0.1) 0%, transparent 45%);
-      pointer-events: none;
-    }
-    .cat-contact-banner::after {
-      content: '';
-      position: absolute; top: 0; left: 0; width: 3px; height: 100%;
-      background: linear-gradient(to bottom, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
     }
     .cat-contact-banner-inner {
-      display: flex; flex-direction: column; gap: 0.35rem;
-      position: relative; z-index: 1;
-    }
-    .cat-contact-banner-eyebrow {
-      font-family: 'Lato', sans-serif;
-      font-size: 9px; font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase;
-      color: var(--gold);
-      display: flex; align-items: center; gap: 0.7rem;
-    }
-    .cat-contact-banner-eyebrow::before {
-      content: ''; display: block;
-      width: 20px; height: 1px;
-      background: linear-gradient(to right, var(--gold), transparent);
+      display: flex; flex-direction: column; gap: 0.25rem;
     }
     .cat-contact-banner p {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.85rem; font-weight: 400; color: var(--dark);
-      letter-spacing: -0.02em; line-height: 1.2;
+      font-size: 1.5rem; font-weight: 400; color: var(--dark);
+      line-height: 1.3;
     }
     .cat-contact-banner p span { color: var(--gold); font-style: italic; }
     .cat-contact-banner-sub {
       font-family: 'Lato', sans-serif;
       font-size: 12px; color: var(--muted); line-height: 1.5;
-      margin-top: 0.15rem;
     }
-    .cat-contact-banner-cta { position: relative; z-index: 1; flex-shrink: 0; }
+    .cat-contact-banner-cta { flex-shrink: 0; }
     .cat-contact-banner a {
       display: inline-flex; align-items: center; gap: 0.65rem;
       background: #25D366; color: #fff;
@@ -2120,7 +2088,8 @@
         ref: 'CD 009',
         name: 'Cadeira Imperial<br>Dourada',
         desc: 'Cadeira imperial com estrutura dourada e assento almofadado. Presença majestosa para eventos de luxo, galas e cerimónias de prestígio.',
-        images: ['Fotosdiversas/Cadeiras/CD 009.png'],
+        images: ['Fotosdiversas/Cadeiras/CD 009.png', 'Fotosdiversas/Cadeiras/CD 009 - 2.jpeg'],
+        hoverImage: 'Fotosdiversas/Cadeiras/CD 009 - 2.jpeg',
         specs: [['Material', 'Metal + Tecido'], ['Acabamento', 'Dourado'], ['Tipo', 'Imperial']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
@@ -2686,7 +2655,7 @@
       'sb-004': { cat: 'exterior-sb', ref: 'SB 004', name: 'Módulo Poltrona (Bambu)', desc: 'Módulo poltrona em bambu para uso exterior.', images: ['Fotosdiversas/Complementos Exterior/SB 004.jpg'], specs: [['Material', 'Bambu'], ['Uso', 'Exterior']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
       'cl-001': { cat: 'exterior-sb', ref: 'CL 001', name: 'Conjunto Sofás Bambu 4 Pax', desc: '1 sofá de canto + 3 sofás de centro + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 001.jpg'], specs: [['Composição', '1 canto + 3 centro + 1 mesa'], ['Capacidade', '4 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
       'cl-002': { cat: 'exterior-sb', ref: 'CL 002', name: 'Conjunto Sofás Bambu 4 Pax', desc: '2 sofás de canto + 2 sofás de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 002.jpg'], specs: [['Composição', '2 canto + 2 centro'], ['Capacidade', '4 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
-      'cl-003': { cat: 'exterior-sb', ref: 'CL 003', name: 'Conjunto Sofás Bambu 4 Pax', desc: '2 sofás de canto + 2 poltronas + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 003.jpg'], specs: [['Composição', '2 canto + 2 poltronas + 1 mesa'], ['Capacidade', '4 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
+      'cl-003': { cat: 'exterior-sb', ref: 'CL 003', name: 'Conjunto Sofás Bambu 4 Pax', desc: '2 sofás de canto + 2 poltronas + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 003.jpg', 'Fotosdiversas/Complementos Exterior/CL 003 - 2.jpeg', 'Fotosdiversas/Complementos Exterior/CL 003 - 3.jpeg'], hoverImage: 'Fotosdiversas/Complementos Exterior/CL 003 - 2.jpeg', specs: [['Composição', '2 canto + 2 poltronas + 1 mesa'], ['Capacidade', '4 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
       'cl-004': { cat: 'exterior-sb', ref: 'CL 004', name: 'Conjunto Sofás Bambu 5 Pax', desc: '3 sofás de canto + 2 sofás de centro + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 004.jpg'], specs: [['Composição', '3 canto + 2 centro + 1 mesa'], ['Capacidade', '5 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
       'cl-005': { cat: 'exterior-sb', ref: 'CL 005', name: 'Conjunto Sofás Bambu 5 Pax', desc: '4 sofás de canto + 1 sofá de centro + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 005.jpg'], specs: [['Composição', '4 canto + 1 centro + 1 mesa'], ['Capacidade', '5 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
       'cl-006': { cat: 'exterior-sb', ref: 'CL 006', name: 'Conjunto Sofás Bambu 5 Pax', desc: '3 sofás de canto + 2 sofás de centro + 1 mesa de centro.', images: ['Fotosdiversas/Complementos Exterior/CL 006.jpg'], specs: [['Composição', '3 canto + 2 centro + 1 mesa'], ['Capacidade', '5 pessoas'], ['Material', 'Bambu']], priceLabel: 'Preço por conjunto / dia', price: 'Sob consulta', priceNote: '' },
@@ -2716,7 +2685,7 @@
 
       /* TOALHAS RETANGULARES */
       'thr-001': { cat: 'texteis-thr', ref: 'THR 001', name: 'Toalha Retangular Tostado', desc: 'Toalha retangular em tecido tostado. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+001'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Tostado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
-      'thr-002': { cat: 'texteis-thr', ref: 'THR 002', name: 'Toalha Retangular Estampado Burgundy', desc: 'Toalha retangular com estampado burgundy. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+002'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Estampado Burgundy']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-002': { cat: 'texteis-thr', ref: 'THR 002', name: 'Toalha Retangular Estampado Burgundy', desc: 'Toalha retangular com estampado burgundy. Dimensões: 2,5x4m.', images: ['Fotosdiversas/Toalhas quadradas/THR 002.jpeg', 'Fotosdiversas/Toalhas quadradas/THR 002 - 2.jpeg'], hoverImage: 'Fotosdiversas/Toalhas quadradas/THR 002 - 2.jpeg', specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Estampado Burgundy']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'thr-003': { cat: 'texteis-thr', ref: 'THR 003', name: 'Toalha Retangular Branco', desc: 'Toalha retangular em tecido adamascado branco. Dimensões: 2,5x4m.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+003'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'thr-004': { cat: 'texteis-thr', ref: 'THR 004', name: 'Toalha Retangular Areia', desc: 'Toalha retangular na cor areia. Dimensões: 2,5x4m.', images: ['Fotosdiversas/Toalhas quadradas/THR 004.jpg'], specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Areia']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'thr-005': { cat: 'texteis-thr', ref: 'THR 005', name: 'Toalha Retangular Branca Lisa Cetim', desc: 'Toalha retangular em cetim branco liso. Dimensões: 1,5x3m.', images: ['Fotosdiversas/Toalhas quadradas/THR 005.jpg'], specs: [['Dimensão', '1,5 × 3 m'], ['Cor', 'Branco'], ['Tecido', 'Cetim liso']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
@@ -2725,6 +2694,7 @@
       'thr-008': { cat: 'texteis-thr', ref: 'THR 008', name: 'Toalha Retangular Renda Pérola', desc: 'Toalha retangular com renda pérola. Dimensões: 2,5x6,5m.', images: ['Fotosdiversas/Toalhas quadradas/THR 008.jpg'], specs: [['Dimensão', '2,5 × 6,5 m'], ['Acabamento', 'Renda Pérola']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'thr-009': { cat: 'texteis-thr', ref: 'THR 009', name: 'Toalha Xadrez Vermelho', desc: 'Toalha xadrez vermelha disponível em várias medidas.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+009'], specs: [['Cor', 'Vermelho'], ['Padrão', 'Xadrez'], ['Medidas', 'Várias']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
       'thr-010': { cat: 'texteis-thr', ref: 'THR 010', name: 'Toalha Xadrez Azul', desc: 'Toalha xadrez azul disponível em várias medidas.', images: ['https://placehold.co/800x600/2a2520/b89a55?text=THR+010'], specs: [['Cor', 'Azul'], ['Padrão', 'Xadrez'], ['Medidas', 'Várias']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
+      'thr-011': { cat: 'texteis-thr', ref: 'THR 011', name: 'Toalha Retangular Beje Adamascada', desc: '', images: ['Fotosdiversas/Toalhas quadradas/THR 011.jpeg', 'Fotosdiversas/Toalhas quadradas/THR 011 - 1.jpeg', 'Fotosdiversas/Toalhas quadradas/THR 011 -2.jpeg'], hoverImage: 'Fotosdiversas/Toalhas quadradas/THR 011 - 1.jpeg', specs: [['Dimensão', '2,5 × 4 m'], ['Cor', 'Beje'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
 
       /* TOALHAS QUADRADAS */
       'thq-001': { cat: 'texteis-thq', ref: 'THQ 001', name: 'Toalha Quadrada Branca', desc: 'Toalha quadrada em tecido adamascado branco.', images: ['Fotosdiversas/Toalhas quadradas/THQ 001.png'], specs: [['Dimensão', '2,3 m × 2,3 m'], ['Cor', 'Branco'], ['Tecido', 'Adamascado']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: 'Preços por quantidade disponíveis' },
@@ -3487,9 +3457,8 @@
       const bannerHTML = `
         <div class="cat-contact-banner">
           <div class="cat-contact-banner-inner">
-            <span class="cat-contact-banner-eyebrow">Apoio ao Cliente</span>
             <p>Não encontra o que <span>precisa?</span></p>
-            <p class="cat-contact-banner-sub">A nossa equipa está disponível para o ajudar a encontrar a solução ideal.</p>
+            <p class="cat-contact-banner-sub">Na Moreira &amp; Araújo dizemos: <em>O que não há, faz-se.</em></p>
           </div>
           <div class="cat-contact-banner-cta">
             <a href="https://wa.me/351910060114" target="_blank" rel="noopener">
