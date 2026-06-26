@@ -19,7 +19,7 @@
     }
 
     html { scroll-behavior: smooth; }
-    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--dark); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+    body { font-family: 'Lato', sans-serif; background: var(--dark); color: var(--dark); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
     a { text-decoration: none; color: inherit; }
 
     /* ── NAV ── */
@@ -76,8 +76,18 @@
 
 
     /* ── CATEGORY SECTION ── */
-    .cat-section { display: none; }
+    .cat-section { display: none; position: relative; }
     .cat-section.visible { display: block; }
+    .cat-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url('Fotosdiversas/Fotos_fundo/Mobiliário.png');
+      background-size: cover; background-position: center 40%;
+      background-attachment: fixed;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
 
     /* ── CATEGORY HEADER (static) ── */
     .cat-header {
@@ -93,6 +103,7 @@
       position: absolute; inset: 0;
       background-image: url('Fotosdiversas/Fotos_fundo/Mobiliário.png');
       background-size: cover; background-position: center 40%;
+      background-attachment: fixed;
       opacity: 0.18; pointer-events: none;
     }
     .cat-header::after {
@@ -159,13 +170,13 @@
     .cat-subnav a:hover { color: white; border-bottom-color: var(--gold-light); }
 
     /* ── CAT CONTENT & BAR ── */
-    .cat-content { padding: 3rem 18rem 5rem; }
+    .cat-content { padding: 3rem 18rem 5rem; position: relative; z-index: 1; }
 
     /* ── CONTACT BANNER ── */
     .cat-contact-banner {
       margin-top: 4rem;
       padding: 2rem 2.5rem;
-      background: var(--cream-light);
+      background: rgba(255,255,255,0.05);
       border-left: 2px solid var(--gold);
       display: flex; align-items: center; justify-content: space-between; gap: 2rem;
       flex-wrap: wrap;
@@ -175,14 +186,15 @@
     }
     .cat-contact-banner p {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.5rem; font-weight: 400; color: var(--dark);
+      font-size: 1.5rem; font-weight: 400; color: rgba(255,255,255,0.9);
       line-height: 1.3;
     }
-    .cat-contact-banner p span { color: var(--gold); font-style: italic; }
+    .cat-contact-banner p span { color: var(--gold-light); font-style: italic; }
     .cat-contact-banner-sub {
       font-family: 'Lato', sans-serif;
-      font-size: 12px; color: var(--muted); line-height: 1.5;
+      font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5;
     }
+    .cat-contact-banner-sub em { font-weight: 600; }
     .cat-contact-banner-cta { flex-shrink: 0; }
     .cat-contact-banner a {
       display: inline-flex; align-items: center; gap: 0.65rem;
@@ -204,13 +216,13 @@
     .cat-subsection-header {
       margin-bottom: 2rem; padding-bottom: 1rem;
       padding-left: 1rem;
-      border-bottom: 1px solid var(--cream-border);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
       border-left: 2px solid var(--gold-light);
       display: flex; align-items: center; gap: 1rem;
     }
     .cat-subsection-header h3 {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.45rem; font-weight: 400; color: var(--dark);
+      font-size: 1.45rem; font-weight: 400; color: rgba(255,255,255,0.9);
     }
     .cat-subsection-header .subsection-badge {
       font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
@@ -218,7 +230,7 @@
       border: 1px solid rgba(184,154,85,0.25);
       padding: 0.25rem 0.6rem;
     }
-    .cat-subsection-header p { color: var(--muted); font-size: 13px; margin-top: 0.2rem; }
+    .cat-subsection-header p { color: rgba(255,255,255,0.45); font-size: 13px; margin-top: 0.2rem; }
 
     /* ── PRODUCT GRID ── */
     .product-grid {
@@ -566,7 +578,7 @@
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1.2rem; font-weight: 900;
       letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--gold-dark);
+      color: var(--gold-light);
       margin-bottom: 1.5rem; padding-bottom: 0.7rem;
       border-bottom: 1px solid rgba(184,154,85,0.22);
     }
@@ -730,7 +742,7 @@
     .cat-search-field input::-webkit-search-cancel-button { cursor: pointer; }
     .cat-search-count {
       font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.45);
       opacity: 0;
       transform: translateY(-4px);
       transition: opacity 0.3s ease, transform 0.3s ease;
@@ -741,7 +753,7 @@
       padding: 4rem 0; text-align: center;
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1.4rem; font-weight: 300; font-style: italic;
-      color: var(--muted); display: none;
+      color: rgba(255,255,255,0.4); display: none;
     }
     .cat-no-results small {
       display: block; margin-top: 0.4rem;
@@ -1963,9 +1975,7 @@
         name: 'Mesa Redonda',
         desc: 'Mesa redonda elegante ideal para banquetes e jantares. Disponível em diferentes diâmetros para 8 a 12 pessoas.',
         images: [
-          'https://placehold.co/800x600/2a2520/b89a55?text=Mesa+Redonda',
-          'https://placehold.co/800x600/2a2520/b89a55?text=Vista+2',
-          'https://placehold.co/800x600/2a2520/b89a55?text=Vista+3',
+          'Fotosdiversas/Cadeiras/MS 001.jpeg',
         ],
         specs: [
           ['Dimensões', 'Ø 180 cm'],
@@ -1983,7 +1993,9 @@
         desc: 'Mesa rectangular em madeira para banquetes. Combinável com outras para criar configurações personalizadas.',
         images: [
           'Fotosdiversas/Cadeiras/MS 002.png',
+          'Fotosdiversas/Cadeiras/MS 002 - 2.jpeg',
         ],
+        hoverImage: 'Fotosdiversas/Cadeiras/MS 002 - 2.jpeg',
         specs: [
           ['Dimensões', '180 × 90 cm'],
           ['Capacidade', '6 a 8 pessoas'],
