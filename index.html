@@ -448,20 +448,20 @@
     .featured-section { background: var(--cream); }
 
     .recent-carousel {
-      margin-top: 2.5rem;
+      margin-top: 3rem;
       position: relative;
-      padding: 0 52px;
+      padding: 0 48px;
     }
     .recent-viewport {
       overflow: hidden;
     }
     .recent-track {
       display: flex;
-      gap: 1.75rem;
+      gap: 2.5rem;
       will-change: transform;
     }
     .recent-track .recent-card {
-      flex: 0 0 calc(25% - 1.3125rem);
+      flex: 0 0 calc(33.333% - 1.667rem);
     }
     .recent-dots { display: none; }
     .recent-card-img-scene {
@@ -471,71 +471,54 @@
       transition: opacity 5s cubic-bezier(0.45,0,0.55,1), transform 5s cubic-bezier(0.45,0,0.55,1);
       transition-delay: 1.2s;
     }
-    .recent-card:hover .recent-card-img-scene { opacity: 1; transform: scale(1.04); }
+    .recent-card:hover .recent-card-img-scene { opacity: 1; transform: scale(1.03); }
     .recent-card-img.has-scene img:not(.recent-card-img-scene) {
       transition: opacity 5.5s cubic-bezier(0.45,0,0.55,1), transform 5.5s cubic-bezier(0.45,0,0.55,1);
       transition-delay: 1.2s;
     }
-    .recent-card:hover .recent-card-img.has-scene img:not(.recent-card-img-scene) { opacity: 0; transform: scale(1.04); }
+    .recent-card:hover .recent-card-img.has-scene img:not(.recent-card-img-scene) { opacity: 0; transform: scale(1.03); }
     .recent-nav {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 40px; height: 40px; border-radius: 50%;
-      background: var(--cream-light); border: 1px solid var(--cream-border);
-      box-shadow: 0 2px 12px rgba(20,18,15,0.1);
+      position: absolute; top: 40%;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: transparent; border: 1px solid rgba(20,18,15,0.18);
       cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
       z-index: 10;
     }
-    .recent-nav:hover { background: #fff; box-shadow: 0 4px 20px rgba(20,18,15,0.15); transform: translateY(-50%) scale(1.08); }
-    .recent-nav:active { transform: translateY(-50%) scale(0.96); }
+    .recent-nav:hover { background: var(--cream-light); border-color: var(--gold); transform: scale(1.08); }
+    .recent-nav:active { transform: scale(0.96); }
     .recent-nav.prev { left: 0; }
     .recent-nav.next { right: 0; }
 
     .recent-card {
-      background: var(--cream-light);
-      border: 1px solid var(--cream-border);
-      border-radius: 12px;
-      overflow: hidden;
+      background: transparent;
       cursor: pointer;
-      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, border-color 0.3s;
-      box-shadow: 0 1px 4px rgba(20,18,15,0.04);
+      transition: opacity 0.3s ease;
       text-decoration: none; color: inherit; display: block;
     }
-    .recent-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(184,154,85,0.3);
-      box-shadow: 0 12px 32px rgba(20,18,15,0.1), 0 3px 8px rgba(20,18,15,0.06);
-    }
+    .recent-card:hover { opacity: 0.88; }
 
     .recent-card-img {
-      width: 100%; aspect-ratio: 4/3;
+      width: 100%; aspect-ratio: 3/4;
       overflow: hidden; position: relative;
       background: var(--cream-mid);
     }
     .recent-card-img img {
       width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
     }
-    .recent-card:hover .recent-card-img img { transform: scale(1.06); }
-    .recent-card-img::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(20,18,15,0.35) 0%, transparent 55%);
-      pointer-events: none;
-    }
+    .recent-card:hover .recent-card-img img { transform: scale(1.04); }
 
-    .recent-card-body { padding: 1rem 1.1rem 1.25rem; }
+    .recent-card-body { padding: 1.25rem 0 0; }
     .recent-card-cat {
       font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-      color: var(--gold-dark); margin-bottom: 0.3rem;
+      color: var(--gold-dark); margin-bottom: 0.5rem;
     }
     .recent-card-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.15rem; font-weight: 500; color: var(--dark); line-height: 1.3;
+      font-size: 1.5rem; font-weight: 400; color: var(--dark); line-height: 1.25;
     }
-    .recent-card-price {
-      font-size: 11px; color: var(--muted); margin-top: 0.35rem;
-    }
+    .recent-card-price { display: none; }
 
     /* ── SECTION DIVIDER ── */
     .section-divider {
