@@ -445,7 +445,23 @@
     }
 
     /* ── RECENT PRODUCTS ── */
-    .featured-section { background: var(--cream); }
+    .featured-section {
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url('Fotosdiversas/Imagens_Slides_iniciais/II10.jpeg');
+      background-size: cover;
+      background-position: center 40%;
+      background-attachment: fixed;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .featured-section > * { position: relative; z-index: 1; }
 
     .recent-carousel {
       margin-top: 3rem;
@@ -512,11 +528,11 @@
     .recent-card-body { padding: 1.25rem 0 0; }
     .recent-card-cat {
       font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-      color: var(--gold-dark); margin-bottom: 0.5rem;
+      color: var(--gold); margin-bottom: 0.5rem;
     }
     .recent-card-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.5rem; font-weight: 400; color: var(--dark); line-height: 1.25;
+      font-size: 1.5rem; font-weight: 400; color: rgba(245,239,226,0.9); line-height: 1.25;
     }
     .recent-card-price { display: none; }
 
@@ -1480,18 +1496,18 @@
     <div class="container">
       <div class="section-header fade-in" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;">
         <div>
-          <div class="eyebrow">Novidades</div>
-          <h2 class="section-title" style="margin-bottom:0;">Peças Mais Recentes</h2>
+          <div class="eyebrow" style="color:var(--gold);">Novidades</div>
+          <h2 class="section-title" style="margin-bottom:0; color:rgba(245,239,226,0.95);">Peças Mais Recentes</h2>
         </div>
-        <a href="catalogo.html" class="btn-outline">Ver Catálogo Completo</a>
+        <a href="catalogo.html" class="btn-outline" style="color:rgba(245,239,226,0.85); border-color:rgba(245,239,226,0.25);">Ver Catálogo Completo</a>
       </div>
 
       <div class="recent-carousel">
-        <button class="recent-nav prev" id="recentPrev" aria-label="Anterior">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--dark)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,2 4,7 9,12"/></svg>
+        <button class="recent-nav prev" id="recentPrev" aria-label="Anterior" style="border-color:rgba(245,239,226,0.25);">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(245,239,226,0.8)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,2 4,7 9,12"/></svg>
         </button>
-        <button class="recent-nav next" id="recentNext" aria-label="Seguinte">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--dark)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="5,2 10,7 5,12"/></svg>
+        <button class="recent-nav next" id="recentNext" aria-label="Seguinte" style="border-color:rgba(245,239,226,0.25);">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(245,239,226,0.8)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="5,2 10,7 5,12"/></svg>
         </button>
         <div class="recent-viewport">
         <div class="recent-track" id="recentTrack">
