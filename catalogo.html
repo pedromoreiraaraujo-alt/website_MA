@@ -353,41 +353,26 @@
 
     .drawer-panel {
       position: absolute; top: 0; right: 0; bottom: 0;
-      width: min(860px, 100vw);
+      width: min(560px, 100vw);
       background: var(--cream-light);
       transform: translateX(100%);
       transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
-      overflow: hidden;
-      display: flex; flex-direction: row;
+      overflow-y: auto;
+      display: flex; flex-direction: column;
       box-shadow: -8px 0 40px rgba(20,18,15,0.18);
     }
     .drawer.open .drawer-panel { transform: translateX(0); }
 
-    .drawer-left {
-      width: 48%;
-      flex-shrink: 0;
-      background: var(--dark);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .drawer-right {
-      flex: 1;
-      overflow-y: auto;
-      background: var(--cream-light);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
+    .drawer-left { display: contents; }
+    .drawer-right { display: contents; }
 
     .drawer-close {
-      align-self: flex-end;
+      position: absolute; top: 1.25rem; right: 1.25rem;
       background: none; border: none; cursor: pointer;
       color: var(--muted); font-size: 10px; font-weight: 700;
       letter-spacing: 2px; text-transform: uppercase;
       display: flex; align-items: center; gap: 0.4rem;
-      padding: 1.25rem 1.5rem 0;
+      padding: 0.4rem 0.6rem;
       transition: color 0.2s;
       z-index: 10;
     }
@@ -425,10 +410,11 @@
 
     /* Drawer image */
     .drawer-img-wrap {
-      flex: 1;
-      background: var(--dark); position: relative; overflow: hidden;
+      width: 100%; aspect-ratio: 1;
+      background: #f7f3ec; position: relative; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
-      padding: 2.5rem;
+      flex-shrink: 0;
+      padding: 2.5rem; box-sizing: border-box;
     }
     .drawer-img-wrap img {
       width: 100%; height: 100%; object-fit: contain;
@@ -439,24 +425,24 @@
     .drawer-img-nav {
       position: absolute; right: 1rem; bottom: 1rem;
       width: 36px; height: 36px; border-radius: 50%;
-      background: rgba(245,239,226,0.12); backdrop-filter: blur(6px);
-      border: 1px solid rgba(245,239,226,0.2);
+      background: rgba(20,18,15,0.08); backdrop-filter: blur(6px);
+      border: 1px solid rgba(20,18,15,0.12);
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: background 0.2s, transform 0.2s;
       z-index: 10;
     }
-    .drawer-img-nav:hover { background: rgba(245,239,226,0.22); transform: scale(1.08); }
+    .drawer-img-nav:hover { background: rgba(20,18,15,0.15); transform: scale(1.08); }
     .drawer-img-nav svg { display: block; }
 
     .drawer-thumbs {
-      display: flex; gap: 0.4rem; padding: 1rem 1.5rem;
-      background: rgba(255,255,255,0.04);
+      display: flex; gap: 0.5rem; padding: 0.75rem 1.75rem;
+      border-bottom: 1px solid var(--cream-border);
       flex-shrink: 0;
     }
     .drawer-thumb {
       width: 52px; height: 52px; flex-shrink: 0;
-      border: 1.5px solid rgba(255,255,255,0.12); cursor: pointer;
-      overflow: hidden; background: rgba(255,255,255,0.06);
+      border: 1.5px solid var(--cream-border); cursor: pointer;
+      overflow: hidden; background: #f7f3ec;
       transition: border-color 0.2s;
     }
     .drawer-thumb.active { border-color: var(--gold); }
@@ -953,10 +939,8 @@
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       .nav-logo img { height: 44px; }
-      .drawer-panel { width: 100vw; flex-direction: column; }
-      .drawer-left { width: 100%; flex: 0 0 45vw; }
+      .drawer-panel { width: 100vw; }
       .drawer-img-wrap { padding: 1.5rem; }
-      .drawer-right { flex: 1; }
       .drawer-info { padding: 1.25rem 1.25rem 2rem; }
       .cat-header { padding: 2.5rem 1.5rem 0; }
       .cat-header-title { font-size: 2.5rem; }
@@ -1985,7 +1969,7 @@
 
       const drawer = document.getElementById('drawer');
       drawer.classList.add('open');
-      drawer.querySelector('.drawer-right').scrollTop = 0;
+      drawer.querySelector('.drawer-panel').scrollTop = 0;
       document.body.style.overflow = 'hidden';
     }
 
@@ -3116,7 +3100,7 @@
 
       const drawer = document.getElementById('drawer');
       drawer.classList.add('open');
-      drawer.querySelector('.drawer-right').scrollTop = 0;
+      drawer.querySelector('.drawer-panel').scrollTop = 0;
       document.body.style.overflow = 'hidden';
     }
 
