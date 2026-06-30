@@ -474,24 +474,27 @@
     }
 
     .drawer-price-box {
-      background: var(--cream-mid); padding: 1.1rem 1.4rem;
-      border-left: 3px solid var(--gold); margin-bottom: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--cream-border);
+      border-bottom: 1px solid var(--cream-border);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: baseline; gap: 1.25rem;
     }
     .price-label {
       font-family: 'Lato', sans-serif; font-size: 9px; font-weight: 700;
-      letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold-dark);
-      display: block; margin-bottom: 0.3rem;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+      display: block; flex-shrink: 0;
     }
     .price-value {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.75rem; font-weight: 400; color: var(--dark); line-height: 1.15;
+      font-size: 1.75rem; font-weight: 400; color: var(--dark); line-height: 1;
     }
     .price-note {
-      font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 300;
-      letter-spacing: 0.5px; color: var(--muted); margin-top: 0.3rem;
+      font-family: 'Lato', sans-serif; font-size: 10px; font-weight: 300;
+      letter-spacing: 0.5px; color: var(--muted); margin-left: auto;
     }
 
-    .drawer-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+    .drawer-actions { display: flex; flex-direction: column; gap: 0.6rem; }
 
     /* Quantity selector — drawer */
     .qty-selector {
@@ -549,12 +552,13 @@
     }
     .btn-dark:hover { background: var(--gold); color: var(--dark); }
     .btn-outline-sm {
-      display: inline-block; border: 1px solid var(--dark); color: var(--dark);
-      padding: 0.8rem 1.75rem; font-size: 11px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
+      display: flex; align-items: center; justify-content: center; flex: 1;
+      border: 1px solid var(--cream-border); color: var(--muted);
+      padding: 0.75rem 1rem; font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
       transition: border-color 0.25s, color 0.25s;
     }
-    .btn-outline-sm:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-outline-sm:hover { border-color: var(--dark); color: var(--dark); }
 
     /* ── COLLECTION CARD ── */
     .collection-count-pill {
@@ -1258,34 +1262,19 @@
 
     /* ── ADD TO CART BUTTON (in drawer) ── */
     .btn-add-cart {
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
-      padding: 0.9rem 2rem; font-size: 11px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      border: 1.5px solid var(--gold); cursor: pointer;
-      border-radius: 999px;
-      position: relative; overflow: hidden;
-      background: linear-gradient(to right, var(--gold) 50%, transparent 50%);
-      background-size: 200% 100%;
-      background-position: left center;
-      color: var(--dark);
-      transition: background-position 0.35s cubic-bezier(0.4,0,0.2,1),
-                  color 0.35s ease,
-                  transform 0.15s ease,
-                  box-shadow 0.2s ease;
-      box-shadow: 0 2px 10px rgba(184,154,85,0.25);
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; padding: 1rem 1.5rem; font-size: 10px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      border: none; cursor: pointer;
+      background: var(--dark); color: var(--cream-light);
+      transition: opacity 0.2s, transform 0.15s;
     }
-    .btn-add-cart:hover {
-      background-position: right center;
-      color: var(--gold);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(184,154,85,0.35);
-    }
-    .btn-add-cart:active { transform: translateY(0) scale(0.97); box-shadow: none; }
+    .btn-add-cart:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-add-cart:active { transform: translateY(0); opacity: 1; }
     .btn-add-cart:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
     .btn-add-cart.btn-added {
-      background: #6b956b; border-color: #6b956b; color: #fff;
-      pointer-events: none; transform: none;
-      box-shadow: 0 2px 10px rgba(107,149,107,0.3);
+      background: #4a7a4a; color: #fff;
+      pointer-events: none; transform: none; opacity: 1;
     }
     .ci-add-btn.btn-added { color: #fff; background: #6b956b; pointer-events: none; box-shadow: none; transform: none; }
   </style>
@@ -3074,16 +3063,17 @@
           <div class="price-note">${p.priceNote}</div>
         </div>
         <div class="drawer-actions">
-          <div class="qty-selector">
-            <button class="qty-btn" onclick="changeDrawerQty(-1)">−</button>
-            <input type="number" class="qty-value" id="drawerQtyVal" value="1" min="1">
-            <button class="qty-btn" onclick="changeDrawerQty(1)">+</button>
-          </div>
           <button class="btn-add-cart" onclick="addToCart('${id}', getDrawerQty(), this)">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
             Adicionar ao Carrinho
           </button>
-          <a href="tel:+351910060114" class="btn-outline-sm">910 060 114</a>
+          <div style="display:flex;gap:0.6rem;align-items:center;">
+            <div class="qty-selector" style="flex-shrink:0;">
+              <button class="qty-btn" onclick="changeDrawerQty(-1)">−</button>
+              <input type="number" class="qty-value" id="drawerQtyVal" value="1" min="1">
+              <button class="qty-btn" onclick="changeDrawerQty(1)">+</button>
+            </div>
+            <a href="tel:+351910060114" class="btn-outline-sm">910 060 114</a>
+          </div>
         </div>
       `;
 
