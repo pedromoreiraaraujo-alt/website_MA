@@ -1300,12 +1300,14 @@
 
     @media (max-width: 760px) {
       .recent-carousel { padding: 0 1rem; position: relative; }
-      .recent-viewport { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; width: 100%; }
-      .recent-viewport::-webkit-scrollbar { display: none; }
+      .recent-viewport { overflow: hidden; width: 100%; }
       .recent-nav { display: none; }
-      .recent-track { gap: 1rem; }
-      .recent-track .recent-card[aria-hidden="true"] { display: block; }
+      .recent-track { gap: 1rem; transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+      .recent-track .recent-card[aria-hidden="true"] { display: none; }
       .recent-track .recent-card { flex: 0 0 calc(44vw); }
+      .recent-dots-mobile { display: flex; justify-content: center; gap: 7px; margin-top: 1.25rem; }
+      .recent-dots-mobile span { width: 6px; height: 6px; border-radius: 50%; background: rgba(245,239,226,0.25); transition: background 0.3s, transform 0.3s; cursor: pointer; }
+      .recent-dots-mobile span.active { background: var(--gold); transform: scale(1.35); }
     }
     @media (max-width: 600px) {
       .stats-inner { gap: 0; }
@@ -1996,7 +1998,7 @@
       const track = document.getElementById('recentTrack');
       if (!track) return;
 
-      // Clone cards for seamless loop
+      // Clone cards for seamless desktop loop
       const origCards = Array.from(track.querySelectorAll('.recent-card'));
       origCards.forEach(card => {
         const clone = card.cloneNode(true);
@@ -2004,6 +2006,48 @@
         track.appendChild(clone);
       });
 
+      /* ── MOBILE: swipe carousel with infinite loop ── */
+      if (window.innerWidth <= 760) {
+        let mobileIdx = 0;
+        const total = origCards.length;
+
+        function cardStep() {
+          const card = track.querySelector('.recent-card:not([aria-hidden])');
+          if (!card) return 0;
+          const gap = parseFloat(getComputedStyle(track).gap) || 16;
+          return card.offsetWidth + gap;
+        }
+
+        // Dots
+        const dotsWrap = document.createElement('div');
+        dotsWrap.className = 'recent-dots-mobile';
+        for (let i = 0; i < total; i++) {
+          const d = document.createElement('span');
+          if (i === 0) d.classList.add('active');
+          d.addEventListener('click', () => goTo(i));
+          dotsWrap.appendChild(d);
+        }
+        track.closest('.recent-carousel').after(dotsWrap);
+
+        function goTo(idx) {
+          mobileIdx = ((idx % total) + total) % total;
+          track.style.transform = `translateX(${-mobileIdx * cardStep()}px)`;
+          dotsWrap.querySelectorAll('span').forEach((d, i) => d.classList.toggle('active', i === mobileIdx));
+        }
+
+        // Touch swipe
+        let tx = 0;
+        track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend', e => {
+          const dx = e.changedTouches[0].clientX - tx;
+          if (Math.abs(dx) > 40) goTo(dx < 0 ? mobileIdx + 1 : mobileIdx - 1);
+        }, { passive: true });
+
+        window.addEventListener('resize', () => { goTo(mobileIdx); }, { passive: true });
+        return;
+      }
+
+      /* ── DESKTOP: continuous auto-scroll loop ── */
       const PX_PER_SEC = 60;
       let x = 0;
       let paused = false;
@@ -2019,20 +2063,17 @@
       }
 
       function tick(now) {
-        if (window.innerWidth > 760) {
-          if (lastTime !== null && !paused) {
-            x -= PX_PER_SEC * (now - lastTime) / 1000;
-            const hw = getHalfWidth();
-            if (x <= -hw) x += hw;
-          }
-          track.style.transform = `translateX(${x}px)`;
+        if (lastTime !== null && !paused) {
+          x -= PX_PER_SEC * (now - lastTime) / 1000;
+          const hw = getHalfWidth();
+          if (x <= -hw) x += hw;
         }
+        track.style.transform = `translateX(${x}px)`;
         lastTime = now;
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
 
-      // Setas
       document.getElementById('recentPrev').addEventListener('click', () => {
         x += getCardStep();
         const hw = getHalfWidth();
@@ -2044,7 +2085,6 @@
         if (x <= -hw) x += hw;
       });
 
-      // Pausa no hover
       track.parentElement.addEventListener('mouseenter', () => { paused = true; });
       track.parentElement.addEventListener('mouseleave', () => { paused = false; lastTime = null; });
     })();
