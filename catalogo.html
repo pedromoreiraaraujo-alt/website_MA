@@ -419,6 +419,17 @@
     }
     .lightbox-close:hover { color: var(--cream); }
     .drawer-img-wrap { cursor: zoom-in; }
+    .drawer-img-close {
+      position: absolute; top: 0.75rem; left: 0.75rem; z-index: 5;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(20,18,15,0.45); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.18); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.9);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .drawer-img-close:hover { background: rgba(20,18,15,0.75); transform: scale(1.08); }
+    .drawer-img-close:active { transform: scale(0.95); }
 
 
     /* Drawer image */
@@ -1797,6 +1808,9 @@
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
       </button>
       <div class="drawer-img-wrap">
+        <button class="drawer-img-close" onclick="closeDrawer()" aria-label="Fechar">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
+        </button>
         <img id="drawerMainImg" src="" alt="">
         <button class="drawer-img-nav" id="drawerImgNav" style="display:none" title="Ver cenário">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
