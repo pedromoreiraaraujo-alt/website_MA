@@ -378,17 +378,19 @@
     .drawer.open .drawer-panel { transform: translateX(0); }
 
     .drawer-close {
-      position: absolute; top: 1.25rem; right: 1.25rem;
-      background: none; border: none; cursor: pointer;
-      color: var(--muted); font-size: 11px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      display: flex; align-items: center; gap: 0.4rem;
-      padding: 0.4rem 0.6rem;
-      transition: color 0.2s;
+      position: absolute; top: 1rem; right: 1rem;
+      width: 36px; height: 36px;
+      background: var(--cream); border: 1px solid var(--cream-border);
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      box-shadow: 0 2px 8px rgba(20,18,15,0.08);
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
       z-index: 10;
     }
-    .drawer-close:hover { color: var(--dark); }
-    .drawer-close:focus-visible { outline: 2px solid var(--gold); }
+    .drawer-close:hover { background: var(--dark); border-color: var(--dark); color: var(--cream-light); transform: scale(1.08); }
+    .drawer-close:active { transform: scale(0.95); }
+    .drawer-close:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
     /* ── LIGHTBOX ── */
     .lightbox {
@@ -1792,8 +1794,7 @@
     <div class="drawer-backdrop" id="drawerBackdrop"></div>
     <div class="drawer-panel">
       <button class="drawer-close" id="drawerClose" aria-label="Fechar">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
-        Fechar
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
       </button>
       <div class="drawer-img-wrap">
         <img id="drawerMainImg" src="" alt="">
@@ -1813,8 +1814,7 @@
     <div class="drawer-backdrop" id="collectionBackdrop"></div>
     <div class="collection-panel" id="collectionPanel">
       <button class="drawer-close" id="collectionClose" aria-label="Fechar coleção">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
-        Fechar
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
       </button>
       <div id="collectionContent"></div>
     </div>
