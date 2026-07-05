@@ -419,15 +419,16 @@
     }
     .lightbox-close:hover { color: var(--cream); }
     .drawer-edge-close {
-      position: absolute; top: 50%; left: -20px; transform: translateY(-50%);
-      width: 20px; height: 56px; border-radius: 6px 0 0 6px;
+      position: absolute; top: 50%; right: min(680px, 100vw); transform: translateY(-50%);
+      width: 24px; height: 56px; border-radius: 6px 0 0 6px;
       background: var(--cream-light); border: 1px solid var(--cream-border); border-right: none;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; display: none; align-items: center; justify-content: center;
       color: var(--muted);
       box-shadow: -4px 0 12px rgba(20,18,15,0.1);
       transition: background 0.2s, color 0.2s;
-      z-index: 5;
+      z-index: 501;
     }
+    .drawer.open .drawer-edge-close { display: flex; }
     .drawer-edge-close:hover { background: var(--gold); color: var(--dark); }
     .drawer-edge-close:active { background: var(--gold-dark); }
     .drawer-img-wrap { cursor: zoom-in; }
@@ -1815,10 +1816,10 @@
   <!-- DRAWER -->
   <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Detalhes do produto">
     <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <button class="drawer-edge-close" id="drawerEdgeClose" onclick="closeDrawer()" aria-label="Fechar gaveta">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,1 7,5 3,9"/></svg>
+    </button>
     <div class="drawer-panel">
-      <button class="drawer-edge-close" onclick="closeDrawer()" aria-label="Fechar gaveta">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,1 7,5 3,9"/></svg>
-      </button>
       <button class="drawer-close" id="drawerClose" aria-label="Fechar">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
       </button>
