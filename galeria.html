@@ -291,6 +291,10 @@
     }
     .cart-fab:hover { background: var(--dark-soft,#2a2520); border-color: var(--gold); transform: scale(1.06); }
     .cart-fab:active { transform: scale(0.97); }
+    @media (max-width: 768px) {
+      .cart-fab { bottom: auto; top: 5.5rem; right: 1rem; }
+      .whatsapp-fab { bottom: auto; top: 9.5rem; right: 1rem; }
+    }
     .cart-fab svg { width: 22px; height: 22px; stroke: var(--cream-light,#faf7f2); fill: none; stroke-width: 1.5; stroke-linecap: round; }
     .cart-badge {
       position: absolute; top: -5px; right: -5px;
