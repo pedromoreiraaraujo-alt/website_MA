@@ -3012,38 +3012,40 @@
       mainImg.src = p.images[0];
       mainImg.alt = p.name;
 
-      /* Image nav arrow (cycles between product and scene image) */
+      /* Image nav arrow — cycles forward through all images */
       const navBtn = document.getElementById('drawerImgNav');
-      if (p.hoverImage) {
+      let drawerImgIdx = 0;
+      const drawerImgCount = p.images.length;
+
+      const goToDrawerImg = (idx) => {
+        const newSrc = p.images[idx];
+        const wrap = mainImg.parentElement;
+        const incoming = document.createElement('img');
+        incoming.src = newSrc;
+        incoming.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);z-index:1;`;
+        wrap.appendChild(incoming);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          incoming.style.transform = 'translateX(0)';
+          mainImg.style.transform = 'translateX(-100%)';
+        }));
+        incoming.addEventListener('transitionend', () => {
+          mainImg.style.transition = 'none';
+          mainImg.src = newSrc;
+          mainImg.style.transform = '';
+          void mainImg.offsetWidth;
+          requestAnimationFrame(() => {
+            incoming.remove();
+            requestAnimationFrame(() => { mainImg.style.transition = 'transform 0.35s cubic-bezier(0.4,0,0.2,1)'; });
+          });
+        }, { once: true });
+        thumbsEl.querySelectorAll('.drawer-thumb').forEach((el, i) => el.classList.toggle('active', i === idx));
+        drawerImgIdx = idx;
+      };
+
+      if (drawerImgCount > 1) {
         navBtn.style.display = 'flex';
-        let showingScene = false;
-        navBtn.onclick = () => {
-          showingScene = !showingScene;
-          const newSrc = showingScene ? p.hoverImage : p.images[0];
-          const dir = showingScene ? 1 : -1;
-          const wrap = mainImg.parentElement;
-          const incoming = document.createElement('img');
-          incoming.src = newSrc;
-          incoming.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:translateX(${dir*100}%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);z-index:1;`;
-          wrap.appendChild(incoming);
-          requestAnimationFrame(() => requestAnimationFrame(() => {
-            incoming.style.transform = 'translateX(0)';
-            mainImg.style.transform = `translateX(${-dir*100}%)`;
-          }));
-          incoming.addEventListener('transitionend', () => {
-            // Reset mainImg off-screen (no transition) before making it visible
-            mainImg.style.transition = 'none';
-            mainImg.src = newSrc;
-            mainImg.style.transform = '';
-            void mainImg.offsetWidth; // force reflow so snap is applied
-            // Only remove incoming after mainImg is painted in place
-            requestAnimationFrame(() => {
-              incoming.remove();
-              navBtn.querySelector('svg').style.transform = showingScene ? 'rotate(180deg)' : '';
-              requestAnimationFrame(() => { mainImg.style.transition = 'transform 0.35s cubic-bezier(0.4,0,0.2,1)'; });
-            });
-          }, { once: true });
-        };
+        navBtn.querySelector('svg').style.transform = '';
+        navBtn.onclick = () => goToDrawerImg((drawerImgIdx + 1) % drawerImgCount);
       } else {
         navBtn.style.display = 'none';
       }
@@ -3051,16 +3053,12 @@
       /* Thumbnails */
       const thumbsEl = document.getElementById('drawerThumbs');
       thumbsEl.innerHTML = '';
-      if (p.images.length > 1) {
+      if (drawerImgCount > 1) {
         p.images.forEach((src, i) => {
           const t = document.createElement('div');
           t.className = 'drawer-thumb' + (i === 0 ? ' active' : '');
           t.innerHTML = `<img src="${src}" alt="Vista ${i+1}" loading="lazy">`;
-          t.addEventListener('click', () => {
-            mainImg.src = src;
-            thumbsEl.querySelectorAll('.drawer-thumb').forEach(el => el.classList.remove('active'));
-            t.classList.add('active');
-          });
+          t.addEventListener('click', () => goToDrawerImg(i));
           thumbsEl.appendChild(t);
         });
       }
