@@ -963,6 +963,14 @@
       .cat-subnav::-webkit-scrollbar { display: none; }
       .cat-subnav a { white-space: nowrap; }
       .form-row { grid-template-columns: 1fr; }
+      /* Drawer mobile layout */
+      .drawer-price-box { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem; }
+      .price-label { flex-basis: 100%; margin-bottom: 0; }
+      .price-value { font-size: 1.5rem; }
+      .price-note { margin-left: 0; flex-basis: 100%; }
+      .drawer-actions .qty-phone-row { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+      .drawer-actions .qty-phone-row .qty-selector { justify-content: center; }
+      .drawer-actions .qty-phone-row .btn-outline-sm { width: 100%; text-align: center; box-sizing: border-box; }
     }
     @media (max-width: 480px) {
       .product-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
@@ -3093,7 +3101,7 @@
           <button class="btn-add-cart" onclick="addToCart('${id}', getDrawerQty(), this)">
             Adicionar ao Carrinho
           </button>
-          <div style="display:flex;gap:0.6rem;align-items:center;">
+          <div class="qty-phone-row" style="display:flex;gap:0.6rem;align-items:center;">
             <div class="qty-selector" style="flex-shrink:0;">
               <button class="qty-btn" onclick="changeDrawerQty(-1)">−</button>
               <input type="number" class="qty-value" id="drawerQtyVal" value="1" min="1">
