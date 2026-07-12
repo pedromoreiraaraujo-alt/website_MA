@@ -1353,6 +1353,19 @@
     gtag('js', new Date());
     gtag('config', 'AW-18203454546');
   </script>
+  <!-- Google tag (gtag.js) event - delayed navigation helper -->
+  <script>
+    function gtagSendEvent(url) {
+      var callback = function () {
+        if (typeof url === 'string') { window.location = url; }
+      };
+      gtag('event', 'ads_conversion_Pedir_estimativa_do_cus_1', {
+        'event_callback': callback,
+        'event_timeout': 2000,
+      });
+      return false;
+    }
+  </script>
 </head>
 <body>
 
@@ -1859,7 +1872,7 @@
   </div>
 
   <!-- CART FAB -->
-  <a class="whatsapp-fab" href="https://wa.me/351910060114" target="_blank" rel="noopener" aria-label="Contactar via WhatsApp">
+  <a class="whatsapp-fab" href="https://wa.me/351910060114" target="_blank" rel="noopener" aria-label="Contactar via WhatsApp" onclick="gtagSendEvent('https://wa.me/351910060114')">
     <span class="wa-tooltip">Fale connosco</span>
     <svg viewBox="0 0 32 32" fill="#fff"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.49.65 4.826 1.786 6.852L2 30l7.34-1.766A13.934 13.934 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 01-5.834-1.6l-.418-.247-4.354 1.048 1.078-3.924-.272-.432A11.46 11.46 0 014.5 16C4.5 9.649 9.649 4.5 16 4.5S27.5 9.649 27.5 16 22.351 27.5 16 27.5zm6.29-8.61c-.344-.172-2.036-1.004-2.352-1.118-.316-.115-.546-.172-.776.172-.23.344-.888 1.118-1.088 1.348-.2.23-.4.258-.744.086-.344-.172-1.452-.535-2.766-1.706-1.022-.912-1.712-2.036-1.912-2.38-.2-.344-.022-.53.15-.7.155-.154.344-.4.516-.6.172-.2.23-.344.344-.574.115-.23.058-.43-.029-.602-.086-.172-.776-1.87-1.062-2.562-.28-.672-.564-.58-.776-.59-.2-.01-.43-.012-.66-.012-.23 0-.602.086-.918.43-.316.344-1.204 1.176-1.204 2.868s1.232 3.328 1.404 3.558c.172.23 2.424 3.702 5.876 5.19.82.354 1.46.566 1.96.724.824.262 1.574.226 2.166.138.66-.098 2.036-.832 2.322-1.636.286-.804.286-1.492.2-1.636-.086-.144-.316-.23-.66-.402z"/></svg>
   </a>
