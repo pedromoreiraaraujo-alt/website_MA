@@ -45,6 +45,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- Firebase (para sincronizar pedidos com a plataforma de orçamentos) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script>
+    // !! Mesma config que app.html !!
+    const MA_FIREBASE_CONFIG = {
+      apiKey:            "AIzaSyDgiSoD_WNRqEvNuCt9xcLA8zwK17MRJcs",
+      authDomain:        "mea-orcamentos.firebaseapp.com",
+      projectId:         "mea-orcamentos",
+      storageBucket:     "mea-orcamentos.firebasestorage.app",
+      messagingSenderId: "677126078751",
+      appId:             "1:677126078751:web:7ef5e3bf1059e16636b02a",
+    };
+    try {
+      if (!firebase.apps.length) firebase.initializeApp(MA_FIREBASE_CONFIG);
+    } catch(e) { /* Firebase não configurado */ }
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -744,6 +761,24 @@
           observacoes: msg || '—',
           reply_to:    email,
         });
+
+        // Guardar pedido na plataforma de orçamentos
+        try {
+          const db = firebase.firestore();
+          await db.collection('pedidos').add({
+            nome:      nome,
+            email:     email,
+            telefone:  tel || '',
+            mensagem:  msg || '',
+            artigos:   cartText,
+            status:    'novo',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+        } catch(fbErr) {
+          // Não bloqueia o fluxo se Firebase não estiver configurado
+          console.warn('Firebase: pedido não guardado —', fbErr.message);
+        }
+
         document.getElementById('contactFormWrap').style.display = 'none';
         document.getElementById('contactSuccess').style.display  = 'block';
       } catch (err) {

@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEA · Orçamentos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <!-- PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<style>
+:root {
+  --dark: #14120f;
+  --dark2: #1e1b16;
+  --gold: #b89a55;
+  --gold2: #cdb06a;
+  --cream: #f5efe2;
+  --cream2: #faf7f2;
+  --muted: #7a6e5e;
+  --border: rgba(184,154,85,0.18);
+  --red: #a83232;
+  --green: #2a6e42;
+  --blue: #2b5c8a;
+  --orange: #b06020;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Lato',sans-serif;background:var(--cream2);color:var(--dark);min-height:100vh;}
+.hidden{display:none!important;}
+a{color:inherit;text-decoration:none;}
+button{font-family:'Lato',sans-serif;cursor:pointer;}
+input,textarea,select{font-family:'Lato',sans-serif;}
+
+/* ── LOGIN ── */
+#login-view{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:var(--dark);
+  background-image:radial-gradient(ellipse at 30% 40%,rgba(184,154,85,0.08) 0%,transparent 60%);
+}
+.login-card{
+  background:var(--cream2);border-radius:12px;padding:2.5rem 2rem;width:100%;max-width:360px;
+  box-shadow:0 24px 64px rgba(0,0,0,0.5);
+}
+.login-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;
+  letter-spacing:0.12em;color:var(--dark);text-align:center;margin-bottom:0.3rem;
+}
+.login-logo span{color:var(--gold);}
+.login-sub{text-align:center;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;}
+.login-card label{display:block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:0.35rem;}
+.login-card input{
+  width:100%;border:1px solid var(--border);background:var(--cream);
+  padding:0.7rem 0.85rem;border-radius:6px;font-size:0.9rem;color:var(--dark);
+  outline:none;transition:border-color 0.2s;margin-bottom:1rem;
+}
+.login-card input:focus{border-color:var(--gold);}
+.btn-login{
+  width:100%;background:var(--dark);color:var(--cream2);border:none;
+  padding:0.85rem;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;transition:background 0.2s;margin-top:0.5rem;
+}
+.btn-login:hover{background:var(--gold);color:var(--dark);}
+#login-error{color:var(--red);font-size:12px;margin-top:0.75rem;text-align:center;min-height:1em;}
+
+/* ── LAYOUT ── */
+#app-view{display:flex;min-height:100vh;}
+.sidebar{
+  width:220px;min-height:100vh;background:var(--dark);
+  display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:200;
+  transition:transform 0.3s;
+}
+.sb-logo{
+  padding:1.75rem 1.5rem 1.25rem;border-bottom:1px solid rgba(184,154,85,0.15);
+  font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;
+  letter-spacing:0.1em;color:var(--cream2);
+}
+.sb-logo span{color:var(--gold);}
+.sb-nav{flex:1;padding:1rem 0;}
+.sb-item{
+  display:flex;align-items:center;gap:0.75rem;
+  padding:0.75rem 1.5rem;font-size:11px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(245,239,226,0.5);
+  transition:color 0.2s,background 0.2s;cursor:pointer;
+  border-left:2px solid transparent;
+}
+.sb-item:hover{color:var(--cream2);background:rgba(255,255,255,0.04);}
+.sb-item.active{color:var(--gold);border-left-color:var(--gold);background:rgba(184,154,85,0.08);}
+.sb-item svg{flex-shrink:0;opacity:0.7;}
+.sb-item.active svg{opacity:1;}
+.sb-footer{padding:1rem 1.5rem;border-top:1px solid rgba(184,154,85,0.15);}
+.sb-user{font-size:11px;color:rgba(245,239,226,0.4);margin-bottom:0.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.btn-logout{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(245,239,226,0.35);background:none;border:none;padding:0;
+  transition:color 0.2s;
+}
+.btn-logout:hover{color:var(--gold);}
+.app-main{margin-left:220px;flex:1;padding:2rem;min-height:100vh;}
+
+/* Mobile sidebar */
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199;}
+.mob-topbar{
+  display:none;position:fixed;top:0;left:0;right:0;height:52px;
+  background:var(--dark);z-index:198;align-items:center;padding:0 1rem;gap:1rem;
+}
+.mob-topbar-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;letter-spacing:0.1em;color:var(--cream2);flex:1;}
+.mob-topbar-logo span{color:var(--gold);}
+.mob-ham{background:none;border:none;color:var(--cream2);padding:4px;}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .sb-overlay.open{display:block;}
+  .mob-topbar{display:flex;}
+  .app-main{margin-left:0;padding:1rem;padding-top:68px;}
+}
+
+/* ── PAGE HEADER ── */
+.page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;}
+.page-hdr h1{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:300;color:var(--dark);}
+.page-hdr-actions{display:flex;gap:0.5rem;}
+
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  padding:0.6rem 1.1rem;border-radius:6px;font-size:11px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;border:none;transition:all 0.2s;
+}
+.btn-primary{background:var(--dark);color:var(--cream2);}
+.btn-primary:hover{background:var(--gold);color:var(--dark);}
+.btn-gold{background:var(--gold);color:var(--dark);}
+.btn-gold:hover{background:var(--gold2);}
+.btn-outline{background:none;border:1px solid var(--border);color:var(--muted);}
+.btn-outline:hover{border-color:var(--dark);color:var(--dark);}
+.btn-danger{background:none;border:1px solid rgba(168,50,50,0.3);color:var(--red);}
+.btn-danger:hover{background:var(--red);color:#fff;border-color:var(--red);}
+.btn-sm{padding:0.4rem 0.75rem;font-size:10px;}
+.btn-icon{width:30px;height:30px;padding:0;justify-content:center;border-radius:50%;}
+
+/* ── STATS ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.75rem;}
+.stat-card{
+  background:#fff;border:1px solid var(--border);border-radius:10px;
+  padding:1.25rem 1.5rem;
+}
+.stat-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;}
+.stat-value{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:var(--dark);line-height:1;}
+.stat-value.gold{color:var(--gold);}
+@media(max-width:640px){.stats-row{grid-template-columns:1fr 1fr;}}
+
+/* ── CARD ── */
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.5rem;}
+.card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.25rem;border-bottom:1px solid var(--border);
+}
+.card-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);padding:0.7rem 1rem;text-align:left;
+  background:var(--cream2);border-bottom:1px solid var(--border);white-space:nowrap;
+}
+td{padding:0.8rem 1rem;border-bottom:1px solid rgba(0,0,0,0.04);font-size:13px;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(245,239,226,0.4);}
+.td-actions{display:flex;gap:0.4rem;align-items:center;}
+.empty-row td{text-align:center;color:var(--muted);font-size:13px;padding:2.5rem;}
+
+/* ── BADGES ── */
+.badge{
+  display:inline-block;padding:0.2rem 0.6rem;border-radius:999px;
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+}
+.badge-novo{background:rgba(184,154,85,0.15);color:#8a6a20;}
+.badge-rascunho{background:rgba(122,110,94,0.1);color:var(--muted);}
+.badge-enviado{background:rgba(43,92,138,0.12);color:var(--blue);}
+.badge-aceite{background:rgba(42,110,66,0.12);color:var(--green);}
+.badge-rejeitado{background:rgba(168,50,50,0.1);color:var(--red);}
+.badge-em_progresso{background:rgba(176,96,32,0.12);color:var(--orange);}
+.badge-concluido{background:rgba(42,110,66,0.12);color:var(--green);}
+
+/* ── EDITOR ── */
+.editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+@media(max-width:900px){.editor-grid{grid-template-columns:1fr;}}
+.form-section{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.25rem;}
+.form-section h3{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;padding-bottom:0.6rem;border-bottom:1px solid var(--border);}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:480px){.form-row-2{grid-template-columns:1fr;}}
+.field{margin-bottom:1rem;}
+.field:last-child{margin-bottom:0;}
+.field label{display:block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:0.3rem;}
+.field input,.field textarea,.field select{
+  width:100%;border:1px solid var(--border);background:var(--cream2);
+  padding:0.6rem 0.8rem;border-radius:6px;font-size:13px;color:var(--dark);
+  outline:none;transition:border-color 0.2s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold);}
+.field textarea{resize:vertical;min-height:80px;}
+
+/* Items table in editor */
+.items-tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.items-tbl th{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:0.5rem 0.5rem;text-align:left;border-bottom:1px solid var(--border);}
+.items-tbl td{padding:0.35rem 0.5rem;border-bottom:1px solid rgba(0,0,0,0.04);vertical-align:middle;}
+.items-tbl input{width:100%;border:1px solid transparent;background:transparent;padding:0.3rem 0.4rem;border-radius:4px;font-size:13px;color:var(--dark);outline:none;}
+.items-tbl input:focus{border-color:var(--gold);background:var(--cream2);}
+.items-tbl .td-ref{width:90px;}
+.items-tbl .td-qty{width:60px;}
+.items-tbl .td-price{width:90px;}
+.items-tbl .td-total{width:90px;color:var(--muted);}
+.items-tbl .td-del{width:36px;text-align:center;}
+.del-btn{background:none;border:none;color:rgba(168,50,50,0.5);font-size:16px;line-height:1;transition:color 0.15s;}
+.del-btn:hover{color:var(--red);}
+
+.totals-box{border-top:1px solid var(--border);padding-top:1rem;margin-top:0.5rem;}
+.totals-row{display:flex;justify-content:space-between;font-size:13px;padding:0.2rem 0.5rem;}
+.totals-row.total{font-weight:700;font-size:15px;padding-top:0.5rem;border-top:1px solid var(--border);margin-top:0.5rem;}
+.iva-toggle{display:flex;align-items:center;gap:0.5rem;font-size:12px;color:var(--muted);padding:0.5rem 0.5rem;margin-top:0.25rem;}
+.iva-toggle input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;}
+
+.items-actions{display:flex;gap:0.5rem;margin-top:0.75rem;flex-wrap:wrap;}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(20,18,15,0.7);z-index:500;
+  display:flex;align-items:center;justify-content:center;padding:1rem;
+}
+.modal{
+  background:#fff;border-radius:12px;width:100%;max-width:520px;
+  max-height:80vh;display:flex;flex-direction:column;
+  box-shadow:0 24px 64px rgba(0,0,0,0.3);
+}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);}
+.modal-header h2{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;}
+.modal-close{background:none;border:none;font-size:1.5rem;color:var(--muted);line-height:1;transition:color 0.2s;}
+.modal-close:hover{color:var(--dark);}
+.modal-search{padding:1rem 1.5rem;border-bottom:1px solid var(--border);}
+.modal-search input{
+  width:100%;border:1px solid var(--border);background:var(--cream2);
+  padding:0.6rem 0.8rem;border-radius:6px;font-size:13px;outline:none;
+}
+.modal-search input:focus{border-color:var(--gold);}
+.modal-list{overflow-y:auto;flex:1;}
+.catalog-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.75rem 1.5rem;border-bottom:1px solid rgba(0,0,0,0.04);
+  cursor:pointer;transition:background 0.15s;
+}
+.catalog-item:hover{background:var(--cream2);}
+.catalog-item-info{flex:1;}
+.catalog-item-ref{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--gold);display:block;}
+.catalog-item-name{font-size:13px;color:var(--dark);}
+.catalog-item-cat{font-size:11px;color:var(--muted);}
+
+/* ── STATUS SELECT ── */
+.status-select{
+  border:none;background:transparent;font-size:10px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;outline:none;
+  font-family:'Lato',sans-serif;
+}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;
+  background:var(--dark);color:var(--cream2);
+  padding:0.75rem 1.25rem;border-radius:8px;font-size:13px;
+  transform:translateY(80px);opacity:0;transition:all 0.3s;pointer-events:none;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.ok{border-left:3px solid var(--gold);}
+#toast.err{border-left:3px solid var(--red);}
+
+/* ── INVENTORY ── */
+.inv-toolbar{display:flex;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center;}
+.inv-search{
+  flex:1;min-width:200px;border:1px solid var(--border);background:#fff;
+  padding:0.55rem 0.85rem;border-radius:6px;font-size:13px;color:var(--dark);
+  outline:none;transition:border-color 0.2s;font-family:'Lato',sans-serif;
+}
+.inv-search:focus{border-color:var(--gold);}
+.cat-chips{display:flex;gap:0.4rem;flex-wrap:wrap;}
+.cat-chip{
+  padding:0.35rem 0.75rem;border-radius:999px;font-size:10px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;border:1px solid var(--border);
+  background:#fff;color:var(--muted);cursor:pointer;
+  transition:all 0.15s;white-space:nowrap;
+}
+.cat-chip:hover{border-color:var(--dark);color:var(--dark);}
+.cat-chip.active{background:var(--dark);color:var(--cream2);border-color:var(--dark);}
+.inv-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:1rem;
+}
+.inv-card{
+  background:#fff;border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;cursor:default;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.inv-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(20,18,15,0.1);}
+.inv-card-img{
+  width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--cream2);
+}
+.inv-card-img-placeholder{
+  width:100%;aspect-ratio:1;background:var(--cream2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;color:var(--border);
+}
+.inv-card-body{padding:0.75rem 0.85rem;}
+.inv-card-ref{font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--gold);display:block;margin-bottom:0.2rem;}
+.inv-card-name{font-size:12px;color:var(--dark);line-height:1.35;margin-bottom:0.5rem;min-height:2.7em;}
+.inv-card-price{
+  font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;
+  color:var(--dark);
+}
+.inv-card-price-zero{color:var(--muted);}
+.inv-count{font-size:12px;color:var(--muted);margin-left:auto;white-space:nowrap;}
+@media(max-width:640px){.inv-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));}}
+
+/* ── CART ── */
+.inv-card-img-wrap{position:relative;overflow:hidden;}
+.inv-card-add{
+  position:absolute;bottom:8px;right:8px;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--dark);color:var(--cream2);border:none;
+  font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(0.75);
+  transition:opacity 0.18s,transform 0.18s,background 0.15s;cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,0.35);
+}
+.inv-card:hover .inv-card-add{opacity:1;transform:scale(1);}
+.inv-card-add:hover{background:var(--gold);color:var(--dark);}
+.inv-card-add.in-cart{opacity:1;transform:scale(1);background:var(--gold);color:var(--dark);}
+
+.cart-fab{
+  position:fixed;bottom:2rem;right:2rem;z-index:600;
+  width:54px;height:54px;border-radius:50%;
+  background:var(--dark);color:var(--cream2);border:none;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,0.35);cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.cart-fab:hover{background:var(--gold);color:var(--dark);transform:scale(1.06);}
+.cart-fab-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--gold);color:var(--dark);
+  font-size:10px;font-weight:700;
+  min-width:18px;height:18px;border-radius:999px;
+  display:flex;align-items:center;justify-content:center;padding:0 4px;
+  font-family:'Lato',sans-serif;
+}
+
+.cart-overlay{display:none;position:fixed;inset:0;background:rgba(20,18,15,0.5);z-index:700;}
+.cart-overlay.open{display:block;}
+
+.cart-panel{
+  position:fixed;top:0;right:0;bottom:0;width:380px;max-width:100vw;
+  background:#fff;z-index:800;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:-8px 0 40px rgba(0,0,0,0.15);
+}
+.cart-panel.open{transform:translateX(0);}
+.cart-panel-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.cart-panel-hdr h2{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;}
+.cart-panel-close{background:none;border:none;font-size:1.5rem;color:var(--muted);cursor:pointer;line-height:1;transition:color 0.2s;}
+.cart-panel-close:hover{color:var(--dark);}
+.cart-panel-body{flex:1;overflow-y:auto;padding:1rem 1.5rem;}
+.cart-empty{color:var(--muted);font-size:13px;text-align:center;padding:3rem 1rem;}
+.cart-item{display:flex;align-items:flex-start;gap:0.85rem;padding:0.85rem 0;border-bottom:1px solid rgba(0,0,0,0.05);}
+.cart-item:last-child{border-bottom:none;}
+.cart-item-img{width:56px;height:56px;object-fit:cover;border-radius:6px;background:var(--cream2);flex-shrink:0;}
+.cart-item-img-ph{width:56px;height:56px;border-radius:6px;background:var(--cream2);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--border);}
+.cart-item-info{flex:1;min-width:0;}
+.cart-item-ref{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--gold);}
+.cart-item-name{font-size:12px;color:var(--dark);line-height:1.3;margin:0.1rem 0 0.35rem;}
+.cart-item-unit{font-size:11px;color:var(--muted);}
+.cart-item-right{display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem;flex-shrink:0;}
+.qty-ctrl{display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.qty-ctrl button{width:28px;height:28px;border:none;background:#fff;color:var(--dark);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
+.qty-ctrl button:hover{background:var(--cream2);}
+.qty-ctrl input{width:36px;text-align:center;font-size:12px;font-weight:700;color:var(--dark);border:none;outline:none;background:#fff;padding:0;font-family:'Lato',sans-serif;}
+.cart-item-subtotal{font-size:12px;font-weight:700;color:var(--dark);}
+.cart-remove-btn{background:none;border:none;color:rgba(168,50,50,0.45);font-size:14px;cursor:pointer;padding:0;line-height:1;transition:color 0.15s;}
+.cart-remove-btn:hover{color:var(--red);}
+.cart-panel-ftr{
+  padding:1.25rem 1.5rem;border-top:1px solid var(--border);flex-shrink:0;
+  background:var(--cream2);
+}
+.cart-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem;}
+.cart-total-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.cart-total-val{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--dark);}
+.btn-cart-quote{
+  width:100%;background:var(--dark);color:var(--cream2);border:none;
+  padding:0.85rem;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;transition:background 0.2s;font-family:'Lato',sans-serif;
+}
+.btn-cart-quote:hover:not(:disabled){background:var(--gold);color:var(--dark);}
+.btn-cart-quote:disabled{opacity:0.4;cursor:default;}
+.btn-cart-clear{
+  width:100%;background:none;border:none;font-size:10px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);cursor:pointer;padding:0.5rem;margin-top:0.5rem;
+  transition:color 0.2s;font-family:'Lato',sans-serif;
+}
+.btn-cart-clear:hover{color:var(--red);}
+@media(max-width:420px){.cart-panel{width:100vw;}}
+
+/* ── LOADING ── */
+#loading{
+  position:fixed;inset:0;background:var(--dark);
+  display:flex;align-items:center;justify-content:center;z-index:9999;
+}
+.loader{width:32px;height:32px;border:2px solid rgba(184,154,85,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading"><div class="loader"></div></div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- LOGIN -->
+<div id="login-view" class="hidden">
+  <div class="login-card">
+    <div class="login-logo">M<span>&</span>A</div>
+    <div class="login-sub">Plataforma de Orçamentos</div>
+    <label for="l-email">Email</label>
+    <input type="email" id="l-email" placeholder="email@exemplo.com" autocomplete="email">
+    <label for="l-pass">Password</label>
+    <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password">
+    <button class="btn-login" onclick="doLogin()">Entrar</button>
+    <div id="login-error"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app-view" class="hidden">
+
+  <!-- Mobile topbar -->
+  <div class="mob-topbar">
+    <button class="mob-ham" onclick="toggleSidebar()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <img src="/logo.svg" alt="M&A" style="height:22px;width:auto;filter:invert(1);">
+  </div>
+  <div class="sb-overlay" id="sbOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <img src="/logo.svg" alt="M&A Eventos" style="height:52px;width:auto;filter:invert(1);display:block;margin-bottom:0.35rem;">
+      <span style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(184,154,85,0.7);font-weight:400;font-family:'Lato',sans-serif;">Orçamentos</span>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-item active" data-view="dash" onclick="goTo('dash')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="sb-item" data-view="requests" onclick="goTo('requests')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Pedidos
+        <span id="badge-requests" class="badge badge-novo hidden" style="margin-left:auto;"></span>
+      </div>
+      <div class="sb-item" data-view="quotes" onclick="goTo('quotes')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Orçamentos
+      </div>
+      <div class="sb-item" data-view="inventory" onclick="goTo('inventory')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        Inventário
+      </div>
+    </nav>
+    <div class="sb-footer">
+      <div class="sb-user" id="sb-user-email"></div>
+      <button class="btn-logout" onclick="doLogout()">Sair →</button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="app-main">
+
+    <!-- DASHBOARD -->
+    <div id="dash-view">
+      <div class="page-hdr">
+        <h1>Dashboard</h1>
+        <div class="page-hdr-actions">
+          <button class="btn btn-primary" onclick="goTo('editor',{})">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo Orçamento
+          </button>
+        </div>
+      </div>
+      <div class="stats-row" id="stats-row">
+        <div class="stat-card"><div class="stat-label">Pedidos novos</div><div class="stat-value gold" id="stat-novos">—</div></div>
+        <div class="stat-card"><div class="stat-label">Total orçamentos</div><div class="stat-value" id="stat-total">—</div></div>
+        <div class="stat-card"><div class="stat-label">Aceites</div><div class="stat-value" id="stat-aceites">—</div></div>
+        <div class="stat-card"><div class="stat-label">Em aberto</div><div class="stat-value" id="stat-aberto">—</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Últimos Pedidos</span><button class="btn btn-outline btn-sm" onclick="goTo('requests')">Ver todos</button></div>
+        <div class="tbl-wrap"><table id="dash-req-tbl"><thead><tr><th>Data</th><th>Nome</th><th>Email</th><th>Estado</th><th></th></tr></thead><tbody id="dash-req-body"></tbody></table></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Últimos Orçamentos</span><button class="btn btn-outline btn-sm" onclick="goTo('quotes')">Ver todos</button></div>
+        <div class="tbl-wrap"><table id="dash-orc-tbl"><thead><tr><th>Nº</th><th>Cliente</th><th>Total</th><th>Estado</th><th></th></tr></thead><tbody id="dash-orc-body"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- PEDIDOS -->
+    <div id="requests-view" class="hidden">
+      <div class="page-hdr"><h1>Pedidos do Site</h1></div>
+      <div class="card">
+        <div class="tbl-wrap">
+          <table><thead><tr><th>Data</th><th>Nome</th><th>Email</th><th>Telefone</th><th>Material</th><th>Estado</th><th></th></tr></thead>
+          <tbody id="req-body"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORÇAMENTOS -->
+    <div id="quotes-view" class="hidden">
+      <div class="page-hdr">
+        <h1>Orçamentos</h1>
+        <button class="btn btn-primary" onclick="goTo('editor',{})">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo
+        </button>
+      </div>
+      <div class="card">
+        <div class="tbl-wrap">
+          <table><thead><tr><th>Nº</th><th>Cliente</th><th>Email</th><th>Evento</th><th>Total</th><th>Estado</th><th></th></tr></thead>
+          <tbody id="orc-body"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDITOR -->
+    <div id="editor-view" class="hidden">
+      <div class="page-hdr">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <button class="btn btn-outline btn-sm" onclick="goTo('quotes')">← Voltar</button>
+          <h1 id="editor-title">Novo Orçamento</h1>
+        </div>
+        <div class="page-hdr-actions">
+          <button class="btn btn-outline" onclick="saveQuote('rascunho')">Guardar Rascunho</button>
+          <button class="btn btn-gold" onclick="saveQuote('enviado')">Marcar como Enviado</button>
+          <button class="btn btn-primary" onclick="generatePDF()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Gerar PDF
+          </button>
+        </div>
+      </div>
+
+      <div class="editor-grid">
+        <!-- LEFT COLUMN -->
+        <div>
+          <div class="form-section">
+            <h3>Cliente</h3>
+            <div class="field"><label>Nome</label><input type="text" id="e-nome" placeholder="Nome do cliente"></div>
+            <div class="form-row-2">
+              <div class="field"><label>Email</label><input type="email" id="e-email" placeholder="email@exemplo.com"></div>
+              <div class="field"><label>Telefone</label><input type="tel" id="e-tel" placeholder="9XX XXX XXX"></div>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3>Evento</h3>
+            <div class="form-row-2">
+              <div class="field"><label>Data do Evento</label><input type="date" id="e-data"></div>
+              <div class="field"><label>Tipo de Evento</label>
+                <select id="e-tipo">
+                  <option value="">Seleccionar…</option>
+                  <option>Casamento</option>
+                  <option>Baptizado</option>
+                  <option>Aniversário</option>
+                  <option>Comunhão</option>
+                  <option>Evento Corporativo</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+            </div>
+            <div class="field"><label>Local</label><input type="text" id="e-local" placeholder="Local do evento"></div>
+          </div>
+          <div class="form-section">
+            <h3>Notas / Condições</h3>
+            <div class="field">
+              <textarea id="e-notas" placeholder="Ex: Inclui entrega e recolha em Vila do Conde. Validade do orçamento: 30 dias.">Inclui entrega e recolha em Vila do Conde e arredores.
+Orçamento válido por 30 dias.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div>
+          <div class="form-section">
+            <h3>Artigos</h3>
+            <div class="tbl-wrap">
+              <table class="items-tbl">
+                <thead><tr><th class="td-ref">Ref.</th><th>Descrição</th><th class="td-qty">Qtd</th><th class="td-price">Preço/u</th><th class="td-total">Total</th><th class="td-del"></th></tr></thead>
+                <tbody id="items-body"></tbody>
+              </table>
+            </div>
+            <div class="items-actions">
+              <button class="btn btn-outline btn-sm" onclick="openCatalogModal()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Do catálogo
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="addFreeItem()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Linha livre
+              </button>
+            </div>
+            <div class="totals-box">
+              <div class="totals-row"><span>Subtotal</span><span id="t-subtotal">0,00 €</span></div>
+              <div class="iva-toggle">
+                <input type="checkbox" id="e-iva" onchange="recalcTotals()">
+                <label for="e-iva">Incluir IVA (23%)</label>
+                <span id="t-iva-line" class="hidden" style="margin-left:auto;font-size:12px;color:var(--muted)"></span>
+              </div>
+              <div class="totals-row total"><span>Total</span><span id="t-total">0,00 €</span></div>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3>Pedido de origem</h3>
+            <div id="e-pedido-ref" style="font-size:13px;color:var(--muted);">Orçamento criado manualmente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVENTÁRIO -->
+    <div id="inventory-view" class="hidden">
+      <div class="page-hdr">
+        <h1>Inventário</h1>
+      </div>
+      <div class="inv-toolbar">
+        <input class="inv-search" id="inv-search" type="text" placeholder="Pesquisar por nome ou referência…" oninput="filterInventory()">
+        <span class="inv-count" id="inv-count"></span>
+      </div>
+      <div class="cat-chips" id="inv-cat-chips" style="margin-bottom:1.25rem;"></div>
+      <div class="inv-grid" id="inv-grid"></div>
+    </div>
+
+  </main>
+
+  <!-- CART FAB -->
+  <button class="cart-fab hidden" id="cart-fab" onclick="openCart()" title="Ver carrinho">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/></svg>
+    <span class="cart-fab-badge hidden" id="cart-badge">0</span>
+  </button>
+
+</div>
+
+<!-- CART OVERLAY + PANEL -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-panel" id="cart-panel">
+  <div class="cart-panel-hdr">
+    <h2>Carrinho</h2>
+    <button class="cart-panel-close" onclick="closeCart()">&times;</button>
+  </div>
+  <div class="cart-panel-body" id="cart-items-list"></div>
+  <div class="cart-panel-ftr">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total estimado</span>
+      <span class="cart-total-val" id="cart-total-val">0,00 €</span>
+    </div>
+    <button class="btn-cart-quote" id="cart-to-quote-btn" onclick="cartToQuote()" disabled>
+      Criar Orçamento →
+    </button>
+    <button class="btn-cart-clear" onclick="clearCart()">Limpar carrinho</button>
+  </div>
+</div>
+
+<!-- CATALOG MODAL -->
+<div id="catalog-modal" class="modal-overlay hidden" onclick="closeCatalogModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Seleccionar do Catálogo</h2>
+      <button class="modal-close" onclick="closeCatalogModal()">&times;</button>
+    </div>
+    <div class="modal-search">
+      <input type="text" id="catalog-search" placeholder="Pesquisar por ref. ou nome…" oninput="filterCatalog(this.value)">
+    </div>
+    <div class="modal-list" id="catalog-list"></div>
+  </div>
+</div>
+
+<script>
+// ─── FIREBASE CONFIG ─────────────────────────────────────────────────────────
+// !! PREENCHE ESTES VALORES COM A TUA CONFIGURAÇÃO DO FIREBASE !!
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyDgiSoD_WNRqEvNuCt9xcLA8zwK17MRJcs",
+  authDomain:        "mea-orcamentos.firebaseapp.com",
+  projectId:         "mea-orcamentos",
+  storageBucket:     "mea-orcamentos.firebasestorage.app",
+  messagingSenderId: "677126078751",
+  appId:             "1:677126078751:web:7ef5e3bf1059e16636b02a",
+};
+
+// ─── COMPANY INFO (para o PDF) ───────────────────────────────────────────────
+const COMPANY = {
+  name:    'Moreira & Araújo, conf. Lda',
+  morada1: 'Travessa do Eirado A-66',
+  morada2: '4480-250 Ferreiró',
+  pais:    'Portugal',
+  tel:     '910060114',
+  email:   'geral.moreiraearaujo@gmail.com',
+  website: 'meaeventos.com',
+  nif:     '505809800',
+  iban:    'PT50 0045 1461 4018977060250',
+  swift:   'CCCMPTPL',
+};
+
+// ─── CATÁLOGO ────────────────────────────────────────────────────────────────
+const CATALOG = [
+  // Mesas
+  {ref:'MS 001',name:'Mesa Redonda',cat:'Mesas',price:15},
+  {ref:'MS 002',name:'Mesa Rectangular',cat:'Mesas',price:20},
+  // Cadeiras
+  {ref:'CD 001',name:'Cadeira Dobrável Castanha',cat:'Cadeiras',price:4},
+  {ref:'CD 002',name:'Cadeira Dobrável Castanha c/ Coxim Tecido Pérola',cat:'Cadeiras',price:5},
+  {ref:'CD 003',name:'Cadeira Dobrável Castanha c/ Coxim Pele Sintética',cat:'Cadeiras',price:5},
+  {ref:'CD 004',name:'Cadeira Dobrável Prateada',cat:'Cadeiras',price:4},
+  {ref:'CD 005',name:'Cadeira Dobrável Prateada c/ Coxim Tecido Pérola',cat:'Cadeiras',price:5},
+  {ref:'CD 006',name:'Cadeira Dobrável Prateada c/ Coxim Pele Sintética',cat:'Cadeiras',price:5},
+  {ref:'CD 007',name:'Cadeira Crossback Camel',cat:'Cadeiras',price:6.5},
+  {ref:'CD 008',name:'Cadeira Crossback Camel c/ Coxim Pérola',cat:'Cadeiras',price:8},
+  {ref:'CD 009',name:'Cadeira Imperial Dourada',cat:'Cadeiras',price:6},
+  // Laços
+  {ref:'LC 001',name:'Laço Liso Rosa Bébé',cat:'Laços',price:0.80},
+  {ref:'LC 002',name:'Laço Liso Rosa Fúsia',cat:'Laços',price:0.80},
+  {ref:'LC 003',name:'Laço Liso Salmão',cat:'Laços',price:0.80},
+  {ref:'LC 004',name:'Laço Liso Azul Porto',cat:'Laços',price:0.80},
+  {ref:'LC 005',name:'Laço Liso Turquesa',cat:'Laços',price:0.80},
+  {ref:'LC 006',name:'Laço Liso Verde Garrafa',cat:'Laços',price:0.80},
+  {ref:'LC 007',name:'Laço Liso Rosa Seco',cat:'Laços',price:0.80},
+  {ref:'LC 008',name:'Laço Cetim Vermelho',cat:'Laços',price:0.80},
+  {ref:'LC 009',name:'Laço Liso Branco',cat:'Laços',price:0.80},
+  {ref:'LC 010',name:'Laço Liso Pérola',cat:'Laços',price:0.80},
+  {ref:'LC 011',name:'Laço Liso Marinho',cat:'Laços',price:0.80},
+  {ref:'LC 012',name:'Laço Liso Bordeaux',cat:'Laços',price:0.80},
+  {ref:'LC 013',name:'Laço Liso Preto',cat:'Laços',price:0.80},
+  {ref:'LC 014',name:'Laço Liso Castanho',cat:'Laços',price:0.80},
+  {ref:'LC 015',name:'Laço Liso Prateado Estreito',cat:'Laços',price:0.80},
+  {ref:'LC 016',name:'Laço Liso Prateado Largo',cat:'Laços',price:0.80},
+  {ref:'LC 017',name:'Laço Liso Dourado',cat:'Laços',price:0.80},
+  {ref:'LC 018',name:'Laço Organza Vermelho',cat:'Laços',price:0.80},
+  {ref:'LC 019',name:'Laço Organza Preto',cat:'Laços',price:0.80},
+  {ref:'LC 020',name:'Laço Liso Laranja',cat:'Laços',price:0.80},
+  {ref:'LC 021',name:'Laço Liso Lilás',cat:'Laços',price:0.80},
+  {ref:'LC 022',name:'Laço Organza Dourado',cat:'Laços',price:0.80},
+  {ref:'LC 023',name:'Laço Liso Cinza',cat:'Laços',price:0.80},
+  {ref:'LC 024',name:'Laço Organza Azul',cat:'Laços',price:0.80},
+  {ref:'LC 025',name:'Laço Organza Amarelo',cat:'Laços',price:0.80},
+  {ref:'LC 026',name:'Laço Organza Verde Lima',cat:'Laços',price:0.80},
+  // Camilhas
+  {ref:'CM 001',name:'Camilha Areia',cat:'Camilhas',price:15},
+  {ref:'CM 003',name:'Camilha Tostado',cat:'Camilhas',price:15},
+  {ref:'CM 004',name:'Camilha Azul',cat:'Camilhas',price:15},
+  {ref:'CM 005',name:'Camilha Areia Branca',cat:'Camilhas',price:15},
+  {ref:'CM 006',name:'Camilha Branca (Adamascada)',cat:'Camilhas',price:15},
+  {ref:'CM 007',name:'Camilha Bege (Adamascada)',cat:'Camilhas',price:15},
+  {ref:'CM 008',name:'Camilha Dourado (Adamascada)',cat:'Camilhas',price:15},
+  {ref:'CM 009',name:'Camilha Bordeaux (Adamascada)',cat:'Camilhas',price:15},
+  {ref:'CM 012',name:'Camilha Verde Esmeralda (Adamascada)',cat:'Camilhas',price:15},
+  {ref:'CM 014',name:'Camilha Lilás (Adamascada)',cat:'Camilhas',price:15},
+  {ref:'CM 015',name:'Camilha Branca (Renda)',cat:'Camilhas',price:15},
+  {ref:'CM 016',name:'Camilha Pérola (Renda)',cat:'Camilhas',price:15},
+  {ref:'CM 017',name:'Camilha Preto/Prateado',cat:'Camilhas',price:12},
+  {ref:'CM 018',name:'Camilha Preto/Violeta',cat:'Camilhas',price:12},
+  {ref:'CM 019',name:'Camilha Azul (Estampado)',cat:'Camilhas',price:15},
+  {ref:'CM 020',name:'Camilha Burgundy (Estampado)',cat:'Camilhas',price:15},
+  {ref:'CM 021',name:'Camilha Cinza (Tafetá)',cat:'Camilhas',price:12},
+  {ref:'CM 022',name:'Camilha Lilás (Tafetá)',cat:'Camilhas',price:12},
+  {ref:'CM 023',name:'Camilha Branco (Cetim)',cat:'Camilhas',price:15},
+  {ref:'CM 025',name:'Camilha MM Branco',cat:'Camilhas',price:12},
+  {ref:'CM 026',name:'Camilha MM Pérola',cat:'Camilhas',price:12},
+  {ref:'CM 027',name:'Camilha MM Marinho',cat:'Camilhas',price:12},
+  {ref:'CM 028',name:'Camilha MM Vermelho',cat:'Camilhas',price:12},
+  {ref:'CM 029',name:'Camilha MM Bordeaux',cat:'Camilhas',price:12},
+  {ref:'CM 030',name:'Camilha MM Rosa Fúchsia',cat:'Camilhas',price:12},
+  {ref:'CM 031',name:'Camilha MM Verde Lima',cat:'Camilhas',price:12},
+  {ref:'CM 032',name:'Camilha MM Castanho',cat:'Camilhas',price:12},
+  {ref:'CM 033',name:'Camilha MM Preto',cat:'Camilhas',price:12},
+  {ref:'CM 034',name:'Camilha MM Rosa Bebé',cat:'Camilhas',price:12},
+  {ref:'CM 035',name:'Camilha MM Salmão',cat:'Camilhas',price:12},
+  {ref:'CM 036',name:'Camilha MM Turquesa',cat:'Camilhas',price:12},
+  // Guardanapos
+  {ref:'GD 001',name:'Guardanapo Branco (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 002',name:'Guardanapo Pérola (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 003',name:'Guardanapo Linho (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 004',name:'Guardanapo Cinza (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 005',name:'Guardanapo Azul Claro (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 006',name:'Guardanapo Azul Royal (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 007',name:'Guardanapo Azul Marinho (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 008',name:'Guardanapo Estampado Azul',cat:'Guardanapos',price:0.75},
+  {ref:'GD 009',name:'Guardanapo Verde Azeitona (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 010',name:'Guardanapo Verde Alface (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 011',name:'Guardanapo Areia (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 012',name:'Guardanapo Tostado (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 013',name:'Guardanapo Rosa Seco (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 014',name:'Guardanapo Rosa Bebé (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 015',name:'Guardanapo Salmão (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 016',name:'Guardanapo Rosa Fúchsia (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 017',name:'Guardanapo Terracota (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 018',name:'Guardanapo Laranja (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 019',name:'Guardanapo Bordeaux (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 020',name:'Guardanapo Estampado Bourgundy',cat:'Guardanapos',price:0.75},
+  {ref:'GD 021',name:'Guardanapo Vermelho (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 022',name:'Guardanapo Verde Garrafa (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 023',name:'Guardanapo Amarelo (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 024',name:'Guardanapo Branco (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 025',name:'Guardanapo Pérola (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 026',name:'Guardanapo Bege (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 027',name:'Guardanapo Roxo (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 028',name:'Guardanapo Dourado (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 029',name:'Guardanapo Cinza (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 030',name:'Guardanapo Verde Água (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 031',name:'Guardanapo Lilás (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 032',name:'Guardanapo Castanho (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 033',name:'Guardanapo Bordeaux (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 034',name:'Guardanapo Vermelho Escarlate (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 035',name:'Guardanapo Verde Garrafa (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 036',name:'Guardanapo Camel (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 037',name:'Guardanapo Branco Cetim',cat:'Guardanapos',price:0.75},
+  {ref:'GD 038',name:'Guardanapo Vermelho Escuro (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 039',name:'Guardanapo Areia Branca (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 040',name:'Guardanapo Joil Camel (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 041',name:'Guardanapo Verde Pistácio Cetim',cat:'Guardanapos',price:0.75},
+  {ref:'GD 042',name:'Guardanapo Rosa (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 043',name:'Guardanapo Verde Eucalipto (Liso)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 044',name:'Guardanapo Preto (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 045',name:'Guardanapo Camel (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 046',name:'Guardanapo Cru (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 047',name:'Guardanapo Rosa (Adamascado)',cat:'Guardanapos',price:0.75},
+  {ref:'GD 048',name:'Guardanapo Lavanda (Liso)',cat:'Guardanapos',price:0.75},
+  // Caminhos de Mesa
+  {ref:'CMM 001',name:'Caminho de Mesa Tostado',cat:'Caminhos de Mesa',price:6},
+  {ref:'CMM 002',name:'Caminho de Mesa Rosa Fúchsia',cat:'Caminhos de Mesa',price:5},
+  {ref:'CMM 003',name:'Caminho de Mesa Verde Água',cat:'Caminhos de Mesa',price:5},
+  {ref:'CMM 004',name:'Caminho de Mesa Vermelho',cat:'Caminhos de Mesa',price:5},
+  {ref:'CMM 005',name:'Caminho de Mesa Cinza Cetim',cat:'Caminhos de Mesa',price:5},
+  {ref:'CMM 007',name:'Caminho de Mesa Rosa Velho',cat:'Caminhos de Mesa',price:5},
+  {ref:'CMM 008',name:'Caminho de Mesa Verde Garrafa',cat:'Caminhos de Mesa',price:5},
+  {ref:'CMM 009',name:'Caminho de Mesa Preto',cat:'Caminhos de Mesa',price:5},
+  {ref:'CMM 010',name:'Caminho de Mesa Verde Lima',cat:'Caminhos de Mesa',price:5},
+  {ref:'CMM 011',name:'Caminho de Mesa Vermelho (Adamascado)',cat:'Caminhos de Mesa',price:5},
+  {ref:'CMM 012',name:'Caminho de Mesa Areia com Frosque',cat:'Caminhos de Mesa',price:7.5},
+  {ref:'CMM 013',name:'Caminho de Mesa Tostado com Frosques',cat:'Caminhos de Mesa',price:7.5},
+  // Copos Premium
+  {ref:'CPP 001',name:'Copo Verde',cat:'Copos Premium',price:1.5},
+  {ref:'CPP 002',name:'Copo Picos Azul',cat:'Copos Premium',price:1.5},
+  {ref:'CPP 003',name:'Copo Picos Dourado',cat:'Copos Premium',price:1.5},
+  {ref:'CPP 004',name:'Copo Picos Rosa',cat:'Copos Premium',price:1.5},
+  {ref:'CPP 005',name:'Copo Picos Vermelho',cat:'Copos Premium',price:1.5},
+  {ref:'CPP 006',name:'Copo Picos Transparente',cat:'Copos Premium',price:1.5},
+  {ref:'CPP 007',name:'Copo Fio Dourado 36cl',cat:'Copos Premium',price:1.5},
+  {ref:'CPP 008',name:'Copo Fio Dourado 30cl',cat:'Copos Premium',price:1.5},
+  {ref:'CPP 009',name:'Copo Fio Dourado 25cl',cat:'Copos Premium',price:1.5},
+  // Copos
+  {ref:'CP 001',name:'Copo de Vinho 36cl',cat:'Copos',price:0.45},
+  {ref:'CP 002',name:'Copo de Água 36cl',cat:'Copos',price:0.45},
+  {ref:'CP 003',name:'Copo de Vinho Tinto 30cl',cat:'Copos',price:0.45},
+  {ref:'CP 004',name:'Copo de Vinho Branco 25cl',cat:'Copos',price:0.45},
+  {ref:'CP 005',name:'Copo de Vinho Tinto 25cl',cat:'Copos',price:0.45},
+  {ref:'CP 006',name:'Copo de Vinho Branco 19cl',cat:'Copos',price:0.45},
+  {ref:'CP 007',name:'Copo Flute 19cl',cat:'Copos',price:0.45},
+  {ref:'CP 008',name:'Copo-tubo',cat:'Copos',price:0.45},
+  {ref:'CP 009',name:'Copo de Vinho do Porto 17cl',cat:'Copos',price:0.45},
+  {ref:'CP 010',name:'Copo de Shot 50cl',cat:'Copos',price:0.40},
+  // Louças
+  {ref:'LOU 001',name:'Prato Raso Cerâmica Branca 26D',cat:'Louças',price:0.50},
+  {ref:'LOU 002',name:'Prato Sobremesa Cerâmica Branca 20D',cat:'Louças',price:0.45},
+  {ref:'LOU 003',name:'Prato Raso Quadrado Cerâmica Branca 26cm',cat:'Louças',price:0.50},
+  {ref:'LOU 004',name:'Prato Sobremesa Quadrado Cerâmica Branca 20cm',cat:'Louças',price:0.45},
+  {ref:'LOU 005',name:'Pires Cerâmica Branca 17D',cat:'Louças',price:0.40},
+  {ref:'LOU 006',name:'Taça de Consommé Cerâmica Branca',cat:'Louças',price:0.50},
+  {ref:'LOU 007',name:'Taça de Consommé com Pires Cerâmica Branca',cat:'Louças',price:0.90},
+  {ref:'LOU 008',name:'Prato de Pão Cerâmica Branca 16D',cat:'Louças',price:0.40},
+  {ref:'LOU 009',name:'Chávena Almoçadeira Cerâmica Branca',cat:'Louças',price:0.50},
+  {ref:'LOU 010',name:'Chávena Almoçadeira Cerâmica Branca c/ Pires',cat:'Louças',price:0.90},
+  // Talheres
+  {ref:'TA 001',name:'Conjunto de Talheres Prateados',cat:'Talheres',price:2.8},
+  {ref:'TA 002',name:'Garfo de Peixe',cat:'Talheres',price:0.35},
+  {ref:'TA 003',name:'Faca de Peixe',cat:'Talheres',price:0.35},
+  {ref:'TA 004',name:'Garfo de Carne',cat:'Talheres',price:0.35},
+  {ref:'TA 005',name:'Faca de Carne',cat:'Talheres',price:0.35},
+  {ref:'TA 006',name:'Colher de Sopa',cat:'Talheres',price:0.35},
+  {ref:'TA 007',name:'Faca de Bife',cat:'Talheres',price:0.35},
+  {ref:'TA 008',name:'Garfo de Sobremesa',cat:'Talheres',price:0.35},
+  {ref:'TA 009',name:'Faca de Sobremesa',cat:'Talheres',price:0.35},
+  {ref:'TA 010',name:'Colher de Sobremesa',cat:'Talheres',price:0.35},
+  {ref:'TAD 001',name:'Conjunto de Talheres Dourados',cat:'Talheres',price:4.4},
+  {ref:'TAD 002',name:'Garfo de Peixe Dourado',cat:'Talheres',price:0.55},
+  {ref:'TAD 003',name:'Faca de Peixe Dourada',cat:'Talheres',price:0.55},
+  {ref:'TAD 004',name:'Garfo de Carne Dourado',cat:'Talheres',price:0.55},
+  {ref:'TAD 005',name:'Faca de Carne Dourada',cat:'Talheres',price:0.55},
+  {ref:'TAD 006',name:'Colher de Sopa Dourada',cat:'Talheres',price:0.55},
+  {ref:'TAD 007',name:'Faca de Bife Dourada',cat:'Talheres',price:0.55},
+  {ref:'TAD 008',name:'Garfo de Sobremesa Dourado',cat:'Talheres',price:0.55},
+  {ref:'TAD 009',name:'Faca de Sobremesa Dourada',cat:'Talheres',price:0.55},
+  {ref:'TAD 010',name:'Colher de Sobremesa Dourada',cat:'Talheres',price:0.55},
+  // Almofadas
+  {ref:'ALM 001',name:'Almofada Estampado Burgundy (50×50)',cat:'Almofadas',price:4},
+  {ref:'ALM 002',name:'Almofada Estampado Azul (50×50)',cat:'Almofadas',price:4},
+  {ref:'ALM 003',name:'Almofada Mostarda (50×50)',cat:'Almofadas',price:4},
+  {ref:'ALM 004',name:'Almofada Riscas Bege (50×50)',cat:'Almofadas',price:4},
+  {ref:'ALM 005',name:'Almofada Frosques Bege (50×50)',cat:'Almofadas',price:5},
+  {ref:'ALM 021',name:'Almofada Estampado Burgundy (50×30)',cat:'Almofadas',price:3},
+  {ref:'ALM 022',name:'Almofada Estampado Azul (50×30)',cat:'Almofadas',price:3},
+  {ref:'ALM 023',name:'Almofada Mostarda (50×30)',cat:'Almofadas',price:3},
+  {ref:'ALM 024',name:'Almofada Riscas Bege (50×30)',cat:'Almofadas',price:3},
+  {ref:'ALM 025',name:'Almofada Frosques Bege (50×30)',cat:'Almofadas',price:4},
+  {ref:'THWC 01',name:'Toalhete Branco',cat:'Almofadas',price:0.5},
+  // Complementos de Mesa
+  {ref:'COM 001',name:'Prato de Bolo D33 com Pé + Tampa',cat:'Complementos Mesa',price:7.5},
+  {ref:'COM 002',name:'Prato de Bolo D33 com Pé',cat:'Complementos Mesa',price:5},
+  {ref:'COM 003',name:'Prato de Bolo 3 Níveis',cat:'Complementos Mesa',price:4},
+  {ref:'COM 004',name:'Prato de Bolo D32',cat:'Complementos Mesa',price:4},
+  {ref:'COM 005',name:'Taça de Cocktail',cat:'Complementos Mesa',price:1.5},
+  {ref:'COM 006',name:'Taça de Gelado',cat:'Complementos Mesa',price:1},
+  {ref:'COM 007',name:'Caneca com Asa 1L',cat:'Complementos Mesa',price:2},
+  {ref:'COM 008',name:'Pinça de Servir',cat:'Complementos Mesa',price:0.5},
+  {ref:'COM 009',name:'Pinça Multiusos',cat:'Complementos Mesa',price:0.5},
+  {ref:'COM 010',name:'Pinça Dourada Multiusos',cat:'Complementos Mesa',price:0.75},
+  {ref:'COM 011',name:'Frapé Inox 5L',cat:'Complementos Mesa',price:4},
+  {ref:'COM 012',name:'Champanheira Acrílica 8L',cat:'Complementos Mesa',price:10},
+  {ref:'COM 013',name:'Dispensador de Bebidas 8L',cat:'Complementos Mesa',price:18},
+  {ref:'COM 014',name:'Dispensador de Bebidas 10L',cat:'Complementos Mesa',price:20},
+  {ref:'COM 015',name:'Espelho D40 cm',cat:'Complementos Mesa',price:5},
+  {ref:'COM 016',name:'Espelho D35 cm',cat:'Complementos Mesa',price:4},
+  {ref:'COM 017',name:'Conjunto 3 Castiçais Dourados',cat:'Complementos Mesa',price:6},
+  {ref:'COM 018',name:'Aquário 1L',cat:'Complementos Mesa',price:3},
+  {ref:'COM 019',name:'Aquário 0,5L',cat:'Complementos Mesa',price:2},
+  {ref:'COM 020',name:'Candeeiro sem Fios 40cm',cat:'Complementos Mesa',price:10},
+  // Sofás Bambu (módulos)
+  {ref:'SB 001',name:'Módulo Sofá de Centro (Bambu)',cat:'Sofás Bambu',price:40},
+  {ref:'SB 002',name:'Módulo Sofá de Canto (Bambu)',cat:'Sofás Bambu',price:40},
+  {ref:'SB 003',name:'Módulo Mesa de Centro (Bambu)',cat:'Sofás Bambu',price:20},
+  {ref:'SB 004',name:'Módulo Poltrona (Bambu)',cat:'Sofás Bambu',price:40},
+  {ref:'CL 001',name:'Conjunto Sofás Bambu 4 Pax (1c+3m+1mesa)',cat:'Sofás Bambu',price:160},
+  {ref:'CL 002',name:'Conjunto Sofás Bambu 4 Pax (2c+2m)',cat:'Sofás Bambu',price:160},
+  {ref:'CL 003',name:'Conjunto Sofás Bambu 4 Pax (2c+2p+1mesa)',cat:'Sofás Bambu',price:160},
+  {ref:'CL 004',name:'Conjunto Sofás Bambu 5 Pax (3c+2m+1mesa)',cat:'Sofás Bambu',price:200},
+  {ref:'CL 005',name:'Conjunto Sofás Bambu 5 Pax (4c+1m+1mesa)',cat:'Sofás Bambu',price:200},
+  {ref:'CL 006',name:'Conjunto Sofás Bambu 5 Pax (3c+2m+1mesa)',cat:'Sofás Bambu',price:200},
+  {ref:'CL 007',name:'Conjunto Sofás Bambu 6 Pax (3c+2m+1p+1mesa)',cat:'Sofás Bambu',price:240},
+  // Exterior
+  {ref:'BAR 01', name:'Bar em Madeira',cat:'Exterior',price:150},
+  {ref:'AD 001', name:'Arco Dourado',cat:'Exterior',price:40},
+  {ref:'GS 001', name:'Guarda-Sol',cat:'Exterior',price:40},
+  {ref:'PSV 001',name:'Puff Sofá Versátil',cat:'Exterior',price:40},
+  {ref:'PP 001', name:'Puff Pirâmide',cat:'Exterior',price:30},
+  {ref:'PPE 001',name:'Puff Pera Branco',cat:'Exterior',price:30},
+  {ref:'PPE 002',name:'Puff Pera Preto',cat:'Exterior',price:30},
+  {ref:'PPE 003',name:'Puff Pera Rosa',cat:'Exterior',price:30},
+  {ref:'PPE 004',name:'Puff Pera Azul',cat:'Exterior',price:30},
+  {ref:'PC 001', name:'Puff Cubo Branco',cat:'Exterior',price:30},
+  {ref:'GAM 001',name:'Gambiarras Amarelas',cat:'Exterior',price:35},
+  {ref:'GAM 002',name:'Gambiarras Brancas',cat:'Exterior',price:35},
+  // Marcadores de Mesa
+  {ref:'MC 001',name:'Prato Marcador Vidro Fio Dourado',cat:'Marcadores de Mesa',price:2},
+  {ref:'MC 002',name:'Prato Marcador Dourado',cat:'Marcadores de Mesa',price:1.2},
+  {ref:'MC 003',name:'Prato Marcador Prateado',cat:'Marcadores de Mesa',price:1.5},
+  {ref:'MC 004',name:'Prato Marcador de Vime',cat:'Marcadores de Mesa',price:1.5},
+  {ref:'MC 005',name:'Capa de Marcador Rosa + Renda Pérola',cat:'Marcadores de Mesa',price:0.8},
+  {ref:'MC 006',name:'Capa de Marcador Azul + Renda Pérola',cat:'Marcadores de Mesa',price:0.8},
+  {ref:'MC 007',name:'Capa de Marcador Amarelo + Renda Pérola',cat:'Marcadores de Mesa',price:0.8},
+  {ref:'MC 008',name:'Capa de Marcador Cinza + Renda Pérola',cat:'Marcadores de Mesa',price:0.8},
+  {ref:'MC 009',name:'Marcador Linhado com Franja',cat:'Marcadores de Mesa',price:1},
+  // Toalhas Retangulares
+  {ref:'THR 001',name:'Toalha Retangular Tostado',cat:'Toalhas',price:20},
+  {ref:'THR 002',name:'Toalha Retangular Estampado Burgundy',cat:'Toalhas',price:20},
+  {ref:'THR 003',name:'Toalha Retangular Branco (Adamascada)',cat:'Toalhas',price:18},
+  {ref:'THR 004',name:'Toalha Retangular Areia',cat:'Toalhas',price:20},
+  {ref:'THR 005',name:'Toalha Retangular Branca Lisa Cetim',cat:'Toalhas',price:20},
+  {ref:'THR 006',name:'Toalha Retangular Branca (Adamascada)',cat:'Toalhas',price:18},
+  {ref:'THR 007',name:'Toalha Retangular Verde Esmeralda',cat:'Toalhas',price:15},
+  {ref:'THR 008',name:'Toalha Retangular Renda Pérola',cat:'Toalhas',price:35},
+  {ref:'THR 009',name:'Toalha Xadrez Vermelho',cat:'Toalhas',price:10},
+  {ref:'THR 010',name:'Toalha Xadrez Azul',cat:'Toalhas',price:10},
+  {ref:'THR 011',name:'Toalha Retangular Beje Adamascada',cat:'Toalhas',price:20},
+  // Toalhas Quadradas
+  {ref:'THQ 001',name:'Toalha Quadrada Branca',cat:'Toalhas',price:12},
+  {ref:'THQ 002',name:'Toalha Quadrada Verde Esmeralda',cat:'Toalhas',price:12},
+  {ref:'THQ 003',name:'Toalha Quadrada Rústica',cat:'Toalhas',price:12},
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let db, auth;
+let unsubRequests = null, unsubQuotes = null;
+let allRequests = [], allQuotes = [];
+let currentQuote = null; // quote being edited
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+// Fallback: se Firebase não responder em 6s, mostra login
+const _loadTimeout = setTimeout(() => {
+  if (!document.getElementById('loading').classList.contains('hidden')) {
+    hide('loading');
+    show('login-view');
+    setLoginError('Tempo esgotado. Verifica a ligação à internet e recarrega a página.');
+  }
+}, 6000);
+
+try {
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db   = firebase.firestore();
+  auth = firebase.auth();
+
+  auth.onAuthStateChanged(user => {
+    clearTimeout(_loadTimeout);
+    hide('loading');
+    if (user) {
+      document.getElementById('sb-user-email').textContent = user.email;
+      show('app-view');
+      hide('login-view');
+      startListeners();
+      goTo('dash');
+    } else {
+      show('login-view');
+      hide('app-view');
+      stopListeners();
+    }
+  });
+} catch(e) {
+  clearTimeout(_loadTimeout);
+  hide('loading');
+  show('login-view');
+  setLoginError('Erro Firebase: ' + e.message);
+}
+
+// ─── AUTH ────────────────────────────────────────────────────────────────────
+function doLogin() {
+  const email = document.getElementById('l-email').value.trim();
+  const pass  = document.getElementById('l-pass').value;
+  setLoginError('');
+  if (!email || !pass) { setLoginError('Preenche email e password.'); return; }
+  auth.signInWithEmailAndPassword(email, pass).catch(e => {
+    const msgs = {
+      'auth/user-not-found':   'Utilizador não encontrado.',
+      'auth/wrong-password':   'Password incorrecta.',
+      'auth/invalid-email':    'Email inválido.',
+      'auth/too-many-requests':'Demasiadas tentativas. Tenta mais tarde.',
+    };
+    setLoginError(msgs[e.code] || e.message);
+  });
+}
+document.getElementById('l-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+function doLogout() {
+  if (confirm('Tens a certeza que queres sair?')) auth.signOut();
+}
+
+function setLoginError(msg) { document.getElementById('login-error').textContent = msg; }
+
+// ─── REALTIME LISTENERS ──────────────────────────────────────────────────────
+function startListeners() {
+  unsubRequests = db.collection('pedidos').orderBy('createdAt','desc').onSnapshot(snap => {
+    allRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    updateBadge();
+    if (document.getElementById('dash-view').style.display !== 'none' &&
+        !document.getElementById('dash-view').classList.contains('hidden'))
+      renderDashboard();
+    if (!document.getElementById('requests-view').classList.contains('hidden'))
+      renderRequests();
+  });
+
+  unsubQuotes = db.collection('orcamentos').orderBy('createdAt','desc').onSnapshot(snap => {
+    allQuotes = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!document.getElementById('dash-view').classList.contains('hidden'))
+      renderDashboard();
+    if (!document.getElementById('quotes-view').classList.contains('hidden'))
+      renderQuotes();
+  });
+}
+
+function stopListeners() {
+  if (unsubRequests) { unsubRequests(); unsubRequests = null; }
+  if (unsubQuotes)   { unsubQuotes();   unsubQuotes   = null; }
+}
+
+function updateBadge() {
+  const novos = allRequests.filter(r => r.status === 'novo').length;
+  const badge = document.getElementById('badge-requests');
+  if (novos > 0) { badge.textContent = novos; badge.classList.remove('hidden'); }
+  else           { badge.classList.add('hidden'); }
+}
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+function goTo(view, data) {
+  ['dash','requests','quotes','editor','inventory'].forEach(v =>
+    document.getElementById(v+'-view').classList.add('hidden'));
+  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
+  document.querySelector(`[data-view="${view === 'editor' ? 'quotes' : view}"]`)?.classList.add('active');
+  document.getElementById(view+'-view').classList.remove('hidden');
+  closeSidebar();
+
+  if (view === 'dash')      renderDashboard();
+  if (view === 'requests')  renderRequests();
+  if (view === 'quotes')    renderQuotes();
+  if (view === 'editor')    initEditor(data || {});
+  if (view === 'inventory') renderInventory();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sbOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sbOverlay').classList.remove('open');
+}
+
+// ─── DASHBOARD ───────────────────────────────────────────────────────────────
+function renderDashboard() {
+  const novos   = allRequests.filter(r => r.status === 'novo').length;
+  const aceites = allQuotes.filter(q => q.status === 'aceite').length;
+  const aberto  = allQuotes.filter(q => ['rascunho','enviado'].includes(q.status)).length;
+  el('stat-novos').textContent   = novos;
+  el('stat-total').textContent   = allQuotes.length;
+  el('stat-aceites').textContent = aceites;
+  el('stat-aberto').textContent  = aberto;
+
+  const reqBody = el('dash-req-body');
+  const recent5req = allRequests.slice(0,5);
+  reqBody.innerHTML = recent5req.length ? recent5req.map(r => `
+    <tr>
+      <td>${fmtDate(r.createdAt)}</td>
+      <td>${esc(r.nome)}</td>
+      <td style="color:var(--muted)">${esc(r.email)}</td>
+      <td>${badge(r.status||'novo')}</td>
+      <td class="td-actions">
+        <button class="btn btn-outline btn-sm" onclick="goTo('editor',{pedidoId:'${r.id}',pedidoData:allRequests.find(x=>x.id==='${r.id}')})">Orçar</button>
+      </td>
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="5">Sem pedidos</td></tr>';
+
+  const orcBody = el('dash-orc-body');
+  const recent5orc = allQuotes.slice(0,5);
+  orcBody.innerHTML = recent5orc.length ? recent5orc.map(q => `
+    <tr>
+      <td style="font-size:11px;color:var(--muted)">${esc(q.numero||'—')}</td>
+      <td>${esc(q.client?.nome||'—')}</td>
+      <td>${fmtCurrency(q.total||0)}</td>
+      <td>${badge(q.status||'rascunho')}</td>
+      <td class="td-actions">
+        <button class="btn btn-outline btn-sm" onclick="openQuote('${q.id}')">Editar</button>
+      </td>
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="5">Sem orçamentos</td></tr>';
+}
+
+// ─── INVENTORY ───────────────────────────────────────────────────────────────
+const IMG_FOLDER = {
+  'Mesas':             'Cadeiras',
+  'Cadeiras':          'Cadeiras',
+  'Laços':             'Laços',
+  'Camilhas':          'Camilhas',
+  'Caminhos de Mesa':  'Caminhos de Mesa',
+  'Guardanapos':       'Guardanapos',
+  'Louças':            'Louças',
+  'Copos':             'Louças/Copos',
+  'Talheres':          'Louças/Talheres',
+  'Almofadas':         'Almofadas',
+  'Complementos Mesa': 'Complementos Mesa',
+  'Sofás Bambu':       'Complementos Exterior',
+  'Exterior':          'Complementos Exterior',
+  'Marcadores de Mesa':'Marcadores de Mesa',
+  'Toalhas':           'Toalhas quadradas',
+};
+
+let invActiveCat = 'Todos';
+
+function getImgSrc(item) {
+  const folder = IMG_FOLDER[item.cat] || item.cat;
+  return `/Fotosdiversas/${folder}/${item.ref}.png`;
+}
+
+function invImgFallback(img) {
+  const ref = img.dataset.ref;
+  const cat = img.dataset.cat;
+  const folder = IMG_FOLDER[cat] || cat;
+  const base = `/Fotosdiversas/${folder}/${ref}`;
+  const tried = img.dataset.tried || '';
+  if (!tried) {
+    img.dataset.tried = 'jpg';
+    img.src = base + '.jpg';
+  } else if (tried === 'jpg') {
+    img.dataset.tried = 'jpeg';
+    img.src = base + '.jpeg';
+  } else {
+    img.style.display = 'none';
+    const ph = document.createElement('div');
+    ph.className = 'inv-card-img-placeholder';
+    ph.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+    img.parentNode.insertBefore(ph, img);
+  }
+}
+
+function renderInventory() {
+  const cats = ['Todos', ...new Set(CATALOG.map(i => i.cat))];
+  el('inv-cat-chips').innerHTML = cats.map(c => `
+    <button class="cat-chip${c === invActiveCat ? ' active' : ''}" onclick="setInvCat('${c}')">${c}</button>
+  `).join('');
+  filterInventory();
+}
+
+function setInvCat(cat) {
+  invActiveCat = cat;
+  document.querySelectorAll('.cat-chip').forEach(ch => {
+    ch.classList.toggle('active', ch.textContent === cat);
+  });
+  filterInventory();
+}
+
+function filterInventory() {
+  const q = (el('inv-search')?.value || '').toLowerCase().trim();
+  const items = CATALOG.filter(item => {
+    const catOk = invActiveCat === 'Todos' || item.cat === invActiveCat;
+    const searchOk = !q || item.ref.toLowerCase().includes(q) || item.name.toLowerCase().includes(q);
+    return catOk && searchOk;
+  });
+  el('inv-count').textContent = `${items.length} artigo${items.length !== 1 ? 's' : ''}`;
+  el('inv-grid').innerHTML = items.map(item => {
+    const inCart = cart.some(c => c.ref === item.ref);
+    const safeRef = item.ref.replace(/'/g,"\\'");
+    return `
+    <div class="inv-card" id="inv-card-${esc(item.ref.replace(/\s/g,'-'))}">
+      <div class="inv-card-img-wrap">
+        <img class="inv-card-img" src="${getImgSrc(item)}"
+             alt="${esc(item.name)}"
+             data-ref="${esc(item.ref)}" data-cat="${esc(item.cat)}"
+             onerror="invImgFallback(this)">
+        <button class="inv-card-add${inCart?' in-cart':''}"
+                title="Adicionar ao carrinho"
+                onclick="addToCart('${safeRef}')">+</button>
+      </div>
+      <div class="inv-card-body">
+        <span class="inv-card-ref">${esc(item.ref)}</span>
+        <div class="inv-card-name">${esc(item.name)}</div>
+        <div class="inv-card-price${item.price ? '' : ' inv-card-price-zero'}">
+          ${item.price ? fmtCurrency(item.price) : '—'}
+        </div>
+      </div>
+    </div>`
+  }).join('');
+}
+
+// ─── CART ────────────────────────────────────────────────────────────────────
+let cart = [];
+
+function addToCart(ref) {
+  const catalogItem = CATALOG.find(c => c.ref === ref);
+  if (!catalogItem) return;
+  const existing = cart.find(c => c.ref === ref);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ref: catalogItem.ref, name: catalogItem.name, cat: catalogItem.cat, price: catalogItem.price, qty: 1 });
+  }
+  updateCartUI();
+  showToast(`${catalogItem.name} adicionado`, 'ok');
+  // Update the "+" button state on the card
+  const cardBtn = document.querySelector(`#inv-card-${ref.replace(/\s/g,'-')} .inv-card-add`);
+  if (cardBtn) cardBtn.classList.add('in-cart');
+}
+
+function removeFromCart(ref) {
+  cart = cart.filter(c => c.ref !== ref);
+  updateCartUI();
+  renderCartPanel();
+  const cardBtn = document.querySelector(`#inv-card-${ref.replace(/\s/g,'-')} .inv-card-add`);
+  if (cardBtn) cardBtn.classList.remove('in-cart');
+}
+
+function updateCartQty(ref, delta) {
+  const item = cart.find(c => c.ref === ref);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  renderCartPanel();
+  updateCartBadge();
+}
+
+function setCartQty(ref, val) {
+  const item = cart.find(c => c.ref === ref);
+  if (!item) return;
+  const n = parseInt(val);
+  item.qty = isNaN(n) || n < 1 ? 1 : n;
+  renderCartPanel();
+  updateCartBadge();
+}
+
+function clearCart() {
+  cart = [];
+  updateCartUI();
+  renderCartPanel();
+  document.querySelectorAll('.inv-card-add.in-cart').forEach(b => b.classList.remove('in-cart'));
+}
+
+function updateCartUI() {
+  updateCartBadge();
+  if (el('cart-panel').classList.contains('open')) renderCartPanel();
+}
+
+function updateCartBadge() {
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  el('cart-badge').textContent = count;
+  el('cart-badge').classList.toggle('hidden', count === 0);
+  el('cart-fab').classList.toggle('hidden', count === 0);
+}
+
+function openCart() {
+  renderCartPanel();
+  el('cart-panel').classList.add('open');
+  el('cart-overlay').classList.add('open');
+}
+
+function closeCart() {
+  el('cart-panel').classList.remove('open');
+  el('cart-overlay').classList.remove('open');
+}
+
+function renderCartPanel() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  el('cart-total-val').textContent = fmtCurrency(total);
+  el('cart-to-quote-btn').disabled = cart.length === 0;
+
+  if (cart.length === 0) {
+    el('cart-items-list').innerHTML = `<div class="cart-empty">O carrinho está vazio.<br>Adiciona artigos do inventário.</div>`;
+    return;
+  }
+
+  el('cart-items-list').innerHTML = cart.map(item => {
+    const folder = IMG_FOLDER[item.cat] || item.cat;
+    const safeRef = item.ref.replace(/'/g,"\\'");
+    return `
+    <div class="cart-item">
+      <img class="cart-item-img"
+           src="/Fotosdiversas/${folder}/${item.ref}.png"
+           data-ref="${esc(item.ref)}" data-cat="${esc(item.cat)}"
+           onerror="invImgFallback(this)"
+           alt="${esc(item.name)}">
+      <div class="cart-item-info">
+        <div class="cart-item-ref">${esc(item.ref)}</div>
+        <div class="cart-item-name">${esc(item.name)}</div>
+        <div class="cart-item-unit">${fmtCurrency(item.price)} / un.</div>
+      </div>
+      <div class="cart-item-right">
+        <div class="qty-ctrl">
+          <button onclick="updateCartQty('${safeRef}',-1)">−</button>
+          <input type="number" min="1" value="${item.qty}" onchange="setCartQty('${safeRef}',+this.value)" onclick="this.select()">
+          <button onclick="updateCartQty('${safeRef}',+1)">+</button>
+        </div>
+        <div class="cart-item-subtotal">${fmtCurrency(item.price * item.qty)}</div>
+        <button class="cart-remove-btn" onclick="removeFromCart('${safeRef}')">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function cartToQuote() {
+  if (cart.length === 0) return;
+  const items = cart.map(c => ({
+    id: uid(),
+    ref: c.ref,
+    descricao: c.name,
+    quantidade: c.qty,
+    precoUnit: c.price,
+    total: c.price * c.qty,
+  }));
+  cart = [];
+  updateCartBadge();
+  closeCart();
+  document.querySelectorAll('.inv-card-add.in-cart').forEach(b => b.classList.remove('in-cart'));
+  goTo('editor', { cartItems: items });
+}
+
+// ─── REQUESTS ────────────────────────────────────────────────────────────────
+function renderRequests() {
+  el('req-body').innerHTML = allRequests.length ? allRequests.map(r => `
+    <tr>
+      <td style="white-space:nowrap">${fmtDate(r.createdAt)}</td>
+      <td><strong>${esc(r.nome)}</strong></td>
+      <td style="color:var(--muted)">${esc(r.email)}</td>
+      <td>${esc(r.telefone||'—')}</td>
+      <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:12px">${esc((r.mensagem||r.artigos||'—').substring(0,80))}</td>
+      <td>
+        <select class="status-select badge badge-${r.status||'novo'}" onchange="updateRequestStatus('${r.id}',this.value);this.className='status-select badge badge-'+this.value">
+          <option value="novo"        ${r.status==='novo'?'selected':''}>Novo</option>
+          <option value="em_progresso"${r.status==='em_progresso'?'selected':''}>Em progresso</option>
+          <option value="concluido"   ${r.status==='concluido'?'selected':''}>Concluído</option>
+        </select>
+      </td>
+      <td class="td-actions">
+        <button class="btn btn-primary btn-sm" onclick="goTo('editor',{pedidoId:'${r.id}',pedidoData:allRequests.find(x=>x.id==='${r.id}')})">Orçar</button>
+      </td>
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="7">Sem pedidos recebidos</td></tr>';
+}
+
+async function updateRequestStatus(id, status) {
+  await db.collection('pedidos').doc(id).update({ status });
+}
+
+// ─── QUOTES ──────────────────────────────────────────────────────────────────
+function renderQuotes() {
+  el('orc-body').innerHTML = allQuotes.length ? allQuotes.map(q => `
+    <tr>
+      <td style="font-size:11px;color:var(--muted);white-space:nowrap">${esc(q.numero||'—')}</td>
+      <td><strong>${esc(q.client?.nome||'—')}</strong></td>
+      <td style="color:var(--muted)">${esc(q.client?.email||'—')}</td>
+      <td style="font-size:12px;color:var(--muted)">${esc(q.evento?.data||'—')}</td>
+      <td><strong>${fmtCurrency(q.total||0)}</strong></td>
+      <td>
+        <select class="status-select badge badge-${q.status||'rascunho'}" onchange="updateQuoteStatus('${q.id}',this.value);this.className='status-select badge badge-'+this.value">
+          <option value="rascunho" ${q.status==='rascunho'?'selected':''}>Rascunho</option>
+          <option value="enviado"  ${q.status==='enviado'?'selected':''}>Enviado</option>
+          <option value="aceite"   ${q.status==='aceite'?'selected':''}>Aceite</option>
+          <option value="rejeitado"${q.status==='rejeitado'?'selected':''}>Rejeitado</option>
+        </select>
+      </td>
+      <td class="td-actions">
+        <button class="btn btn-outline btn-sm" onclick="openQuote('${q.id}')">Editar</button>
+        <button class="btn btn-danger btn-sm btn-icon" onclick="deleteQuote('${q.id}')" title="Apagar">✕</button>
+      </td>
+    </tr>`).join('') : '<tr class="empty-row"><td colspan="7">Sem orçamentos criados</td></tr>';
+}
+
+async function updateQuoteStatus(id, status) {
+  await db.collection('orcamentos').doc(id).update({ status, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+}
+
+function openQuote(id) {
+  const q = allQuotes.find(x => x.id === id);
+  if (q) goTo('editor', { quote: q });
+}
+
+async function deleteQuote(id) {
+  if (!confirm('Apagar este orçamento?')) return;
+  await db.collection('orcamentos').doc(id).delete();
+  toast('Orçamento apagado', 'ok');
+}
+
+// ─── EDITOR ──────────────────────────────────────────────────────────────────
+function initEditor(data) {
+  if (data.quote) {
+    // Edit existing quote
+    currentQuote = JSON.parse(JSON.stringify(data.quote));
+    el('editor-title').textContent = `Orçamento ${data.quote.numero||''}`;
+  } else {
+    // New quote — optionally pre-fill from pedido
+    const pedido = data.pedidoData || null;
+    currentQuote = {
+      id: null,
+      numero: null,
+      pedidoId: data.pedidoId || null,
+      status: 'rascunho',
+      client: {
+        nome:     pedido?.nome     || '',
+        email:    pedido?.email    || '',
+        telefone: pedido?.telefone || '',
+      },
+      evento: { data: '', local: '', tipo: '' },
+      items: [],
+      subtotal: 0,
+      incluiIVA: false,
+      ivaAmount: 0,
+      total: 0,
+      notas: 'Inclui entrega e recolha em Vila do Conde e arredores.\nOrçamento válido por 30 dias.',
+    };
+    // Pre-fill from cart
+    if (data.cartItems && data.cartItems.length) {
+      currentQuote.items = data.cartItems;
+    }
+    // Pre-fill items from pedido artigos
+    else if (pedido?.artigos && pedido.artigos !== '—') {
+      const linhas = pedido.artigos.split('\n');
+      linhas.forEach(l => {
+        const m = l.match(/^(.+?)\s*—\s*(.+?)\s*\(×(\d+)\)/);
+        if (m) currentQuote.items.push({ id: uid(), ref: m[1].trim(), descricao: m[2].trim(), quantidade: parseInt(m[3])||1, precoUnit: 0, total: 0 });
+      });
+    }
+    el('editor-title').textContent = 'Novo Orçamento';
+  }
+
+  // Populate fields
+  el('e-nome').value  = currentQuote.client.nome;
+  el('e-email').value = currentQuote.client.email;
+  el('e-tel').value   = currentQuote.client.telefone;
+  el('e-data').value  = currentQuote.evento.data;
+  el('e-tipo').value  = currentQuote.evento.tipo;
+  el('e-local').value = currentQuote.evento.local;
+  el('e-notas').value = currentQuote.notas;
+  el('e-iva').checked = currentQuote.incluiIVA;
+
+  // Pedido ref
+  el('e-pedido-ref').textContent = currentQuote.pedidoId
+    ? `Criado a partir do pedido de ${currentQuote.client.nome || 'cliente'}`
+    : 'Orçamento criado manualmente';
+
+  renderEditorItems();
+}
+
+function renderEditorItems() {
+  el('items-body').innerHTML = currentQuote.items.map((item, i) => `
+    <tr data-id="${item.id}">
+      <td class="td-ref"><input value="${esc(item.ref)}" placeholder="Ref." onchange="updateItem('${item.id}','ref',this.value)"></td>
+      <td><input value="${esc(item.descricao)}" placeholder="Descrição" onchange="updateItem('${item.id}','descricao',this.value)"></td>
+      <td class="td-qty"><input type="number" value="${item.quantidade}" min="1" onchange="updateItem('${item.id}','quantidade',+this.value)"></td>
+      <td class="td-price"><input type="number" value="${item.precoUnit}" min="0" step="0.01" placeholder="0,00" onchange="updateItem('${item.id}','precoUnit',+this.value)"></td>
+      <td class="td-total">${fmtCurrency(item.total)}</td>
+      <td class="td-del"><button class="del-btn" onclick="removeItem('${item.id}')">✕</button></td>
+    </tr>`).join('') || `<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:1.5rem;font-size:13px;">Sem artigos — adiciona do catálogo ou cria uma linha livre</td></tr>`;
+
+  recalcTotals();
+}
+
+function addFreeItem() {
+  currentQuote.items.push({ id: uid(), ref: '', descricao: '', quantidade: 1, precoUnit: 0, total: 0 });
+  renderEditorItems();
+}
+
+function removeItem(itemId) {
+  currentQuote.items = currentQuote.items.filter(i => i.id !== itemId);
+  renderEditorItems();
+}
+
+function updateItem(itemId, field, value) {
+  const item = currentQuote.items.find(i => i.id === itemId);
+  if (!item) return;
+  item[field] = value;
+  item.total  = +(item.quantidade * item.precoUnit).toFixed(2);
+  recalcTotals();
+  // Update total cell without full re-render
+  const row = document.querySelector(`[data-id="${itemId}"] .td-total`);
+  if (row) row.textContent = fmtCurrency(item.total);
+}
+
+function recalcTotals() {
+  const sub = currentQuote.items.reduce((acc, i) => acc + (i.total||0), 0);
+  const iva  = el('e-iva').checked ? +(sub * 0.23).toFixed(2) : 0;
+  const tot  = +(sub + iva).toFixed(2);
+  currentQuote.subtotal  = sub;
+  currentQuote.incluiIVA = el('e-iva').checked;
+  currentQuote.ivaAmount = iva;
+  currentQuote.total     = tot;
+  el('t-subtotal').textContent = fmtCurrency(sub);
+  el('t-total').textContent    = fmtCurrency(tot);
+  const ivaLine = el('t-iva-line');
+  if (iva > 0) { ivaLine.textContent = `IVA 23%: ${fmtCurrency(iva)}`; ivaLine.classList.remove('hidden'); }
+  else         { ivaLine.classList.add('hidden'); }
+}
+
+async function saveQuote(status) {
+  // Read current field values
+  currentQuote.client = {
+    nome:     el('e-nome').value.trim(),
+    email:    el('e-email').value.trim(),
+    telefone: el('e-tel').value.trim(),
+  };
+  currentQuote.evento = {
+    data:  el('e-data').value,
+    tipo:  el('e-tipo').value,
+    local: el('e-local').value.trim(),
+  };
+  currentQuote.notas     = el('e-notas').value;
+  currentQuote.status    = status || currentQuote.status;
+  currentQuote.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+
+  if (!currentQuote.client.nome) { toast('Preenche o nome do cliente', 'err'); return; }
+
+  try {
+    if (currentQuote.id) {
+      // Update
+      const { id, ...data } = currentQuote;
+      await db.collection('orcamentos').doc(id).update(data);
+      toast('Orçamento guardado', 'ok');
+    } else {
+      // Create — get next number
+      const snap = await db.collection('orcamentos').get();
+      const year = new Date().getFullYear();
+      const num  = String(snap.size + 1).padStart(3, '0');
+      currentQuote.numero    = `ORC-${year}-${num}`;
+      currentQuote.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+      const ref = await db.collection('orcamentos').add(currentQuote);
+      currentQuote.id = ref.id;
+      el('editor-title').textContent = `Orçamento ${currentQuote.numero}`;
+      toast('Orçamento criado', 'ok');
+      // Mark pedido as em_progresso
+      if (currentQuote.pedidoId)
+        await db.collection('pedidos').doc(currentQuote.pedidoId).update({ status: 'em_progresso' });
+    }
+  } catch(e) {
+    toast('Erro ao guardar: ' + e.message, 'err');
+  }
+}
+
+// ─── CATALOG MODAL ───────────────────────────────────────────────────────────
+function openCatalogModal() {
+  el('catalog-search').value = '';
+  filterCatalog('');
+  el('catalog-modal').classList.remove('hidden');
+  el('catalog-search').focus();
+}
+function closeCatalogModal(e) {
+  if (!e || e.target === el('catalog-modal')) el('catalog-modal').classList.add('hidden');
+}
+function filterCatalog(q) {
+  const term = q.toLowerCase();
+  const filtered = CATALOG.filter(p =>
+    p.ref.toLowerCase().includes(term) ||
+    p.name.toLowerCase().includes(term) ||
+    p.cat.toLowerCase().includes(term)
+  );
+  el('catalog-list').innerHTML = filtered.map(p => `
+    <div class="catalog-item" onclick="addCatalogItem(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+      <div class="catalog-item-info">
+        <span class="catalog-item-ref">${esc(p.ref)}</span>
+        <span class="catalog-item-name">${esc(p.name)}</span>
+      </div>
+      <span class="catalog-item-cat">${esc(p.cat)}</span>
+    </div>`).join('') || '<div style="padding:2rem;text-align:center;color:var(--muted);font-size:13px">Sem resultados</div>';
+}
+function addCatalogItem(p) {
+  const precoUnit = p.price || 0;
+  currentQuote.items.push({ id: uid(), ref: p.ref, descricao: p.name, quantidade: 1, precoUnit, total: precoUnit });
+  renderEditorItems();
+  el('catalog-modal').classList.add('hidden');
+}
+
+// ─── PDF GENERATION ──────────────────────────────────────────────────────────
+function loadLogoForPDF() {
+  return new Promise(resolve => {
+    fetch('/logo.svg')
+      .then(r => r.text())
+      .then(svgText => {
+        // Add explicit dimensions so the canvas can render the SVG
+        const sized = svgText.replace(
+          '<svg ',
+          '<svg width="900" height="630" '
+        );
+        const blob = new Blob([sized], { type: 'image/svg+xml' });
+        const url  = URL.createObjectURL(blob);
+        const img  = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width  = 900;
+          canvas.height = 630;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, 900, 630);
+          ctx.drawImage(img, 0, 0, 900, 630);
+          URL.revokeObjectURL(url);
+          resolve(canvas.toDataURL('image/png'));
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
+        img.src = url;
+      })
+      .catch(() => resolve(null));
+  });
+}
+
+async function generatePDF() {
+  currentQuote.client = {
+    nome:     el('e-nome').value.trim(),
+    email:    el('e-email').value.trim(),
+    telefone: el('e-tel').value.trim(),
+  };
+  currentQuote.evento = {
+    data:  el('e-data').value,
+    tipo:  el('e-tipo').value,
+    local: el('e-local').value.trim(),
+  };
+  currentQuote.notas = el('e-notas').value;
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+  const W = 210, H = 297;
+  const ML = 14, MR = 14;
+  const dark  = [25, 25, 25];
+  const gray  = [100, 100, 100];
+  const lgray = [190, 190, 190];
+  const green = [50, 160, 70];
+
+  function dashedLine(x1, y1, x2, y2) {
+    doc.setLineDashPattern([1.8, 1.4], 0);
+    doc.line(x1, y1, x2, y2);
+    doc.setLineDashPattern([], 0);
+  }
+
+  const today = new Date().toLocaleDateString('pt-PT');
+  const validDate = (() => {
+    const d = new Date(); d.setDate(d.getDate() + 30);
+    return d.toLocaleDateString('pt-PT');
+  })();
+
+  // helper: bold label + normal value on same line
+  function labelValue(x, y, label, value, fontSize) {
+    doc.setFontSize(fontSize || 8.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...dark);
+    doc.text(label, x, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(...gray);
+    doc.text(value, x + doc.getTextWidth(label), y);
+  }
+
+  // ── LOGO (top-left) ──
+  const logoData = await loadLogoForPDF();
+  if (logoData) {
+    doc.addImage(logoData, 'PNG', ML, 7, 32, 22);
+  } else {
+    doc.setFont('times', 'bolditalic');
+    doc.setFontSize(26);
+    doc.setTextColor(30, 30, 30);
+    doc.text('M&A', ML, 20);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6);
+    doc.setTextColor(...gray);
+    doc.text('EVENTOS', ML + 1, 25);
+  }
+
+  // ── QUOTE TITLE & DATE (right) ──
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(13);
+  doc.setTextColor(...dark);
+  const quoteNumLabel = 'Orçamento nº ';
+  const quoteNum = currentQuote.numero || 'ORÇAMENTO';
+  const labelW = doc.getTextWidth(quoteNumLabel);
+  const titleX = W - MR - doc.getTextWidth(quoteNumLabel + quoteNum);
+  doc.text(quoteNumLabel, titleX, 20);
+  doc.setFont('helvetica', 'bold');
+  doc.text(quoteNum, titleX + labelW, 20);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...gray);
+  doc.text(`Data de Emissão: ${today}`, W - MR, 26, { align: 'right' });
+
+  // ── SEPARATOR ──
+  doc.setDrawColor(...lgray);
+  doc.setLineWidth(0.3);
+  doc.line(ML, 31, W - MR, 31);
+
+  let y = 38;
+
+  // ── COMPANY INFO (left) ──
+  const compLines = [
+    { bold: true,  text: COMPANY.name },
+    { bold: false, text: COMPANY.morada1 },
+    { bold: false, text: COMPANY.morada2 },
+    { bold: false, text: COMPANY.pais },
+    { label: 'E-mail: ', value: COMPANY.email },
+    { label: 'Tel.: ',   value: COMPANY.tel },
+    { label: 'Web: ',    value: COMPANY.website },
+    { label: 'NIF: ',    value: COMPANY.nif },
+  ];
+  let cy = y;
+  compLines.forEach(l => {
+    if (l.label !== undefined) {
+      labelValue(ML, cy, l.label, l.value, 8.5);
+    } else {
+      doc.setFont('helvetica', l.bold ? 'bold' : 'normal');
+      doc.setFontSize(l.bold ? 9 : 8.5);
+      if (l.bold) { doc.setTextColor(dark[0], dark[1], dark[2]); } else { doc.setTextColor(gray[0], gray[1], gray[2]); }
+      doc.text(l.text, ML, cy);
+    }
+    cy += 4.5;
+  });
+
+  // ── CLIENT INFO (right) ──
+  const clientX = W / 2 + 5;
+  let cly = y;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.setTextColor(...dark);
+  doc.text(currentQuote.client.nome || 'Cliente', clientX, cly); cly += 4.5;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8.5);
+  doc.setTextColor(...gray);
+  if (currentQuote.evento.local) { doc.text(currentQuote.evento.local, clientX, cly); cly += 4.5; }
+  if (currentQuote.client.email) { doc.text(currentQuote.client.email, clientX, cly); cly += 4.5; }
+  if (currentQuote.client.telefone) { doc.text(currentQuote.client.telefone, clientX, cly); cly += 4.5; }
+
+  y = Math.max(cy, cly) + 4;
+
+  // ── INFO BAR ──
+  const barH = 17;
+  const barY = y;
+  doc.setDrawColor(...lgray);
+  doc.setLineWidth(0.5);
+  dashedLine(ML, barY, W - MR, barY);
+  dashedLine(ML, barY + barH, W - MR, barY + barH);
+
+  const infoCols = [
+    { label: 'NIF:',          value: 'Consumidor Final' },
+    { label: 'Referência:',   value: '----' },
+    { label: 'Válido até:',   value: validDate },
+    { label: 'IVA:',          value: fmtCurrencyPDF(currentQuote.ivaAmount || 0) },
+    { label: 'Total Aceite:', value: fmtCurrencyPDF(currentQuote.total || 0) },
+  ];
+  const colW = (W - ML - MR) / infoCols.length;
+  infoCols.forEach((col, i) => {
+    const cx = ML + i * colW + 3;
+    if (i > 0) {
+      doc.setDrawColor(...lgray);
+      doc.setLineWidth(0.3);
+      doc.line(ML + i * colW, barY + 2, ML + i * colW, barY + barH - 2);
+    }
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(...gray);
+    doc.text(col.label, cx, barY + 5.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(...dark);
+    doc.text(col.value, cx, barY + 13);
+  });
+
+  y = barY + barH + 4;
+
+  // ── ITEMS TABLE ──
+  const ivaRate = currentQuote.incluiIVA ? 0.23 : 0;
+  const rows = currentQuote.items.map(item => {
+    const totalSIVA = +(item.quantidade * item.precoUnit).toFixed(2);
+    const ivaVal    = +(totalSIVA * ivaRate).toFixed(2);
+    const totalCIVA = +(totalSIVA + ivaVal).toFixed(2);
+    const itemLabel = [item.ref, item.descricao].filter(Boolean).join(' - ');
+    return [
+      itemLabel || '—',
+      fmtCurrencyPDF(item.precoUnit),
+      item.quantidade % 1 === 0 ? item.quantidade + '.0' : String(item.quantidade),
+      fmtCurrencyPDF(totalSIVA),
+      ivaRate > 0 ? '23%' : '—',
+      fmtCurrencyPDF(totalCIVA),
+    ];
+  });
+
+  if (rows.length === 0) rows.push(['Sem artigos adicionados', '', '', '', '', '']);
+
+  doc.autoTable({
+    startY: y,
+    head: [['Item', 'Preço Unit.', 'Quant.', 'Total s/ IVA', 'IVA', 'Total c/ IVA']],
+    body: rows,
+    margin: { left: ML, right: MR },
+    styles: { overflow: 'linebreak' },
+    headStyles: {
+      fillColor: [255, 255, 255],
+      textColor: [120, 120, 120],
+      fontStyle: 'normal',
+      fontSize: 7.5,
+      cellPadding: { top: 2, bottom: 3, left: 2.5, right: 2.5 },
+      lineColor: [180, 180, 180],
+      lineWidth: { bottom: 0.35, top: 0, left: 0, right: 0 },
+    },
+    bodyStyles: {
+      fontSize: 8.5,
+      cellPadding: { top: 1.5, bottom: 1.5, left: 2.5, right: 2.5 },
+      textColor: dark,
+      fillColor: [255, 255, 255],
+      lineColor: [220, 220, 220],
+      lineWidth: { bottom: 0.2, top: 0, left: 0, right: 0 },
+    },
+    alternateRowStyles: { fillColor: [255, 255, 255] },
+    columnStyles: {
+      0: { cellWidth: 'auto', halign: 'left' },
+      1: { cellWidth: 24, halign: 'right' },
+      2: { cellWidth: 20, halign: 'center' },
+      3: { cellWidth: 26, halign: 'right' },
+      4: { cellWidth: 14, halign: 'center' },
+      5: { cellWidth: 26, halign: 'right' },
+    },
+  });
+
+  y = doc.lastAutoTable.finalY;
+
+  // ── DASHED LINE AFTER TABLE ──
+  doc.setDrawColor(...lgray);
+  doc.setLineWidth(0.5);
+  dashedLine(ML, y, W - MR, y);
+  y += 6;
+
+  // ── "VALOR A TRANSITAR" ──
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...gray);
+  doc.text('Valor a transitar para a próxima página:', W - MR, y, { align: 'right' });
+  y += 8;
+  // Total value large + arrow box
+  const totalStr = fmtCurrencyPDF(currentQuote.total);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(15);
+  doc.setTextColor(...dark);
+  doc.text(totalStr, W - MR - 9, y, { align: 'right' });
+  // Arrow box
+  const arrowBoxX = W - MR - 7;
+  const arrowBoxY = y - 5.5;
+  doc.setDrawColor(...lgray);
+  doc.setLineWidth(0.3);
+  doc.rect(arrowBoxX, arrowBoxY, 7, 7);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...gray);
+  doc.text('→', arrowBoxX + 3.5, arrowBoxY + 5, { align: 'center' });
+
+  // ── BOTTOM PAGE FOOTER ──
+  const fY = H - 10;
+  doc.setDrawColor(...lgray);
+  doc.setLineWidth(0.25);
+  doc.line(ML, fY - 4, W - MR, fY - 4);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6);
+  doc.setTextColor(...lgray);
+  doc.text('Este documento não serve de factura', ML, fY);
+  doc.text('Página 1', W - MR, fY, { align: 'right' });
+
+  const filename = `orcamento_${(currentQuote.numero || 'MEA').replace(/[^a-zA-Z0-9]/g, '-')}_${(currentQuote.client.nome || 'cliente').split(' ')[0]}.pdf`;
+  doc.save(filename);
+  toast('PDF gerado', 'ok');
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+function el(id) { return document.getElementById(id); }
+function show(id) { document.getElementById(id).classList.remove('hidden'); }
+function hide(id) { document.getElementById(id).classList.add('hidden'); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function uid() { return Math.random().toString(36).slice(2,10); }
+function fmtCurrency(n) { return (+(n||0)).toLocaleString('pt-PT',{style:'currency',currency:'EUR'}); }
+function fmtCurrencyPDF(n) { return (+(n||0)).toFixed(2).replace('.',',') + ' €'; }
+function fmtDate(ts) {
+  if (!ts) return '—';
+  try { return ts.toDate ? ts.toDate().toLocaleDateString('pt-PT') : new Date(ts).toLocaleDateString('pt-PT'); }
+  catch { return '—'; }
+}
+function badge(status) {
+  const labels = { novo:'Novo', rascunho:'Rascunho', enviado:'Enviado', aceite:'Aceite', rejeitado:'Rejeitado', em_progresso:'Em progresso', concluido:'Concluído' };
+  return `<span class="badge badge-${status}">${labels[status]||status}</span>`;
+}
+let toastTimer;
+function toast(msg, type = 'ok') {
+  const t = el('toast');
+  t.textContent = msg;
+  t.className = 'show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = ''; }, 3000);
+}
+</script>
+</body>
+</html>
