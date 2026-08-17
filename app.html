@@ -1911,6 +1911,21 @@ async function generatePDF() {
   doc.setTextColor(...gray);
   doc.text('→', arrowBoxX + 3.5, arrowBoxY + 5, { align: 'center' });
 
+  // ── NOTAS / CONDIÇÕES ──
+  if (currentQuote.notas && currentQuote.notas.trim()) {
+    y += 10;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7);
+    doc.setTextColor(...gray);
+    doc.text('NOTAS / CONDIÇÕES', ML, y);
+    y += 4;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(...dark);
+    const notaLines = doc.splitTextToSize(currentQuote.notas.trim(), W - ML - MR);
+    doc.text(notaLines, ML, y);
+  }
+
   // ── BOTTOM PAGE FOOTER ──
   const fY = H - 10;
   doc.setDrawColor(...lgray);
