@@ -726,7 +726,9 @@ const COMPANY = {
 const CATALOG = [
   // Mesas
   {ref:'MS 001',name:'Mesa Redonda',cat:'Mesas',price:15},
-  {ref:'MS 002',name:'Mesa Rectangular',cat:'Mesas',price:20},
+  {ref:'MS 002',name:'Mesa Retangular',cat:'Mesas',price:20},
+  {ref:'MS 003',name:'Mesa Dobrável',cat:'Mesas',price:12},
+  {ref:'MS 004',name:'Mesa Rústica Pé de Galo',cat:'Mesas',price:40},
   // Cadeiras
   {ref:'CD 001',name:'Cadeira Dobrável Castanha',cat:'Cadeiras',price:4},
   {ref:'CD 002',name:'Cadeira Dobrável Castanha c/ Coxim Tecido Pérola',cat:'Cadeiras',price:5},
@@ -737,6 +739,7 @@ const CATALOG = [
   {ref:'CD 007',name:'Cadeira Crossback Camel',cat:'Cadeiras',price:6.5},
   {ref:'CD 008',name:'Cadeira Crossback Camel c/ Coxim Pérola',cat:'Cadeiras',price:8},
   {ref:'CD 009',name:'Cadeira Imperial Dourada',cat:'Cadeiras',price:6},
+  {ref:'CD 010',name:'Cadeira Rústica',cat:'Cadeiras',price:15},
   // Laços
   {ref:'LC 001',name:'Laço Liso Rosa Bébé',cat:'Laços',price:0.80},
   {ref:'LC 002',name:'Laço Liso Rosa Fúsia',cat:'Laços',price:0.80},
@@ -944,6 +947,7 @@ const CATALOG = [
   {ref:'COM 018',name:'Aquário 1L',cat:'Complementos Mesa',price:3},
   {ref:'COM 019',name:'Aquário 0,5L',cat:'Complementos Mesa',price:2},
   {ref:'COM 020',name:'Candeeiro sem Fios 40cm',cat:'Complementos Mesa',price:10},
+  {ref:'COM 021',name:'Dispensador de Bebidas',cat:'Complementos Mesa',price:0},
   // Sofás Bambu (módulos)
   {ref:'SB 001',name:'Módulo Sofá de Centro (Bambu)',cat:'Sofás Bambu',price:40},
   {ref:'SB 002',name:'Módulo Sofá de Canto (Bambu)',cat:'Sofás Bambu',price:40},
@@ -1485,7 +1489,13 @@ function initEditor(data) {
       const linhas = pedido.artigos.split('\n');
       linhas.forEach(l => {
         const m = l.match(/^(.+?)\s*—\s*(.+?)\s*\(×(\d+)\)/);
-        if (m) currentQuote.items.push({ id: uid(), ref: m[1].trim(), descricao: m[2].trim(), quantidade: parseInt(m[3])||1, precoUnit: 0, total: 0 });
+        if (m) {
+          const ref = m[1].trim();
+          const qty = parseInt(m[3]) || 1;
+          const catalogItem = CATALOG.find(c => c.ref === ref);
+          const precoUnit = catalogItem?.price || 0;
+          currentQuote.items.push({ id: uid(), ref, descricao: m[2].trim(), quantidade: qty, precoUnit, total: +(precoUnit * qty).toFixed(2) });
+        }
       });
     }
     el('editor-title').textContent = 'Novo Orçamento';
@@ -1584,11 +1594,20 @@ async function saveQuote(status) {
       await db.collection('orcamentos').doc(id).update(data);
       toast('Orçamento guardado', 'ok');
     } else {
-      // Create — get next number
-      const snap = await db.collection('orcamentos').get();
-      const year = new Date().getFullYear();
-      const num  = String(snap.size + 1).padStart(3, '0');
-      currentQuote.numero    = `ORC-${year}-${num}`;
+      // Create — sequential number within current month + 2-digit year (e.g. 0126)
+      const now        = new Date();
+      const YY         = String(now.getFullYear()).slice(-2);
+      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      const monthEnd   = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+      const snap       = await db.collection('orcamentos').get();
+      const thisMonth  = snap.docs.filter(d => {
+        const ts = d.data().createdAt;
+        if (!ts) return false;
+        const date = ts.toDate ? ts.toDate() : new Date(ts);
+        return date >= monthStart && date < monthEnd;
+      }).length;
+      const seq = String(thisMonth + 1).padStart(2, '0');
+      currentQuote.numero    = `${seq}${YY}`;
       currentQuote.createdAt = firebase.firestore.FieldValue.serverTimestamp();
       const ref = await db.collection('orcamentos').add(currentQuote);
       currentQuote.id = ref.id;
@@ -1669,6 +1688,11 @@ function loadLogoForPDF() {
 }
 
 async function generatePDF() {
+  // Auto-save first to ensure the quote number is assigned
+  if (!currentQuote.numero) {
+    await saveQuote(currentQuote.status || 'rascunho');
+    if (!currentQuote.numero) return; // save failed
+  }
   currentQuote.client = {
     nome:     el('e-nome').value.trim(),
     email:    el('e-email').value.trim(),

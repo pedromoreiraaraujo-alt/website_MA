@@ -227,10 +227,10 @@
     }
     .cat-contact-banner p {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2.4rem; font-weight: 300; color: rgba(255,255,255,0.92);
-      line-height: 1.2; letter-spacing: -0.01em;
+      font-size: 2.6rem; font-weight: 300; color: rgba(245,239,226,0.93);
+      line-height: 1.2; letter-spacing: -0.02em;
     }
-    .cat-contact-banner p span { color: var(--gold-light); font-style: italic; font-weight: 400; }
+    .cat-contact-banner p span { color: rgba(245,239,226,0.93); font-style: italic; font-weight: 400; }
     .cat-contact-banner-sub {
       font-family: 'Lato', sans-serif;
       font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5;
@@ -2094,7 +2094,7 @@
       'mob-004': {
         cat: 'mobiliario-mesas',
         ref: 'MS 002',
-        name: 'Mesa Rectangular',
+        name: 'Mesa Retangular',
         desc: 'Mesa rectangular em madeira para banquetes. Combinável com outras para criar configurações personalizadas.',
         images: [
           'Fotosdiversas/Cadeiras/MS 002.png',
@@ -2104,6 +2104,38 @@
         specs: [
           ['Dimensões', '278 × 102 cm'],
           ['Capacidade', '10 a 12 pessoas'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Inclui entrega em Vila do Conde e arredores',
+      },
+
+      'ms-004': {
+        cat: 'mobiliario-mesas',
+        ref: 'MS 004',
+        name: 'Mesa Rústica Pé de Galo',
+        desc: 'Mesa rústica premium com pé de galo, usada em celebrações de cerimónias civis e como mesa dos noivos. Peça de destaque para momentos únicos, com stock limitado ao existente.',
+        images: ['Fotosdiversas/Cadeiras/MS 004.png'],
+        hoverImage: 'Fotosdiversas/Cadeiras/MS 004.png',
+        specs: [
+          ['Dimensões', '160 × 95 cm'],
+          ['Stock', 'Consultar'],
+        ],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Inclui entrega em Vila do Conde e arredores',
+      },
+
+      'ms-003': {
+        cat: 'mobiliario-mesas',
+        ref: 'MS 003',
+        name: 'Mesa Dobrável',
+        desc: 'Mesa dobrável de fácil montagem e transporte. Ideal para eventos que requerem flexibilidade na disposição do espaço.',
+        images: ['Fotosdiversas/Cadeiras/MS 003.jpeg'],
+        hoverImage: 'Fotosdiversas/Cadeiras/MS 003.jpeg',
+        specs: [
+          ['Dimensões', '180 × 90 cm'],
           ['Stock', 'Consultar'],
         ],
         priceLabel: 'Preço por unidade / dia',
@@ -2210,6 +2242,19 @@
         images: ['Fotosdiversas/Cadeiras/CD 009.png', 'Fotosdiversas/Cadeiras/CD 009 - 2.jpeg'],
         hoverImage: 'Fotosdiversas/Cadeiras/CD 009 - 2.jpeg',
         specs: [['Material', 'Metal + Tecido'], ['Acabamento', 'Dourado'], ['Tipo', 'Imperial']],
+        priceLabel: 'Preço por unidade / dia',
+        price: 'Sob consulta',
+        priceNote: 'Preços por quantidade disponíveis',
+      },
+
+      'cd-010': {
+        cat: 'mobiliario-cadeiras',
+        ref: 'CD 010',
+        name: 'Cadeira Rústica',
+        desc: 'Cadeira rústica premium, usada em celebrações de cerimónias civis e como cadeira dos noivos. Item de destaque com stock limitado ao existente — disponibilidade sujeita a consulta.',
+        images: ['Fotosdiversas/Cadeiras/CD 010.png'],
+        hoverImage: 'Fotosdiversas/Cadeiras/CD 010.png',
+        specs: [['Tipo', 'Rústica'], ['Uso', 'Exterior / Interior']],
         priceLabel: 'Preço por unidade / dia',
         price: 'Sob consulta',
         priceNote: 'Preços por quantidade disponíveis',
@@ -2766,6 +2811,7 @@
       'com-018': { cat: 'decoracao', ref: 'COM 018', name: 'Aquário 1L', desc: 'Aquário decorativo. Capacidade: 1 L.', images: ['Fotosdiversas/Complementos Mesa/COM 018.png'], specs: [['Capacidade', '1 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
       'com-019': { cat: 'decoracao', ref: 'COM 019', name: 'Aquário 0,5L', desc: 'Aquário decorativo. Capacidade: 0,5 L.', images: ['Fotosdiversas/Complementos Mesa/COM 019.png'], specs: [['Capacidade', '0,5 L']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
       'com-020': { cat: 'decoracao', ref: 'COM 020', name: 'Candeeiro sem Fios 40cm', desc: 'Candeeiro sem fios. Altura: 40 cm.', images: ['Fotosdiversas/Complementos Mesa/COM 020.png'], specs: [['Altura', '40 cm'], ['Alimentação', 'Sem fios']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
+      'com-021': { cat: 'outros-com', ref: 'COM 021', name: 'Dispensador de Bebidas', desc: 'Dispensador de bebidas.', images: ['Fotosdiversas/Complementos Mesa/COM 021.jpeg','Fotosdiversas/Complementos Mesa/COM 021 - 2.jpeg'], hoverImage: 'Fotosdiversas/Complementos Mesa/COM 021 - 2.jpeg', specs: [], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
 
       /* EXTERIOR — Sofás Bambu */
       'sb-001': { cat: 'exterior-sb', ref: 'SB 001', name: 'Módulo Sofá de Centro (Bambu)', desc: 'Módulo sofá de centro em bambu para uso exterior.', images: ['Fotosdiversas/Complementos Exterior/SB 001.png'], specs: [['Material', 'Bambu'], ['Uso', 'Exterior']], priceLabel: 'Preço por unidade / dia', price: 'Sob consulta', priceNote: '' },
